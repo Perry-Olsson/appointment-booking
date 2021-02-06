@@ -11,7 +11,7 @@ generator client {
   previewFeatures = ["nativeTypes"]
 }
 
-model Appointment {
+model appointments {
   id        Int      @id @default(autoincrement())
   createAt  DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -19,6 +19,7 @@ model Appointment {
   day       Int      @db.SmallInt
   year      Int      @db.SmallInt
   time      DateTime @db.Time
+  timestamp DateTime 
 }
 
 // model Post {

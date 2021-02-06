@@ -12,7 +12,8 @@
     "dev:js": "NODE_ENV=development nodemon dist/index.js",
     "lint": "eslint ./src/**/*.ts",
     "format": "prisma format",
-    "migrate:dev": "rm -rf ./prisma/migrations && prisma migrate dev --name init --preview-feature",
+    "migrate:init": "rm -rf ./prisma/migrations && prisma migrate dev --name init --preview-feature",
+    "migrate:dev": "prisma migrate dev --preview-feature",
     "db:push": "prisma db push"
   },
   "devDependencies": {

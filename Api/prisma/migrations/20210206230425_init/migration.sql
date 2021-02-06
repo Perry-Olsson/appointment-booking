@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Appointment" (
+CREATE TABLE "appointments" (
     "id" SERIAL NOT NULL,
     "createAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -7,6 +7,7 @@ CREATE TABLE "Appointment" (
     "day" SMALLINT NOT NULL,
     "year" SMALLINT NOT NULL,
     "time" TIME NOT NULL,
+    "timestamp" TIMESTAMP(3) NOT NULL,
 
     PRIMARY KEY ("id")
 );
