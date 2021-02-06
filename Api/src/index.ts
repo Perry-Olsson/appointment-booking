@@ -17,6 +17,18 @@ async function main() {
     res.send("pong");
   });
 
+  app.get("/appointment", async (_, res) => {
+    const appointment = await prisma.appointment.findFirst({
+      where: { day: 10 },
+      select: {
+        day: true,
+        month: true,
+        year: true,
+      },
+    });
+    res.json(appointment);
+  });
+
   http.createServer(app).listen(port, () => {
     console.log(`server is listening on port ${port}`);
   });
