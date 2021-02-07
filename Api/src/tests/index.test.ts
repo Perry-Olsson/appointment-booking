@@ -13,6 +13,7 @@ describe("Server starts sucdessfully", () => {
 
   test("ping endpoint pongs", async () => {
     const response = await api.get("/api/ping");
-    return expect(response.status).toBe(200);
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("pong");
   });
 });
