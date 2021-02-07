@@ -6,7 +6,7 @@ CREATE TABLE "appointments" (
     "month" SMALLINT NOT NULL,
     "day" SMALLINT NOT NULL,
     "year" SMALLINT NOT NULL,
-    "time" TIME NOT NULL,
+    "time" SMALLINT NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL,
 
     PRIMARY KEY ("id")
