@@ -1,1 +1,1 @@
-- create database seed 
+ - finish tests for database seed
