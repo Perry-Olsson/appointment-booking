@@ -5,15 +5,18 @@ import { getDaysBetweenAppointments } from "./helpers";
 const prisma = new PrismaClient();
 
 let appointments: Appointment[];
+let appointmentsCreated: number;
 
 beforeAll(async () => {
-  await seedDatabase(createAppointments());
+  const newAppointments = createAppointments();
+  appointmentsCreated = newAppointments.length;
+  await seedDatabase(newAppointments);
   appointments = await prisma.appointment.findMany();
 });
 
 describe("Database seeding", () => {
   test("Database is emptied and seeded", async () => {
-    expect(appointments).toHaveLength(10);
+    expect(appointments).toHaveLength(appointmentsCreated);
   });
 
   test("appointment seeds are randomally assigned dates", async () => {
