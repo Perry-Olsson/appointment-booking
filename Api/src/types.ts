@@ -1,6 +1,6 @@
-import { appointments } from "@prisma/client";
+import { Appointment } from "@prisma/client";
 
 export type NewAppointment = Pick<
-  appointments,
+  Appointment,
   "day" | "month" | "year" | "time" | "timestamp"
 >;

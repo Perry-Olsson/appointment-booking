@@ -4,10 +4,10 @@ import { NewAppointment } from "../types";
 const prisma = new PrismaClient();
 
 export async function seedDatabase(appointments: NewAppointment[]) {
-  await prisma.appointments.deleteMany();
+  await prisma.appointment.deleteMany();
 
   for (let i = 0; i < appointments.length; i++) {
-    await prisma.appointments.create({ data: appointments[i] });
+    await prisma.appointment.create({ data: appointments[i] });
   }
   await prisma.$disconnect();
 }
