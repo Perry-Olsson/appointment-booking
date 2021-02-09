@@ -19,7 +19,7 @@ describe("Database seeding", () => {
     expect(appointments).toHaveLength(appointmentsCreated);
   });
 
-  test("appointment seeds are randomally assigned dates", async () => {
+  test("appointment seeds are randomly assigned dates", async () => {
     const daysBetweenAppointments = getDaysBetweenAppointments(appointments);
 
     const isRandom = daysBetweenAppointments.some((val, i, arr) => {

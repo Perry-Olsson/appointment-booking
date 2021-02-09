@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { oneDay } from "../constants";
 import { NewAppointment } from "../types";
 
 const prisma = new PrismaClient();
@@ -14,22 +15,20 @@ export async function seedDatabase(appointments: NewAppointment[]) {
 
 export const createAppointments = (): NewAppointment[] => {
   const today = new Date();
+  today.setHours(12);
+
   const initialAppointment = Date.UTC(
     today.getFullYear(),
     today.getMonth(),
     today.getDay(),
-    12
+    today.getUTCHours()
   );
-  const oneDay = 1000 * 60 * 60 * 24;
 
   const appointmentSeeds: NewAppointment[] = [];
 
   let lastAppointment = initialAppointment;
   for (let i = 1; i < 11; i++) {
     const date = new Date(lastAppointment + oneDay * getRandomNumber(1, 5));
-    date.setHours(12);
-    date.setMinutes(0);
-    date.setMilliseconds(0);
     lastAppointment = date.getTime();
     appointmentSeeds.push({
       day: date.getDate(),
