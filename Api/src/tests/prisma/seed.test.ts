@@ -34,10 +34,12 @@ describe("Database seeding", () => {
     const invalidTimes = appointments.filter(({ timestamp }) => {
       const hour = timestamp.getHours();
       const minutes = timestamp.getMinutes();
+
       if (hour <= 24 && hour >= 0 && (minutes === 0 || minutes === 30))
         return false;
-      return false;
+      return true;
     });
+
     expect(invalidTimes).toHaveLength(0);
   });
 });
