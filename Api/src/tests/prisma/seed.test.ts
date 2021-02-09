@@ -31,9 +31,11 @@ describe("Database seeding", () => {
   });
 
   test("Appointments time is valid", async () => {
-    const invalidTimes = appointments.filter(({ time }) => {
-      const mod = time % 100;
-      if (time < 2400 && time >= 0 && (mod === 0 || mod === 30)) return false;
+    const invalidTimes = appointments.filter(({ timestamp }) => {
+      const hour = timestamp.getHours();
+      const minutes = timestamp.getMinutes();
+      if (hour <= 24 && hour >= 0 && (minutes === 0 || minutes === 30))
+        return false;
       return false;
     });
     expect(invalidTimes).toHaveLength(0);

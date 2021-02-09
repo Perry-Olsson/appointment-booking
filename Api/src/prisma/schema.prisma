@@ -13,12 +13,11 @@ generator client {
 
 model Appointment {
   id        Int      @id @default(autoincrement())
-  createAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
   updatedAt DateTime @default(now())
   month     Int      @db.SmallInt
   day       Int      @db.SmallInt
   year      Int      @db.SmallInt
-  time      Int      @db.SmallInt
   timestamp DateTime 
 }
 

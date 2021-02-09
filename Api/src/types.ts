@@ -1,6 +1,6 @@
 import { Appointment } from "@prisma/client";
 
-export type NewAppointment = Pick<
+export type NewAppointment = Omit<
   Appointment,
-  "day" | "month" | "year" | "time" | "timestamp"
+  "id" | "createdAt" | "updatedAt"
 >;

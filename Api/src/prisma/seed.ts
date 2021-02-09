@@ -13,20 +13,28 @@ export async function seedDatabase(appointments: NewAppointment[]) {
 }
 
 export const createAppointments = (): NewAppointment[] => {
-  const now = Date.now();
+  const today = new Date();
+  const initialAppointment = Date.UTC(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDay(),
+    12
+  );
   const oneDay = 1000 * 60 * 60 * 24;
 
   const appointmentSeeds: NewAppointment[] = [];
 
-  let lastAppointment = now;
+  let lastAppointment = initialAppointment;
   for (let i = 1; i < 11; i++) {
     const date = new Date(lastAppointment + oneDay * getRandomNumber(1, 5));
+    date.setHours(12);
+    date.setMinutes(0);
+    date.setMilliseconds(0);
     lastAppointment = date.getTime();
     appointmentSeeds.push({
       day: date.getDate(),
       month: date.getMonth(),
       year: date.getFullYear(),
-      time: 1200,
       timestamp: date,
     });
   }
