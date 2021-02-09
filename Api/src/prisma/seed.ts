@@ -14,19 +14,10 @@ export async function seedDatabase(appointments: NewAppointment[]) {
 }
 
 export const createAppointments = (): NewAppointment[] => {
-  const today = new Date();
-  today.setHours(12);
-
-  const initialAppointment = Date.UTC(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDay(),
-    today.getUTCHours()
-  );
-
   const appointmentSeeds: NewAppointment[] = [];
-
+  const initialAppointment = createInitialAppointment();
   let lastAppointment = initialAppointment;
+
   for (let i = 1; i < 11; i++) {
     const date = new Date(lastAppointment + oneDay * getRandomNumber(1, 5));
     lastAppointment = date.getTime();
@@ -38,6 +29,18 @@ export const createAppointments = (): NewAppointment[] => {
     });
   }
   return appointmentSeeds;
+};
+
+const createInitialAppointment = () => {
+  const today = new Date();
+  today.setHours(12);
+
+  return Date.UTC(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDay(),
+    today.getUTCHours()
+  );
 };
 
 const getRandomNumber = (lowerBound = 0, upperBound = 10) => {
