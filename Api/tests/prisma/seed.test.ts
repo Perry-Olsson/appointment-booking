@@ -1,4 +1,4 @@
-import { createAppointments, seedDatabase } from "../../prisma/seed";
+import { createAppointments, seedDatabase } from "../../src/prisma/seed";
 import { Appointment, PrismaClient } from "@prisma/client";
 import { getDaysBetweenAppointments } from "./helpers";
 
@@ -45,5 +45,5 @@ describe("Database seeding", () => {
 });
 
 afterAll(async () => {
-  prisma.$disconnect();
+  await prisma.$disconnect();
 });

@@ -1,6 +1,6 @@
 import request from "supertest";
 import { PrismaClient } from "@prisma/client";
-import { app } from "../app";
+import { app } from "../src/app";
 
 const api = request(app);
 const prisma = new PrismaClient();

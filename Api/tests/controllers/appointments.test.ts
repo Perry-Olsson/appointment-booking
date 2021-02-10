@@ -1,7 +1,7 @@
 import request from "supertest";
 
-import { createAppointments, seedDatabase } from "../../prisma/seed";
-import { app, prisma } from "../../app";
+import { createAppointments, seedDatabase } from "../../src/prisma/seed";
+import { app, prisma } from "../../src/app";
 
 const api = request(app);
 
@@ -19,5 +19,5 @@ describe("GET request to /api/appointments", () => {
 });
 
 afterAll(async () => {
-  return await prisma.$disconnect();
+  await prisma.$disconnect();
 });
