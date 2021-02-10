@@ -1,10 +1,8 @@
 import request from "supertest";
-import { PrismaClient } from "@prisma/client";
 
 import { createAppointments, seedDatabase } from "../../prisma/seed";
-import app from "../../app";
+import { app, prisma } from "../../app";
 
-const prisma = new PrismaClient();
 const api = request(app);
 
 beforeAll(async () => {
@@ -21,5 +19,5 @@ describe("GET request to /api/appointments", () => {
 });
 
 afterAll(async () => {
-  await prisma.$disconnect();
+  return await prisma.$disconnect();
 });

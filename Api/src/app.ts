@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 import express from "express";
 import { appointmentsRouter } from "./controllers";
@@ -16,4 +17,6 @@ app.get("/api/ping", (_, res) => {
   res.send("pong");
 });
 
-export default app;
+const prisma = new PrismaClient();
+
+export { app, prisma };

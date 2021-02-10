@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "tsc": "rm -rf dist/ && tsc",
+    "type-check": "tsc --noEmit",
     "watch": "rm -rf dist/ && tsc --watch",
     "start": "NODE_ENV=production node ./dist/index.js",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",

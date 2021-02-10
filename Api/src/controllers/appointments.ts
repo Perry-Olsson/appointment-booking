@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import express from "express";
+import { prisma } from "../app";
 
 const router = express.Router();
-
-const prisma = new PrismaClient();
 
 router.get("/", async (_, res) => {
   const appointments = await prisma.appointment.findMany();

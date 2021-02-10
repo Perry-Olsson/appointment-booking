@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../app";
 import { oneDay } from "../constants";
 import { NewAppointment } from "../types";
-
-const prisma = new PrismaClient();
 
 export async function seedDatabase(appointments: NewAppointment[]) {
   await prisma.appointment.deleteMany();
