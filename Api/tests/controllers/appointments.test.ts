@@ -6,8 +6,10 @@ import { app, prisma } from "../../src/app";
 const api = request(app);
 
 beforeAll(async () => {
+  console.log("appointments start: ", Date.now());
   const newAppointments = createAppointments();
   await seedDatabase(newAppointments);
+  console.log("appointments end: ", Date.now());
 });
 
 describe("GET request to /api/appointments", () => {
@@ -18,6 +20,6 @@ describe("GET request to /api/appointments", () => {
   });
 });
 
-afterAll(async () => {
-  await prisma.$disconnect();
+afterAll(() => {
+  return prisma.$disconnect();
 });

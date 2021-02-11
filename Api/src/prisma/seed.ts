@@ -8,6 +8,7 @@ export async function seedDatabase(appointments: NewAppointment[]) {
   for (let i = 0; i < appointments.length; i++) {
     await prisma.appointment.create({ data: appointments[i] });
   }
+
   await prisma.$disconnect();
 }
 
