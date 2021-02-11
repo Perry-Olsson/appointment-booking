@@ -8,12 +8,11 @@ let appointments: Appointment[];
 let appointmentsCreated: number;
 
 beforeAll(async () => {
-  console.log("seed start", Date.now());
   const newAppointments = createAppointments();
   appointmentsCreated = newAppointments.length;
+
   await seedDatabase(newAppointments);
   appointments = await prisma.appointment.findMany();
-  console.log("seed end: ", Date.now());
 });
 
 describe("Database seeding", () => {

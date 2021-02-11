@@ -37,7 +37,7 @@ const createInitialAppointment = () => {
   return Date.UTC(
     today.getFullYear(),
     today.getMonth(),
-    today.getDay(),
+    today.getDate(),
     today.getUTCHours()
   );
 };

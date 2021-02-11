@@ -1,22 +1,33 @@
 import request from "supertest";
+import { Appointment } from "@prisma/client";
 
 import { createAppointments, seedDatabase } from "../../src/prisma/seed";
 import { app, prisma } from "../../src/app";
+import { appointmentsAreSorted, parseRawAppointment } from "./helpers";
 
 const api = request(app);
 
+let appointmentsFromDb: Appointment[];
+
 beforeAll(async () => {
-  console.log("appointments start: ", Date.now());
   const newAppointments = createAppointments();
   await seedDatabase(newAppointments);
-  console.log("appointments end: ", Date.now());
+
+  appointmentsFromDb = await prisma.appointment.findMany({
+    orderBy: { timestamp: "asc" },
+  });
 });
 
 describe("GET request to /api/appointments", () => {
   test("request returns appointments", async () => {
     const response = await api.get("/api/appointments");
-    const { body } = response;
-    expect(typeof body[0]).toBe("object");
+    const appointments: Appointment[] = response.body.map((app: any) =>
+      parseRawAppointment(app)
+    );
+
+    expect(appointments).toHaveLength(appointments.length);
+    expect(parseRawAppointment(appointments[0])).toEqual(appointmentsFromDb[0]);
+    expect(appointmentsAreSorted(appointments)).toBe(true);
   });
 });
 
