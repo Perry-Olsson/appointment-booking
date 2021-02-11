@@ -17,8 +17,8 @@
     "format": "prisma format",
     "generate": "prisma generate",
     "migrate:init": "rm -rf src/prisma/migrations && prisma migrate dev --name init --preview-feature && prisma generate",
-    "migrate:reset": "prisma migrate reset --preview-feature",
-    "migrate:dev": "prisma migrate dev --preview-feature",
+    "migrate:reset": "prisma migrate reset --preview-feature && prisma generate",
+    "migrate:dev": "prisma migrate dev --preview-feature && prisma generate",
     "db:push": "prisma db push"
   },
   "devDependencies": {
