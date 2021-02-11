@@ -25,16 +25,48 @@ describe("GET request", () => {
       parseRawAppointment(app)
     );
 
+    expect(response.status).toBe(200);
     expect(appointments).toHaveLength(appointments.length);
     expect(parseRawAppointment(appointments[0])).toEqual(appointmentsFromDb[0]);
     expect(appointmentsAreSorted(appointments)).toBe(true);
   });
 
-  // test("Request to /api/appointments/:id", async () => {
+  test("Request to /api/appointments/:month/:year returns appointments from specified month", async () => {
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const appointmentsFromDb = await prisma.appointment.findMany({
+      orderBy: { timestamp: "asc" },
+      where: { month: currentMonth, year: currentYear },
+    });
 
-  // })
+    const response = await api.get(
+      `/api/appointments/${currentMonth}/${currentYear}`
+    );
+
+    expect(response.status).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+
+    const appointments = response.body.map((app: any) =>
+      parseRawAppointment(app)
+    );
+
+    expect(
+      filterUnwantedMonths(appointments, currentMonth, currentYear)
+    ).toHaveLength(appointmentsFromDb.length);
+  });
 });
 
 afterAll(() => {
   return prisma.$disconnect();
 });
+
+const filterUnwantedMonths = (
+  appointments: Appointment[],
+  currentMonth: number,
+  currentYear: number
+) => {
+  return appointments.filter(
+    app => app.month === currentMonth && app.year === currentYear
+  );
+};

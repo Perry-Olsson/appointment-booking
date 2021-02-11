@@ -7,7 +7,18 @@ router.get("/", async (_, res) => {
   const appointments = await prisma.appointment.findMany({
     orderBy: { timestamp: "asc" },
   });
-  return res.json(appointments);
+  res.json(appointments);
+});
+
+router.get("/:month/:year", async (req, res) => {
+  const { month, year } = req.params;
+
+  const appointments = await prisma.appointment.findMany({
+    orderBy: { timestamp: "asc" },
+    where: { month: Number(month), year: Number(year) },
+  });
+
+  res.json(appointments);
 });
 
 export { router as appointmentsRouter };
