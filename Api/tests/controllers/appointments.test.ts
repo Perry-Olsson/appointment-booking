@@ -18,8 +18,8 @@ beforeAll(async () => {
   });
 });
 
-describe("GET request to /api/appointments", () => {
-  test("request returns appointments", async () => {
+describe("GET request", () => {
+  test("Request to /api/appointments returns appointments", async () => {
     const response = await api.get("/api/appointments");
     const appointments: Appointment[] = response.body.map((app: any) =>
       parseRawAppointment(app)
@@ -29,6 +29,10 @@ describe("GET request to /api/appointments", () => {
     expect(parseRawAppointment(appointments[0])).toEqual(appointmentsFromDb[0]);
     expect(appointmentsAreSorted(appointments)).toBe(true);
   });
+
+  // test("Request to /api/appointments/:id", async () => {
+
+  // })
 });
 
 afterAll(() => {
