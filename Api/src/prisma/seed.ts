@@ -1,5 +1,5 @@
-import { prisma } from "../app";
 import { oneDay } from "../constants";
+import { prisma } from "../prisma";
 import { NewAppointment } from "../types";
 
 export async function seedDatabase(appointments: NewAppointment[]) {

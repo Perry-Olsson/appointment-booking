@@ -1,8 +1,7 @@
 import { createAppointments, seedDatabase } from "../../src/prisma/seed";
-import { Appointment, PrismaClient } from "@prisma/client";
+import { Appointment } from "@prisma/client";
 import { getDaysBetweenAppointments } from "./helpers";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../src/prisma";
 
 let appointments: Appointment[];
 let appointmentsCreated: number;

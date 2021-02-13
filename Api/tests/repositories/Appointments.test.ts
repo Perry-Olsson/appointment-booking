@@ -1,7 +1,7 @@
 import { Appointment } from "@prisma/client";
-import { prisma } from "../../src/app";
+import { prisma } from "../../src/prisma";
 import { createAppointments, seedDatabase } from "../../src/prisma/seed";
-import Appointments from "../../src/repositories/Appointment";
+import { Appointments } from "../../src/repositories/Appointments";
 
 let appointmentSeeds: Appointment[];
 

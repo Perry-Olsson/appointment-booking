@@ -2,12 +2,13 @@ import request from "supertest";
 import { Appointment } from "@prisma/client";
 
 import { createAppointments, seedDatabase } from "../../src/prisma/seed";
-import { app, prisma } from "../../src/app";
+import { app } from "../../src/app";
 import {
   appointmentsAreSorted,
   filterUnwantedMonths,
   parseRawAppointment,
 } from "./helpers";
+import { prisma } from "../../src/prisma";
 
 const api = request(app);
 

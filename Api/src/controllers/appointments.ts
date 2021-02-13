@@ -1,12 +1,11 @@
 import express from "express";
-import { prisma } from "../app";
+import { prisma } from "../prisma";
+import { Appointments } from "../repositories/Appointments";
 
 const router = express.Router();
 
 router.get("/", async (_, res) => {
-  const appointments = await prisma.appointment.findMany({
-    orderBy: { timestamp: "asc" },
-  });
+  const appointments = await Appointments.sorted.findMany();
   res.json(appointments);
 });
 

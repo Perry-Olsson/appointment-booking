@@ -1,6 +1,6 @@
 import { Appointment, Prisma, PrismaClient } from "@prisma/client";
 
-export interface AppointmentRepository
+export interface AppointmentRepo
   extends Prisma.AppointmentDelegate<
     boolean | ((error: Error) => Error) | Prisma.RejectPerOperation | undefined
   > {
