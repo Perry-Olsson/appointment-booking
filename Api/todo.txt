@@ -1,1 +1,3 @@
 - create appointment repository
+
+- create endpoint for creating an appointment
