@@ -1,6 +1,6 @@
 import request from "supertest";
 import { Appointment } from "@prisma/client";
-import { createAppointments, seedDatabase } from "../../src/prisma/seed";
+import { createAppointments, seedAppointments } from "../../src/prisma/seeds";
 import { app } from "../../src/app";
 import {
   appointmentsAreSorted,
@@ -17,7 +17,7 @@ let appointmentSeeds: Appointment[];
 
 beforeAll(async () => {
   const newAppointments = createAppointments();
-  await seedDatabase(newAppointments);
+  await seedAppointments(newAppointments);
 
   appointmentSeeds = await prisma.appointment.findMany({
     orderBy: { timestamp: "asc" },
@@ -90,6 +90,17 @@ describe("GET request", () => {
       await prisma.appointment.delete({ where: { id } });
     });
   });
+
+  // describe("Query string request", () => {
+  //   test("Query string is returned", async () => {
+  //     const response = await api.get("/api/appointments/?hour=10&minutes=30");
+  //     expect(response.status).toBe(200);
+  //     expect(response.body).toEqual({
+  //       hour: "10",
+  //       minute: "30",
+  //     });
+  //   });
+  // });
 });
 
 afterAll(() => {

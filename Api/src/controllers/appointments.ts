@@ -3,8 +3,9 @@ import { Appointments } from "../repositories/Appointments";
 
 const router = express.Router();
 
-router.get("/", async (_, res) => {
-  const appointments = await Appointments.sorted.findMany();
+router.get("/", async (req, res) => {
+  console.log(req.query);
+  const appointments = await Appointments.sorted.findMany({ where: {} });
   res.json(appointments);
 });
 

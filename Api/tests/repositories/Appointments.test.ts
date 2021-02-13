@@ -1,13 +1,13 @@
 import { Appointment } from "@prisma/client";
 import { prisma } from "../../src/prisma";
-import { createAppointments, seedDatabase } from "../../src/prisma/seed";
+import { createAppointments, seedAppointments } from "../../src/prisma/seeds";
 import { Appointments } from "../../src/repositories/Appointments";
 
 let appointmentSeeds: Appointment[];
 
 beforeAll(async () => {
   const newAppointments = createAppointments();
-  await seedDatabase(newAppointments);
+  await seedAppointments(newAppointments);
 
   appointmentSeeds = await prisma.appointment.findMany();
 });

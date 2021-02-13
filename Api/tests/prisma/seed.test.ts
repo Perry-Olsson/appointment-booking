@@ -1,4 +1,4 @@
-import { createAppointments, seedDatabase } from "../../src/prisma/seed";
+import { createAppointments, seedAppointments } from "../../src/prisma/seeds";
 import { Appointment } from "@prisma/client";
 import { getDaysBetweenAppointments } from "./helpers";
 import { prisma } from "../../src/prisma";
@@ -10,7 +10,7 @@ beforeAll(async () => {
   const newAppointments = createAppointments();
   appointmentsCreated = newAppointments.length;
 
-  await seedDatabase(newAppointments);
+  await seedAppointments(newAppointments);
   appointments = await prisma.appointment.findMany();
 });
 

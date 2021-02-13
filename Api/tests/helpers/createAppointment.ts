@@ -12,9 +12,11 @@ export const createAppointment = async (
 
   return await prisma.appointment.create({
     data: {
-      day: date.getDate(),
-      month: date.getMonth(),
       year: date.getFullYear(),
+      month: date.getMonth(),
+      day: date.getDate(),
+      hour: date.getHours(),
+      minute: date.getMinutes(),
       timestamp: date,
     },
   });

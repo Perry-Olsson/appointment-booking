@@ -1,8 +1,8 @@
-import { ONE_DAY } from "../constants";
-import { prisma } from "../prisma";
-import { NewAppointment } from "../types";
+import { ONE_DAY } from "../../constants";
+import { prisma } from "../../prisma";
+import { NewAppointment } from "../../types";
 
-export async function seedDatabase(appointments: NewAppointment[]) {
+export async function seedAppointments(appointments: NewAppointment[]) {
   await prisma.appointment.deleteMany();
 
   for (let i = 0; i < appointments.length; i++) {
@@ -21,9 +21,11 @@ export const createAppointments = (): NewAppointment[] => {
     const date = new Date(lastAppointment + ONE_DAY * getRandomNumber(1, 5));
     lastAppointment = date.getTime();
     appointmentSeeds.push({
-      day: date.getDate(),
-      month: date.getMonth(),
       year: date.getFullYear(),
+      month: date.getMonth(),
+      day: date.getDate(),
+      hour: date.getHours(),
+      minute: date.getMinutes(),
       timestamp: date,
     });
   }
@@ -41,7 +43,6 @@ const createInitialAppointment = () => {
     today.getUTCHours()
   );
 };
-
 const getRandomNumber = (lowerBound = 0, upperBound = 10) => {
   return lowerBound + Math.ceil(Math.random() * upperBound);
 };
