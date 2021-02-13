@@ -32,7 +32,7 @@ describe("GET request", () => {
     );
 
     expect(response.status).toBe(200);
-    expect(appointments).toHaveLength(appointments.length);
+    expect(appointments).toHaveLength(appointmentSeeds.length);
     expect(parseRawAppointment(appointments[0])).toEqual(appointmentSeeds[0]);
     expect(appointmentsAreSorted(appointments)).toBe(true);
   });
@@ -48,9 +48,8 @@ describe("GET request", () => {
       });
 
       const response = await api.get(`/api/appointments/${currentMonth}`);
-
       expect(response.status).toBe(200);
-      expect(Array.isArray(response.body)).toBe(true);
+      expect(response.body).toHaveLength(appointmentsFromDb.length);
 
       const appointments: Appointment[] = response.body.map((app: any) =>
         parseRawAppointment(app)
@@ -77,7 +76,6 @@ describe("GET request", () => {
       });
 
       const response = await api.get(`/api/appointments/${month}`);
-
       expect(response.status).toBe(200);
       expect(response.body).toHaveLength(appointmentsFromDb.length);
 
