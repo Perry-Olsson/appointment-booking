@@ -1,1 +1,1 @@
-- database sometimes ends up with more than 10 seed appointments during 
+- create appointment repository
