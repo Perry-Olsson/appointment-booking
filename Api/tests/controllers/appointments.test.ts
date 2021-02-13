@@ -9,6 +9,7 @@ import {
 } from "./helpers";
 import { prisma } from "../../src/prisma";
 import { ONE_MONTH } from "../../src/constants";
+import { createAppointment } from "../helpers";
 
 const api = request(app);
 
@@ -62,10 +63,11 @@ describe("GET request", () => {
     });
 
     test("Returns correct months appointment if month is in next year", async () => {
-      const { id, month, year } = await createAppointment(
-        Date.now() + 11 * ONE_MONTH,
-        { hour: 12, minute: 0 }
-      );
+      const elevenMonthsFromNow = Date.now() + 11 * ONE_MONTH;
+      const { id, month, year } = await createAppointment(elevenMonthsFromNow, {
+        hour: 12,
+        minute: 0,
+      });
 
       const appointmentsFromDb = await prisma.appointment.findMany({
         where: {
@@ -95,26 +97,3 @@ describe("GET request", () => {
 afterAll(() => {
   return prisma.$disconnect();
 });
-
-const createAppointment = async (
-  utc: number,
-  { hour, minute }: Time
-): Promise<Appointment> => {
-  const date = new Date(utc);
-  date.setHours(hour);
-  date.setMinutes(minute);
-
-  return await prisma.appointment.create({
-    data: {
-      day: date.getDate(),
-      month: date.getMonth(),
-      year: date.getFullYear(),
-      timestamp: date,
-    },
-  });
-};
-
-interface Time {
-  hour: number;
-  minute: number;
-}
