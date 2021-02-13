@@ -8,11 +8,14 @@ router.get("/", async (_, res) => {
   res.json(appointments);
 });
 
-router.get("/:month/:year", async (req, res) => {
-  const { month, year } = req.params;
+router.get("/:month", async (req, res) => {
+  const now = new Date();
+  const month = Number(req.params.month);
+  const year =
+    now.getMonth() > month ? now.getFullYear() + 1 : now.getFullYear();
 
   const appointments = await Appointments.sorted.findMany({
-    where: { month: Number(month), year: Number(year) },
+    where: { month, year },
   });
 
   res.json(appointments);

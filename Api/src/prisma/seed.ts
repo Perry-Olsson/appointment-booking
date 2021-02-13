@@ -1,4 +1,4 @@
-import { oneDay } from "../constants";
+import { ONE_DAY } from "../constants";
 import { prisma } from "../prisma";
 import { NewAppointment } from "../types";
 
@@ -18,7 +18,7 @@ export const createAppointments = (): NewAppointment[] => {
   let lastAppointment = initialAppointment;
 
   for (let i = 1; i < 11; i++) {
-    const date = new Date(lastAppointment + oneDay * getRandomNumber(1, 5));
+    const date = new Date(lastAppointment + ONE_DAY * getRandomNumber(1, 5));
     lastAppointment = date.getTime();
     appointmentSeeds.push({
       day: date.getDate(),
