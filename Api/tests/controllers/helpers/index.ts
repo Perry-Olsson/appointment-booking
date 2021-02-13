@@ -25,3 +25,13 @@ export const appointmentsAreSorted = (appointments: Appointment[]) => {
   }
   return true;
 };
+
+export const filterUnwantedMonths = (
+  appointments: Appointment[],
+  currentMonth: number,
+  currentYear: number
+) => {
+  return appointments.filter(
+    app => app.month === currentMonth && app.year === currentYear
+  );
+};

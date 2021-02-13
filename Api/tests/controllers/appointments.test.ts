@@ -3,7 +3,11 @@ import { Appointment } from "@prisma/client";
 
 import { createAppointments, seedDatabase } from "../../src/prisma/seed";
 import { app, prisma } from "../../src/app";
-import { appointmentsAreSorted, parseRawAppointment } from "./helpers";
+import {
+  appointmentsAreSorted,
+  filterUnwantedMonths,
+  parseRawAppointment,
+} from "./helpers";
 
 const api = request(app);
 
@@ -47,7 +51,7 @@ describe("GET request", () => {
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
 
-    const appointments = response.body.map((app: any) =>
+    const appointments: Appointment[] = response.body.map((app: any) =>
       parseRawAppointment(app)
     );
 
@@ -60,13 +64,3 @@ describe("GET request", () => {
 afterAll(() => {
   return prisma.$disconnect();
 });
-
-const filterUnwantedMonths = (
-  appointments: Appointment[],
-  currentMonth: number,
-  currentYear: number
-) => {
-  return appointments.filter(
-    app => app.month === currentMonth && app.year === currentYear
-  );
-};
