@@ -79,6 +79,7 @@ describe("GET request", () => {
         parseRawAppointment(app)
       );
 
+      //Does not return month from past years unless explicitly requested
       expect(filterUnwantedMonths(appointments, month, year)).toHaveLength(
         appointmentsFromDb.length
       );
