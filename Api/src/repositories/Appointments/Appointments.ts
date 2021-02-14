@@ -6,7 +6,6 @@ import { AppointmentMixin, AppointmentRepo } from "./types";
 export const appointmentsMixin: AppointmentMixin = {
   sorted: {
     findMany: async function (query) {
-      console.log("validatedQuery: ", validateQuery(query));
       const findManyArg: Prisma.AppointmentFindManyArgs = {
         orderBy: { timestamp: "asc" },
         where: validateQuery(query),
