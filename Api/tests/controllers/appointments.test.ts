@@ -37,33 +37,33 @@ describe("GET request", () => {
     expect(appointmentsAreSorted(appointments)).toBe(true);
   });
 
-  describe("Request to /api/appointments/:month", () => {
-    test("Request to /api/appointments/:month returns appointments from specified month", async () => {
+  describe("Query string request", () => {
+    test("Request with query string returns correct appointments", async () => {
       const now = new Date();
-      const currentMonth = now.getMonth();
-      const currentYear = now.getFullYear();
+
       const appointmentsFromDb = await prisma.appointment.findMany({
-        orderBy: { timestamp: "asc" },
-        where: { month: currentMonth, year: currentYear },
+        where: { month: now.getMonth(), year: now.getFullYear() },
       });
 
-      const response = await api.get(`/api/appointments/${currentMonth}`);
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveLength(appointmentsFromDb.length);
-
-      const appointments: Appointment[] = response.body.map((app: any) =>
-        parseRawAppointment(app)
+      const response = await api.get(
+        `/api/appointments/?month=${now.getMonth()}&year=${now.getFullYear()}`
       );
 
-      expect(appointments[0]).toEqual(appointmentsFromDb[0]);
-      expect(
-        filterUnwantedMonths(appointments, currentMonth, currentYear)
-      ).toHaveLength(appointmentsFromDb.length);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(appointmentsFromDb.length);
     });
 
-    test("Returns correct months appointment if month is in next year", async () => {
+    test("Query string with month and no year", async () => {
       const elevenMonthsFromNow = Date.now() + 11 * ONE_MONTH;
-      const { id, month, year } = await createAppointment(elevenMonthsFromNow, {
+      const lastMonth = Date.now() - ONE_MONTH;
+      const { id: id1, month, year } = await createAppointment(
+        elevenMonthsFromNow,
+        {
+          hour: 12,
+          minute: 0,
+        }
+      );
+      const { id: id2 } = await createAppointment(lastMonth, {
         hour: 12,
         minute: 0,
       });
@@ -75,7 +75,7 @@ describe("GET request", () => {
         },
       });
 
-      const response = await api.get(`/api/appointments/${month}`);
+      const response = await api.get(`/api/appointments/?month=${month}`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveLength(appointmentsFromDb.length);
 
@@ -87,20 +87,11 @@ describe("GET request", () => {
         appointmentsFromDb.length
       );
 
-      await prisma.appointment.delete({ where: { id } });
+      await prisma.appointment.deleteMany({
+        where: { OR: [{ id: id1 }, { id: id2 }] },
+      });
     });
   });
-
-  // describe("Query string request", () => {
-  //   test("Query string is returned", async () => {
-  //     const response = await api.get("/api/appointments/?hour=10&minutes=30");
-  //     expect(response.status).toBe(200);
-  //     expect(response.body).toEqual({
-  //       hour: "10",
-  //       minute: "30",
-  //     });
-  //   });
-  // });
 });
 
 afterAll(() => {
