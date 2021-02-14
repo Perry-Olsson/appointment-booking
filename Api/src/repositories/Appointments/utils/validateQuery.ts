@@ -3,12 +3,15 @@ import { Prisma } from "@prisma/client";
 export const validateQuery = (query: any) => {
   const validQuery: Prisma.AppointmentWhereInput = {};
 
+  if (!query || !query.where) return validQuery;
+  const whereInput = query.where;
+
   const assignQueryField = (field: AppointmentField): void => {
-    const num = isNumber(query[field]);
+    const num = isNumber(whereInput[field]);
     if (num !== false) validQuery[field] = num;
   };
 
-  for (let field in query) {
+  for (let field in whereInput) {
     switch (field) {
       case "year":
         assignQueryField("year");
@@ -32,7 +35,9 @@ export const validateQuery = (query: any) => {
     const now = new Date();
     if (now.getMonth() > validQuery.month)
       validQuery.year = now.getFullYear() + 1;
+    else validQuery.year = now.getFullYear();
   }
+
   return validQuery;
 };
 

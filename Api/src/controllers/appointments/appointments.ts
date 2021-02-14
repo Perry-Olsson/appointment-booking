@@ -1,12 +1,10 @@
 import express from "express";
 import { Appointments } from "../../repositories/Appointments";
-import { validateQuery } from "./utils/validateQuery";
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const query = { where: validateQuery(req.query) };
-  const appointments = await Appointments.sorted.findMany(query);
+  const appointments = await Appointments.sorted.findMany({ where: req.query });
   res.json(appointments);
 });
 

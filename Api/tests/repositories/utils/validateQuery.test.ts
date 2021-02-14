@@ -1,4 +1,4 @@
-import { validateQuery } from "../../../src/controllers/appointments/utils/validateQuery";
+import { validateQuery } from "../../../src/repositories/Appointments/utils";
 
 describe("Query string is validated correctly", () => {
   test("validate field returns correct fields", () => {
@@ -13,8 +13,10 @@ describe("Query string is validated correctly", () => {
 const now = new Date();
 
 const query = {
-  month: now.getMonth().toString(),
-  year: now.getFullYear().toString(),
-  fake: "doesn't return obj with invalid field",
-  hour: "doesn't return valid field with invalid value",
+  where: {
+    month: now.getMonth().toString(),
+    year: now.getFullYear().toString(),
+    fake: "doesn't return obj with invalid field",
+    hour: "doesn't return valid field with invalid value",
+  },
 };
