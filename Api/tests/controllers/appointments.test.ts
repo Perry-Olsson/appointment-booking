@@ -1,6 +1,5 @@
 import request from "supertest";
 import { Appointment } from "@prisma/client";
-import { createAppointments, seedAppointments } from "../../src/prisma/seeds";
 import { app } from "../../src/app";
 import {
   appointmentsAreSorted,
@@ -10,30 +9,27 @@ import {
 import { prisma } from "../../src/prisma";
 import { ONE_MONTH } from "../../src/constants";
 import { createAppointment } from "../helpers";
+import { initializeAppointments } from "../helpers/initalizeDb";
 
 const api = request(app);
 
-let appointmentSeeds: Appointment[];
-
 beforeAll(async () => {
-  const newAppointments = createAppointments();
-  await seedAppointments(newAppointments);
-
-  appointmentSeeds = await prisma.appointment.findMany({
-    orderBy: { timestamp: "asc" },
-  });
+  await initializeAppointments();
 });
 
 describe("GET request", () => {
   test("Request to /api/appointments returns appointments", async () => {
+    const appointmentsFromDb = await prisma.appointment.findMany({
+      orderBy: { timestamp: "asc" },
+    });
     const response = await api.get("/api/appointments");
     const appointments: Appointment[] = response.body.map((app: any) =>
       parseRawAppointment(app)
     );
 
     expect(response.status).toBe(200);
-    expect(appointments).toHaveLength(appointmentSeeds.length);
-    expect(parseRawAppointment(appointments[0])).toEqual(appointmentSeeds[0]);
+    expect(appointments).toHaveLength(appointmentsFromDb.length);
+    expect(parseRawAppointment(appointments[0])).toEqual(appointmentsFromDb[0]);
     expect(appointmentsAreSorted(appointments)).toBe(true);
   });
 

@@ -1,21 +1,17 @@
-import { Appointment } from "@prisma/client";
 import { prisma } from "../../src/prisma";
-import { createAppointments, seedAppointments } from "../../src/prisma/seeds";
 import { Appointments } from "../../src/repositories/Appointments";
-
-let appointmentSeeds: Appointment[];
+import { initializeAppointments } from "../helpers/initalizeDb";
 
 beforeAll(async () => {
-  const newAppointments = createAppointments();
-  await seedAppointments(newAppointments);
-
-  appointmentSeeds = await prisma.appointment.findMany();
+  await initializeAppointments();
 });
 
 describe("Appointments Repository", () => {
   test("Appointments repository retrieves data", async () => {
+    const appointmentsFromDb = await prisma.appointment.findMany();
     const appointments = await Appointments.findMany();
-    expect(appointments).toEqual(appointmentSeeds);
+
+    expect(appointments).toEqual(appointmentsFromDb);
   });
 
   test("Sorted field of repository returns sorted appointments", async () => {
