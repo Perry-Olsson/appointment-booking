@@ -1,3 +1,3 @@
-- create endpoint for creating an appointment
+- test for and create appointment creation validation
 
 - middleware to convert number strings into numbers
