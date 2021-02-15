@@ -1,16 +1,17 @@
 import request from "supertest";
 import { Appointment } from "@prisma/client";
-import { app } from "../../src/app";
+
+import { app } from "../../../src/app";
+import { prisma } from "../../../src/prisma";
+import { ONE_MONTH } from "../../../src/constants";
+import { createNewAppointment } from "../../../src/prisma/seeds/utils";
+import { initializeAppointments } from "../../helpers/initalizeDb";
 import {
-  appointmentsAreSorted,
-  filterUnwantedMonths,
   parseRawAppointment,
+  appointmentsAreSorted,
+  createAppointment,
+  filterUnwantedMonths,
 } from "./helpers";
-import { prisma } from "../../src/prisma";
-import { ONE_MONTH } from "../../src/constants";
-import { createAppointment } from "../helpers";
-import { initializeAppointments } from "../helpers/initalizeDb";
-import { NewAppointment } from "../../src/types";
 
 const api = request(app);
 
@@ -120,14 +121,3 @@ describe("POST request", () => {
 afterAll(() => {
   return prisma.$disconnect();
 });
-
-const createNewAppointment = (timestamp: Date): NewAppointment => {
-  return {
-    year: timestamp.getFullYear(),
-    month: timestamp.getMonth(),
-    day: timestamp.getDate(),
-    hour: timestamp.getHours(),
-    minute: timestamp.getMinutes(),
-    timestamp,
-  };
-};

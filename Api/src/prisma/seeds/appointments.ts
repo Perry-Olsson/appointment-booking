@@ -1,6 +1,7 @@
 import { ONE_DAY } from "../../constants";
 import { prisma } from "../../prisma";
-import { NewAppointment } from "../../types";
+import { NewAppointment } from "./types";
+import { createNewAppointment } from "./utils";
 
 export async function seedAppointments(appointments: NewAppointment[]) {
   await prisma.appointment.deleteMany();
@@ -20,14 +21,7 @@ export const createAppointments = (): NewAppointment[] => {
   for (let i = 1; i < 11; i++) {
     const date = new Date(lastAppointment + ONE_DAY * getRandomNumber(1, 5));
     lastAppointment = date.getTime();
-    appointmentSeeds.push({
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      day: date.getDate(),
-      hour: date.getHours(),
-      minute: date.getMinutes(),
-      timestamp: date,
-    });
+    appointmentSeeds.push(createNewAppointment(date));
   }
   return appointmentSeeds;
 };

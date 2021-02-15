@@ -1,1 +1,1 @@
-export * from "./createAppointment";
+export * from "./initalizeDb";

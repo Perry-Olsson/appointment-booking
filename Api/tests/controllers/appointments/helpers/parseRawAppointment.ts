@@ -26,23 +26,3 @@ export const parseRawAppointment = (appointment: any): Appointment => {
     throw new Error("Missing fields in appointment");
   return returnApp as Appointment;
 };
-
-export const appointmentsAreSorted = (appointments: Appointment[]) => {
-  let lastAppointment = -Infinity;
-  for (let appointment of appointments) {
-    if (appointment.timestamp.getTime() < lastAppointment) return false;
-
-    lastAppointment = appointment.timestamp.getTime();
-  }
-  return true;
-};
-
-export const filterUnwantedMonths = (
-  appointments: Appointment[],
-  currentMonth: number,
-  currentYear: number
-) => {
-  return appointments.filter(
-    app => app.month === currentMonth && app.year === currentYear
-  );
-};

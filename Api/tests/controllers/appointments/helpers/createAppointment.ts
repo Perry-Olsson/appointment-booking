@@ -1,6 +1,6 @@
 import { Appointment } from "@prisma/client";
-import { prisma } from "../../src/prisma";
-import { Time } from "../../src/types";
+import { prisma } from "../../../../src/prisma";
+import { createNewAppointment } from "../../../../src/prisma/seeds/utils";
 
 export const createAppointment = async (
   utc: number,
@@ -11,13 +11,11 @@ export const createAppointment = async (
   date.setMinutes(minute);
 
   return await prisma.appointment.create({
-    data: {
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      day: date.getDate(),
-      hour: date.getHours(),
-      minute: date.getMinutes(),
-      timestamp: date,
-    },
+    data: createNewAppointment(date),
   });
 };
+
+export interface Time {
+  hour: number;
+  minute: number;
+}
