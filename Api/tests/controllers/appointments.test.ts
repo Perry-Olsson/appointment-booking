@@ -10,6 +10,7 @@ import { prisma } from "../../src/prisma";
 import { ONE_MONTH } from "../../src/constants";
 import { createAppointment } from "../helpers";
 import { initializeAppointments } from "../helpers/initalizeDb";
+import { NewAppointment } from "../../src/types";
 
 const api = request(app);
 
@@ -91,6 +92,42 @@ describe("GET request", () => {
   });
 });
 
+describe("POST request", () => {
+  test("POST request to /api/appointments creates an appointment", async () => {
+    const now = new Date();
+    const appointmentTimestamp = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      15,
+      10,
+      30
+    );
+    const newAppointment = createNewAppointment(appointmentTimestamp);
+
+    const response = await api.post("/api/appointments").send(newAppointment);
+    expect(response.status).toBe(200);
+
+    const appointment = parseRawAppointment(response.body);
+    const appointmentFromDb = await prisma.appointment.findUnique({
+      where: { id: appointment.id },
+    });
+    expect(appointment).toEqual(appointmentFromDb);
+
+    await prisma.appointment.delete({ where: { id: appointment.id } });
+  });
+});
+
 afterAll(() => {
   return prisma.$disconnect();
 });
+
+const createNewAppointment = (timestamp: Date): NewAppointment => {
+  return {
+    year: timestamp.getFullYear(),
+    month: timestamp.getMonth(),
+    day: timestamp.getDate(),
+    hour: timestamp.getHours(),
+    minute: timestamp.getMinutes(),
+    timestamp,
+  };
+};
