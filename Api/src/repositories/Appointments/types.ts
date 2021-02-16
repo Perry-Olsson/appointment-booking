@@ -2,12 +2,13 @@ import { Appointment, Prisma, PrismaClient } from "@prisma/client";
 import { NewAppointment } from "../../types";
 
 export interface AppointmentRepo
-  extends Prisma.AppointmentDelegate<
-    boolean | ((error: Error) => Error) | Prisma.RejectPerOperation | undefined
-  > {
-  initialize: (req: any) => NewAppointment;
-  sorted: Sorted;
-}
+  extends AppointmentMixin,
+    Prisma.AppointmentDelegate<
+      | boolean
+      | ((error: Error) => Error)
+      | Prisma.RejectPerOperation
+      | undefined
+    > {}
 
 export interface AppointmentMixin {
   initialize: (req: any) => NewAppointment;

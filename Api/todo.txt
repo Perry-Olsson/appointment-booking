@@ -1,5 +1,3 @@
 - finish appointment creation validation and start on error handlin
 
-- create more elegant solution for custom repository types
-
 - middleware to convert number strings into numbers
