@@ -1,4 +1,4 @@
-import { NewAppointment } from "../types";
+import { NewAppointment } from "../../../types";
 
 export const createNewAppointment = (timestamp: Date): NewAppointment => {
   return {

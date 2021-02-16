@@ -1,6 +1,6 @@
 import { ONE_DAY } from "../../constants";
 import { prisma } from "../../prisma";
-import { NewAppointment } from "./types";
+import { NewAppointment } from "../../types";
 import { createNewAppointment } from "./utils";
 
 export async function seedAppointments(appointments: NewAppointment[]) {

@@ -1,5 +1,5 @@
 import { Appointment, Prisma, PrismaClient } from "@prisma/client";
-import { NewAppointment } from "../../prisma/seeds/types";
+import { NewAppointment } from "../../types";
 
 export interface AppointmentRepo
   extends Prisma.AppointmentDelegate<
