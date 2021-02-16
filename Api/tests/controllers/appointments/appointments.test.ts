@@ -94,7 +94,7 @@ describe("GET request", () => {
 });
 
 describe("POST request", () => {
-  test("POST request to /api/appointments creates an appointment", async () => {
+  test("/api/appointments creates an appointment", async () => {
     const now = new Date();
     const appointmentTimestamp = new Date(
       now.getFullYear(),
@@ -106,6 +106,30 @@ describe("POST request", () => {
     const newAppointment = createNewAppointment(appointmentTimestamp);
 
     const response = await api.post("/api/appointments").send(newAppointment);
+    expect(response.status).toBe(200);
+
+    const appointment = parseRawAppointment(response.body);
+    const appointmentFromDb = await prisma.appointment.findUnique({
+      where: { id: appointment.id },
+    });
+    expect(appointment).toEqual(appointmentFromDb);
+
+    await prisma.appointment.delete({ where: { id: appointment.id } });
+  });
+
+  test.only("/api/appointments with now timestamp creates a timestamp from provided data", async () => {
+    const now = new Date();
+    const newAppointmentNoTimestamp = {
+      year: now.getFullYear(),
+      month: now.getMonth() + 1,
+      day: 15,
+      hour: 10,
+      minute: 30,
+    };
+
+    const response = await api
+      .post("/api/appointments")
+      .send(newAppointmentNoTimestamp);
     expect(response.status).toBe(200);
 
     const appointment = parseRawAppointment(response.body);

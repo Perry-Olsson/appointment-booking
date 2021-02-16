@@ -2,8 +2,20 @@ import { Prisma } from "@prisma/client";
 import { validateQuery } from "./utils/validateQuery";
 import { prisma } from "../../prisma";
 import { AppointmentMixin, AppointmentRepo } from "./types";
+import { NewAppointment } from "../../prisma/seeds/types";
 
 export const appointmentsMixin: AppointmentMixin = {
+  initialize: function (newAppointment) {
+    if (!newAppointment.timestamp)
+      newAppointment.timestamp = new Date(
+        newAppointment.year,
+        newAppointment.month,
+        newAppointment.day,
+        newAppointment.hour,
+        newAppointment.minute
+      );
+    return newAppointment as NewAppointment;
+  },
   sorted: {
     findMany: async function (query) {
       const findManyArg: Prisma.AppointmentFindManyArgs = {

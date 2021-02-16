@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const newAppointment = req.body;
+  const newAppointment = Appointments.initialize(req.body);
   const createdAppointment = await Appointments.create({
     data: newAppointment,
   });
