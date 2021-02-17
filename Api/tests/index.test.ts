@@ -16,4 +16,10 @@ describe("Server starts sucdessfully", () => {
     expect(response.status).toBe(200);
     expect(response.text).toBe("pong");
   });
+
+  test("Unknown endpoint returns correct error response", async () => {
+    const response = await api.get("/api/thisdoesnotexist");
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: "Unknown endpoint" });
+  });
 });
