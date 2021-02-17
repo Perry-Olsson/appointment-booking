@@ -1,5 +1,3 @@
 - finish appointment creation validation and start on error handlin
 
-- create functions module for appointments mixin
-
 - middleware to convert number strings into numbers
