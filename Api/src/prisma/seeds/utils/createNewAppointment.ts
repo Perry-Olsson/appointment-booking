@@ -8,5 +8,6 @@ export const createNewAppointment = (timestamp: Date): NewAppointment => {
     hour: timestamp.getHours(),
     minute: timestamp.getMinutes(),
     timestamp,
+    timestampz: timestamp,
   };
 };

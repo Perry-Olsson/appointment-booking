@@ -9,6 +9,7 @@ CREATE TABLE "Appointment" (
     "hour" SMALLINT NOT NULL,
     "minute" SMALLINT NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL,
+    "timestampz" TIMESTAMPTZ NOT NULL,
 
     PRIMARY KEY ("id")
 );

@@ -6,7 +6,8 @@ export const parseRawAppointment = (appointment: any): Appointment => {
     if (
       field === "createdAt" ||
       field === "updatedAt" ||
-      field === "timestamp"
+      field === "timestamp" ||
+      field === "timestampz"
     ) {
       returnApp[field] = new Date(appointment[field]);
     } else {
@@ -14,7 +15,7 @@ export const parseRawAppointment = (appointment: any): Appointment => {
       else throw new Error(`Invalid appointment field: ${field}`);
     }
   }
-  if (Object.keys(returnApp).length !== 9)
+  if (Object.keys(returnApp).length !== 10)
     throw new Error("Missing fields in appointment");
   return returnApp as Appointment;
 };

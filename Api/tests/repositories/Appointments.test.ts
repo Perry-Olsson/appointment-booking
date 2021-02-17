@@ -50,7 +50,10 @@ describe("Appointments Repository", () => {
       const newAppointment = Appointments.initialize(rawRequest);
 
       expect(newAppointment).toMatchObject(rawRequest);
-      expect(isNaN(newAppointment.timestamp.getDate())).toBe(false);
+      expect(
+        isNaN(newAppointment.timestamp.getDate()) &&
+          isNaN(newAppointment.timestampz.getDate())
+      ).toBe(false);
     });
   });
 });
