@@ -20,7 +20,8 @@
     "migrate:reset": "prisma migrate reset --preview-feature && prisma generate",
     "migrate:dev": "prisma migrate dev --preview-feature && prisma generate",
     "db:push": "prisma db push",
-    "db:seed": "ts-node ./src/prisma/seeds/seed.ts"
+    "db:seed": "ts-node ./src/prisma/seeds/seed.ts",
+    "db:test": "ts-node ./src/prisma/prismaTest.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.9",

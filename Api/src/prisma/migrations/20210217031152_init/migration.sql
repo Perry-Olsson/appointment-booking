@@ -13,5 +13,13 @@ CREATE TABLE "Appointment" (
     PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Test" (
+    "id" SERIAL NOT NULL,
+    "text" TEXT NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Appointment.timestamp_unique" ON "Appointment"("timestamp");

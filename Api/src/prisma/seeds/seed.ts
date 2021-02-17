@@ -2,7 +2,7 @@ import { prisma } from "../../prisma";
 import { createAppointments, seedAppointments } from "./appointments";
 
 async function main() {
-  seedAppointments(createAppointments());
+  await seedAppointments(createAppointments());
 }
 
 main()

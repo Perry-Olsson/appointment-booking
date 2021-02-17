@@ -4,4 +4,6 @@ yarn.lock
 
 .env
 
+prismaTest.ts
+
 dist/
