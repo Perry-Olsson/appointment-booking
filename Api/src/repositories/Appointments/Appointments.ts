@@ -14,7 +14,7 @@ export const appointmentsMixin: AppointmentMixin = {
         newAppointment.hour,
         newAppointment.minute
       );
-    newAppointment.timestampz = new Date(newAppointment.timestamp);
+    newAppointment.timestampz = newAppointment.timestamp;
     return newAppointment as NewAppointment;
   },
   sorted: {

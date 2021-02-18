@@ -16,7 +16,7 @@ export const errorHandler: ErrorRequestHandler = (
   res,
   next
 ): void => {
-  logger.error(error.message);
+  logger.error("--------------\n", typeof error.message, "\n--------------");
 
   if (error.name === "Duplicate appointment") {
     res.status(409).json({

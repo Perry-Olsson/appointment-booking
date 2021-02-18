@@ -12,6 +12,8 @@ import {
   createAppointmentsOneYearApart,
   deleteAppointmentsOneYearApart,
 } from "./helpers";
+import { createAppointmentTimestamp } from "../../helpers";
+import { NewAppointment } from "../../../src/types";
 
 const api = request(app);
 
@@ -103,15 +105,12 @@ describe("POST request", () => {
     await prisma.appointment.delete({ where: { id: appointment.id } });
   });
 
-  test("/api/appointments with now timestamp creates a timestamp from provided data", async () => {
-    const now = new Date();
-    const newAppointmentNoTimestamp = {
-      year: now.getFullYear(),
-      month: now.getMonth() + 1,
-      day: 15,
-      hour: 10,
-      minute: 30,
-    };
+  test.only("/api/appointments with now timestamp creates a timestamp from provided data", async () => {
+    const newAppointmentNoTimestamp = createNewAppointment(
+      createAppointmentTimestamp()
+    ) as Partial<NewAppointment>;
+    delete newAppointmentNoTimestamp.timestamp;
+    delete newAppointmentNoTimestamp.timestampz;
 
     const response = await api
       .post("/api/appointments")
