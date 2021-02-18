@@ -7,3 +7,5 @@ yarn.lock
 prismaTest.ts
 
 dist/
+
+.VSCodeCounter
