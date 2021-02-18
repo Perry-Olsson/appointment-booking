@@ -19,7 +19,7 @@
     "migrate:init": "rm -rf src/prisma/migrations && prisma migrate dev --name init --preview-feature && prisma generate",
     "migrate:reset": "prisma migrate reset --preview-feature && prisma generate",
     "migrate:dev": "prisma migrate dev --preview-feature && prisma generate",
-    "db:push": "prisma db push",
+    "db:push": "prisma db push --preview-feature",
     "db:seed": "ts-node ./src/prisma/seeds/seed.ts",
     "db:test": "ts-node ./src/prisma/prismaTest.ts"
   },
