@@ -10,8 +10,20 @@ export const requestLogger: MiddlewareFn = (req, _, next) => {
   next();
 };
 
-export const errorHandler: ErrorRequestHandler = (error, _, __, next): void => {
+export const errorHandler: ErrorRequestHandler = (
+  error,
+  _,
+  res,
+  next
+): void => {
   logger.error(error.message);
+
+  if (error.code === "P2002") {
+    res.status(409).json({
+      error: "Duplicate appointment",
+      message: "timeslot has been taken",
+    });
+  }
 
   next(error);
 };

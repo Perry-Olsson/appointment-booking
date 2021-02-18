@@ -6,7 +6,6 @@ import {
   requestLogger,
   unknownEndpoint,
 } from "./utils/middleware";
-import "express-async-errors";
 
 const app = express();
 
