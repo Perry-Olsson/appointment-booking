@@ -3,7 +3,10 @@ import { app } from "../../src/app";
 import { createNewAppointment } from "../../src/prisma/seeds/utils/createNewAppointment";
 import { initializeAppointments } from "../helpers/initalizeDb";
 import { prisma } from "../../src/prisma";
-import { createAppointmentTimestamp } from "../helpers/createAppointmentTimestamp";
+import {
+  createAppointmentForRequest,
+  createAppointmentTimestamp,
+} from "../helpers";
 
 const api = request(app);
 
@@ -22,12 +25,26 @@ describe("Error handler middleware", () => {
 
     const response = await api.post("/api/appointments").send(newAppointment);
 
-    expect(response.status).toBe(409);
+    expect(response.status).toBe(400);
     expect(response.body).toEqual({
       error: "Duplicate appointment",
       message: "timeslot has been taken",
     });
 
     await prisma.appointment.delete({ where: { id: appointment.id } });
+  });
+
+  test("Handles invalid time error", async () => {
+    const newAppointment = createAppointmentForRequest(
+      createAppointmentTimestamp({ minute: 25 })
+    );
+
+    const response = await api.post("/api/appointments").send(newAppointment);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: "InvalidTimeError",
+      message: "Appointments must be scheduled on the hour or half hour",
+    });
   });
 });

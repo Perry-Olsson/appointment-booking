@@ -1,2 +1,2 @@
 export * from "./initalizeDb";
-export * from "./createAppointmentTimestamp";
+export * from "./AppointmentCreation";

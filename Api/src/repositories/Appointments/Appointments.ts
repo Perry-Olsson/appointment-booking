@@ -6,6 +6,12 @@ import { NewAppointment } from "../../types";
 
 export const appointmentsMixin: AppointmentMixin = {
   initialize: function (newAppointment) {
+    if (newAppointment.minute % 30 !== 0) {
+      throw new InvalidTimeError(
+        "Appointments must be scheduled on the hour or half hour"
+      );
+    }
+
     if (!newAppointment.timestamp)
       newAppointment.timestamp = new Date(
         newAppointment.year,
@@ -34,3 +40,10 @@ const Appointments: AppointmentRepo = Object.assign(
 );
 
 export { Appointments };
+
+class InvalidTimeError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidTimeError";
+  }
+}

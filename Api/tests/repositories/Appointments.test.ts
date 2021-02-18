@@ -1,6 +1,7 @@
 import { prisma } from "../../src/prisma";
 import { Appointments } from "../../src/repositories/Appointments";
-import { initializeAppointments } from "../helpers/initalizeDb";
+import { createAppointmentTimestamp, initializeAppointments } from "../helpers";
+import { createAppointmentForRequest } from "../helpers";
 
 beforeAll(async () => {
   await initializeAppointments();
@@ -39,23 +40,27 @@ describe("Appointments Repository", () => {
   });
 
   describe("Appointment creation", () => {
-    const now = new Date();
-    const rawRequest = {
-      year: now.getFullYear(),
-      month: now.getMonth() + 1,
-      day: 15,
-      hour: 10,
-      minute: 30,
-    };
-
     test("initialize returns new appointment data from raw request", async () => {
-      const newAppointment = Appointments.initialize(rawRequest);
+      const rawRequestAppointment = createAppointmentForRequest(
+        createAppointmentTimestamp()
+      );
+      const newAppointment = Appointments.initialize(rawRequestAppointment);
 
-      expect(newAppointment).toMatchObject(rawRequest);
+      expect(newAppointment).toMatchObject(rawRequestAppointment);
       expect(
         isNaN(newAppointment.timestamp.getDate()) &&
           isNaN(newAppointment.timestampz.getDate())
       ).toBe(false);
+    });
+
+    test("Initialize throws InvalidTime error", () => {
+      const requestBody = createAppointmentForRequest(
+        createAppointmentTimestamp({ minute: 29 })
+      );
+
+      const initialize = jest.fn(Appointments.initialize);
+
+      expect(() => initialize(requestBody)).toThrow();
     });
   });
 });

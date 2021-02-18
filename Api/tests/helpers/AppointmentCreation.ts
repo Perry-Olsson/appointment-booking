@@ -1,5 +1,15 @@
 import { NewAppointment } from "../../src/types";
 
+export const createAppointmentForRequest = (date: Date) => {
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDay(),
+    hour: date.getHours(),
+    minute: date.getMinutes(),
+  };
+};
+
 export const createAppointmentTimestamp = (
   time: Partial<NewAppointment> = {}
 ): Date => {

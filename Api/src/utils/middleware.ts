@@ -16,10 +16,15 @@ export const errorHandler: ErrorRequestHandler = (
   res,
   next
 ): void => {
-  logger.error("--------------\n", typeof error.message, "\n--------------");
+  logger.error("--------------\n", error.message, "\n--------------");
 
   if (error.name === "Duplicate appointment") {
-    res.status(409).json({
+    res.status(400).json({
+      error: error.name,
+      message: error.message,
+    });
+  } else if (error.name === "InvalidTimeError") {
+    res.status(400).json({
       error: error.name,
       message: error.message,
     });
