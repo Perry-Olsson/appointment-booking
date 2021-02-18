@@ -21,6 +21,8 @@ beforeAll(async () => {
   await initializeAppointments();
 });
 
+afterAll(() => prisma.$disconnect());
+
 describe("GET request", () => {
   test("Request to /api/appointments returns appointments", async () => {
     const appointmentsFromDb = await prisma.appointment.findMany({
@@ -125,8 +127,4 @@ describe("POST request", () => {
 
     await prisma.appointment.delete({ where: { id: appointment.id } });
   });
-});
-
-afterAll(() => {
-  return prisma.$disconnect();
 });

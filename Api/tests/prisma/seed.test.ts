@@ -14,6 +14,8 @@ beforeAll(async () => {
   appointments = await prisma.appointment.findMany();
 });
 
+afterAll(() => prisma.$disconnect());
+
 describe("Database seeding", () => {
   test("Database is emptied and seeded", async () => {
     expect(appointments).toHaveLength(appointmentsCreated);
@@ -42,8 +44,4 @@ describe("Database seeding", () => {
 
     expect(invalidTimes).toHaveLength(0);
   });
-});
-
-afterAll(() => {
-  return prisma.$disconnect();
 });

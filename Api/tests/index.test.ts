@@ -1,9 +1,8 @@
 import request from "supertest";
-import { PrismaClient } from "@prisma/client";
 import { app } from "../src/app";
+import { prisma } from "../src/prisma";
 
 const api = request(app);
-const prisma = new PrismaClient();
 
 describe("Server starts sucdessfully", () => {
   test("Connects to Database", async () => {

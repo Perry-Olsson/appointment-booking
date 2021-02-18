@@ -6,6 +6,8 @@ beforeAll(async () => {
   await initializeAppointments();
 });
 
+afterAll(() => prisma.$disconnect());
+
 describe("Appointments Repository", () => {
   test("Appointments repository retrieves data", async () => {
     const appointmentsFromDb = await prisma.appointment.findMany();
@@ -57,5 +59,3 @@ describe("Appointments Repository", () => {
     });
   });
 });
-
-afterAll(() => prisma.$disconnect());
