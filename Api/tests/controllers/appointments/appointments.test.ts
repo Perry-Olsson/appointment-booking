@@ -105,7 +105,7 @@ describe("POST request", () => {
     await prisma.appointment.delete({ where: { id: appointment.id } });
   });
 
-  test.only("/api/appointments with now timestamp creates a timestamp from provided data", async () => {
+  test("/api/appointments with now timestamp creates a timestamp from provided data", async () => {
     const newAppointmentNoTimestamp = createNewAppointment(
       createAppointmentTimestamp()
     ) as Partial<NewAppointment>;

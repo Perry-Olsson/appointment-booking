@@ -14,15 +14,13 @@ beforeAll(async () => {
 afterAll(() => prisma.$disconnect());
 
 describe("Error handler middleware", () => {
-  test("Handles duplicate appointment error from database", async () => {
+  test("Handles duplicate appointment error", async () => {
     const newAppointment = createNewAppointment(createAppointmentTimestamp());
     const appointment = await prisma.appointment.create({
       data: newAppointment,
     });
 
-    const response = await api
-      .post("/api/appointments")
-      .send(createNewAppointment(createAppointmentTimestamp()));
+    const response = await api.post("/api/appointments").send(newAppointment);
 
     expect(response.status).toBe(409);
     expect(response.body).toEqual({

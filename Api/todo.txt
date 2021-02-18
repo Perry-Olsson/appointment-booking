@@ -1,5 +1,3 @@
-- finish test for duplicate appointment error from database
- 
-- finish appointment creation validation and start on error handlin
+- delete appointments endpoint
 
 - middleware to convert number strings into numbers
