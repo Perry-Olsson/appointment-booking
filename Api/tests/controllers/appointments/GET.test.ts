@@ -3,7 +3,6 @@ import { Appointment } from "@prisma/client";
 
 import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
-import { createNewAppointment } from "../../../src/prisma/seeds/utils";
 import { initializeAppointments } from "../../helpers/initalizeDb";
 import {
   parseRawAppointment,
@@ -12,8 +11,6 @@ import {
   createAppointmentsOneYearApart,
   deleteAppointmentsOneYearApart,
 } from "./helpers";
-import { createAppointmentTimestamp } from "../../helpers";
-import { NewAppointment } from "../../../src/types";
 
 const api = request(app);
 
@@ -80,51 +77,5 @@ describe("GET request", () => {
 
       await deleteAppointmentsOneYearApart({ id1, id2 });
     });
-  });
-});
-
-describe("POST request", () => {
-  test("/api/appointments creates an appointment", async () => {
-    const now = new Date();
-    const appointmentTimestamp = new Date(
-      now.getFullYear(),
-      now.getMonth() + 1,
-      15,
-      10,
-      30
-    );
-    const newAppointment = createNewAppointment(appointmentTimestamp);
-
-    const response = await api.post("/api/appointments").send(newAppointment);
-    expect(response.status).toBe(200);
-
-    const appointment = parseRawAppointment(response.body);
-    const appointmentFromDb = await prisma.appointment.findUnique({
-      where: { id: appointment.id },
-    });
-    expect(appointment).toEqual(appointmentFromDb);
-
-    await prisma.appointment.delete({ where: { id: appointment.id } });
-  });
-
-  test("/api/appointments with now timestamp creates a timestamp from provided data", async () => {
-    const newAppointmentNoTimestamp = createNewAppointment(
-      createAppointmentTimestamp()
-    ) as Partial<NewAppointment>;
-    delete newAppointmentNoTimestamp.timestamp;
-    delete newAppointmentNoTimestamp.timestampz;
-
-    const response = await api
-      .post("/api/appointments")
-      .send(newAppointmentNoTimestamp);
-    expect(response.status).toBe(200);
-
-    const appointment = parseRawAppointment(response.body);
-    const appointmentFromDb = await prisma.appointment.findUnique({
-      where: { id: appointment.id },
-    });
-    expect(appointment).toEqual(appointmentFromDb);
-
-    await prisma.appointment.delete({ where: { id: appointment.id } });
   });
 });
