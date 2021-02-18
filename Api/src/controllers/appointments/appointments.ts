@@ -1,5 +1,7 @@
 import express from "express";
 import { Appointments } from "../../repositories/Appointments";
+import { DuplicateError } from "../../utils";
+import { isDuplicate } from "./utils";
 
 const router = express.Router();
 
@@ -16,8 +18,13 @@ router.get("/", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const newAppointment = Appointments.initialize(req.body);
   try {
+    const newAppointment = Appointments.initialize(req.body);
+
+    if (await isDuplicate(newAppointment)) {
+      throw new DuplicateError("appointment", "timeslot has been taken");
+    }
+
     const createdAppointment = await Appointments.create({
       data: newAppointment,
     });

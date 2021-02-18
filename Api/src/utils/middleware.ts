@@ -18,10 +18,10 @@ export const errorHandler: ErrorRequestHandler = (
 ): void => {
   logger.error(error.message);
 
-  if (error.code === "P2002") {
+  if (error.name === "Duplicate appointment") {
     res.status(409).json({
-      error: "Duplicate appointment",
-      message: "timeslot has been taken",
+      error: error.name,
+      message: error.message,
     });
   }
 
