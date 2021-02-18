@@ -1,6 +1,7 @@
 import request from "supertest";
-import { app } from "../../src/app";
-import { NewAppointment } from "../../src/types";
+
+import { app } from "../../app";
+import { NewAppointment } from "../../types";
 
 const api = request(app);
 

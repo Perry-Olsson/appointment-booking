@@ -3,14 +3,14 @@ import { Appointment } from "@prisma/client";
 
 import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
-import { ONE_MONTH } from "../../../src/constants";
 import { createNewAppointment } from "../../../src/prisma/seeds/utils";
 import { initializeAppointments } from "../../helpers/initalizeDb";
 import {
   parseRawAppointment,
   appointmentsAreSorted,
-  createAppointment,
   filterUnwantedMonths,
+  createAppointmentsOneYearApart,
+  deleteAppointmentsOneYearApart,
 } from "./helpers";
 
 const api = request(app);
@@ -52,19 +52,7 @@ describe("GET request", () => {
     });
 
     test("Query string with month and no year", async () => {
-      const elevenMonthsFromNow = Date.now() + 11 * ONE_MONTH;
-      const lastMonth = Date.now() - ONE_MONTH;
-      const { id: id1, month, year } = await createAppointment(
-        elevenMonthsFromNow,
-        {
-          hour: 12,
-          minute: 0,
-        }
-      );
-      const { id: id2 } = await createAppointment(lastMonth, {
-        hour: 12,
-        minute: 0,
-      });
+      const { id1, id2, month, year } = await createAppointmentsOneYearApart();
 
       const appointmentsFromDb = await prisma.appointment.findMany({
         where: {
@@ -86,9 +74,7 @@ describe("GET request", () => {
         appointmentsFromDb.length
       );
 
-      await prisma.appointment.deleteMany({
-        where: { OR: [{ id: id1 }, { id: id2 }] },
-      });
+      await deleteAppointmentsOneYearApart({ id1, id2 });
     });
   });
 });
