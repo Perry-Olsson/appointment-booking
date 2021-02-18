@@ -3,7 +3,10 @@ import { Appointment } from "@prisma/client";
 
 import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
-import { initializeAppointments } from "../../helpers/initalizeDb";
+import {
+  createAppointmentTimestamp,
+  initializeAppointments,
+} from "../../helpers";
 import {
   parseRawAppointment,
   appointmentsAreSorted,
@@ -11,6 +14,7 @@ import {
   createAppointmentsOneYearApart,
   deleteAppointmentsOneYearApart,
 } from "./helpers";
+import { createNewAppointment } from "../../../src/prisma/seeds/utils";
 
 const api = request(app);
 
@@ -76,6 +80,32 @@ describe("GET request", () => {
       );
 
       await deleteAppointmentsOneYearApart({ id1, id2 });
+    });
+  });
+
+  describe("Request to /api/appointments/:timestamp", () => {
+    test("Returns correct appointment", async () => {
+      const newAppointment = createNewAppointment(createAppointmentTimestamp());
+      const createdAppointment = await prisma.appointment.create({
+        data: newAppointment,
+      });
+      const response = await api.get(
+        `/api/appointments/${createdAppointment.timestamp.toJSON()}`
+      );
+
+      const appointment = parseRawAppointment(response.body);
+
+      expect(response.status).toBe(200);
+      expect(appointment).toEqual(createdAppointment);
+    });
+
+    test("Invalid timestamp returns unknown endpoint error", async () => {
+      const response = await api.get("/api/appointments/invalid");
+
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({
+        error: "Unknown endpoint",
+      });
     });
   });
 });

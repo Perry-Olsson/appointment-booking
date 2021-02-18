@@ -17,6 +17,22 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:timestamp", async (req, res, next) => {
+  try {
+    const timestamp = req.params.timestamp;
+
+    if (timestamp.length !== 24 || isNaN(Date.parse(timestamp))) {
+      return next();
+    }
+
+    const appointment = await Appointments.findUnique({ where: { timestamp } });
+
+    res.json(appointment);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/", async (req, res, next) => {
   try {
     const newAppointment = Appointments.initialize(req.body);
@@ -36,3 +52,10 @@ router.post("/", async (req, res, next) => {
 });
 
 export { router as appointmentsRouter };
+
+export class InvalidTimestampError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidTimestampError";
+  }
+}
