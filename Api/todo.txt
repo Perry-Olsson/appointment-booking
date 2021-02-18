@@ -2,4 +2,4 @@
 
 - middleware to convert number strings into numbers
 
-- maybe create raw sql queries to specific appointments using postgres extract()
+- maybe create raw sql queries to specific appointments using postgres extract)
