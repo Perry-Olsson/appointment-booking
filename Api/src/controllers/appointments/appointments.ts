@@ -1,7 +1,7 @@
 import express from "express";
 import { Appointments } from "../../repositories/Appointments";
 import { DuplicateError, InvalidTimestampError } from "../../utils";
-import { isDuplicate } from "./utils";
+import { isDuplicate, isInvalidTimestamp } from "./utils";
 
 const router = express.Router();
 
@@ -21,9 +21,8 @@ router.get("/:timestamp", async (req, res, next) => {
   try {
     const timestamp = req.params.timestamp;
 
-    if (timestamp.length !== 24 || isNaN(Date.parse(timestamp))) {
+    if (isInvalidTimestamp(timestamp))
       throw new InvalidTimestampError(timestamp);
-    }
 
     const appointment = await Appointments.findUnique({ where: { timestamp } });
 
@@ -37,9 +36,8 @@ router.post("/", async (req, res, next) => {
   try {
     const newAppointment = Appointments.initialize(req.body);
 
-    if (await isDuplicate(newAppointment)) {
+    if (await isDuplicate(newAppointment))
       throw new DuplicateError("appointment", "timeslot has been taken");
-    }
 
     const createdAppointment = await Appointments.create({
       data: newAppointment,
