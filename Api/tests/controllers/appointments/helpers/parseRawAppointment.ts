@@ -12,7 +12,10 @@ export const parseRawAppointment = (appointment: any): Appointment => {
       returnApp[field] = new Date(appointment[field]);
     } else {
       if (isValidAppointmentField(field)) returnApp[field] = appointment[field];
-      else throw new Error(`Invalid appointment field: ${field}`);
+      else {
+        console.log(appointment);
+        throw new Error(`Invalid appointment field`);
+      }
     }
   }
   if (Object.keys(returnApp).length !== 10)

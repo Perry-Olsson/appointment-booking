@@ -22,7 +22,9 @@ router.get("/:timestamp", async (req, res, next) => {
     const timestamp = req.params.timestamp;
 
     if (timestamp.length !== 24 || isNaN(Date.parse(timestamp))) {
-      return next();
+      throw new InvalidTimestampError(
+        `timestamp ${timestamp} is invalid. Timestamp must be in json format`
+      );
     }
 
     const appointment = await Appointments.findUnique({ where: { timestamp } });
@@ -56,6 +58,6 @@ export { router as appointmentsRouter };
 export class InvalidTimestampError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "InvalidTimestampError";
+    this.name = "Invalid timestamp";
   }
 }

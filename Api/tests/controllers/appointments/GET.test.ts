@@ -99,12 +99,14 @@ describe("GET request", () => {
       expect(appointment).toEqual(createdAppointment);
     });
 
-    test("Invalid timestamp returns unknown endpoint error", async () => {
+    test("Invalid timestamp returns correct error", async () => {
       const response = await api.get("/api/appointments/invalid");
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(400);
       expect(response.body).toEqual({
-        error: "Unknown endpoint",
+        error: "Invalid timestamp",
+        message:
+          "timestamp invalid is invalid. Timestamp must be in json format",
       });
     });
   });
