@@ -43,7 +43,7 @@ describe("Error handler middleware", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
-      error: "InvalidTimeError",
+      error: "Invalid time",
       message: "Appointments must be scheduled on the hour or half hour",
     });
   });

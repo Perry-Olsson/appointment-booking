@@ -23,7 +23,7 @@ export const errorHandler: ErrorRequestHandler = (
       error: error.name,
       message: error.message,
     });
-  } else if (error.name === "InvalidTimeError") {
+  } else if (error.name === "Invalid time") {
     res.status(400).json({
       error: error.name,
       message: error.message,

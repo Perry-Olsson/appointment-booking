@@ -1,6 +1,6 @@
 import express from "express";
 import { Appointments } from "../../repositories/Appointments";
-import { DuplicateError } from "../../utils";
+import { DuplicateError, InvalidTimestampError } from "../../utils";
 import { isDuplicate } from "./utils";
 
 const router = express.Router();
@@ -22,9 +22,7 @@ router.get("/:timestamp", async (req, res, next) => {
     const timestamp = req.params.timestamp;
 
     if (timestamp.length !== 24 || isNaN(Date.parse(timestamp))) {
-      throw new InvalidTimestampError(
-        `timestamp ${timestamp} is invalid. Timestamp must be in json format`
-      );
+      throw new InvalidTimestampError(timestamp);
     }
 
     const appointment = await Appointments.findUnique({ where: { timestamp } });
@@ -54,10 +52,3 @@ router.post("/", async (req, res, next) => {
 });
 
 export { router as appointmentsRouter };
-
-export class InvalidTimestampError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "Invalid timestamp";
-  }
-}

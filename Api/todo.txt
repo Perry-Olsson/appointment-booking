@@ -1,5 +1,5 @@
 - delete appointments endpoint
 
-- middleware to convert number strings into numbers
+- middleware to convert number strings into numbers within the query string object
 
 - maybe create raw sql queries to specific appointments using postgres extract)
