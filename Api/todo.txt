@@ -1,5 +1,3 @@
 - delete appointments endpoint
 
-- middleware to validate query string object
-
-- maybe create raw sql queries to specific appointments using postgres extract)
+- maybe create raw sql queries to specific appointments using postgres extract()
