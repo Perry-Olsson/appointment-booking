@@ -1,11 +1,9 @@
 import cors from "cors";
 import express from "express";
 import { appointmentsRouter } from "./controllers";
-import {
-  errorHandler,
-  requestLogger,
-  unknownEndpoint,
-} from "./utils/middleware";
+import { unknownEndpoint } from "./utils/middleware";
+import { errorHandler } from "./utils/middleware";
+import { requestLogger } from "./utils/middleware";
 
 const app = express();
 
