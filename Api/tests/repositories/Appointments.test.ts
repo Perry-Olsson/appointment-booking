@@ -63,4 +63,23 @@ describe("Appointments Repository", () => {
       expect(() => initialize(requestBody)).toThrow();
     });
   });
+
+  describe("Query string is validated correctly", () => {
+    test("validate field returns correct fields", () => {
+      const validQuery = Appointments.validateQuery(query);
+      expect(validQuery).toEqual({
+        year: now.getFullYear(),
+        month: now.getMonth(),
+      });
+    });
+  });
+
+  const now = new Date();
+
+  const query = {
+    year: now.getFullYear(),
+    month: now.getMonth().toString(),
+    fake: "doesn't return obj with invalid field",
+    hour: "doesn't return valid field with invalid value",
+  };
 });

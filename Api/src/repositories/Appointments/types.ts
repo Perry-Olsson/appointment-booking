@@ -11,10 +11,14 @@ export interface AppointmentRepo
     > {}
 
 export interface AppointmentMixin {
-  validateQuery: (query: any) => Prisma.AppointmentWhereInput;
-  initialize: (req: any) => NewAppointment;
+  validateQuery: ValidateQuery;
+  initialize: Initialize;
   sorted: Sorted;
 }
+
+export type ValidateQuery = (query: any) => Prisma.AppointmentWhereInput;
+
+export type Initialize = (req: any) => NewAppointment;
 
 export interface Sorted {
   findMany: (args?: Prisma.AppointmentFindManyArgs) => Promise<Appointment[]>;
