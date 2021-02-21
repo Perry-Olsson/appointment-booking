@@ -102,11 +102,22 @@ describe("GET request", () => {
     test("Invalid timestamp returns correct error", async () => {
       const response = await api.get("/api/appointments/invalid");
 
+      const invalidTimestamp = "2021-02-21T00:54:12:988f";
+      const alsmostValidResponse = await api.get(
+        `/api/appointments/${invalidTimestamp}`
+      );
+
       expect(response.status).toBe(400);
       expect(response.body).toEqual({
         error: "Invalid timestamp",
         message:
           "timestamp invalid is invalid. Timestamp must be in json format",
+      });
+
+      expect(alsmostValidResponse.status).toBe(400);
+      expect(alsmostValidResponse.body).toEqual({
+        error: "Invalid timestamp",
+        message: `timestamp ${invalidTimestamp} is invalid. Timestamp must be in json format`,
       });
     });
   });
