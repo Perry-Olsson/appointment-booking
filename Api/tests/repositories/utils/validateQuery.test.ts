@@ -13,10 +13,8 @@ describe("Query string is validated correctly", () => {
 const now = new Date();
 
 const query = {
-  where: {
-    year: now.getFullYear(),
-    month: now.getMonth().toString(),
-    fake: "doesn't return obj with invalid field",
-    hour: "doesn't return valid field with invalid value",
-  },
+  year: now.getFullYear(),
+  month: now.getMonth().toString(),
+  fake: "doesn't return obj with invalid field",
+  hour: "doesn't return valid field with invalid value",
 };

@@ -1,11 +1,11 @@
-import { Prisma } from "@prisma/client";
-import { validateQuery } from "./utils/validateQuery";
 import { prisma } from "../../prisma";
 import { AppointmentMixin, AppointmentRepo } from "./types";
 import { NewAppointment } from "../../types";
 import { InvalidTimeError } from "../../utils";
+import { validateQuery } from "./utils/validateQuery";
 
 export const appointmentsMixin: AppointmentMixin = {
+  validateQuery,
   initialize: function (newAppointment) {
     if (newAppointment.minute % 30 !== 0) {
       throw new InvalidTimeError();
@@ -24,12 +24,10 @@ export const appointmentsMixin: AppointmentMixin = {
     return newAppointment as NewAppointment;
   },
   sorted: {
-    findMany: async function (query) {
-      const findManyArg: Prisma.AppointmentFindManyArgs = {
-        orderBy: { timestamp: "asc" },
-        where: validateQuery(query),
-      };
-      return await prisma.appointment.findMany(findManyArg);
+    findMany: async function (query = {}) {
+      query.orderBy = { timestamp: "asc" };
+
+      return await prisma.appointment.findMany(query);
     },
   },
 };

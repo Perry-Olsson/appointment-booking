@@ -7,9 +7,8 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const appointments = await Appointments.sorted.findMany({
-      where: req.query,
-    });
+    const where = Appointments.validateQuery(req.query);
+    const appointments = await Appointments.sorted.findMany({ where });
 
     res.json(appointments);
   } catch (err) {
