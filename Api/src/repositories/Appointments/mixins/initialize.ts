@@ -7,15 +7,18 @@ export const initialize: Initialize = newAppointment => {
     throw new InvalidTimeError();
   }
 
-  if (!newAppointment.timestamp)
-    newAppointment.timestamp = new Date(
-      newAppointment.year,
-      newAppointment.month,
-      newAppointment.day,
-      newAppointment.hour,
-      newAppointment.minute
-    );
-  newAppointment.timestampz = newAppointment.timestamp;
+  assignTimestamp(newAppointment);
 
   return newAppointment as NewAppointment;
+};
+
+const assignTimestamp = (newAppointment: any) => {
+  newAppointment.timestamp = new Date(
+    newAppointment.year,
+    newAppointment.month,
+    newAppointment.day,
+    newAppointment.hour,
+    newAppointment.minute
+  );
+  newAppointment.timestampz = newAppointment.timestamp;
 };
