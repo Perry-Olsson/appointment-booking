@@ -6,7 +6,7 @@ export const validateQuery = (query: any) => {
   const assignQueryField = (field: string): void => {
     if (isValidAppointmentField(field)) {
       const num = toNumber(query[field]);
-      if (num !== false) validQuery[field as AppointmentField] = num;
+      if (num !== false) validQuery[field as keyof typeof validQuery] = num;
     }
   };
 
@@ -29,7 +29,9 @@ const isValidAppointmentField = (field: string): boolean => {
   return false;
 };
 
-const toNumber = (queryArg: AppointmentField): number | false => {
+const toNumber = (
+  queryArg: keyof Prisma.AppointmentWhereInput
+): number | false => {
   const num = Number(queryArg);
   if (isNaN(num)) {
     return false;
@@ -48,5 +50,3 @@ const assignYearValue = (validQuery: Prisma.AppointmentWhereInput): void => {
     else validQuery.year = now.getFullYear();
   }
 };
-
-type AppointmentField = "year" | "month" | "day" | "hour" | "minute";

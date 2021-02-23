@@ -28,4 +28,5 @@ export type ValidateTimestamp = (timestamp: string) => void;
 
 export interface Sorted {
   findMany: (args?: Prisma.AppointmentFindManyArgs) => Promise<Appointment[]>;
+  findManyRaw: (args?: Prisma.AppointmentWhereInput) => Promise<Appointment[]>;
 }
