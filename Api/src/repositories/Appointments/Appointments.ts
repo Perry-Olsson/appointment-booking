@@ -8,7 +8,7 @@ import {
   validateTimestamp,
 } from "./mixins";
 
-export const appointmentsMixin: AppointmentMixin = {
+const appointmentsMixin: AppointmentMixin = {
   validateQuery,
   initialize,
   isDuplicate,

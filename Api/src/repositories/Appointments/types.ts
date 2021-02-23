@@ -1,4 +1,4 @@
-import { Appointment, Prisma, PrismaClient } from "@prisma/client";
+import { Appointment, Prisma } from "@prisma/client";
 import { NewAppointment } from "../../types";
 
 export interface AppointmentRepo
@@ -29,5 +29,3 @@ export type ValidateTimestamp = (timestamp: string) => void;
 export interface Sorted {
   findMany: (args?: Prisma.AppointmentFindManyArgs) => Promise<Appointment[]>;
 }
-
-export type mixin<T, K> = (prisma: PrismaClient, addIns: T) => K;
