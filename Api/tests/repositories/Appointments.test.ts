@@ -94,4 +94,14 @@ describe("Appointments Repository", () => {
       hour: "doesn't return valid field with invalid value",
     };
   });
+
+  test("Validates that a date string is in JSON format", () => {
+    const validTimestamp = "2021-02-24T20:00:00.000Z";
+    const invalidTimestamp1 = "hello";
+    const invalidTimestamp2 = "Tue, 23 Feb 2021 01:53:24 GMT";
+
+    expect(() => Appointments.validateTimestamp(validTimestamp)).not.toThrow();
+    expect(() => Appointments.validateTimestamp(invalidTimestamp1)).toThrow();
+    expect(() => Appointments.validateTimestamp(invalidTimestamp2)).toThrow();
+  });
 });

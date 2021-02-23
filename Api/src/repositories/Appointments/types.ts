@@ -15,6 +15,7 @@ export interface AppointmentMixin {
   initialize: Initialize;
   sorted: Sorted;
   isDuplicate: IsDuplicate;
+  validateTimestamp: ValidateTimestamp;
 }
 
 export type ValidateQuery = (query: any) => Prisma.AppointmentWhereInput;
@@ -22,6 +23,8 @@ export type ValidateQuery = (query: any) => Prisma.AppointmentWhereInput;
 export type Initialize = (req: any) => NewAppointment;
 
 export type IsDuplicate = (newAppointment: NewAppointment) => Promise<void>;
+
+export type ValidateTimestamp = (timestamp: string) => void;
 
 export interface Sorted {
   findMany: (args?: Prisma.AppointmentFindManyArgs) => Promise<Appointment[]>;

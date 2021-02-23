@@ -1,7 +1,5 @@
 import express from "express";
 import { Appointments } from "../../repositories/Appointments";
-import { InvalidTimestampError } from "../../utils";
-import { isInvalidTimestamp } from "./utils";
 
 const router = express.Router();
 
@@ -20,8 +18,7 @@ router.get("/:timestamp", async (req, res, next) => {
   try {
     const timestamp = req.params.timestamp;
 
-    if (isInvalidTimestamp(timestamp))
-      throw new InvalidTimestampError(timestamp);
+    Appointments.validateTimestamp(timestamp);
 
     const appointment = await Appointments.findUnique({ where: { timestamp } });
 
