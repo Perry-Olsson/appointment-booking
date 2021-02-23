@@ -1,10 +1,11 @@
 import { prisma } from "../../prisma";
 import { AppointmentMixin, AppointmentRepo } from "./types";
-import { initialize, sorted, validateQuery } from "./mixins";
+import { initialize, sorted, validateQuery, isDuplicate } from "./mixins";
 
 export const appointmentsMixin: AppointmentMixin = {
   validateQuery,
   initialize,
+  isDuplicate,
   sorted,
 };
 

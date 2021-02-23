@@ -1,4 +1,5 @@
 import { prisma } from "../../src/prisma";
+import { createNewAppointment } from "../../src/prisma/seeds/utils";
 import { Appointments } from "../../src/repositories/Appointments";
 import { createAppointmentTimestamp, initializeAppointments } from "../helpers";
 import { createAppointmentForRequest } from "../helpers";
@@ -62,6 +63,18 @@ describe("Appointments Repository", () => {
 
       expect(() => initialize(requestBody)).toThrow();
     });
+
+    test("throws Duplicate error is appointment already exists", async () => {
+      const newAppointment = createNewAppointment(createAppointmentTimestamp());
+      await prisma.appointment.create({ data: newAppointment });
+
+      try {
+        await Appointments.isDuplicate(newAppointment);
+      } catch (e) {
+        console.log(e.message);
+        expect(e.message).toBe("timeslot has been taken");
+      }
+    });
   });
 
   describe("Query string is validated correctly", () => {
@@ -72,14 +85,13 @@ describe("Appointments Repository", () => {
         month: now.getMonth(),
       });
     });
+    const now = new Date();
+
+    const query = {
+      year: now.getFullYear(),
+      month: now.getMonth().toString(),
+      fake: "doesn't return obj with invalid field",
+      hour: "doesn't return valid field with invalid value",
+    };
   });
-
-  const now = new Date();
-
-  const query = {
-    year: now.getFullYear(),
-    month: now.getMonth().toString(),
-    fake: "doesn't return obj with invalid field",
-    hour: "doesn't return valid field with invalid value",
-  };
 });
