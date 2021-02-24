@@ -2,7 +2,6 @@ import { prisma } from "../../src/prisma";
 import { createNewAppointment } from "../../src/prisma/seeds/utils";
 import { Appointments } from "../../src/repositories/Appointments";
 import {
-  createAppointmentForRequest,
   createAppointmentTimestamp,
   filterAppointmentsFromDb,
   initializeAppointments,
@@ -56,23 +55,29 @@ describe("Appointments Repository", () => {
 
   describe("Appointment creation", () => {
     test("initialize returns new appointment data from raw request", async () => {
-      const rawRequestAppointment = createNewAppointment(
-        createAppointmentTimestamp()
+      const newAppointment = createNewAppointment(createAppointmentTimestamp());
+      const initializedAppointment = Appointments.initialize(
+        JSON.parse(JSON.stringify(newAppointment))
       );
-      const newAppointment = Appointments.initialize(rawRequestAppointment);
 
-      expect(newAppointment).toMatchObject(rawRequestAppointment);
+      expect(newAppointment).toMatchObject(initializedAppointment);
       expect(isNaN(newAppointment.timestamp.getDate())).toBe(false);
     });
 
     test("Initialize throws InvalidTime error", () => {
-      const requestBody = createAppointmentForRequest(
-        createAppointmentTimestamp({ minute: 29 })
+      const timestampWithInvalidMinutes = createNewAppointment(
+        createAppointmentTimestamp({ minute: 25 })
       );
+
+      const timestampWithNonZeroSeconds = createNewAppointment(
+        createAppointmentTimestamp()
+      );
+      timestampWithNonZeroSeconds.timestamp.setSeconds(5);
 
       const initialize = jest.fn(Appointments.initialize);
 
-      expect(() => initialize(requestBody)).toThrow();
+      expect(() => initialize(timestampWithInvalidMinutes)).toThrow();
+      expect(() => initialize(timestampWithNonZeroSeconds)).toThrow();
     });
 
     test("throws Duplicate error if appointment already exists", async () => {

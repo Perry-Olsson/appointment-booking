@@ -1,13 +1,13 @@
 import { NewAppointment } from "../../../types";
-import { InvalidTimeError } from "../../../utils";
+import { Appointments } from "../Appointments";
 import { Initialize } from "../types";
 
 export const initialize: Initialize = newAppointment => {
+  Appointments.validateTimestamp(newAppointment.timestamp);
+
   newAppointment.timestamp = new Date(newAppointment.timestamp);
 
-  if (newAppointment.timestamp.getMinutes() % 30 !== 0) {
-    throw new InvalidTimeError();
-  }
+  Appointments.validateTime(newAppointment.timestamp);
 
   return newAppointment as NewAppointment;
 };
