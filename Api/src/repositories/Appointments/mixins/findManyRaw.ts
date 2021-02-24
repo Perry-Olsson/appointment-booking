@@ -7,13 +7,13 @@ export const findManyRaw: FindManyRaw = async (query = {}, options = ";") => {
   let sqlString = 'SELECT * FROM "Appointment"';
   const initialLength = sqlString.length;
 
-  for (const whereField in query) {
+  for (const timestampField in query) {
     sqlString.length === initialLength
       ? (sqlString += " WHERE ")
       : (sqlString += " AND ");
 
-    sqlString += `extract(${whereField} from timestamp) = ${
-      query[whereField as keyof typeof query]
+    sqlString += `extract(${timestampField} from timestamp) = ${
+      query[timestampField as keyof typeof query]
     }`;
   }
 
