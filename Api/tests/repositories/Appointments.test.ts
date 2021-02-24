@@ -54,7 +54,7 @@ describe("Appointments Repository", () => {
   });
 
   describe("Appointment creation", () => {
-    test("initialize returns new appointment data from raw request", async () => {
+    test("Initialize function returns returns NewAppointment object from request", async () => {
       const newAppointment = createNewAppointment(createAppointmentTimestamp());
       const initializedAppointment = Appointments.initialize(
         JSON.parse(JSON.stringify(newAppointment))
@@ -112,12 +112,14 @@ describe("Appointments Repository", () => {
   });
 
   test("Validates that a date string is in JSON format", () => {
-    const validTimestamp = "2021-02-24T20:00:00.000Z";
+    const validTimestamp = new Date().toJSON();
     const invalidTimestamp1 = "hello";
     const invalidTimestamp2 = "Tue, 23 Feb 2021 01:53:24 GMT";
+    const invalidTimestamp3 = validTimestamp.slice(0, -1);
 
     expect(() => Appointments.validateTimestamp(validTimestamp)).not.toThrow();
     expect(() => Appointments.validateTimestamp(invalidTimestamp1)).toThrow();
     expect(() => Appointments.validateTimestamp(invalidTimestamp2)).toThrow();
+    expect(() => Appointments.validateTimestamp(invalidTimestamp3)).toThrow();
   });
 });
