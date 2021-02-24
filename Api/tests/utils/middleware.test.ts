@@ -3,10 +3,7 @@ import { app } from "../../src/app";
 import { createNewAppointment } from "../../src/prisma/seeds/utils/createNewAppointment";
 import { initializeAppointments } from "../helpers/initalizeDb";
 import { prisma } from "../../src/prisma";
-import {
-  createAppointmentForRequest,
-  createAppointmentTimestamp,
-} from "../helpers";
+import { createAppointmentTimestamp } from "../helpers";
 
 const api = request(app);
 
@@ -35,7 +32,7 @@ describe("Error handler middleware", () => {
   });
 
   test("Handles invalid time error", async () => {
-    const newAppointment = createAppointmentForRequest(
+    const newAppointment = createNewAppointment(
       createAppointmentTimestamp({ minute: 25 })
     );
 

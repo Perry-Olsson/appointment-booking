@@ -1,10 +1,10 @@
-import { Prisma } from "@prisma/client";
+import { Time } from "../../../types";
 
 export const validateQuery = (query: any) => {
-  const validQuery: Prisma.AppointmentWhereInput = {};
+  const validQuery: Time = {};
 
   const assignQueryField = (field: string): void => {
-    if (isValidAppointmentField(field)) {
+    if (isValidTimeField(field)) {
       const num = toNumber(query[field]);
       if (num !== false) validQuery[field as keyof typeof validQuery] = num;
     }
@@ -17,7 +17,7 @@ export const validateQuery = (query: any) => {
   return validQuery;
 };
 
-const isValidAppointmentField = (field: string): boolean => {
+const isValidTimeField = (field: string): boolean => {
   if (
     field === "year" ||
     field === "month" ||
@@ -29,9 +29,7 @@ const isValidAppointmentField = (field: string): boolean => {
   return false;
 };
 
-const toNumber = (
-  queryArg: keyof Prisma.AppointmentWhereInput
-): number | false => {
+const toNumber = (queryArg: keyof Time): number | false => {
   const num = Number(queryArg);
   if (isNaN(num)) {
     return false;
@@ -42,7 +40,7 @@ const toNumber = (
 Assign a year value that returns future appointments 
 if a month value and no year value is provided
 */
-const assignYearValue = (validQuery: Prisma.AppointmentWhereInput): void => {
+const assignYearValue = (validQuery: Time): void => {
   if (typeof validQuery.month === "number" && !validQuery.year) {
     const now = new Date();
     if (now.getMonth() > validQuery.month)

@@ -5,10 +5,11 @@ import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
 import {
   createAppointmentTimestamp,
+  filterAppointmentsFromDb,
   initializeAppointments,
+  parseRawAppointment,
 } from "../../helpers";
 import {
-  parseRawAppointment,
   appointmentsAreSorted,
   filterUnwantedMonths,
   createAppointmentsOneYearApart,
@@ -44,9 +45,10 @@ describe("GET request", () => {
     test("Request with query string returns correct appointments", async () => {
       const now = new Date();
 
-      const appointmentsFromDb = await prisma.appointment.findMany({
-        where: { month: now.getMonth(), year: now.getFullYear() },
-      });
+      const appointmentsFromDb = filterAppointmentsFromDb(
+        await prisma.appointment.findMany(),
+        { year: now.getFullYear(), month: now.getMonth() }
+      );
 
       const response = await api.get(
         `/api/appointments/?month=${now.getMonth()}&year=${now.getFullYear()}`
@@ -59,12 +61,10 @@ describe("GET request", () => {
     test("Query string with month and no year", async () => {
       const { id1, id2, month, year } = await createAppointmentsOneYearApart();
 
-      const appointmentsFromDb = await prisma.appointment.findMany({
-        where: {
-          month,
-          year,
-        },
-      });
+      const appointmentsFromDb = filterAppointmentsFromDb(
+        await prisma.appointment.findMany(),
+        { year, month }
+      );
 
       const response = await api.get(`/api/appointments/?month=${month}`);
       expect(response.status).toBe(200);

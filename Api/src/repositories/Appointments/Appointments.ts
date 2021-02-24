@@ -6,6 +6,7 @@ import {
   validateQuery,
   isDuplicate,
   validateTimestamp,
+  findManyRaw,
 } from "./mixins";
 
 const appointmentsMixin: AppointmentMixin = {
@@ -14,6 +15,7 @@ const appointmentsMixin: AppointmentMixin = {
   isDuplicate,
   validateTimestamp,
   sorted,
+  findManyRaw,
 };
 
 const Appointments: AppointmentRepo = Object.assign(

@@ -1,5 +1,5 @@
 import { Appointment, Prisma } from "@prisma/client";
-import { NewAppointment } from "../../types";
+import { NewAppointment, Time } from "../../types";
 
 export interface AppointmentRepo
   extends AppointmentMixin,
@@ -16,9 +16,10 @@ export interface AppointmentMixin {
   sorted: Sorted;
   isDuplicate: IsDuplicate;
   validateTimestamp: ValidateTimestamp;
+  findManyRaw: FindManyRaw;
 }
 
-export type ValidateQuery = (query: any) => Prisma.AppointmentWhereInput;
+export type ValidateQuery = (query: any) => Time;
 
 export type Initialize = (req: any) => NewAppointment;
 
@@ -26,7 +27,12 @@ export type IsDuplicate = (newAppointment: NewAppointment) => Promise<void>;
 
 export type ValidateTimestamp = (timestamp: string) => void;
 
+export type FindManyRaw = (
+  args: Time,
+  options?: string
+) => Promise<Appointment[]>;
+
 export interface Sorted {
   findMany: (args?: Prisma.AppointmentFindManyArgs) => Promise<Appointment[]>;
-  findManyRaw: (args?: Prisma.AppointmentWhereInput) => Promise<Appointment[]>;
+  findManyRaw: FindManyRaw;
 }

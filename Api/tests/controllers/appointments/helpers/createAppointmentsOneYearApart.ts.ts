@@ -6,19 +6,21 @@ import { createNewAppointment } from "../../../../src/prisma/seeds/utils";
 export const createAppointmentsOneYearApart = async (): Promise<AppointmentsInfo> => {
   const elevenMonthsFromNow = Date.now() + 11 * ONE_MONTH;
   const lastMonth = Date.now() - ONE_MONTH;
-  const { id: id1, month, year } = await createAppointment(
-    elevenMonthsFromNow,
-    {
-      hour: 12,
-      minute: 0,
-    }
-  );
+  const { id: id1, timestamp } = await createAppointment(elevenMonthsFromNow, {
+    hour: 12,
+    minute: 0,
+  });
   const { id: id2 } = await createAppointment(lastMonth, {
     hour: 12,
     minute: 0,
   });
 
-  return { id1, id2, month, year };
+  return {
+    id1,
+    id2,
+    year: timestamp.getFullYear(),
+    month: timestamp.getMonth(),
+  };
 };
 
 export const deleteAppointmentsOneYearApart = async ({

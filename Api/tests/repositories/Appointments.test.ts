@@ -1,8 +1,13 @@
 import { prisma } from "../../src/prisma";
 import { createNewAppointment } from "../../src/prisma/seeds/utils";
 import { Appointments } from "../../src/repositories/Appointments";
-import { createAppointmentTimestamp, initializeAppointments } from "../helpers";
-import { createAppointmentForRequest } from "../helpers";
+import {
+  createAppointmentForRequest,
+  createAppointmentTimestamp,
+  filterAppointmentsFromDb,
+  initializeAppointments,
+  parseRawAppointment,
+} from "../helpers";
 
 beforeAll(async () => {
   await initializeAppointments();
@@ -27,14 +32,23 @@ describe("Appointments Repository", () => {
       expect(appointments).toEqual(appointmentsFromDb);
     });
 
-    test("Sorted field takes query arguements", async () => {
-      const appointmentsFromDb = await prisma.appointment.findMany({
-        orderBy: { timestamp: "asc" },
-        where: { month: 1 },
-      });
-      const appointments = await Appointments.sorted.findMany({
-        where: { month: 1 },
-      });
+    test("Sorted find many raw takes query arguments", async () => {
+      const now = new Date();
+      const queryObject = {
+        month: now.getMonth(),
+      };
+
+      const rawAppointments = await Appointments.sorted.findManyRaw(
+        queryObject
+      );
+      const appointments = rawAppointments.map((a: any) =>
+        parseRawAppointment(a)
+      );
+
+      const appointmentsFromDb = filterAppointmentsFromDb(
+        await prisma.appointment.findMany(),
+        { month: now.getMonth() }
+      );
 
       expect(appointments).toEqual(appointmentsFromDb);
     });
@@ -42,16 +56,13 @@ describe("Appointments Repository", () => {
 
   describe("Appointment creation", () => {
     test("initialize returns new appointment data from raw request", async () => {
-      const rawRequestAppointment = createAppointmentForRequest(
+      const rawRequestAppointment = createNewAppointment(
         createAppointmentTimestamp()
       );
       const newAppointment = Appointments.initialize(rawRequestAppointment);
 
       expect(newAppointment).toMatchObject(rawRequestAppointment);
-      expect(
-        isNaN(newAppointment.timestamp.getDate()) &&
-          isNaN(newAppointment.timestampz.getDate())
-      ).toBe(false);
+      expect(isNaN(newAppointment.timestamp.getDate())).toBe(false);
     });
 
     test("Initialize throws InvalidTime error", () => {
@@ -64,7 +75,7 @@ describe("Appointments Repository", () => {
       expect(() => initialize(requestBody)).toThrow();
     });
 
-    test("throws Duplicate error is appointment already exists", async () => {
+    test("throws Duplicate error if appointment already exists", async () => {
       const newAppointment = createNewAppointment(createAppointmentTimestamp());
       await prisma.appointment.create({ data: newAppointment });
 

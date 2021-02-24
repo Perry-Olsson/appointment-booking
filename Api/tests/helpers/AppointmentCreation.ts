@@ -1,4 +1,4 @@
-import { NewAppointment } from "../../src/types";
+import { Time } from "../../src/types";
 
 export const createAppointmentForRequest = (date: Date) => {
   return {
@@ -10,9 +10,7 @@ export const createAppointmentForRequest = (date: Date) => {
   };
 };
 
-export const createAppointmentTimestamp = (
-  time: Partial<NewAppointment> = {}
-): Date => {
+export const createAppointmentTimestamp = (time: Time = {}): Date => {
   const now = new Date();
 
   const year = time.year || now.getFullYear();

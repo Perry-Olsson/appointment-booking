@@ -6,6 +6,8 @@ export const filterUnwantedMonths = (
   currentYear: number
 ) => {
   return appointments.filter(
-    app => app.month === currentMonth && app.year === currentYear
+    a =>
+      a.timestamp.getMonth() === currentMonth &&
+      a.timestamp.getFullYear() === currentYear
   );
 };
