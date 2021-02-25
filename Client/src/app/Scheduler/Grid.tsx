@@ -31,7 +31,7 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  width: 800px;
-  height: 600px;
+  width: 100%;
+  height: 50%;
   margin: 2rem;
 `;
