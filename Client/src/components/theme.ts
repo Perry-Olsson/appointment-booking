@@ -1,8 +1,15 @@
 export const theme = {
+  navBar: {
+    height: "6rem",
+  },
+  grid: {
+    width: "90vw",
+    maxWidth: "500px",
+  },
   font: {
     small: "1rem",
-    medium: "2rem",
-    large: "3rem",
+    medium: "1.5rem",
+    large: "2rem",
   },
   colors: {
     primary: "#5eab55",

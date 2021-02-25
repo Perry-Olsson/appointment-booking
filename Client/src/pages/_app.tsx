@@ -19,7 +19,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <NavBar />
-        <Component {...pageProps} />
+        <div
+          style={{ zIndex: -1, position: "relative", top: theme.navBar.height }}
+        >
+          <Component {...pageProps} />
+        </div>
       </ThemeProvider>
     </div>
   );
