@@ -1,5 +1,9 @@
 import { AppProps } from "next/app";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import {
+  createGlobalStyle,
+  CSSProperties,
+  ThemeProvider,
+} from "styled-components";
 import { NavBar } from "../app/NavBar/NavBar";
 import { theme } from "../components";
 
@@ -19,12 +23,16 @@ export default function App({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <NavBar />
-        <div
-          style={{ zIndex: -1, position: "relative", top: theme.navBar.height }}
-        >
+        <div style={componentContainerStyles}>
           <Component {...pageProps} />
         </div>
       </ThemeProvider>
     </div>
   );
 }
+
+const componentContainerStyles: CSSProperties = {
+  zIndex: -1,
+  position: "relative",
+  top: theme.navBar.height,
+};
