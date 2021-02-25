@@ -3,6 +3,7 @@ import path from "path";
 
 dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
 
-const port = process.env.PORT;
-
-export { port };
+export default {
+  port: process.env.PORT,
+  env: process.env.NODE_ENV,
+};

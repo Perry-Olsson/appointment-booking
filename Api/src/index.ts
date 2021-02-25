@@ -1,7 +1,7 @@
 import http from "http";
 import { app } from "./app";
-import { port } from "./config";
+import config from "./config";
 
-http.createServer(app).listen(port, () => {
-  console.log(`server is listening on port ${port}`);
+http.createServer(app).listen(config.port, () => {
+  console.log(`server is listening on port ${config.port}`);
 });

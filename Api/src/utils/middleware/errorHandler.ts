@@ -1,30 +1,28 @@
 import { ErrorRequestHandler } from "express";
+import config from "../../config";
 import logger from "../logger";
 
-export const errorHandler: ErrorRequestHandler = (
-  error,
-  _,
-  res,
-  next
-): void => {
-  logger.error("--------------\n", error.message, "\n--------------");
+export const errorHandler: ErrorRequestHandler = (error, _, res, next) => {
+  if (config.env !== "production")
+    logger.error("--------------\n", error.message, "\n--------------");
 
-  if (error.name === "Duplicate appointment") {
-    res.status(400).json({
-      error: error.name,
-      message: error.message,
-    });
-  } else if (error.name === "Invalid time") {
-    res.status(400).json({
-      error: error.name,
-      message: error.message,
-    });
-  } else if (error.name === "Invalid timestamp") {
-    res.status(400).json({
-      error: error.name,
-      message: error.message,
-    });
+  switch (error.name) {
+    case "Duplicate appointment":
+      return res.status(400).json({
+        error: error.name,
+        message: error.message,
+      });
+    case "Invalid time":
+      return res.status(400).json({
+        error: error.name,
+        message: error.message,
+      });
+    case "Invalid timestamp":
+      return res.status(400).json({
+        error: error.name,
+        message: error.message,
+      });
   }
 
-  next(error);
+  return next(error);
 };

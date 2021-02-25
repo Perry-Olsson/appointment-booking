@@ -1,8 +1,7 @@
 import { prisma } from "../../src/prisma";
-import { createNewAppointment } from "../../src/prisma/seeds/utils";
 import { Appointments } from "../../src/repositories/Appointments";
 import {
-  createAppointmentTimestamp,
+  createTestAppointment,
   filterAppointmentsFromDb,
   initializeAppointments,
   parseRawAppointment,
@@ -54,24 +53,23 @@ describe("Appointments Repository", () => {
   });
 
   describe("Appointment creation", () => {
-    test("initialize returns new appointment data from raw request", async () => {
-      const newAppointment = createNewAppointment(createAppointmentTimestamp());
+    test("Initialize function returns returns NewAppointment object from request", async () => {
+      const { data } = await createTestAppointment();
       const initializedAppointment = Appointments.initialize(
-        JSON.parse(JSON.stringify(newAppointment))
+        JSON.parse(JSON.stringify(data))
       );
 
-      expect(newAppointment).toMatchObject(initializedAppointment);
-      expect(isNaN(newAppointment.timestamp.getDate())).toBe(false);
+      expect(data).toMatchObject(initializedAppointment);
+      expect(isNaN(data.timestamp.getDate())).toBe(false);
     });
 
-    test("Initialize throws InvalidTime error", () => {
-      const timestampWithInvalidMinutes = createNewAppointment(
-        createAppointmentTimestamp({ minute: 25 })
-      );
-
-      const timestampWithNonZeroSeconds = createNewAppointment(
-        createAppointmentTimestamp()
-      );
+    test("Initialize throws InvalidTime error", async () => {
+      const {
+        data: timestampWithInvalidMinutes,
+      } = await createTestAppointment();
+      const {
+        data: timestampWithNonZeroSeconds,
+      } = await createTestAppointment();
       timestampWithNonZeroSeconds.timestamp.setSeconds(5);
 
       const initialize = jest.fn(Appointments.initialize);
@@ -81,11 +79,11 @@ describe("Appointments Repository", () => {
     });
 
     test("throws Duplicate error if appointment already exists", async () => {
-      const newAppointment = createNewAppointment(createAppointmentTimestamp());
-      await prisma.appointment.create({ data: newAppointment });
+      //todo
+      const { data } = await createTestAppointment({ pushToDb: true });
 
       try {
-        await Appointments.isDuplicate(newAppointment);
+        await Appointments.isDuplicate(data);
       } catch (e) {
         console.log(e.message);
         expect(e.message).toBe("timeslot has been taken");
@@ -112,12 +110,14 @@ describe("Appointments Repository", () => {
   });
 
   test("Validates that a date string is in JSON format", () => {
-    const validTimestamp = "2021-02-24T20:00:00.000Z";
+    const validTimestamp = new Date().toJSON();
     const invalidTimestamp1 = "hello";
     const invalidTimestamp2 = "Tue, 23 Feb 2021 01:53:24 GMT";
+    const invalidTimestamp3 = validTimestamp.slice(0, -1);
 
     expect(() => Appointments.validateTimestamp(validTimestamp)).not.toThrow();
     expect(() => Appointments.validateTimestamp(invalidTimestamp1)).toThrow();
     expect(() => Appointments.validateTimestamp(invalidTimestamp2)).toThrow();
+    expect(() => Appointments.validateTimestamp(invalidTimestamp3)).toThrow();
   });
 });

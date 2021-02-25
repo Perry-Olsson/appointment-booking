@@ -1,9 +1,8 @@
 import request from "supertest";
 import { app } from "../../src/app";
-import { createNewAppointment } from "../../src/prisma/seeds/utils/createNewAppointment";
 import { initializeAppointments } from "../helpers/initalizeDb";
 import { prisma } from "../../src/prisma";
-import { createAppointmentTimestamp } from "../helpers";
+import { createTestAppointment } from "../helpers";
 
 const api = request(app);
 
@@ -15,12 +14,11 @@ afterAll(() => prisma.$disconnect());
 
 describe("Error handler middleware", () => {
   test("Handles duplicate appointment error", async () => {
-    const newAppointment = createNewAppointment(createAppointmentTimestamp());
-    const appointment = await prisma.appointment.create({
-      data: newAppointment,
+    const { data, appointment } = await createTestAppointment({
+      pushToDb: true,
     });
 
-    const response = await api.post("/api/appointments").send(newAppointment);
+    const response = await api.post("/api/appointments").send(data);
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
@@ -28,15 +26,15 @@ describe("Error handler middleware", () => {
       message: "timeslot has been taken",
     });
 
-    await prisma.appointment.delete({ where: { id: appointment.id } });
+    await prisma.appointment.delete({ where: { id: appointment?.id } });
   });
 
   test("Handles invalid time error", async () => {
-    const newAppointment = createNewAppointment(
-      createAppointmentTimestamp({ minute: 25 })
-    );
+    const { data } = await createTestAppointment({
+      time: { minute: 25 },
+    });
 
-    const response = await api.post("/api/appointments").send(newAppointment);
+    const response = await api.post("/api/appointments").send(data);
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({

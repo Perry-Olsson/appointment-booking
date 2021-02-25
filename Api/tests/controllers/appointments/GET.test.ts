@@ -4,7 +4,7 @@ import { Appointment } from "@prisma/client";
 import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
 import {
-  createAppointmentTimestamp,
+  createTestAppointment,
   filterAppointmentsFromDb,
   initializeAppointments,
   parseRawAppointment,
@@ -15,7 +15,6 @@ import {
   createAppointmentsOneYearApart,
   deleteAppointmentsOneYearApart,
 } from "./helpers";
-import { createNewAppointment } from "../../../src/prisma/seeds/utils";
 
 const api = request(app);
 
@@ -85,25 +84,24 @@ describe("GET request", () => {
 
   describe("Request to /api/appointments/:timestamp", () => {
     test("Returns correct appointment", async () => {
-      const newAppointment = createNewAppointment(createAppointmentTimestamp());
-      const createdAppointment = await prisma.appointment.create({
-        data: newAppointment,
+      const { appointment } = await createTestAppointment({
+        pushToDb: true,
       });
       const response = await api.get(
-        `/api/appointments/${createdAppointment.timestamp.toJSON()}`
+        `/api/appointments/${appointment?.timestamp.toJSON()}`
       );
 
-      const appointment = parseRawAppointment(response.body);
+      const appointmentFromApi = parseRawAppointment(response.body);
 
       expect(response.status).toBe(200);
-      expect(appointment).toEqual(createdAppointment);
+      expect(appointmentFromApi).toEqual(appointment);
     });
 
     test("Invalid timestamp returns correct error", async () => {
       const response = await api.get("/api/appointments/invalid");
 
       const invalidTimestamp = "2021-02-21T00:54:12:988f";
-      const alsmostValidResponse = await api.get(
+      const almostValidResponse = await api.get(
         `/api/appointments/${invalidTimestamp}`
       );
 
@@ -114,8 +112,8 @@ describe("GET request", () => {
           "timestamp invalid is invalid. Timestamp must be in json format",
       });
 
-      expect(alsmostValidResponse.status).toBe(400);
-      expect(alsmostValidResponse.body).toEqual({
+      expect(almostValidResponse.status).toBe(400);
+      expect(almostValidResponse.body).toEqual({
         error: "Invalid timestamp",
         message: `timestamp ${invalidTimestamp} is invalid. Timestamp must be in json format`,
       });

@@ -15,12 +15,12 @@ const GlobalStyle = createGlobalStyle`
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <div>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <NavBar />
         <Component {...pageProps} />
       </ThemeProvider>
-    </>
+    </div>
   );
 }

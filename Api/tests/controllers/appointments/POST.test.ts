@@ -2,11 +2,7 @@ import request from "supertest";
 
 import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
-import { createNewAppointment } from "../../../src/prisma/seeds/utils";
-import {
-  createAppointmentTimestamp,
-  initializeAppointments,
-} from "../../helpers";
+import { createTestAppointment, initializeAppointments } from "../../helpers";
 import { parseRawAppointment } from "./helpers";
 
 const api = request(app);
@@ -19,9 +15,8 @@ afterAll(() => prisma.$disconnect());
 
 describe("POST request", () => {
   test("/api/appointments creates an appointment", async () => {
-    const newAppointment = createNewAppointment(createAppointmentTimestamp());
-
-    const response = await api.post("/api/appointments").send(newAppointment);
+    const { data } = await createTestAppointment();
+    const response = await api.post("/api/appointments").send(data);
     expect(response.status).toBe(200);
 
     const appointment = parseRawAppointment(response.body);
