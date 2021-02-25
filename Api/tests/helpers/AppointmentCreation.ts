@@ -1,13 +1,21 @@
-import { Time } from "../../src/types";
+import { Appointment } from "@prisma/client";
+import { prisma } from "../../src/prisma";
+import { createNewAppointment } from "../../src/prisma/seeds/utils";
+import { NewAppointment, Time } from "../../src/types";
 
-export const createAppointmentForRequest = (date: Date) => {
-  return {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDay(),
-    hour: date.getHours(),
-    minute: date.getMinutes(),
-  };
+export const createTestAppointment = async ({
+  time,
+  pushToDb,
+}: TestAppointmentOptions = {}): Promise<TestAppointment> => {
+  const data = createNewAppointment(createAppointmentTimestamp(time));
+  const appointment =
+    pushToDb === true
+      ? await prisma.appointment.create({
+          data,
+        })
+      : null;
+
+  return { data, appointment };
 };
 
 export const createAppointmentTimestamp = (time: Time = {}): Date => {
@@ -21,3 +29,13 @@ export const createAppointmentTimestamp = (time: Time = {}): Date => {
 
   return new Date(year, month, day, hour, minute);
 };
+
+interface TestAppointmentOptions {
+  time?: Time;
+  pushToDb?: boolean;
+}
+
+interface TestAppointment {
+  data: NewAppointment;
+  appointment: Appointment | null;
+}
