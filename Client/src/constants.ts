@@ -12,3 +12,5 @@ export const months = [
   { name: "November", days: 30, index: 10 },
   { name: "December", days: 31, index: 11 },
 ];
+
+export const ONE_DAY = 1000 * 60 * 60 * 24;

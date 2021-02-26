@@ -4,7 +4,9 @@ export const theme = {
   },
   grid: {
     width: "90vw",
+    rawWidth: 90,
     maxWidth: "500px",
+    rawMaxWidth: 500,
   },
   font: {
     small: "1rem",

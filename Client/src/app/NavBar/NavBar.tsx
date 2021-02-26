@@ -31,5 +31,6 @@ const Container = styled(Flex)`
 `;
 
 const TabContainer = styled(Flex)`
+  width: 100%;
   justify-content: flex-start;
 `;
