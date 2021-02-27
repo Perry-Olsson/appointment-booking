@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const Flex: React.FC<FlexProps> = ({ children, ...restProps }) => {
+export const Flex: React.FC<FlexProps & React.HTMLAttributes<any>> = ({
+  children,
+  ...restProps
+}) => {
   return <Container {...restProps}>{children}</Container>;
 };
 
@@ -13,5 +16,4 @@ const Container = styled.div`
 
 interface FlexProps {
   children: React.ReactNode;
-  restProps?: React.HTMLAttributes<any>;
 }

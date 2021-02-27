@@ -8,7 +8,7 @@ export const Day: React.FC<DayProps> = ({ day, ...restProps }) => {
 
 interface DayProps {
   day: Date;
-  restProps?: React.HTMLAttributes<any>;
+  restProps?: React.HTMLAttributes<any>[];
 }
 
 const Container = styled(Flex)`
