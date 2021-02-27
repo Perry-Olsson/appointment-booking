@@ -1,6 +1,9 @@
 export const theme = {
   navBar: {
-    height: "6rem",
+    height: "3.7rem",
+  },
+  scheduler: {
+    headerHeight: "1.8rem",
   },
   grid: {
     width: "90vw",

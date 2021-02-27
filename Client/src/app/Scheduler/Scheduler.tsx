@@ -1,12 +1,18 @@
 import { useMemo } from "react";
-import { ONE_DAY } from "../../constants";
+import styled from "styled-components";
+import { Flex } from "../../components";
 import { NowProvider, useNow } from "../../context";
+import { DaysOfTheWeek } from "./DaysOfTheWeek";
 import { Month } from "./Month";
+import { computeDates } from "./utils/computeDates";
 
-export default function ScheduleContainer() {
+export default function SchedulerContainer() {
   return (
     <NowProvider>
-      <Scheduler />
+      <Flex>
+        <DaysOfTheWeek />
+        <Scheduler />
+      </Flex>
     </NowProvider>
   );
 }
@@ -16,27 +22,16 @@ export const Scheduler: React.FC = () => {
   const months = useMemo(() => computeDates(now), [now]);
 
   return (
-    <>
+    <Container>
       {months.map((month, i) => (
         <Month key={i} days={month} />
       ))}
-    </>
+    </Container>
   );
 };
 
-const computeDates = (now: Date): Array<Date[]> => {
-  let firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const months: Array<Date[]> = [];
-
-  for (let i = 0; i < 12; i++) {
-    const month: Date[] = [firstOfMonth];
-    let nextDay = new Date(firstOfMonth.valueOf() + ONE_DAY);
-    while (nextDay.getMonth() === firstOfMonth.getMonth()) {
-      month.push(nextDay);
-      nextDay = new Date(nextDay.valueOf() + ONE_DAY);
-    }
-    months.push(month);
-    firstOfMonth = nextDay;
-  }
-  return months;
-};
+const Container = styled.div`
+  position: relative;
+  top: ${({ theme }) => theme.scheduler.headerHeight};
+  z-index: -1;
+`;

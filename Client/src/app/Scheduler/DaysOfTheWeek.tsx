@@ -16,10 +16,12 @@ export const DaysOfTheWeek: React.FC = () => {
 };
 
 const Container = styled.div`
+  position: fixed;
+  top: ${({ theme }) => theme.navBar.height};
   display: grid;
-  position: absolute;
-  bottom: 5px;
   grid-template-columns: repeat(7, 1fr);
+  height: ${({ theme }) => theme.scheduler.headerHeight};
+  background-color: white;
   width: ${({ theme }) => theme.grid.width};
   max-width: ${({ theme }) => theme.grid.maxWidth};
 `;
