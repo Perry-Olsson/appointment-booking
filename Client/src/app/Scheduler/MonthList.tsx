@@ -6,7 +6,7 @@ import { Month } from "./Month";
 import { computeDates } from "./utils";
 
 export const MonthList: React.FC = () => {
-  const now = useNow();
+  const { now } = useNow();
   const months = useMemo(() => computeDates(now), [now]);
   return (
     <Container>

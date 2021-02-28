@@ -24,6 +24,7 @@ const Container = styled.div`
   max-width: ${({ theme }) => theme.grid.maxWidth};
 `;
 
+// `minmax(${theme.grid.rawWidth / 7}vw, ${theme.grid.rawMaxWidth / 7})`};
 const OffsetDay = styled(Day)`
   grid-column: ${({ day }) => day.getDay() + 1};
 `;

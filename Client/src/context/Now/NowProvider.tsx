@@ -1,11 +1,17 @@
 import { createContext, useContext, useState } from "react";
 
-const NowStateContext = createContext<Date | undefined>(undefined);
+const NowStateContext = createContext<{ now: Date; today: Date } | undefined>(
+  undefined
+);
 
 export const NowProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [state] = useState(new Date());
+  const now = new Date();
+  const [state] = useState({
+    now: now,
+    today: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+  });
 
   return (
     <NowStateContext.Provider value={state}>
