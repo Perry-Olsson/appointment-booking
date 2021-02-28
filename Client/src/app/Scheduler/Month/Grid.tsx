@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import { Day } from "../Day";
+import { Date } from "./Date";
 
 export const Grid: React.FC<GridProps> = ({ days }) => {
   return (
     <Container>
       {days.map((day, i) => {
         if (i === 0) return <OffsetDay key={day.valueOf()} day={day} />;
-        return <Day key={day.valueOf()} day={day} />;
+        return <Date key={day.valueOf()} day={day} />;
       })}
     </Container>
   );
@@ -24,7 +24,6 @@ const Container = styled.div`
   max-width: ${({ theme }) => theme.grid.maxWidth};
 `;
 
-// `minmax(${theme.grid.rawWidth / 7}vw, ${theme.grid.rawMaxWidth / 7})`};
-const OffsetDay = styled(Day)`
+const OffsetDay = styled(Date)`
   grid-column: ${({ day }) => day.getDay() + 1};
 `;

@@ -1,5 +1,5 @@
 import { AppProps } from "next/app";
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { NavBar } from "../app/NavBar/NavBar";
 import { theme } from "../components";
 
@@ -19,16 +19,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <NavBar />
-        <ComponentContainer>
+        <div style={{ position: "relative", top: theme.navBar.height }}>
           <Component {...pageProps} />
-        </ComponentContainer>
+        </div>
       </ThemeProvider>
     </div>
   );
 }
-
-const ComponentContainer = styled.div`
-  z-index: -1;
-  position: relative;
-  top: ${({ theme }) => theme.navBar.height};
-`;

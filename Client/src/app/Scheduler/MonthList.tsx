@@ -20,5 +20,4 @@ export const MonthList: React.FC = () => {
 const Container = styled.div`
   position: relative;
   top: ${({ theme }) => theme.scheduler.headerHeight};
-  z-index: -1;
 `;

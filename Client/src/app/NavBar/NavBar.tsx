@@ -17,6 +17,7 @@ const Container = styled(Flex)`
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 1;
   justify-content: flex-start;
   height: ${({ theme }) => theme.navBar.height};
   color: ${({ theme }) => theme.colors.textSecondary};
