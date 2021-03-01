@@ -33,13 +33,13 @@ interface DayProps {
 }
 
 const GridCell = styled(Flex)`
-  height: ${({ theme }) => `${theme.grid.rawWidth / 7}vw`};
-  max-height: ${({ theme }) => `${theme.grid.rawMaxWidth / 7}px`};
+  height: ${({ theme }) => theme.grid.cellWidth};
+  max-height: ${({ theme }) => theme.grid.cellMaxWidth};
 `;
 
 const InnerCircle = styled(Flex)<{ today: boolean; dayHasPassed: boolean }>`
-  height: 60%;
-  width: 60%;
+  height: 50%;
+  width: 50%;
   border-radius: 50%;
   border: ${({ today }) => (today ? "solid 1px" : null)};
   color: ${({ dayHasPassed }) => (dayHasPassed ? "rgba(0, 0, 0, 0.3)" : null)};

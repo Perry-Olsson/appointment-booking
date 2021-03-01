@@ -11,10 +11,9 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <ReactModal
       isOpen={displayModal}
-      shouldCloseOnOverlayClick={true}
       onRequestClose={closeModal}
       style={customStyles}
-      closeTimeoutMS={300}
+      closeTimeoutMS={300} // Needs to be the same as tranistion defined in global styles (pages/_app.tsx)
     >
       <Day day={day} />
     </ReactModal>

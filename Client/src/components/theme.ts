@@ -12,9 +12,9 @@ export const theme: DefaultTheme = {
   },
   grid: {
     width: "90vw",
-    rawWidth: 90,
+    cellWidth: "12.857vw", // grid.width / 7
     maxWidth: "600px",
-    rawMaxWidth: 600,
+    cellMaxWidth: "85.714px", // grid.maxWidth / 7
   },
   font: {
     small: "1rem",
@@ -45,9 +45,9 @@ declare module "styled-components" {
     };
     grid: {
       width: string;
-      rawWidth: number;
+      cellWidth: string;
       maxWidth: string;
-      rawMaxWidth: number;
+      cellMaxWidth: string;
     };
     font: {
       small: string;
