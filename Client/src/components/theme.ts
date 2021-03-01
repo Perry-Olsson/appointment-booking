@@ -5,6 +5,9 @@ export const theme = {
   scheduler: {
     headerHeight: "1.8rem",
   },
+  modal: {
+    position: "5.5rem",
+  },
   grid: {
     width: "90vw",
     rawWidth: 90,

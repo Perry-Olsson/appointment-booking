@@ -1,1 +1,3 @@
 - get initial axios and react query set up
+
+- find solution for Modal warning
