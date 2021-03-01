@@ -50,8 +50,7 @@ const InnerCircle = styled(Flex)<{ today: boolean; dayHasPassed: boolean }>`
   }
   &:active {
     background-color: ${({ dayHasPassed }) => (dayHasPassed ? null : "gray")};
-    color: white;
   }
   transition: 0.15s;
-  cursor: pointer;
+  cursor: ${({ dayHasPassed }) => (dayHasPassed ? null : "pointer")};
 `;

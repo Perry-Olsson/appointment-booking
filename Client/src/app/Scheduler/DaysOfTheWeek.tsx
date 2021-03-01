@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Flex } from "../../components";
+import { CalenderGrid } from "./components";
 
 export const DaysOfTheWeek: React.FC = () => {
   return (
@@ -15,16 +16,12 @@ export const DaysOfTheWeek: React.FC = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled(CalenderGrid)`
   position: fixed;
   z-index: 1;
   top: ${({ theme }) => theme.navBar.height};
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
   height: ${({ theme }) => theme.scheduler.headerHeight};
   background-color: white;
-  width: ${({ theme }) => theme.grid.width};
-  max-width: ${({ theme }) => theme.grid.maxWidth};
 `;
 
 const Cell = styled(Flex)``;
