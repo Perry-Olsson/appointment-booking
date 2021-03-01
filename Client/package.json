@@ -2,7 +2,8 @@
   "name": "appointment-booking",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next",
+    "dev": "yarn dev:client & (cd ../Api && yarn tsc && yarn dev:js)",
+    "dev:client": "next",
     "build": "next build",
     "start": "next start",
     "type-check": "tsc --noEmit"

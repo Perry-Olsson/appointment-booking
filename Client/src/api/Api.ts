@@ -10,14 +10,9 @@ export class Api extends AxiosClient {
     const rawAppointments = await this.instance.get<Appointment[]>(
       `/appointments/${query}`
     );
-    const organizedAppointments: any = {};
+    const organizedAppointments = new Map<string, Appointment>();
     rawAppointments.forEach(a => {
-      a.timestamp = new Date(a.timestamp);
-      const month = a.timestamp.getMonth();
-      if (organizedAppointments[month] === undefined) {
-        organizedAppointments[month] = {};
-      }
-      organizedAppointments[month][a.timestamp.getDate()] = a;
+      organizedAppointments.set(a.timestamp, a);
     });
     return organizedAppointments;
   };
