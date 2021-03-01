@@ -40,7 +40,9 @@ const customStyles = {
   content: {
     position: "fixed",
     backgroundColor: "white",
-    top: theme.modal.position,
+    top: theme.modal.topOffset,
+    right: "5%",
+    left: "5%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

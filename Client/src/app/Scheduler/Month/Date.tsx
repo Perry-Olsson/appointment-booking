@@ -12,11 +12,13 @@ export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {
   const openModal = () => setDisplayModal(true);
   const closeModal = () => setDisplayModal(false);
 
+  const dayHasPassed = day.valueOf() < today.valueOf();
   return (
     <GridCell {...restProps}>
       <InnerCircle
         today={today.valueOf() === day.valueOf()}
-        onClick={openModal}
+        dayHasPassed={dayHasPassed}
+        onClick={!dayHasPassed ? openModal : undefined}
       >
         {day.getDate()}
       </InnerCircle>
@@ -35,17 +37,20 @@ const GridCell = styled(Flex)`
   max-height: ${({ theme }) => `${theme.grid.rawMaxWidth / 7}px`};
 `;
 
-const InnerCircle = styled(Flex)<{ today: boolean }>`
+const InnerCircle = styled(Flex)<{ today: boolean; dayHasPassed: boolean }>`
   height: 60%;
   width: 60%;
   border-radius: 50%;
   border: ${({ today }) => (today ? "solid 1px" : null)};
+  color: ${({ dayHasPassed }) => (dayHasPassed ? "rgba(0, 0, 0, 0.3)" : null)};
   border-color: gray;
   &:hover {
-    background-color: gray;
+    background-color: ${({ dayHasPassed }) => (dayHasPassed ? null : "gray")};
+    color: ${({ dayHasPassed }) => (dayHasPassed ? null : " white")};
   }
   &:active {
-    background-color: gray;
+    background-color: ${({ dayHasPassed }) => (dayHasPassed ? null : "gray")};
+    color: white;
   }
   transition: 0.15s;
   cursor: pointer;

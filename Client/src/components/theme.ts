@@ -6,13 +6,13 @@ export const theme = {
     headerHeight: "1.8rem",
   },
   modal: {
-    position: "5.5rem",
+    topOffset: "5.5rem", //navBar.height + schedule.headerHeight
   },
   grid: {
     width: "90vw",
     rawWidth: 90,
-    maxWidth: "500px",
-    rawMaxWidth: 500,
+    maxWidth: "600px",
+    rawMaxWidth: 600,
   },
   font: {
     small: "1rem",
