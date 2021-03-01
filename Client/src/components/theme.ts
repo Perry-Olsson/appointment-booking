@@ -1,4 +1,6 @@
-export const theme = {
+import { DefaultTheme } from "styled-components";
+
+export const theme: DefaultTheme = {
   navBar: {
     height: "3.7rem",
   },
@@ -29,3 +31,37 @@ export const theme = {
     medium: "2rem",
   },
 };
+
+declare module "styled-components" {
+  export interface DefaultTheme {
+    navBar: {
+      height: string;
+    };
+    scheduler: {
+      headerHeight: string;
+    };
+    modal: {
+      topOffset: string;
+    };
+    grid: {
+      width: string;
+      rawWidth: number;
+      maxWidth: string;
+      rawMaxWidth: number;
+    };
+    font: {
+      small: string;
+      medium: string;
+      large: string;
+    };
+    colors: {
+      primary: string;
+      textPrimary: string;
+      textSecondary: string;
+    };
+    icons: {
+      small: string;
+      medium: string;
+    };
+  }
+}
