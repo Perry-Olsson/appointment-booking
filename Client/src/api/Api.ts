@@ -1,4 +1,4 @@
-import { Appointment } from "../types";
+import { Appointment, OrganizedAppointments } from "../types";
 import { AxiosClient } from "./AxiosClient";
 
 export class Api extends AxiosClient {
@@ -10,25 +10,22 @@ export class Api extends AxiosClient {
     const rawAppointments = await this.instance.get<Appointment[]>(
       `/appointments/${query}`
     );
-    const organizedAppointments = new Map<string, Appointment>();
+    return this._indexAppointments(rawAppointments);
+  };
+
+  private _indexAppointments(rawAppointments: Appointment[]) {
+    const organizedAppointments: OrganizedAppointments = {};
     rawAppointments.forEach(a => {
-      organizedAppointments.set(a.timestamp, a);
+      a.timestamp = new Date(a.timestamp);
+      const month = a.timestamp.getMonth();
+      const date = a.timestamp.getDate();
+
+      if (!organizedAppointments[month]) organizedAppointments[month] = {};
+      if (!organizedAppointments[month][date])
+        organizedAppointments[month][date] = [];
+
+      organizedAppointments[month][date].push(a);
     });
     return organizedAppointments;
-  };
+  }
 }
-
-// interface OrganizedAppointments {
-//   0: Appointment[];
-//   1: Appointment[];
-//   2: Appointment[];
-//   3: Appointment[];
-//   4: Appointment[];
-//   5: Appointment[];
-//   6: Appointment[];
-//   7: Appointment[];
-//   8: Appointment[];
-//   9: Appointment[];
-//   10: Appointment[];
-//   11: Appointment[];
-// }
