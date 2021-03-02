@@ -30,13 +30,16 @@ const createInitialAppointment = () => {
   const today = new Date();
   today.setHours(12);
 
-  return Date.UTC(
+  const initialAppointmentTimestamp = new Date(
     today.getFullYear(),
     today.getMonth(),
     today.getDate(),
-    today.getUTCHours()
+    today.getHours()
   );
+
+  return initialAppointmentTimestamp.valueOf();
 };
+
 const getRandomNumber = (lowerBound = 0, upperBound = 10) => {
   return lowerBound + Math.ceil(Math.random() * upperBound);
 };

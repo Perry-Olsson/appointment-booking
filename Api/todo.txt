@@ -1,3 +1,1 @@
-- create appointment and add to db function for testing
-
-- set up initial front end
+- seed database with multiple appointments per day
