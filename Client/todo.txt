@@ -1,5 +1,3 @@
 - setup react query
 
-- seed database with more appointments
-
 - work on modal ui

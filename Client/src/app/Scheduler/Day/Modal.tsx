@@ -37,13 +37,9 @@ const customStyles = {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
   },
   content: {
-    position: "fixed",
     backgroundColor: "white",
     top: theme.modal.topOffset,
     right: "5%",
     left: "5%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
 } as const;
