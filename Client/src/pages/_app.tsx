@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
   }
   .ReactModal__Overlay {
   opacity: 0;
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${theme.modal.transitionTime}ms ease-in-out;
 }
 
 .ReactModal__Overlay--after-open {

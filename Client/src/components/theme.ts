@@ -9,6 +9,7 @@ export const theme: DefaultTheme = {
   },
   modal: {
     topOffset: "5.5rem", //navBar.height + schedule.headerHeight
+    transitionTime: 300,
   },
   grid: {
     width: "90vw",
@@ -42,6 +43,7 @@ declare module "styled-components" {
     };
     modal: {
       topOffset: string;
+      transitionTime: number;
     };
     grid: {
       width: string;

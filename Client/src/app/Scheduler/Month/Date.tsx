@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { Flex } from "../../../components";
+import { Flex, theme } from "../../../components";
 import { useNow } from "../../../context";
-import { Modal } from "../Day/Modal";
+import { Modal } from "../Day";
 
 export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {
   const { today } = useNow();
+  const [renderModal, setRenderModal] = useState(false);
   const [displayModal, setDisplayModal] = useState(false);
 
-  const openModal = () => setDisplayModal(true);
-  const closeModal = () => setDisplayModal(false);
+  const openModal = () => {
+    setRenderModal(true);
+    setDisplayModal(true);
+  };
+  const closeModal = () => {
+    setDisplayModal(false);
+    setTimeout(() => {
+      setRenderModal(false);
+    }, theme.modal.transitionTime);
+  };
 
   const dayHasPassed = day.valueOf() < today.valueOf();
   return (
@@ -22,7 +31,9 @@ export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {
       >
         {day.getDate()}
       </InnerCircle>
-      <Modal day={day} displayModal={displayModal} closeModal={closeModal} />
+      {renderModal ? (
+        <Modal day={day} displayModal={displayModal} closeModal={closeModal} />
+      ) : null}
     </GridCell>
   );
 };

@@ -18,8 +18,6 @@ export default function SchedulerContainer() {
       });
   }, []);
 
-  console.log(appointments);
-
   return (
     <NowProvider>
       <Flex>
