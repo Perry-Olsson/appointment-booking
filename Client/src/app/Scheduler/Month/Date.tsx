@@ -29,7 +29,7 @@ export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {
         dayHasPassed={dayHasPassed}
         onClick={!dayHasPassed ? openModal : undefined}
       >
-        {day.getDate()}
+        <b>{day.getDate()}</b>
       </InnerCircle>
       {renderModal ? (
         <Modal day={day} displayModal={displayModal} closeModal={closeModal} />

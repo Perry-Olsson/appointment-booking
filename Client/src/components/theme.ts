@@ -12,10 +12,10 @@ export const theme: DefaultTheme = {
     transitionTime: 300,
   },
   grid: {
-    width: "90vw",
-    cellWidth: "12.857vw", // grid.width / 7
-    maxWidth: "600px",
-    cellMaxWidth: "85.714px", // grid.maxWidth / 7
+    width: "91vw",
+    cellWidth: "13vw", // grid.width / 7
+    maxWidth: "602px",
+    cellMaxWidth: "86px", // grid.maxWidth / 7
   },
   font: {
     small: "1rem",

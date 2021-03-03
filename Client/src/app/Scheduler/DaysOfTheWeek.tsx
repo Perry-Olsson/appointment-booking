@@ -21,6 +21,7 @@ const Container = styled(CalenderGrid)`
   z-index: 1;
   top: ${({ theme }) => theme.navBar.height};
   height: ${({ theme }) => theme.scheduler.headerHeight};
+  font-weight: bold;
   background-color: white;
 `;
 
