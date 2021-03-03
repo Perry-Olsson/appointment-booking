@@ -13,22 +13,29 @@ export async function seedAppointments(appointments: NewAppointment[]) {
   await prisma.$disconnect();
 }
 
-export const createAppointments = (): NewAppointment[] => {
+export const createAppointments = (
+  daysWithAppointments = 11,
+  appointmentsPerDay = 2
+): NewAppointment[] => {
   const appointmentSeeds: NewAppointment[] = [];
   const initialAppointment = createInitialAppointment();
-  let lastAppointment = initialAppointment;
+  let previousDay = initialAppointment;
 
-  for (let i = 1; i < 11; i++) {
-    const date = new Date(lastAppointment + ONE_DAY * getRandomNumber(1, 5));
-    lastAppointment = date.getTime();
-    appointmentSeeds.push(createNewAppointment(date));
+  for (let i = 0; i < daysWithAppointments; i++) {
+    const day = new Date(previousDay + ONE_DAY * getRandomNumber(3));
+    previousDay = day.valueOf();
+    let appointment = day.valueOf();
+    for (let i = 0; i < appointmentsPerDay; i++) {
+      appointment += HALF_HOUR * getRandomNumber(3);
+      appointmentSeeds.push(createNewAppointment(new Date(appointment)));
+    }
   }
   return appointmentSeeds;
 };
 
 const createInitialAppointment = () => {
   const today = new Date();
-  today.setHours(12);
+  today.setHours(9);
 
   const initialAppointmentTimestamp = new Date(
     today.getFullYear(),
@@ -40,6 +47,8 @@ const createInitialAppointment = () => {
   return initialAppointmentTimestamp.valueOf();
 };
 
-const getRandomNumber = (lowerBound = 0, upperBound = 10) => {
-  return lowerBound + Math.ceil(Math.random() * upperBound);
+const getRandomNumber = (upperBound = 10) => {
+  return Math.ceil(Math.random() * upperBound);
 };
+
+const HALF_HOUR = 1000 * 60 * 30;
