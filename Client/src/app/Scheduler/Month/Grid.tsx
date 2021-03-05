@@ -20,5 +20,6 @@ const Container = styled(CalenderGrid)`
     border-top: 1px solid;
     border-left: 1px solid;
     border-color: ${({ theme }) => theme.grid.borderColor};
+    margin: 1rem 0 5rem 0;
   }
 `;
