@@ -14,8 +14,9 @@ export const theme: DefaultTheme = {
   grid: {
     width: "91vw",
     cellWidth: "13vw", // grid.width / 7
-    maxWidth: "602px",
-    cellMaxWidth: "86px", // grid.maxWidth / 7
+    maxWidth: "1300px",
+    cellMaxWidth: "100px", // grid.maxWidth / 7
+    borderColor: "#00000035",
   },
   font: {
     small: "1rem",
@@ -50,6 +51,7 @@ declare module "styled-components" {
       cellWidth: string;
       maxWidth: string;
       cellMaxWidth: string;
+      borderColor: string;
     };
     font: {
       small: string;

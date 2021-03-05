@@ -1,16 +1,13 @@
 import styled from "styled-components";
+import { device } from "../../../components/device";
 import { CalenderGrid } from "../components";
-
-import { Date } from "./Date";
+import { DateList } from "./DateList";
 
 export const Grid: React.FC<GridProps> = ({ days }) => {
   return (
-    <CalenderGrid>
-      {days.map((day, i) => {
-        if (i === 0) return <OffsetDay key={day.valueOf()} day={day} />;
-        return <Date key={day.valueOf()} day={day} />;
-      })}
-    </CalenderGrid>
+    <Container>
+      <DateList days={days} />
+    </Container>
   );
 };
 
@@ -18,6 +15,10 @@ interface GridProps {
   days: Date[];
 }
 
-const OffsetDay = styled(Date)`
-  grid-column: ${({ day }) => day.getDay() + 1};
+const Container = styled(CalenderGrid)`
+  @media (min-width: ${device.tablet}) {
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-color: ${({ theme }) => theme.grid.borderColor};
+  }
 `;
