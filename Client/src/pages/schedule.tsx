@@ -1,7 +1,15 @@
 import ReactModal from "react-modal";
+import { QueryClient, QueryClientProvider } from "react-query";
+
 import { DynamicScheduler } from "../app/Scheduler";
+
+const queryClient = new QueryClient();
 
 export default function schedule() {
   ReactModal.setAppElement("#__next");
-  return <DynamicScheduler />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <DynamicScheduler />
+    </QueryClientProvider>
+  );
 }
