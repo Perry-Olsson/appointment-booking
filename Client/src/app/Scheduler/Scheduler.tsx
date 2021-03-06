@@ -1,29 +1,20 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
-import { Api } from "../../api";
+import { api } from "../../api";
 import { Flex } from "../../components";
 import { NowProvider } from "../../context";
 import { AppointmentsProvider } from "../../context/Appointments";
-import { OrganizedAppointments } from "../../types";
 import { DaysOfTheWeek } from "./DaysOfTheWeek";
 import { MonthList } from "./MonthList";
 
 export default function SchedulerContainer() {
-  const [appointments, setAppointments] = useState<OrganizedAppointments>();
-
-  useEffect(() => {
-    getAppointments()
-      .then(result => setAppointments(result))
-      .catch(e => {
-        console.log(e);
-      });
-  }, []);
+  const { data } = useQuery("appointments", getAppointments);
 
   return (
     <NowProvider>
       <Flex>
         <DaysOfTheWeek />
-        <AppointmentsProvider appointments={appointments}>
+        <AppointmentsProvider appointments={data}>
           <MonthList />
         </AppointmentsProvider>
       </Flex>
@@ -34,5 +25,3 @@ export default function SchedulerContainer() {
 const getAppointments = async () => {
   return await api.getAppointments();
 };
-
-const api = new Api();
