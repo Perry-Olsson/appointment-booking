@@ -1,1 +1,4 @@
-- seed database with multiple appointments per day
+- /appointments with now query arg does not return past appointments
+
+- paginate appointment query?
+
