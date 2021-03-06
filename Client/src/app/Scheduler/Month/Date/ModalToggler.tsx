@@ -29,16 +29,16 @@ interface ModalTogglerProps {
 
 const Container = styled(Flex)<{ today: boolean; dayHasPassed: boolean }>`
   color: ${({ dayHasPassed }) => (dayHasPassed ? "rgba(0, 0, 0, 0.3)" : null)};
-  &:hover {
-    background-color: ${({ dayHasPassed }) =>
-      dayHasPassed ? null : "#e3f2df"};
-  }
   @media (min-width: ${device.tablet.pixels}) {
     height: 100%;
     width: 100%;
     justify-content: flex-end;
     align-items: flex-start;
     padding: 0.1rem;
+    &:hover {
+      background-color: ${({ theme, dayHasPassed }) =>
+        dayHasPassed ? null : `${theme.colors.primary}20`};
+    }
   }
   @media (max-width: ${device.tablet.pixels}) {
     height: 50%;

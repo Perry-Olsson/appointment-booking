@@ -1,9 +1,9 @@
 - setup react query
 
+- look into migrating to jotai for state management
+
 - Checkout some online booking apps for ui inspiration
 
 - work on modal ui
 
 - create burger nav icon for mobile devices
-
-- work on ui for medium to large display sizes (maybe expand out calender to have square cells);
