@@ -16,7 +16,7 @@ interface GridProps {
 }
 
 const Container = styled(CalenderGrid)`
-  @media (min-width: ${device.tablet}) {
+  @media (min-width: ${device.tablet.pixels}) {
     border-top: 1px solid;
     border-left: 1px solid;
     border-color: ${({ theme }) => theme.grid.borderColor};

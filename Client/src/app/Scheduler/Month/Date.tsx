@@ -5,6 +5,7 @@ import { Flex, theme } from "../../../components";
 import { device } from "../../../components/device";
 import { useNow } from "../../../context";
 import { Modal } from "../Day";
+import { Marker } from "./Marker";
 
 export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {
   if (day === null) return <GridCell {...restProps}>{null}</GridCell>;
@@ -26,6 +27,7 @@ export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {
   const dayHasPassed = day.valueOf() < today.valueOf();
   return (
     <GridCell {...restProps}>
+      {today.valueOf() === day.valueOf() ? <Marker /> : null}
       <InnerCircle
         today={today.valueOf() === day.valueOf()}
         dayHasPassed={dayHasPassed}
@@ -46,7 +48,9 @@ interface DayProps {
 }
 
 const GridCell = styled(Flex)`
-  @media (min-width: ${device.tablet}) {
+  @media (min-width: ${device.tablet.pixels}) {
+    justify-content: flex-start;
+    align-items: flex-start;
     border-bottom: 1px solid;
     border-right: 1px solid;
     border-color: ${({ theme }) => theme.grid.borderColor};
@@ -56,19 +60,19 @@ const GridCell = styled(Flex)`
 `;
 
 const InnerCircle = styled(Flex)<{ today: boolean; dayHasPassed: boolean }>`
-  height: 100%;
-  width: 100%;
   color: ${({ dayHasPassed }) => (dayHasPassed ? "rgba(0, 0, 0, 0.3)" : null)};
   &:hover {
     background-color: ${({ dayHasPassed }) =>
       dayHasPassed ? null : "#e3f2df"};
   }
-  @media (min-width: ${device.tablet}) {
+  @media (min-width: ${device.tablet.pixels}) {
+    height: 100%;
+    width: 100%;
     justify-content: flex-end;
     align-items: flex-start;
     padding: 0.1rem;
   }
-  @media (max-width: ${device.tablet}) {
+  @media (max-width: ${device.tablet.pixels}) {
     height: 50%;
     width: 50%;
     border: ${({ today }) => (today ? "solid 1px" : null)};

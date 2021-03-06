@@ -1,3 +1,6 @@
 export const device = {
-  tablet: "770px",
+  tablet: {
+    width: 770,
+    pixels: "770px",
+  },
 };
