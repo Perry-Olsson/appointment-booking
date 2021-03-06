@@ -1,13 +1,15 @@
+import { useAtom } from "jotai";
 import { useMemo } from "react";
 import styled from "styled-components";
 
-import { useNow } from "../../context";
+import { currentTime } from "./atoms";
 import { Month } from "./Month";
 import { computeDates } from "./utils";
 
 export const MonthList: React.FC = () => {
-  const { now } = useNow();
-  const months = useMemo(() => computeDates(now), [now]);
+  const [{ today }] = useAtom(currentTime);
+  const months = useMemo(() => computeDates(today), [today]);
+
   return (
     <Container>
       {months.map((month, i) => (
