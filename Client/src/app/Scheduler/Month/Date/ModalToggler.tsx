@@ -1,14 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { useAtom } from "jotai";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
-import { useNow } from "../../../../context";
+import { currentTime } from "../../atoms";
 
 export const ModalToggler: React.FC<ModalTogglerProps> = ({
   day,
   openModal,
 }) => {
-  const { today } = useNow();
+  const [{ today }] = useAtom(currentTime);
   const dayHasPassed = day.valueOf() < today.valueOf();
 
   return (
@@ -37,7 +38,7 @@ const Container = styled(Flex)<{ today: boolean; dayHasPassed: boolean }>`
     padding: 0.1rem;
     &:hover {
       background-color: ${({ theme, dayHasPassed }) =>
-        dayHasPassed ? null : `${theme.colors.primary}20`};
+        dayHasPassed ? null : `${theme.colors.primary}40`};
     }
   }
   @media (max-width: ${device.tablet.pixels}) {

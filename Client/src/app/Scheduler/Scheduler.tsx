@@ -1,24 +1,26 @@
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 
 import { api } from "../../api";
 import { Flex } from "../../components";
-import { NowProvider } from "../../context";
-import { AppointmentsProvider } from "../../context/Appointments";
+import { appointmentsAtom } from "./atoms";
 import { DaysOfTheWeek } from "./DaysOfTheWeek";
 import { MonthList } from "./MonthList";
 
 export default function SchedulerContainer() {
+  const [, setAppointments] = useAtom(appointmentsAtom);
   const { data } = useQuery("appointments", getAppointments);
 
+  useEffect(() => {
+    if (data) setAppointments(data);
+  }, [data]);
+
   return (
-    <NowProvider>
-      <Flex>
-        <DaysOfTheWeek />
-        <AppointmentsProvider appointments={data}>
-          <MonthList />
-        </AppointmentsProvider>
-      </Flex>
-    </NowProvider>
+    <Flex>
+      <DaysOfTheWeek />
+      <MonthList />
+    </Flex>
   );
 }
 

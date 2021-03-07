@@ -1,14 +1,15 @@
+import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { Flex } from "../../../components";
-import { useAppointments } from "../../../context/Appointments";
+import { appointmentsAtom } from "../atoms";
 
 interface DayProps {
   day: Date;
 }
 
 export const Day: React.FC<DayProps> = ({ day }) => {
-  const appointments = useAppointments();
+  const [appointments] = useAtom(appointmentsAtom);
   const month = day.getMonth();
   const date = day.getDate();
 

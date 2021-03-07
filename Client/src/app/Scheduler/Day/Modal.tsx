@@ -7,18 +7,16 @@ export const Modal: React.FC<ModalProps> = ({
   displayModal,
   closeModal,
   day,
-}) => {
-  return (
-    <ReactModal
-      isOpen={displayModal}
-      onRequestClose={closeModal}
-      style={customStyles}
-      closeTimeoutMS={300} // Needs to be the same as tranistion defined in global styles (pages/_app.tsx)
-    >
-      <Day day={day} />
-    </ReactModal>
-  );
-};
+}) => (
+  <ReactModal
+    isOpen={displayModal}
+    onRequestClose={closeModal}
+    style={customStyles}
+    closeTimeoutMS={300} // Needs to be the same as tranistion defined in global styles (pages/_app.tsx)
+  >
+    <Day day={day} />
+  </ReactModal>
+);
 
 interface ModalProps {
   day: Date;

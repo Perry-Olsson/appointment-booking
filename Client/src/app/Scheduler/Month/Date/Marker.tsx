@@ -1,12 +1,13 @@
+import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { device } from "../../../../components/device";
-import { useNow } from "../../../../context";
 import { useDimensions } from "../../../../hooks";
+import { currentTime } from "../../atoms";
 
 //for expanded view only
 export const TodayMarker: React.FC<MarkerProps> = ({ day }) => {
-  const { today } = useNow();
+  const [{ today }] = useAtom(currentTime);
   const { width } = useDimensions();
 
   const isToday = today.valueOf() === day.valueOf();
