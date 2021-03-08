@@ -8,7 +8,7 @@
     "tsc": "rm -rf dist/ && tsc",
     "type-check": "tsc --noEmit",
     "watch": "rm -rf dist/ && tsc --watch",
-    "start": "NODE_ENV=production node ./dist/index.js",
+    "start": "NODE_ENV=production yarn tsc && node ./dist/index.js",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "dev:js": "NODE_ENV=development nodemon dist/index.js",
     "test": "NODE_ENV=test jest -o --runInBand",
