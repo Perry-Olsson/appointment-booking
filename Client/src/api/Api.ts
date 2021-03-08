@@ -1,9 +1,10 @@
+import { API_URI } from "../constants";
 import { Appointment, OrganizedAppointments } from "../types";
 import { AxiosClient } from "./AxiosClient";
 
 export class Api extends AxiosClient {
   public constructor() {
-    super("http://localhost:3001/api");
+    super(API_URI);
   }
 
   public getAppointments = async (query = "") => {
