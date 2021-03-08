@@ -3,5 +3,3 @@
 - create burger nav icon for mobile devices
 
 - back button for day view
-
--reduce rerenders of monthview ui

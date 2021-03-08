@@ -1,16 +1,14 @@
 import { useAtom } from "jotai";
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import styled from "styled-components";
 
 import { currentTime } from "./atoms";
 import { Month } from "./Month";
 import { computeDates } from "./utils";
 
-export const MonthList: React.FC = () => {
+export const MonthList: React.FC = memo(() => {
   const [{ today }] = useAtom(currentTime);
   const months = useMemo(() => computeDates(today), [today]);
-
-  console.log("monthlists rendered");
 
   return (
     <Container>
@@ -19,7 +17,7 @@ export const MonthList: React.FC = () => {
       ))}
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   position: relative;
