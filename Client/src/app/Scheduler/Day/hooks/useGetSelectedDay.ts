@@ -10,6 +10,8 @@ export const useGetSelectedDay = (): SelectedDay => {
   const day =
     typeof router.query.day === "string" ? new Date(router.query.day) : null;
   if (!day) return { day, appointments: [] };
+  else if (Object.keys(appointments).length === 0)
+    return { day, appointments: null };
 
   const month = day.getMonth();
   const date = day.getDate();
@@ -21,5 +23,5 @@ export const useGetSelectedDay = (): SelectedDay => {
 
 interface SelectedDay {
   day: Date | null;
-  appointments: Appointment[];
+  appointments: Appointment[] | null;
 }

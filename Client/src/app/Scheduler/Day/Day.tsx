@@ -9,7 +9,7 @@ const DayContainer = () => {
   useFetchAppointments();
   const { day, appointments } = useGetSelectedDay();
 
-  if (!day) return <div>loading...</div>;
+  if (!day || !appointments) return <div>loading...</div>;
 
   return <Day day={day} appointments={appointments} />;
 };

@@ -11,11 +11,14 @@ export const DayViewLink: React.FC<ModalTogglerProps> = ({ day }) => {
   const [{ today }] = useAtom(currentTime);
   const dayHasPassed = day.valueOf() < today.valueOf();
 
+  const handleClick = () =>
+    dayHasPassed ? undefined : router.push(`/schedule/${day.toJSON()}`);
+
   return (
     <Container
       today={today.valueOf() === day.valueOf()}
       dayHasPassed={dayHasPassed}
-      onClick={() => router.push(`/schedule/${day.toJSON()}`)}
+      onClick={handleClick}
     >
       <b>{day.getDate()}</b>
     </Container>
