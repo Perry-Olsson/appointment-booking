@@ -9,7 +9,7 @@
     "type-check": "tsc --noEmit",
     "watch": "rm -rf dist/ && tsc --watch",
     "start": "NODE_ENV=production node ./dist/index.js",
-    "postinstall": "npm run migrate:init && tsc",
+    "postinstall": "prisma introspect && tsc",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "dev:js": "NODE_ENV=development nodemon dist/index.js",
     "test": "NODE_ENV=test jest -o --runInBand",
