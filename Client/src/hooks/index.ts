@@ -1,2 +1,2 @@
 export * from "./useDimensions";
-export * from "./useGetAppointments";
+export * from "./useFetchAppointments";

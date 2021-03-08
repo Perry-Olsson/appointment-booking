@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { api } from "../api";
 import { appointmentsAtom } from "../app/Scheduler/atoms";
 
-export const useGetAppointments = () => {
+export const useFetchAppointments = () => {
   const [appointments, setAppointments] = useAtom(appointmentsAtom);
   const { data } = useQuery(
     "appointments",

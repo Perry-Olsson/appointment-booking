@@ -1,35 +1,27 @@
-import { useAtom } from "jotai";
-import { useRouter } from "next/dist/client/router";
 import React from "react";
 import styled from "styled-components";
 import { Flex } from "../../../components";
-import { useGetAppointments } from "../../../hooks";
-import { appointmentsAtom } from "../atoms";
+import { useFetchAppointments } from "../../../hooks";
+import { Appointment } from "../../../types";
+import { useGetSelectedDay } from "./hooks";
 
 const DayContainer = () => {
-  const router = useRouter();
-  useGetAppointments();
+  useFetchAppointments();
+  const { day, appointments } = useGetSelectedDay();
 
-  const day =
-    typeof router.query.day === "string" ? new Date(router.query.day) : null;
+  if (!day) return <div>loading...</div>;
 
-  return <Day day={day} />;
+  return <Day day={day} appointments={appointments} />;
 };
 
-const Day: React.FC<DayProps> = ({ day }) => {
-  if (!day) return <div>loading</div>;
-
-  const [appointments] = useAtom(appointmentsAtom);
-  const month = day.getMonth();
-  const date = day.getDate();
-
-  return appointments[month] && appointments[month][date] ? (
+const Day: React.FC<DayProps> = ({ day, appointments }) => {
+  return appointments.length ? (
     <Grid>
       <Flex>
         <h1>{day.toLocaleDateString()}</h1>
       </Flex>
       <AppointmentsContainer>
-        {appointments[month][date].map(a => (
+        {appointments.map(a => (
           <div key={a.timestamp.valueOf()}>
             {a.timestamp.toLocaleTimeString()}
           </div>
@@ -46,7 +38,8 @@ const Day: React.FC<DayProps> = ({ day }) => {
 };
 
 interface DayProps {
-  day: Date | null;
+  appointments: Appointment[];
+  day: Date;
 }
 
 const Grid = styled.div`
