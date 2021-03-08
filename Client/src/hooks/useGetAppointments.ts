@@ -5,13 +5,15 @@ import { api } from "../api";
 import { appointmentsAtom } from "../app/Scheduler/atoms";
 
 export const useGetAppointments = () => {
-  const [, setAppointments] = useAtom(appointmentsAtom);
+  const [appointments, setAppointments] = useAtom(appointmentsAtom);
   const { data } = useQuery(
     "appointments",
     async () => await api.getAppointments()
   );
 
   useEffect(() => {
-    if (data) setAppointments(data);
+    if (data && Object.keys(appointments).length === 0) {
+      setAppointments(data);
+    }
   }, [data]);
 };

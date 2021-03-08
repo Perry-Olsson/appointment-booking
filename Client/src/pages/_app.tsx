@@ -2,15 +2,23 @@ import { AppProps } from "next/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { NavBar } from "../app/NavBar/NavBar";
 import { theme } from "../components";
+import { getLayoutProvider } from "../utils";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const getLayout = getLayoutProvider(Component.displayName);
+
   return (
     <div>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <NavBar />
-        <div style={{ position: "relative", top: theme.navBar.height }}>
-          <Component {...pageProps} />
+        <div
+          style={{
+            position: "relative",
+            top: theme.navBar.height,
+          }}
+        >
+          {getLayout(<Component {...pageProps}></Component>)}
         </div>
       </ThemeProvider>
     </div>

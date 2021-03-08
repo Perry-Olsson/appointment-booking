@@ -11,6 +11,8 @@ export const currentTime = atom<Today>(() => {
 
 export const appointmentsAtom = atom<OrganizedAppointments>({});
 
+export const dayAtom = atom<Date | null>(null);
+
 interface Today {
   now: Date;
   today: Date;

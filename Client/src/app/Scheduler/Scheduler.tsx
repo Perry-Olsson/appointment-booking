@@ -1,5 +1,5 @@
 import { Flex } from "../../components";
-import { useGetAppointments } from "../../hooks/useGetAppointments";
+import { useGetAppointments } from "../../hooks";
 import { DaysOfTheWeek } from "./DaysOfTheWeek";
 import { MonthList } from "./MonthList";
 

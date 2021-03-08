@@ -5,10 +5,12 @@ import { Flex } from "../../../components";
 import { appointmentsAtom } from "../atoms";
 
 interface DayProps {
-  day: Date;
+  day: Date | null;
 }
 
 export const Day: React.FC<DayProps> = ({ day }) => {
+  if (!day) return <div>loading</div>;
+
   const [appointments] = useAtom(appointmentsAtom);
   const month = day.getMonth();
   const date = day.getDate();
@@ -36,7 +38,7 @@ export const Day: React.FC<DayProps> = ({ day }) => {
 };
 
 const Grid = styled.div`
-  height: 100%;
+  height: 100vh;
   display: grid;
   grid-template-rows: 10% 90%;
 `;

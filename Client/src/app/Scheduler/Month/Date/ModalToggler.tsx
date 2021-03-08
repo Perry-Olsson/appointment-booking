@@ -4,11 +4,10 @@ import { useAtom } from "jotai";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
 import { currentTime } from "../../atoms";
+import { useRouter } from "next/dist/client/router";
 
-export const ModalToggler: React.FC<ModalTogglerProps> = ({
-  day,
-  openModal,
-}) => {
+export const ModalToggler: React.FC<ModalTogglerProps> = ({ day }) => {
+  const router = useRouter();
   const [{ today }] = useAtom(currentTime);
   const dayHasPassed = day.valueOf() < today.valueOf();
 
@@ -16,7 +15,7 @@ export const ModalToggler: React.FC<ModalTogglerProps> = ({
     <Container
       today={today.valueOf() === day.valueOf()}
       dayHasPassed={dayHasPassed}
-      onClick={!dayHasPassed ? openModal : undefined}
+      onClick={() => router.push(`/schedule/${day.toJSON()}`)}
     >
       <b>{day.getDate()}</b>
     </Container>
