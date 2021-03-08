@@ -1,2 +1,1 @@
-export * from "./Day";
-export * from "./Modal";
+export * from "./DynamicDay";

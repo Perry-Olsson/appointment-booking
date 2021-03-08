@@ -1,14 +1,22 @@
 import { useAtom } from "jotai";
+import { useRouter } from "next/dist/client/router";
 import React from "react";
 import styled from "styled-components";
 import { Flex } from "../../../components";
+import { useGetAppointments } from "../../../hooks";
 import { appointmentsAtom } from "../atoms";
 
-interface DayProps {
-  day: Date | null;
-}
+const DayContainer = () => {
+  const router = useRouter();
+  useGetAppointments();
 
-export const Day: React.FC<DayProps> = ({ day }) => {
+  const day =
+    typeof router.query.day === "string" ? new Date(router.query.day) : null;
+
+  return <Day day={day} />;
+};
+
+const Day: React.FC<DayProps> = ({ day }) => {
   if (!day) return <div>loading</div>;
 
   const [appointments] = useAtom(appointmentsAtom);
@@ -37,6 +45,10 @@ export const Day: React.FC<DayProps> = ({ day }) => {
   );
 };
 
+interface DayProps {
+  day: Date | null;
+}
+
 const Grid = styled.div`
   height: 100vh;
   display: grid;
@@ -46,3 +58,5 @@ const Grid = styled.div`
 const AppointmentsContainer = styled(Flex)`
   flex-direction: column;
 `;
+
+export default DayContainer;

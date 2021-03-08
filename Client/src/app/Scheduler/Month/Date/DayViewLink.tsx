@@ -6,7 +6,7 @@ import { device } from "../../../../components/device";
 import { currentTime } from "../../atoms";
 import { useRouter } from "next/dist/client/router";
 
-export const ModalToggler: React.FC<ModalTogglerProps> = ({ day }) => {
+export const DayViewLink: React.FC<ModalTogglerProps> = ({ day }) => {
   const router = useRouter();
   const [{ today }] = useAtom(currentTime);
   const dayHasPassed = day.valueOf() < today.valueOf();
@@ -24,7 +24,6 @@ export const ModalToggler: React.FC<ModalTogglerProps> = ({ day }) => {
 
 interface ModalTogglerProps {
   day: Date;
-  openModal: () => void;
 }
 
 const Container = styled(Flex)<{ today: boolean; dayHasPassed: boolean }>`

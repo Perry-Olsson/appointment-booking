@@ -1,35 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
-import { Flex, theme } from "../../../../components";
+import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
-import { Modal } from "../../Day";
 import { TodayMarker } from "./Marker";
-import { ModalToggler } from "./ModalToggler";
+import { DayViewLink } from "./DayViewLink";
 
 export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {
   if (day === null) return <GridCell {...restProps}>{null}</GridCell>;
-  const [renderModal, setRenderModal] = useState(false);
-  const [displayModal, setDisplayModal] = useState(false);
-
-  const openModal = () => {
-    setRenderModal(true);
-    setDisplayModal(true);
-  };
-  const closeModal = () => {
-    setDisplayModal(false);
-    setTimeout(() => {
-      setRenderModal(false);
-    }, theme.modal.transitionTime);
-  };
 
   return (
     <GridCell {...restProps}>
       <TodayMarker day={day} />
-      <ModalToggler day={day} openModal={openModal} />
-      {renderModal ? (
-        <Modal day={day} displayModal={displayModal} closeModal={closeModal} />
-      ) : null}
+      <DayViewLink day={day} />
     </GridCell>
   );
 };

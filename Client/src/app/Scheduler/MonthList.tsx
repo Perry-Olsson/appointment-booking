@@ -10,6 +10,8 @@ export const MonthList: React.FC = () => {
   const [{ today }] = useAtom(currentTime);
   const months = useMemo(() => computeDates(today), [today]);
 
+  console.log("monthlists rendered");
+
   return (
     <Container>
       {months.map((month, i) => (

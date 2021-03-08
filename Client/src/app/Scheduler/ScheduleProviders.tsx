@@ -3,7 +3,7 @@ import { Provider } from "jotai";
 
 const queryClient = new QueryClient();
 
-export const Providers: React.FC<ProvidersProps> = ({ children }) => {
+export const ScheduleProviders: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider>{children}</Provider>

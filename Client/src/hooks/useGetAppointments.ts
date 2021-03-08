@@ -8,7 +8,8 @@ export const useGetAppointments = () => {
   const [appointments, setAppointments] = useAtom(appointmentsAtom);
   const { data } = useQuery(
     "appointments",
-    async () => await api.getAppointments()
+    async () => await api.getAppointments(),
+    { refetchOnWindowFocus: false }
   );
 
   useEffect(() => {
