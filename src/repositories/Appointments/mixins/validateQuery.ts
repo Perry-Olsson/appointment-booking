@@ -6,7 +6,7 @@ export const validateQuery = (query: any) => {
   const assignQueryField = (field: string): void => {
     if (isValidTimeField(field)) {
       const num = toNumber(query[field]);
-      if (num !== false) validQuery[field as keyof typeof validQuery] = num;
+      if (num !== false) validQuery[field as keyof Time] = num;
     }
   };
 
@@ -23,7 +23,7 @@ const isValidTimeField = (field: string): boolean => {
     field === "month" ||
     field === "day" ||
     field === "hour" ||
-    field === "minutes"
+    field === "minute"
   )
     return true;
   return false;
