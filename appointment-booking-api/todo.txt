@@ -1,6 +1,0 @@
-- create a start and end timestamp
- 
-- /appointments with now query arg does not return past appointments
-
-- paginate appointment query?
-
