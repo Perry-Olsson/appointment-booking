@@ -1,42 +1,21 @@
-import React from "react";
-import styled from "styled-components";
-import { Flex } from "../../../components";
-import { Appointment } from "../../../types";
+import React, { useState } from "react";
+import { useFetchAppointments } from "../hooks";
+import { useGetSelectedDay } from "./hooks";
+import { PageView } from "./PageView";
+import { isInvalidDate } from "../utils";
 
-export const Day: React.FC<DayProps> = ({ day, appointments }) => {
-  return appointments.length ? (
-    <Grid>
-      <Flex>
-        <h1>{day.toLocaleDateString()}</h1>
-      </Flex>
-      <AppointmentsContainer>
-        {appointments.map(a => (
-          <div key={a.timestamp.valueOf()}>
-            {a.timestamp.toLocaleTimeString()}
-          </div>
-        ))}
-      </AppointmentsContainer>
-    </Grid>
-  ) : (
-    <Grid>
-      <Flex>
-        <h1>no appointments</h1>
-      </Flex>
-    </Grid>
-  );
+const Day = () => {
+  const { day, prefetchedAppointments } = useGetSelectedDay();
+  const [appointments, setAppointments] = useState(prefetchedAppointments);
+  const { error } = useFetchAppointments(day, setAppointments);
+
+  if (isInvalidDate(day)) return <div>invalid url. Rerouting...</div>;
+
+  if (error) return <div>Can't connect to server</div>;
+
+  if (!appointments) return <div>loading...</div>;
+
+  return <PageView day={day} appointments={appointments} />;
 };
 
-interface DayProps {
-  appointments: Appointment[];
-  day: Date;
-}
-
-const Grid = styled.div`
-  height: 100vh;
-  display: grid;
-  grid-template-rows: 10% 90%;
-`;
-
-const AppointmentsContainer = styled(Flex)`
-  flex-direction: column;
-`;
+export default Day;

@@ -1,4 +1,4 @@
-import { DynamicDay } from "../../app/Scheduler/Day";
+import { DynamicDay } from "../../app/Scheduler/Day/DynamicDay";
 
 export default function day() {
   return <DynamicDay />;
