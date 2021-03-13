@@ -1,0 +1,7 @@
+- fix css :active bug
+
+- work on day view ui
+
+- create burger nav icon for mobile devices
+
+- back button for day view
