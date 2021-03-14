@@ -1,1 +1,3 @@
-export const isInvalidDate = (date: Date) => isNaN(date.valueOf());
+export const isInvalidDate = (date: Date) => {
+  return isNaN(date.valueOf());
+};

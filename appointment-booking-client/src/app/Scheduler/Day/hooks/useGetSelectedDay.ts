@@ -15,7 +15,8 @@ export const useGetSelectedDay = (): SelectedDay => {
       : new Date("");
 
   useEffect(() => {
-    if (isInvalidDate(day)) setTimeout(() => router.push("/schedule"), 1000);
+    if (router.query.day && isInvalidDate(day))
+      setTimeout(() => router.push("/schedule"), 1000);
   }, []);
 
   if (Object.keys(allAppointments).length === 0)
