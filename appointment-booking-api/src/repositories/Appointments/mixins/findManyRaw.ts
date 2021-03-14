@@ -19,6 +19,5 @@ export const findManyRaw: FindManyRaw = async (query = {}, options = ";") => {
 
   sqlString += options;
 
-  const appointments = await prisma.$queryRaw(sqlString);
-  return appointments;
+  return await prisma.$queryRaw(sqlString);
 };
