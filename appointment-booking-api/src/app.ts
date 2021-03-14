@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import config from "./config";
 import { appointmentsRouter } from "./controllers";
-import { matchAcceptedUrls, unknownEndpoint } from "./utils/middleware";
+import { unknownEndpoint } from "./utils/middleware";
 import { errorHandler } from "./utils/middleware";
 import { requestLogger } from "./utils/middleware";
 
@@ -10,7 +10,6 @@ const app = express();
 
 app.use(cors(config.cors));
 app.use(express.json());
-app.use(matchAcceptedUrls);
 
 if (process.env.NODE_ENV === "development") app.use(requestLogger);
 
