@@ -1,4 +1,5 @@
 import { IoIosArrowBack } from "react-icons/io";
+import styled from "styled-components";
 
 export const BackButton: React.FC<BackButtonProps> = ({
   size = "sm",
@@ -6,7 +7,7 @@ export const BackButton: React.FC<BackButtonProps> = ({
 }) => {
   return (
     <div onClick={goBack} {...restProps}>
-      <IoIosArrowBack size={getWidth(size)} />
+      <StyledBackIcon size={getWidth(size)} />
     </div>
   );
 };
@@ -38,3 +39,9 @@ interface BackButtonProps {
   restProps?: React.HTMLAttributes<any>;
   size?: string;
 }
+
+const StyledBackIcon = styled(IoIosArrowBack)`
+  &:hover {
+    color: gray;
+  }
+`;
