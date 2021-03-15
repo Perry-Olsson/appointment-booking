@@ -1,10 +1,12 @@
+import { IoIosArrowBack } from "react-icons/io";
+
 export const BackButton: React.FC<BackButtonProps> = ({
   size = "sm",
   ...restProps
 }) => {
   return (
     <div onClick={goBack} {...restProps}>
-      <img src="/back.png" width={getWidth(size)} />
+      <IoIosArrowBack size={getWidth(size)} />
     </div>
   );
 };
@@ -17,13 +19,13 @@ const getWidth = (size: string): string => {
   let width: string;
   switch (size) {
     case "sm":
-      width = "25px";
+      width = "35px";
       break;
     case "md":
       width = "50px";
       break;
     case "lg":
-      width = "75px";
+      width = "65px";
       break;
     default:
       width = size;
