@@ -52,9 +52,6 @@ const Container = styled.a<{ today: boolean; dayHasPassed: boolean }>`
       background-color: ${({ dayHasPassed }) => (dayHasPassed ? null : "gray")};
       color: ${({ dayHasPassed }) => (dayHasPassed ? null : " white")};
     }
-    &:focus {
-      background-color: ${({ dayHasPassed }) => (dayHasPassed ? null : "gray")};
-    }
     transition: 0.15s;
   }
   cursor: ${({ dayHasPassed }) => (dayHasPassed ? null : "pointer")};
