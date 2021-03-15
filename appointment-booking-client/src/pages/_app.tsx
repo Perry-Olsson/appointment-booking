@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { AppProps } from "next/app";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { NavBar } from "../app/NavBar/NavBar";
@@ -9,14 +10,20 @@ export default function App({ Component, pageProps }: AppProps) {
   const getLayout = getLayoutProvider(Component.displayName);
 
   return (
-    <div>
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no"
+        />
+      </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <NavBar />
         <NavBarOffset />
         {getLayout(<Component {...pageProps}></Component>)}
       </ThemeProvider>
-    </div>
+    </>
   );
 }
 
