@@ -5,7 +5,7 @@ import { NavBar } from "../app/NavBar/NavBar";
 import { NavBarOffset } from "../app/NavBar/NavBarOffset";
 import { theme } from "../components";
 import { getLayoutProvider } from "../utils";
-//todo refactor navbar offset
+
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = getLayoutProvider(Component.displayName);
 
