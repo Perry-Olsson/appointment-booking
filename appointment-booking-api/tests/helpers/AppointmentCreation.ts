@@ -4,38 +4,79 @@ import { createNewAppointment } from "../../src/prisma/seeds/utils";
 import { NewAppointment, Time } from "../../src/types";
 
 export const createTestAppointment = async ({
-  time,
-  pushToDb,
+  time = {},
+  pushToDb = false,
 }: TestAppointmentOptions = {}): Promise<TestAppointment> => {
-  const data = createNewAppointment(createAppointmentTimestamp(time));
-  const appointment =
-    pushToDb === true
-      ? await prisma.appointment.create({
-          data,
-        })
-      : null;
+  const { timestamp, end } = createAppointmentTimestamps(time);
+  const data = createNewAppointment(timestamp, end);
+
+  const appointment = pushToDb
+    ? await prisma.appointment.create({
+        data,
+      })
+    : null;
 
   return { data, appointment };
 };
 
-export const createAppointmentTimestamp = (time: Time = {}): Date => {
+export const createAppointmentTimestamps = ({
+  start = {},
+  finish = {},
+}: TestAppointmentTime): AppointmentTimestamps => {
+  const { year, month, day, minute, hour } = createDefaultTime();
+
+  const time = {
+    year: start.year || year,
+    month: start.month || month,
+    day: start.day || day,
+    hour: start.hour || hour,
+    minute: start.minute || minute,
+  };
+
+  const timestamp = new Date(
+    time.year,
+    time.month,
+    time.day,
+    time.hour,
+    time.minute
+  );
+
+  time.hour = time.hour + 1;
+  for (let field in finish) {
+    time[field as keyof Time] = finish[field as keyof Time] as number;
+  }
+  const end = new Date(time.year, time.month, time.day, time.hour, time.minute);
+
+  return { timestamp, end };
+};
+
+export const createDefaultTime = (): Required<Time> => {
   const now = new Date();
-
-  const year = time.year || now.getFullYear();
-  const month = time.month || now.getMonth() + 1;
-  const day = time.day || 15;
-  const hour = time.hour || 10;
-  const minute = time.minute || 30;
-
-  return new Date(year, month, day, hour, minute);
+  return {
+    year: now.getFullYear(),
+    month: now.getMonth() + 1,
+    day: 15,
+    hour: 10,
+    minute: 30,
+  };
 };
 
 interface TestAppointmentOptions {
-  time?: Time;
+  time?: TestAppointmentTime;
   pushToDb?: boolean;
+}
+
+interface TestAppointmentTime {
+  start?: Time;
+  finish?: Time;
 }
 
 interface TestAppointment {
   data: NewAppointment;
   appointment: Appointment | null;
+}
+
+interface AppointmentTimestamps {
+  timestamp: Date;
+  end: Date;
 }

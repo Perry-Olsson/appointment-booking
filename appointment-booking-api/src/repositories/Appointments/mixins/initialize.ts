@@ -1,13 +1,10 @@
-import { NewAppointment } from "../../../types";
 import { Appointments } from "../Appointments";
 import { Initialize } from "../types";
 
-export const initialize: Initialize = newAppointment => {
-  Appointments.validateTimestamp(newAppointment.timestamp);
+export const initialize: Initialize = reqBody => {
+  const newAppointment = Appointments.validateTimestamps(reqBody);
 
-  newAppointment.timestamp = new Date(newAppointment.timestamp);
+  Appointments.validateTime(newAppointment);
 
-  Appointments.validateTime(newAppointment.timestamp);
-
-  return newAppointment as NewAppointment;
+  return newAppointment;
 };
