@@ -47,5 +47,5 @@ const AppointmentsContainer = styled(Flex)`
 const StyledBackButton = styled(BackButton)`
   position: absolute;
   left: 0;
-  margin: 1rem;
+  padding: 1rem;
 `;

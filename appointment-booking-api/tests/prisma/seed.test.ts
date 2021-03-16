@@ -33,20 +33,11 @@ describe("Database seeding", () => {
   });
 
   test("Appointments time is valid", async () => {
-    const invalidTimes = appointments.filter(({ timestamp, end }) => {
-      const startHour = timestamp.getHours();
-      const startMinute = timestamp.getMinutes();
-      const endHour = end.getHours();
-      const endMinute = end.getMinutes();
+    const invalidTimes = appointments.filter(({ timestamp }) => {
+      const hour = timestamp.getHours();
+      const minutes = timestamp.getMinutes();
 
-      const hour = (startHour + endHour) / 2;
-
-      if (
-        hour <= 24 &&
-        hour >= 0 &&
-        startMinute % 15 === 0 &&
-        endMinute % 15 === 0
-      )
+      if (hour <= 24 && hour >= 0 && (minutes === 0 || minutes === 30))
         return false;
       return true;
     });

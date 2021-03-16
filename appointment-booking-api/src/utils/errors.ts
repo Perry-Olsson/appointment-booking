@@ -7,7 +7,7 @@ export class DuplicateError extends Error {
 
 export class InvalidTimeError extends Error {
   constructor(
-    message = "Appointments must be scheduled and end at quarter hours"
+    message = "Appointments must be scheduled on the hour or half hour"
   ) {
     super(message);
     this.name = "Invalid time";

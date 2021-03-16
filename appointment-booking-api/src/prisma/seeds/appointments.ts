@@ -26,13 +26,8 @@ export const createAppointments = (
     previousDay = day.valueOf();
     let appointment = day.valueOf();
     for (let i = 0; i < appointmentsPerDay; i++) {
-      appointment += HALF_HOUR + getRandomNumber(4);
-      appointmentSeeds.push(
-        createNewAppointment(
-          new Date(appointment),
-          new Date(appointment + QUARTER_HOUR * getRandomNumber(2))
-        )
-      );
+      appointment += HALF_HOUR * getRandomNumber(3);
+      appointmentSeeds.push(createNewAppointment(new Date(appointment)));
     }
   }
   return appointmentSeeds;
@@ -56,5 +51,4 @@ const getRandomNumber = (upperBound = 10) => {
   return Math.ceil(Math.random() * upperBound);
 };
 
-const QUARTER_HOUR = 1000 * 60 * 15;
-const HALF_HOUR = QUARTER_HOUR * 2;
+const HALF_HOUR = 1000 * 60 * 30;

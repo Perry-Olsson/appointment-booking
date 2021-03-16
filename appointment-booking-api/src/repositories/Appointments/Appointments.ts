@@ -5,7 +5,7 @@ import {
   sorted,
   validateQuery,
   isDuplicate,
-  validateTimestamps,
+  validateTimestamp,
   validateTime,
   findManyRaw,
 } from "./mixins";
@@ -14,7 +14,7 @@ const appointmentsMixin: AppointmentMixin = {
   validateQuery,
   initialize,
   isDuplicate,
-  validateTimestamps,
+  validateTimestamp,
   validateTime,
   sorted,
   findManyRaw,
