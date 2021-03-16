@@ -18,7 +18,7 @@ router.get("/:timestamp", async (req, res, next) => {
   try {
     const timestamp = req.params.timestamp;
 
-    Appointments.validateTimestamps(timestamp);
+    Appointments.validateNewAppointment(timestamp);
 
     const appointment = await Appointments.findUnique({ where: { timestamp } });
 
@@ -48,7 +48,7 @@ router.delete("/:timestamp", async (req, res, next) => {
   try {
     const { timestamp } = req.params;
 
-    Appointments.validateTimestamps(timestamp);
+    Appointments.validateNewAppointment(timestamp);
 
     await Appointments.delete({ where: { timestamp } });
 

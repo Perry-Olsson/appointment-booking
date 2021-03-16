@@ -15,7 +15,8 @@ export interface AppointmentMixin {
   initialize: Initialize;
   sorted: Sorted;
   isDuplicate: IsDuplicate;
-  validateTimestamps: ValidateTimestamp;
+  validateNewAppointment: ValidateNewAppointment;
+  validateTimestamp: ValidateTimestamp;
   validateTime: ValidateTime;
   findManyRaw: FindManyRaw;
 }
@@ -26,7 +27,9 @@ export type Initialize = (req: any) => NewAppointment;
 
 export type IsDuplicate = (newAppointment: NewAppointment) => Promise<void>;
 
-export type ValidateTimestamp = (timestamp: string) => NewAppointment;
+export type ValidateNewAppointment = (reqBody: any) => NewAppointment;
+
+export type ValidateTimestamp = (reqField: any) => Date;
 
 export type ValidateTime = (newAppointment: NewAppointment) => void;
 
