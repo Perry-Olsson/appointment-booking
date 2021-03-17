@@ -1,25 +1,26 @@
 import { Appointment } from "@prisma/client";
 
 export const parseRawAppointment = (appointment: any): Appointment => {
-  const returnApp: any = {};
+  const mappedAppointment: any = {};
   for (let field in appointment) {
     if (
       field === "createdAt" ||
       field === "updatedAt" ||
-      field === "timestamp"
+      field === "timestamp" ||
+      field === "end"
     ) {
-      returnApp[field] = new Date(appointment[field]);
+      mappedAppointment[field] = new Date(appointment[field]);
     } else {
-      if (isValidAppointmentField(field)) returnApp[field] = appointment[field];
+      if (isValidAppointmentField(field))
+        mappedAppointment[field] = appointment[field];
       else {
-        console.log(appointment);
-        throw new Error(`Invalid appointment field`);
+        throw new Error(`Invalid appointment field "${field}"`);
       }
     }
   }
-  if (Object.keys(returnApp).length !== 4)
+  if (Object.keys(mappedAppointment).length !== 5)
     throw new Error("Missing fields in appointment");
-  return returnApp as Appointment;
+  return mappedAppointment as Appointment;
 };
 
 const isValidAppointmentField = (field: string): boolean => {

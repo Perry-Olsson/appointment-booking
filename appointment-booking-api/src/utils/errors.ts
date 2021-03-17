@@ -15,7 +15,7 @@ export class InvalidTimeError extends Error {
 }
 
 export class InvalidTimestampError extends Error {
-  constructor(timestamp: string) {
+  constructor(timestamp: any) {
     super(
       `timestamp ${timestamp} is invalid. Timestamp must be in json format`
     );

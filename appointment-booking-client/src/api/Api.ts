@@ -18,6 +18,7 @@ export class Api extends AxiosClient {
     return rawAppointments.map(a => ({
       ...a,
       timestamp: new Date(a.timestamp),
+      end: new Date(a.end),
     }));
   }
 
@@ -32,6 +33,8 @@ export class Api extends AxiosClient {
     const organizedAppointments: OrganizedAppointments = {};
     rawAppointments.forEach(a => {
       a.timestamp = new Date(a.timestamp);
+      a.end = new Date(a.end);
+
       const month = a.timestamp.getMonth();
       const date = a.timestamp.getDate();
 

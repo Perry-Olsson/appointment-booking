@@ -18,6 +18,13 @@ describe("Error handler middleware", () => {
       pushToDb: true,
     });
 
+    const { data: offsetAppointment } = await createTestAppointment({
+      time: {
+        start: { ...defaultStart, hour: defaultStart.hour - 1 },
+        finish: { ...defaultFinish, minute: defaultFinish.minute - 30 },
+      },
+    });
+
     const response = await api.post("/api/appointments").send(data);
 
     expect(response.status).toBe(400);
@@ -26,7 +33,9 @@ describe("Error handler middleware", () => {
       message: "timeslot has been taken",
     });
 
-    await prisma.appointment.delete({ where: { id: appointment?.id } });
+    await prisma.appointment.deleteMany({
+      where: { id: appointment?.id },
+    });
   });
 
   test("Handles invalid time error", async () => {
@@ -41,5 +50,11 @@ describe("Error handler middleware", () => {
       error: "Invalid time",
       message: "Appointments must be scheduled on the hour or half hour",
     });
+    expect(invalidFinishResponse.body).toEqual({
+      error: "Invalid time",
+      message: "Appointments must be scheduled and end at quarter hours",
+    });
+
+    await prisma.appointment.delete({ where: { id: validResponse.body.id } });
   });
 });

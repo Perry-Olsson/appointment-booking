@@ -57,7 +57,7 @@ describe("GET request", () => {
       expect(response.body).toHaveLength(appointmentsFromDb.length);
     });
 
-    test("Query string with month and no year", async () => {
+    test("Query string with month and no year does not return month from past years", async () => {
       const { id1, id2, month, year } = await createAppointmentsOneYearApart();
 
       const appointmentsFromDb = filterAppointmentsFromDb(
@@ -73,7 +73,6 @@ describe("GET request", () => {
         parseRawAppointment(app)
       );
 
-      //Does not return month from past years unless explicitly requested
       expect(filterUnwantedMonths(appointments, month, year)).toHaveLength(
         appointmentsFromDb.length
       );
