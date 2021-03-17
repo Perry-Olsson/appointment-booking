@@ -56,10 +56,6 @@ const getRandomNumber = (upperBound = 10) => {
   return Math.ceil(Math.random() * upperBound);
 };
 
-<<<<<<< HEAD
-const HALF_HOUR = 1000 * 60 * 30;
-=======
 const QUARTER_HOUR = 1000 * 60 * 15;
 const HALF_HOUR = QUARTER_HOUR * 2;
 const HOUR = HALF_HOUR * 2;
->>>>>>> ending-timestamp-column
