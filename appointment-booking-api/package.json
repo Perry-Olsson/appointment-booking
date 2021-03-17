@@ -9,7 +9,7 @@
     "type-check": "tsc --noEmit",
     "watch": "rm -rf dist/ && tsc --watch",
     "start": "NODE_ENV=production node ./dist/index.js",
-    "postinstall": "prisma introspect && tsc",
+    "postinstall": "npm run migrate:deploy && tsc",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "dev:js": "NODE_ENV=development nodemon dist/index.js",
     "test": "NODE_ENV=test jest -o --runInBand",
@@ -20,6 +20,7 @@
     "migrate:init": "rm -rf src/prisma/migrations && prisma migrate dev --name init --preview-feature && prisma generate",
     "migrate:reset": "prisma migrate reset --preview-feature && prisma generate",
     "migrate:dev": "prisma migrate dev --preview-feature && prisma generate",
+    "migrate:deploy": "prisma migrate deploy",
     "db:push": "prisma db push --preview-feature",
     "db:seed": "ts-node ./src/prisma/seeds/seed.ts",
     "db:test": "ts-node ./src/prisma/prismaTest.ts"
