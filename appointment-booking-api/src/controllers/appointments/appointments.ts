@@ -46,7 +46,7 @@ router.delete("/:timestamp", async (req, res, next) => {
   try {
     const { timestamp } = req.params;
 
-    Appointments.validateNewAppointment(timestamp);
+    Appointments.validateTimestamp(timestamp);
 
     await Appointments.delete({ where: { timestamp } });
 
