@@ -3,6 +3,7 @@ export interface Appointment {
   createdAt: string;
   updatedAt: string;
   timestamp: Date;
+  end: Date;
 }
 
 export interface OrganizedAppointments {

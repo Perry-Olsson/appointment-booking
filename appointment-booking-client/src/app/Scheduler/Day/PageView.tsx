@@ -14,7 +14,7 @@ export const PageView: React.FC<DayProps> = ({ day, appointments }) => {
       <AppointmentsContainer>
         {appointments.map(a => (
           <div key={a.timestamp.valueOf()}>
-            {a.timestamp.toLocaleTimeString()}
+            {a.timestamp.toLocaleTimeString()} - {a.end.toLocaleTimeString()}
           </div>
         ))}
       </AppointmentsContainer>
