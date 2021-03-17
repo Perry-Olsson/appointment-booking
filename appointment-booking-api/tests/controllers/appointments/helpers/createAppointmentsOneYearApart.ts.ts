@@ -36,12 +36,15 @@ export const createAppointment = async (
   utc: number,
   { hour, minute }: Time
 ): Promise<Appointment> => {
-  const date = new Date(utc);
-  date.setHours(hour);
-  date.setMinutes(minute);
+  const timestamp = new Date(utc);
+  timestamp.setHours(hour);
+  timestamp.setMinutes(minute);
+
+  const end = new Date(timestamp);
+  end.setHours(end.getHours() + 1);
 
   return await prisma.appointment.create({
-    data: createNewAppointment(date),
+    data: createNewAppointment(timestamp, end),
   });
 };
 
