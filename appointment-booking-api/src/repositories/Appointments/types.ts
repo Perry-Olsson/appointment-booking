@@ -31,7 +31,7 @@ export type ValidateNewAppointment = (reqBody: any) => NewAppointment;
 
 export type ValidateTimestamp = (reqField: any) => Date;
 
-export type ValidateTime = (date: Date) => void;
+export type ValidateTime = (newAppointment: NewAppointment) => void;
 
 export type FindManyRaw = (
   args: Time,
