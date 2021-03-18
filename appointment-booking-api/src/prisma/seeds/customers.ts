@@ -17,5 +17,3 @@ export const seedCustomers = async () => {
 
   await prisma.$disconnect();
 };
-
-seedCustomers();
