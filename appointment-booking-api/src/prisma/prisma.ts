@@ -1,3 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
+import config from "../config";
 
-export const prisma = new PrismaClient();
+const log: (Prisma.LogLevel | Prisma.LogDefinition)[] | undefined =
+  config.env === "development" ? ["query", "info", "warn", "error"] : undefined;
+
+export const prisma = new PrismaClient({
+  log,
+});
