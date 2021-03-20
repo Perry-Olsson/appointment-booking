@@ -1,6 +1,7 @@
-import { ONE_DAY } from "../../constants";
+import { HALF_HOUR, HOUR, ONE_DAY } from "../../constants";
 import { prisma } from "../../prisma";
 import { NewAppointment, NewCustomer } from "../../types";
+import { createInitialAppointment } from "./utils/createInitialAppointment";
 import { createNewAppointment } from "./utils";
 
 export async function seedAppointments(appointments: NewAppointment[]) {
@@ -38,27 +39,9 @@ export const createAppointments = (
   return appointmentSeeds;
 };
 
-const createInitialAppointment = () => {
-  const today = new Date();
-  today.setHours(9);
-
-  const initialAppointmentTimestamp = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate(),
-    today.getHours()
-  );
-
-  return initialAppointmentTimestamp.valueOf();
-};
-
 export const getRandomNumber = (upperBound = 10) => {
   return Math.ceil(Math.random() * upperBound);
 };
-
-export const QUARTER_HOUR = 1000 * 60 * 15;
-export const HALF_HOUR = QUARTER_HOUR * 2;
-export const HOUR = HALF_HOUR * 2;
 
 const testUser: NewCustomer = {
   email: "test@example.com",

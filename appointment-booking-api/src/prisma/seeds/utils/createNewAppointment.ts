@@ -1,11 +1,11 @@
-import { getRandomNumber, HOUR } from "..";
-import { ONE_DAY } from "../../../constants";
+import { getRandomNumber } from "..";
+import { HOUR, ONE_DAY } from "../../../constants";
 import { NewAppointment } from "../../../types";
 
 export const createNewAppointment = (
   timestamp: Date,
   end: Date,
-  customerId: string = "john@example.com"
+  customerId: string = "test@example.com"
 ): NewAppointment => {
   return {
     timestamp,
