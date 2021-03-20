@@ -22,11 +22,17 @@ export class Timestamper {
 
   getNextTimestamp(timeValue: number, rngUpperbound = 1) {
     const newTimestamp = new Date(
-      this.timeValue + timeValue + getRandomNumber(rngUpperbound)
+      this.timeValue + timeValue * getRandomNumber(rngUpperbound)
     );
 
     this.timeValue = newTimestamp.valueOf();
 
     return newTimestamp;
   }
+
+  setTimeValue(date: Date) {
+    this.timeValue = this.createInitialAppointment(date);
+  }
 }
+
+export const timestamper = new Timestamper();
