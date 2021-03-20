@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../prisma";
 import customers from "./json/customers.json";
 import { NewCustomer } from "../../types";
+import { createNewAppointment } from "./utils";
 
 export const seedCustomers = async () => {
   await prisma.customer.deleteMany();
@@ -12,7 +13,12 @@ export const seedCustomers = async () => {
     if (newCustomer.type === "USER")
       newCustomer.password = await bcrypt.hash(newCustomer.password!, 8);
 
-    await prisma.customer.create({ data: newCustomer });
+    await prisma.customer.create({
+      data: {
+        ...newCustomer,
+        appointments: { create: {} },
+      },
+    });
   }
 
   await prisma.$disconnect();

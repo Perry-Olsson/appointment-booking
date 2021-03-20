@@ -1,10 +1,10 @@
 import { ONE_DAY } from "../../constants";
 import { prisma } from "../../prisma";
-import { NewAppointment } from "../../types";
+import { NewAppointment, NewCustomer } from "../../types";
 import { createNewAppointment } from "./utils";
 
 export async function seedAppointments(appointments: NewAppointment[]) {
-  await prisma.appointment.deleteMany();
+  await prisma.customer.create({ data: testUser });
 
   for (let i = 0; i < appointments.length; i++) {
     await prisma.appointment.create({ data: appointments[i] });
@@ -52,10 +52,19 @@ const createInitialAppointment = () => {
   return initialAppointmentTimestamp.valueOf();
 };
 
-const getRandomNumber = (upperBound = 10) => {
+export const getRandomNumber = (upperBound = 10) => {
   return Math.ceil(Math.random() * upperBound);
 };
 
-const QUARTER_HOUR = 1000 * 60 * 15;
-const HALF_HOUR = QUARTER_HOUR * 2;
-const HOUR = HALF_HOUR * 2;
+export const QUARTER_HOUR = 1000 * 60 * 15;
+export const HALF_HOUR = QUARTER_HOUR * 2;
+export const HOUR = HALF_HOUR * 2;
+
+const testUser: NewCustomer = {
+  email: "test@example.com",
+  type: "USER",
+  phoneNumber: "1234567890",
+  password: "testPassword",
+  firstName: "testFirstName",
+  lastName: "testLastName",
+};

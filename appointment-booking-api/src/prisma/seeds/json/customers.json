@@ -1,5 +1,37 @@
 [
   {
+    "email": "john@example.com",
+    "type": "USER",
+    "phoneNumber": "4536432222",
+    "password": "johnPassword",
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  {
+    "email": "angela.newman@example.com",
+    "type": "USER",
+    "phoneNumber": "081-718-3989",
+    "password": "1234567",
+    "firstName": "angela",
+    "lastName": "newman"
+  },
+  {
+    "email": "judith.schmitz@example.com",
+    "type": "USER",
+    "phoneNumber": "0171-7824648",
+    "password": "prissy",
+    "firstName": "judith",
+    "lastName": "schmitz"
+  },
+  {
+    "email": "carsta.rocha@example.com",
+    "type": "USER",
+    "phoneNumber": "(60) 1416-4953",
+    "password": "soccer12",
+    "firstName": "carsta",
+    "lastName": "rocha"
+  },
+  {
     "email": "melany.wijngaard@example.com",
     "phoneNumber": "(727)-033-9347",
     "type": "GUEST",
@@ -30,37 +62,5 @@
     "password": null,
     "firstName": "sarah",
     "lastName": "oliver"
-  },
-  {
-    "email": "test@example.com",
-    "type": "USER",
-    "phoneNumber": "1234567890",
-    "password": "testPassword",
-    "firstName": "testFirstName",
-    "lastName": "testLastName"
-  },
-  {
-    "email": "angela.newman@example.com",
-    "type": "USER",
-    "phoneNumber": "081-718-3989",
-    "password": "1234567",
-    "firstName": "angela",
-    "lastName": "newman"
-  },
-  {
-    "email": "judith.schmitz@example.com",
-    "type": "USER",
-    "phoneNumber": "0171-7824648",
-    "password": "prissy",
-    "firstName": "judith",
-    "lastName": "schmitz"
-  },
-  {
-    "email": "carsta.rocha@example.com",
-    "type": "USER",
-    "phoneNumber": "(60) 1416-4953",
-    "password": "soccer12",
-    "firstName": "carsta",
-    "lastName": "rocha"
   }
 ]
