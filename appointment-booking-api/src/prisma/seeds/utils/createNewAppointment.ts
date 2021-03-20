@@ -1,6 +1,6 @@
-import { getRandomNumber } from "..";
 import { HOUR, ONE_DAY } from "../../../constants";
 import { NewAppointment } from "../../../types";
+import { getRandomNumber } from "./getRandomNumber";
 
 export const createNewAppointment = (
   timestamp: Date,

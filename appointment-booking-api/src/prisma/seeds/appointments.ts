@@ -3,6 +3,7 @@ import { prisma } from "../../prisma";
 import { NewAppointment, NewCustomer } from "../../types";
 import { createInitialAppointment } from "./utils/createInitialAppointment";
 import { createNewAppointment } from "./utils";
+import { getRandomNumber } from "./utils/getRandomNumber";
 
 export async function seedAppointments(appointments: NewAppointment[]) {
   await prisma.customer.create({ data: testUser });
@@ -15,8 +16,8 @@ export async function seedAppointments(appointments: NewAppointment[]) {
 }
 
 export const createAppointments = (
-  daysWithAppointments = 11,
-  appointmentsPerDay = 2
+  daysWithAppointments: number,
+  appointmentsPerDay: number
 ): NewAppointment[] => {
   const appointmentSeeds: NewAppointment[] = [];
   const initialAppointment = createInitialAppointment();
@@ -37,10 +38,6 @@ export const createAppointments = (
     }
   }
   return appointmentSeeds;
-};
-
-export const getRandomNumber = (upperBound = 10) => {
-  return Math.ceil(Math.random() * upperBound);
 };
 
 const testUser: NewCustomer = {
