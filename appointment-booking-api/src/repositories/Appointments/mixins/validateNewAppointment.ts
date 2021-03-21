@@ -5,5 +5,5 @@ export const validateNewAppointment: ValidateNewAppointment = reqBody => {
   const timestamp = Appointments.validateTimestamp(reqBody.timestamp);
   const end = Appointments.validateTimestamp(reqBody.end);
 
-  return { timestamp, end };
+  return { ...reqBody, timestamp, end };
 };
