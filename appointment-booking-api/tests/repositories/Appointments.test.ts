@@ -79,7 +79,6 @@ describe("Appointments Repository", () => {
     });
 
     test("throws Duplicate error if appointment already exists", async () => {
-      //todo
       const { data } = await createTestAppointment({ pushToDb: true });
 
       try {

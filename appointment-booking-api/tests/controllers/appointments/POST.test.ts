@@ -27,4 +27,14 @@ describe("POST request", () => {
 
     await prisma.appointment.delete({ where: { id: appointment.id } });
   });
+
+  test("/api/appointments fails without customerId (email)", async () => {
+    const { data } = await createTestAppointment();
+
+    const response = await api
+      .post("/api/appointments")
+      .send({ timestamp: data.timestamp, end: data.end });
+
+    expect(response.status).toBe(500);
+  });
 });
