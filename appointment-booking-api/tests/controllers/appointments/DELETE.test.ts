@@ -1,12 +1,16 @@
 import request from "supertest";
 import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
-import { createTestAppointment, initializeAppointments } from "../../helpers";
+import {
+  createTestAppointment,
+  initializeTestData,
+  PushToDbError,
+} from "../../helpers";
 
 const api = request(app);
 
 beforeAll(async () => {
-  await initializeAppointments();
+  await initializeTestData();
 });
 
 afterAll(() => prisma.$disconnect());
@@ -14,8 +18,7 @@ afterAll(() => prisma.$disconnect());
 describe("DELETE request", () => {
   test("request to /api/appointments/:timestamp successfully deletes an appointment", async () => {
     const { appointment } = await createTestAppointment({ pushToDb: true });
-
-    if (appointment === null) throw Error();
+    if (!appointment) throw new PushToDbError();
 
     const response = await api.delete(
       `/api/appointments/${appointment.timestamp.toJSON()}`

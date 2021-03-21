@@ -61,6 +61,11 @@ export const createDefaultTime = (): Required<Time> => {
   };
 };
 
+interface TestAppointment {
+  data: NewAppointment;
+  appointment: Appointment | null;
+}
+
 interface TestAppointmentOptions {
   time?: TestAppointmentTime;
   pushToDb?: boolean;
@@ -69,11 +74,6 @@ interface TestAppointmentOptions {
 interface TestAppointmentTime {
   start?: Time;
   finish?: Time;
-}
-
-interface TestAppointment {
-  data: NewAppointment;
-  appointment: Appointment | null;
 }
 
 interface AppointmentTimestamps {

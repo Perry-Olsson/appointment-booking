@@ -6,7 +6,7 @@ import { prisma } from "../../../src/prisma";
 import {
   createTestAppointment,
   filterAppointmentsFromDb,
-  initializeAppointments,
+  initializeTestData,
   parseRawAppointment,
 } from "../../helpers";
 import {
@@ -19,7 +19,7 @@ import {
 const api = request(app);
 
 beforeAll(async () => {
-  await initializeAppointments();
+  await initializeTestData();
 });
 
 afterAll(() => prisma.$disconnect());
@@ -94,6 +94,8 @@ describe("GET request", () => {
 
       expect(response.status).toBe(200);
       expect(appointmentFromApi).toEqual(appointment);
+
+      await prisma.appointment.delete({ where: { id: appointment?.id } });
     });
 
     test("Invalid timestamp returns correct error", async () => {

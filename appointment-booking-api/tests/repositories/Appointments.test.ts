@@ -3,12 +3,12 @@ import { Appointments } from "../../src/repositories/Appointments";
 import {
   createTestAppointment,
   filterAppointmentsFromDb,
-  initializeAppointments,
+  initializeTestData,
   parseRawAppointment,
 } from "../helpers";
 
 beforeAll(async () => {
-  await initializeAppointments();
+  await initializeTestData();
 });
 
 afterAll(() => prisma.$disconnect());

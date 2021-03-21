@@ -1,4 +1,4 @@
-import { Appointment } from "@prisma/client";
+import { Appointment, Prisma } from "@prisma/client";
 
 export const parseRawAppointment = (appointment: any): Appointment => {
   const mappedAppointment: any = {};
@@ -18,12 +18,16 @@ export const parseRawAppointment = (appointment: any): Appointment => {
       }
     }
   }
-  if (Object.keys(mappedAppointment).length !== 5)
+  if (
+    Object.keys(mappedAppointment).length !==
+    Object.keys(Prisma.AppointmentScalarFieldEnum).length
+  )
     throw new Error("Missing fields in appointment");
   return mappedAppointment as Appointment;
 };
 
 const isValidAppointmentField = (field: string): boolean => {
-  if (field === "id") return true;
+  if (Prisma.AppointmentScalarFieldEnum[field as keyof Appointment])
+    return true;
   else return false;
 };
