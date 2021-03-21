@@ -18,6 +18,7 @@ export const createAppointments = (
   appointmentsPerDay: number
 ): NewAppointment[] => {
   const appointmentSeeds: NewAppointment[] = [];
+
   for (let i = 0; i < daysWithAppointments; i++) {
     timestamper.getNextTimestamp(ONE_DAY, 3);
     for (let i = 0; i < appointmentsPerDay; i++) {
