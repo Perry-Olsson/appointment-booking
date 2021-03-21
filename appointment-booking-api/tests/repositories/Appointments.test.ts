@@ -99,7 +99,6 @@ describe("Appointments Repository", () => {
       try {
         await Appointments.isDuplicate(data);
       } catch (e) {
-        console.log(e.message);
         expect(e.message).toBe("timeslot has been taken");
       }
     });

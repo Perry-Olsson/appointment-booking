@@ -1,4 +1,5 @@
 import { Appointment } from "@prisma/client";
+import { ONE_MONTH } from "../../src/constants";
 import { prisma } from "../../src/prisma";
 import { createNewAppointment } from "../../src/prisma/seeds/utils";
 import { NewAppointment, Time } from "../../src/types";
@@ -51,10 +52,11 @@ export const createAppointmentTimestamps = ({
 };
 
 export const createDefaultTime = (): Required<Time> => {
-  const now = new Date();
+  const fiveMonthsFromNow = new Date(Date.now() + ONE_MONTH * 5);
+
   return {
-    year: now.getFullYear(),
-    month: now.getMonth() + 1,
+    year: fiveMonthsFromNow.getFullYear(),
+    month: fiveMonthsFromNow.getMonth(),
     day: 15,
     hour: 10,
     minute: 30,
