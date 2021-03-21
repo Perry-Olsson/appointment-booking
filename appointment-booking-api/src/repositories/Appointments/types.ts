@@ -14,6 +14,7 @@ export interface AppointmentMixin {
   validateQuery: ValidateQuery;
   initialize: Initialize;
   sorted: Sorted;
+  exposed: Exposed;
   isDuplicate: IsDuplicate;
   validateNewAppointment: ValidateNewAppointment;
   validateTimestamp: ValidateTimestamp;
@@ -21,6 +22,7 @@ export interface AppointmentMixin {
   findManyRaw: FindManyRaw;
 }
 
+//mixins
 export type ValidateQuery = (query: any) => Time;
 
 export type Initialize = (req: any) => NewAppointment;
@@ -40,5 +42,12 @@ export type FindManyRaw = (
 
 export interface Sorted {
   findMany: (args?: Prisma.AppointmentFindManyArgs) => Promise<Appointment[]>;
+  findManyRaw: FindManyRaw;
+}
+
+export interface Exposed {
+  findMany: (
+    where?: Omit<Prisma.AppointmentWhereInput, "customerId" | "customer">
+  ) => Promise<Appointment[]>;
   findManyRaw: FindManyRaw;
 }

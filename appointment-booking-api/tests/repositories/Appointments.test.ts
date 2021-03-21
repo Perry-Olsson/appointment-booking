@@ -20,6 +20,21 @@ describe("Appointments Repository", () => {
 
     expect(appointments).toEqual(appointmentsFromDb);
   });
+
+  describe("exposed", () => {
+    test("exposed findMany does not return customerId", async () => {
+      const appointments = await Appointments.exposed.findMany();
+
+      expect(appointments[0].customerId).toBeUndefined();
+    });
+
+    // test("exposed findManyRaw does not return private customer fields", async () => {
+    //   const appointments = await Appointments.exposed.findManyRaw({});
+
+    //   expect(appointments[0].customerId).toBeUndefined();
+    // });
+  });
+
   describe("Sorted", () => {
     test("Sorted field of repository returns sorted appointments", async () => {
       const appointmentsFromDb = await prisma.appointment.findMany({

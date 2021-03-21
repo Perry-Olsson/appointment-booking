@@ -8,6 +8,7 @@ import {
   filterAppointmentsFromDb,
   initializeTestData,
   parseRawAppointment,
+  PushToDbError,
 } from "../../helpers";
 import {
   appointmentsAreSorted,
@@ -44,8 +45,9 @@ describe("GET request", () => {
     test("Request with query string returns correct appointments", async () => {
       const now = new Date();
 
-      const appointmentsFromDb = filterAppointmentsFromDb(
-        await prisma.appointment.findMany(),
+      const appointmentsFromDb = await prisma.appointment.findMany();
+      const filteredAppointments = filterAppointmentsFromDb(
+        appointmentsFromDb,
         { year: now.getFullYear(), month: now.getMonth() }
       );
 
@@ -54,7 +56,7 @@ describe("GET request", () => {
       );
 
       expect(response.status).toBe(200);
-      expect(response.body).toHaveLength(appointmentsFromDb.length);
+      expect(response.body).toHaveLength(filteredAppointments.length);
     });
 
     test("Query string with month and no year does not return month from past years", async () => {
@@ -86,6 +88,7 @@ describe("GET request", () => {
       const { appointment } = await createTestAppointment({
         pushToDb: true,
       });
+      if (!appointment) throw new PushToDbError();
       const response = await api.get(
         `/api/appointments/${appointment?.timestamp.toJSON()}`
       );
@@ -95,7 +98,7 @@ describe("GET request", () => {
       expect(response.status).toBe(200);
       expect(appointmentFromApi).toEqual(appointment);
 
-      await prisma.appointment.delete({ where: { id: appointment?.id } });
+      await prisma.appointment.delete({ where: { id: appointment.id } });
     });
 
     test("Invalid timestamp returns correct error", async () => {

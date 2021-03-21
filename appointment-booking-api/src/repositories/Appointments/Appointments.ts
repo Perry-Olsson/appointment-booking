@@ -3,6 +3,7 @@ import { AppointmentMixin, AppointmentRepo } from "./types";
 import {
   initialize,
   sorted,
+  exposed,
   validateQuery,
   isDuplicate,
   validateNewAppointment,
@@ -19,6 +20,7 @@ const appointmentsMixin: AppointmentMixin = {
   validateTimestamp,
   validateTime,
   sorted,
+  exposed,
   findManyRaw,
 };
 
