@@ -20,7 +20,9 @@ router.get("/:timestamp", async (req, res, next) => {
   try {
     const timestamp = Appointments.validateTimestamp(req.params.timestamp);
 
-    const appointment = await Appointments.findUnique({ where: { timestamp } });
+    const appointment = await Appointments.exposed.findUnique({
+      where: { timestamp },
+    });
 
     res.json(appointment);
   } catch (err) {

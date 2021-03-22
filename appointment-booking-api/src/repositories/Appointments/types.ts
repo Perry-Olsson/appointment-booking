@@ -48,4 +48,7 @@ export interface Exposed {
     where?: Omit<Prisma.AppointmentWhereInput, "customerId" | "customer">
   ) => Promise<Appointment[]>;
   findManyRaw: FindManyRaw;
+  findUnique: (
+    query: Prisma.AppointmentFindUniqueArgs
+  ) => Promise<Appointment | null>;
 }

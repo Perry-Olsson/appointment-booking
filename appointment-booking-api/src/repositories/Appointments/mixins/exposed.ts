@@ -16,4 +16,9 @@ export const exposed: Exposed = {
     query.select = `"id", "createdAt", "updatedAt", "timestamp", "end"`;
     return await findManyRaw(query);
   },
+  findUnique: async function (query) {
+    query.select = exposedFields;
+
+    return await prisma.appointment.findUnique(query);
+  },
 };

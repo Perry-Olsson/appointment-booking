@@ -138,7 +138,8 @@ describe("GET request", () => {
       const appointmentFromApi = parseRawAppointment(response.body);
 
       expect(response.status).toBe(200);
-      expect(appointmentFromApi).toEqual(appointment);
+      expect(appointmentFromApi.customerId).toBeUndefined();
+      expect(appointment).toMatchObject(appointmentFromApi);
 
       await prisma.appointment.delete({ where: { id: appointment.id } });
     });
