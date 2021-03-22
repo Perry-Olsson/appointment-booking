@@ -12,7 +12,8 @@ export const exposed: Exposed = {
 
     return await prisma.appointment.findMany({ ...query, where });
   },
-  findManyRaw: async function (query, options = ";") {
-    return await findManyRaw(query, " ORDER BY timestamp ASC" + options);
+  findManyRaw: async function (query) {
+    query.select = `"id", "createdAt", "updatedAt", "timestamp", "end"`;
+    return await findManyRaw(query);
   },
 };

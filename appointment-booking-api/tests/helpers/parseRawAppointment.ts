@@ -18,11 +18,6 @@ export const parseRawAppointment = (appointment: any): Appointment => {
       }
     }
   }
-  if (
-    Object.keys(mappedAppointment).length !==
-    Object.keys(Prisma.AppointmentScalarFieldEnum).length
-  )
-    throw new Error("Missing fields in appointment");
   return mappedAppointment as Appointment;
 };
 

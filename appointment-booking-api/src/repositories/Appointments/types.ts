@@ -36,10 +36,13 @@ export type ValidateTimestamp = (reqField: any) => Date;
 
 export type ValidateTime = (newAppointment: NewAppointment) => void;
 
-export type FindManyRaw = (
-  args: Time,
-  options?: string
-) => Promise<Appointment[]>;
+export type FindManyRaw = (query: FindManyRawArgs) => Promise<Appointment[]>;
+
+interface FindManyRawArgs {
+  args: Time;
+  select?: string;
+  options?: string;
+}
 
 export interface Sorted {
   findMany: (args?: Prisma.AppointmentFindManyArgs) => Promise<Appointment[]>;

@@ -28,11 +28,24 @@ describe("Appointments Repository", () => {
       expect(appointments[0].customerId).toBeUndefined();
     });
 
-    // test("exposed findManyRaw does not return private customer fields", async () => {
-    //   const appointments = await Appointments.exposed.findManyRaw({});
+    test("exposed findManyRaw does not return private customer fields", async () => {
+      const appointmentsFromDb = await prisma.appointment.findMany({
+        select: {
+          id: true,
+          createdAt: true,
+          updatedAt: true,
+          timestamp: true,
+          end: true,
+        },
+      });
+      const rawAppointments = await Appointments.exposed.findManyRaw({
+        args: {},
+      });
+      const appointments = rawAppointments.map(parseRawAppointment);
 
-    //   expect(appointments[0].customerId).toBeUndefined();
-    // });
+      expect(appointments).toEqual(appointmentsFromDb);
+      expect(appointments[0].customerId).toBeUndefined();
+    });
   });
 
   describe("Sorted", () => {
@@ -51,9 +64,9 @@ describe("Appointments Repository", () => {
         month: now.getMonth(),
       };
 
-      const rawAppointments = await Appointments.sorted.findManyRaw(
-        queryObject
-      );
+      const rawAppointments = await Appointments.sorted.findManyRaw({
+        args: queryObject,
+      });
       const appointments = rawAppointments.map((a: any) =>
         parseRawAppointment(a)
       );

@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const where = Appointments.validateQuery(req.query);
-    const appointments = await Appointments.sorted.findManyRaw(where);
+    const appointments = await Appointments.sorted.findManyRaw({ args: where });
 
     res.json(appointments);
   } catch (err) {

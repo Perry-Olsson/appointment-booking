@@ -8,7 +8,11 @@ export const sorted: Sorted = {
 
     return await prisma.appointment.findMany(query);
   },
-  findManyRaw: async function (query, options = ";") {
-    return await findManyRaw(query, " ORDER BY timestamp ASC" + options);
+  findManyRaw: async function (query) {
+    const options = query.options || ";";
+    return await findManyRaw({
+      ...query,
+      options: " ORDER BY timestamp ASC" + options,
+    });
   },
 };
