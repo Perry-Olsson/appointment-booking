@@ -23,7 +23,8 @@ export interface AppointmentMixin {
 }
 
 //mixins
-export type ValidateQuery = (query: any) => Time;
+export type ValidateQuery = (query: any) => queryArg;
+export type queryArg = Omit<Time, "hour" | "minute">;
 
 export type Initialize = (req: any) => NewAppointment;
 

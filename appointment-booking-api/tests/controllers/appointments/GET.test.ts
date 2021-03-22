@@ -59,6 +59,42 @@ describe("GET request", () => {
       expect(response.body).toHaveLength(filteredAppointments.length);
     });
 
+    test("Query for appointments within a certain month matches correct timezone", async () => {
+      const now = new Date();
+      const year = now.getFullYear() + 2;
+      const june = 5;
+
+      //appointment will be stored in database as july due to timezone offset
+      const { appointment } = await createTestAppointment({
+        pushToDb: true,
+        time: {
+          start: {
+            year,
+            month: june,
+            day: 30,
+            hour: 20,
+            minute: 0,
+          },
+        },
+      });
+      if (!appointment) throw new PushToDbError();
+
+      const appointmentsFromDb = await prisma.appointment.findMany();
+      const filteredAppointments = filterAppointmentsFromDb(
+        appointmentsFromDb,
+        { year, month: june }
+      );
+
+      const response = await api.get(
+        `/api/appointments/?month=${june}&year=${year}`
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(filteredAppointments.length);
+
+      await prisma.appointment.delete({ where: { id: appointment.id } });
+    });
+
     test("Query string with month and no year does not return month from past years", async () => {
       const { id1, id2, month, year } = await createAppointmentsOneYearApart();
 
