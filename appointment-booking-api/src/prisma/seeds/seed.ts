@@ -1,12 +1,21 @@
 import { prisma } from "../../prisma";
 import { createAppointments, seedAppointments } from "./appointments";
+import { seedCustomers } from "./customers";
+import { clearDb } from "./utils";
 
 async function main() {
   const args = process.argv;
+
+  await clearDb();
+
+  if (args.includes("customers") || !args.includes("-p")) {
+    await seedCustomers();
+  }
+
   if (
     args.includes("appointments") ||
     args.includes("-a") ||
-    process.argv.length === 2
+    !args.includes("-p")
   ) {
     let days = 10;
     let appointments = 2;

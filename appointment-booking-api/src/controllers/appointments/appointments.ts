@@ -6,7 +6,9 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const where = Appointments.validateQuery(req.query);
-    const appointments = await Appointments.sorted.findManyRaw(where);
+    const appointments = await Appointments.exposed.findManyRaw({
+      args: where,
+    });
 
     res.json(appointments);
   } catch (err) {
@@ -18,7 +20,9 @@ router.get("/:timestamp", async (req, res, next) => {
   try {
     const timestamp = Appointments.validateTimestamp(req.params.timestamp);
 
-    const appointment = await Appointments.findUnique({ where: { timestamp } });
+    const appointment = await Appointments.exposed.findUnique({
+      where: { timestamp },
+    });
 
     res.json(appointment);
   } catch (err) {

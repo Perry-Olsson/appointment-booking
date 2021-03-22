@@ -10,6 +10,7 @@
     "declaration": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "composite": false,
     "removeComments": true,
     "noImplicitAny": true,
@@ -27,5 +28,5 @@
     "rootDir": "src"
   },
   "exclude": ["node_modules", "tests"],
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts", "tests/helpers/initializeTestData.ts"]
 }

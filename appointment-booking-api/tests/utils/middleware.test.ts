@@ -1,13 +1,16 @@
 import request from "supertest";
 import { app } from "../../src/app";
-import { initializeAppointments } from "../helpers/initalizeDb";
 import { prisma } from "../../src/prisma";
-import { createDefaultTime, createTestAppointment } from "../helpers";
+import {
+  createDefaultTime,
+  createTestAppointment,
+  initializeTestData,
+} from "../helpers";
 
 const api = request(app);
 
 beforeAll(async () => {
-  await initializeAppointments();
+  await initializeTestData();
 });
 
 afterAll(() => prisma.$disconnect());

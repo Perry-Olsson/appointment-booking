@@ -1,0 +1,66 @@
+[
+  {
+    "email": "john@example.com",
+    "type": "USER",
+    "phoneNumber": "4536432222",
+    "password": "johnPassword",
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  {
+    "email": "angela.newman@example.com",
+    "type": "USER",
+    "phoneNumber": "081-718-3989",
+    "password": "1234567",
+    "firstName": "angela",
+    "lastName": "newman"
+  },
+  {
+    "email": "judith.schmitz@example.com",
+    "type": "USER",
+    "phoneNumber": "0171-7824648",
+    "password": "prissy",
+    "firstName": "judith",
+    "lastName": "schmitz"
+  },
+  {
+    "email": "carsta.rocha@example.com",
+    "type": "USER",
+    "phoneNumber": "(60) 1416-4953",
+    "password": "soccer12",
+    "firstName": "carsta",
+    "lastName": "rocha"
+  },
+  {
+    "email": "melany.wijngaard@example.com",
+    "phoneNumber": "(727)-033-9347",
+    "type": "GUEST",
+    "password": null,
+    "firstName": "melany",
+    "lastName": "wijngaard"
+  },
+  {
+    "email": "nanna.pedersen@example.com",
+    "phoneNumber": "43672992",
+    "type": "GUEST",
+    "firstName": "nanna",
+    "lastName": "pedersen",
+    "password": null
+  },
+  {
+    "email": "amelia.mercier@example.com",
+    "type": "GUEST",
+    "password": null,
+    "phoneNumber": "(168)-747-5950",
+    "firstName": "amelia",
+    "lastName": "mercier"
+  },
+  {
+    "email": "sarah.oliver@example.com",
+    "type": "GUEST",
+    "phoneNumber": "0761-814-654",
+    "password": null,
+    "firstName": "sarah",
+    "lastName": "oliver"
+  }
+]

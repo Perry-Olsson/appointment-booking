@@ -2,7 +2,7 @@ import { prisma } from "../../prisma";
 import { AppointmentMixin, AppointmentRepo } from "./types";
 import {
   initialize,
-  sorted,
+  exposed,
   validateQuery,
   isDuplicate,
   validateNewAppointment,
@@ -18,7 +18,7 @@ const appointmentsMixin: AppointmentMixin = {
   validateNewAppointment,
   validateTimestamp,
   validateTime,
-  sorted,
+  exposed,
   findManyRaw,
 };
 

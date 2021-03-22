@@ -2,13 +2,13 @@ import request from "supertest";
 
 import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
-import { createTestAppointment, initializeAppointments } from "../../helpers";
+import { createTestAppointment, initializeTestData } from "../../helpers";
 import { parseRawAppointment } from "./helpers";
 
 const api = request(app);
 
 beforeAll(async () => {
-  await initializeAppointments();
+  await initializeTestData();
 });
 
 afterAll(() => prisma.$disconnect());
@@ -26,5 +26,15 @@ describe("POST request", () => {
     expect(appointment).toEqual(appointmentFromDb);
 
     await prisma.appointment.delete({ where: { id: appointment.id } });
+  });
+
+  test("/api/appointments fails without customerId (email)", async () => {
+    const { data } = await createTestAppointment();
+
+    const response = await api
+      .post("/api/appointments")
+      .send({ timestamp: data.timestamp, end: data.end });
+
+    expect(response.status).toBe(500);
   });
 });

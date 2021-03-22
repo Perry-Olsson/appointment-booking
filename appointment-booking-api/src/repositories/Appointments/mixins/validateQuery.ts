@@ -18,14 +18,7 @@ export const validateQuery = (query: any) => {
 };
 
 const isValidTimeField = (field: string): boolean => {
-  if (
-    field === "year" ||
-    field === "month" ||
-    field === "day" ||
-    field === "hour" ||
-    field === "minute"
-  )
-    return true;
+  if (field === "year" || field === "month" || field === "day") return true;
   return false;
 };
 

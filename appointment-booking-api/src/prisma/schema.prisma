@@ -8,14 +8,34 @@ datasource db {
 }
 
 model Appointment {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  timestamp DateTime @unique
-  end       DateTime @unique
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+  timestamp  DateTime @unique @db.Timestamptz()
+  end        DateTime @unique @db.Timestamptz()
+  customer   Customer @relation(fields: [customerId], references: [email])
+  customerId String   @db.VarChar(100)
+}
+
+model Customer {
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  firstName    String        @db.VarChar(50)
+  lastName     String        @db.VarChar(50)
+  type         Type          @default(GUEST)
+  email        String        @unique @db.VarChar(100)
+  phoneNumber  String        @db.VarChar(25)
+  password     String?       @db.VarChar(60)
+  appointments Appointment[]
 }
 
 model Test {
   id   Int    @id @default(autoincrement())
   text String
+}
+
+enum Type {
+  USER
+  GUEST
 }

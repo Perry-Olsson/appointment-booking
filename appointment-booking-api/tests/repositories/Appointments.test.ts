@@ -2,13 +2,12 @@ import { prisma } from "../../src/prisma";
 import { Appointments } from "../../src/repositories/Appointments";
 import {
   createTestAppointment,
-  filterAppointmentsFromDb,
-  initializeAppointments,
+  initializeTestData,
   parseRawAppointment,
 } from "../helpers";
 
 beforeAll(async () => {
-  await initializeAppointments();
+  await initializeTestData();
 });
 
 afterAll(() => prisma.$disconnect());
@@ -20,35 +19,29 @@ describe("Appointments Repository", () => {
 
     expect(appointments).toEqual(appointmentsFromDb);
   });
-  describe("Sorted", () => {
-    test("Sorted field of repository returns sorted appointments", async () => {
-      const appointmentsFromDb = await prisma.appointment.findMany({
-        orderBy: { timestamp: "asc" },
-      });
-      const appointments = await Appointments.sorted.findMany();
 
-      expect(appointments).toEqual(appointmentsFromDb);
+  describe("exposed", () => {
+    test("exposed findMany does not return customerId", async () => {
+      const appointments = await Appointments.exposed.findMany();
+
+      expect(appointments[0].customerId).toBeUndefined();
     });
 
-    test("Sorted find many raw takes query arguments", async () => {
-      const now = new Date();
-      const queryObject = {
-        month: now.getMonth(),
-      };
-
-      const rawAppointments = await Appointments.sorted.findManyRaw(
-        queryObject
-      );
-      const appointments = rawAppointments.map((a: any) =>
-        parseRawAppointment(a)
-      );
-
-      const appointmentsFromDb = filterAppointmentsFromDb(
-        await prisma.appointment.findMany(),
-        { month: now.getMonth() }
-      );
+    test("exposed findManyRaw does not return private customer fields", async () => {
+      const appointmentsFromDb = await prisma.appointment.findMany({
+        select: {
+          id: true,
+          createdAt: true,
+          updatedAt: true,
+          timestamp: true,
+          end: true,
+        },
+      });
+      const rawAppointments = await Appointments.exposed.findManyRaw({});
+      const appointments = rawAppointments.map(parseRawAppointment);
 
       expect(appointments).toEqual(appointmentsFromDb);
+      expect(appointments[0].customerId).toBeUndefined();
     });
   });
 
@@ -79,13 +72,11 @@ describe("Appointments Repository", () => {
     });
 
     test("throws Duplicate error if appointment already exists", async () => {
-      //todo
       const { data } = await createTestAppointment({ pushToDb: true });
 
       try {
         await Appointments.isDuplicate(data);
       } catch (e) {
-        console.log(e.message);
         expect(e.message).toBe("timeslot has been taken");
       }
     });
