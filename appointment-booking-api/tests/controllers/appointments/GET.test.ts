@@ -26,9 +26,15 @@ beforeAll(async () => {
 afterAll(() => prisma.$disconnect());
 
 describe("GET request", () => {
-  test("Request to /api/appointments returns appointments", async () => {
+  test("Request to /api/appointments returns appointments without customerId field", async () => {
     const appointmentsFromDb = await prisma.appointment.findMany({
-      orderBy: { timestamp: "asc" },
+      select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        timestamp: true,
+        end: true,
+      },
     });
     const response = await api.get("/api/appointments");
     const appointments: Appointment[] = response.body.map((app: any) =>

@@ -2,7 +2,6 @@ import { prisma } from "../../src/prisma";
 import { Appointments } from "../../src/repositories/Appointments";
 import {
   createTestAppointment,
-  filterAppointmentsFromDb,
   initializeTestData,
   parseRawAppointment,
 } from "../helpers";
@@ -45,38 +44,6 @@ describe("Appointments Repository", () => {
 
       expect(appointments).toEqual(appointmentsFromDb);
       expect(appointments[0].customerId).toBeUndefined();
-    });
-  });
-
-  describe("Sorted", () => {
-    test("Sorted field of repository returns sorted appointments", async () => {
-      const appointmentsFromDb = await prisma.appointment.findMany({
-        orderBy: { timestamp: "asc" },
-      });
-      const appointments = await Appointments.sorted.findMany();
-
-      expect(appointments).toEqual(appointmentsFromDb);
-    });
-
-    test("Sorted find many raw takes query arguments", async () => {
-      const now = new Date();
-      const queryObject = {
-        month: now.getMonth(),
-      };
-
-      const rawAppointments = await Appointments.sorted.findManyRaw({
-        args: queryObject,
-      });
-      const appointments = rawAppointments.map((a: any) =>
-        parseRawAppointment(a)
-      );
-
-      const appointmentsFromDb = filterAppointmentsFromDb(
-        await prisma.appointment.findMany(),
-        { month: now.getMonth() }
-      );
-
-      expect(appointments).toEqual(appointmentsFromDb);
     });
   });
 

@@ -13,7 +13,6 @@ export interface AppointmentRepo
 export interface AppointmentMixin {
   validateQuery: ValidateQuery;
   initialize: Initialize;
-  sorted: Sorted;
   exposed: Exposed;
   isDuplicate: IsDuplicate;
   validateNewAppointment: ValidateNewAppointment;
@@ -42,11 +41,6 @@ interface FindManyRawArgs {
   args: Time;
   select?: string;
   options?: string;
-}
-
-export interface Sorted {
-  findMany: (args?: Prisma.AppointmentFindManyArgs) => Promise<Appointment[]>;
-  findManyRaw: FindManyRaw;
 }
 
 export interface Exposed {
