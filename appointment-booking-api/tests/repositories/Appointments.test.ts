@@ -37,9 +37,7 @@ describe("Appointments Repository", () => {
           end: true,
         },
       });
-      const rawAppointments = await Appointments.exposed.findManyRaw({
-        args: {},
-      });
+      const rawAppointments = await Appointments.exposed.findManyRaw({});
       const appointments = rawAppointments.map(parseRawAppointment);
 
       expect(appointments).toEqual(appointmentsFromDb);

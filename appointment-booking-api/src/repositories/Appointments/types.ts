@@ -38,7 +38,7 @@ export type ValidateTime = (newAppointment: NewAppointment) => void;
 export type FindManyRaw = (query: FindManyRawArgs) => Promise<Appointment[]>;
 
 interface FindManyRawArgs {
-  args: Time;
+  args?: Time;
   select?: string;
   options?: string;
 }
