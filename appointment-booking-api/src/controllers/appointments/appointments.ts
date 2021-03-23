@@ -46,18 +46,4 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:timestamp", async (req, res, next) => {
-  try {
-    const { timestamp } = req.params;
-
-    Appointments.validateTimestamp(timestamp);
-
-    await Appointments.delete({ where: { timestamp } });
-
-    res.status(204).end();
-  } catch (err) {
-    next(err);
-  }
-});
-
 export { router as appointmentsRouter };
