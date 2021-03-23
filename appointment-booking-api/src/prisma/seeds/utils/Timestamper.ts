@@ -8,7 +8,7 @@ export class Timestamper {
   }
 
   private createInitialAppointment(date: Date) {
-    date.setHours(9);
+    date.setUTCHours(16);
 
     const initialAppointmentTimestamp = new Date(
       date.getFullYear(),
