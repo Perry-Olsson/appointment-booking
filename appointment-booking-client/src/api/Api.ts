@@ -1,4 +1,5 @@
-import { Appointment, OrganizedAppointments } from "../types";
+import { ONE_MINUTE, TZ_OFFSET } from "../constants";
+import { Appointment, OrganizedAppointments, RawAppointment } from "../types";
 import { AxiosClient } from "./AxiosClient";
 
 export class Api extends AxiosClient {
@@ -7,43 +8,52 @@ export class Api extends AxiosClient {
   }
 
   public async fetchAppointments(query: string): Promise<Appointment[]> {
-    const rawAppointments = await this.instance.get<Appointment[]>(
+    const rawAppointments = await this.instance.get<RawAppointment[]>(
       `/appointments/${query}`
     );
 
     return this._mapTimestamps(rawAppointments);
   }
 
-  private _mapTimestamps(rawAppointments: Appointment[]) {
-    return rawAppointments.map(a => ({
-      ...a,
-      timestamp: new Date(a.timestamp),
-      end: new Date(a.end),
-    }));
+  private _mapTimestamps(rawAppointments: RawAppointment[]): Appointment[] {
+    return rawAppointments.map(a => {
+      return this._parseRawAppointment(a)
+    });
   }
 
   public prefetchAppointments = async () => {
-    const rawAppointments = await this.instance.get<Appointment[]>(
+    const rawAppointments = await this.instance.get<RawAppointment[]>(
       "/appointments/"
     );
     return this._indexAppointments(rawAppointments);
   };
 
-  private _indexAppointments(rawAppointments: Appointment[]) {
+  private _indexAppointments(rawAppointments: RawAppointment[]) {
     const organizedAppointments: OrganizedAppointments = {};
     rawAppointments.forEach(a => {
-      a.timestamp = new Date(a.timestamp);
-      a.end = new Date(a.end);
+      const parsedAppointment = this._parseRawAppointment(a)
 
-      const month = a.timestamp.getMonth();
-      const date = a.timestamp.getDate();
+      const month = parsedAppointment.timestamp.getMonth();
+      const date = parsedAppointment.timestamp.getDate();
 
       if (!organizedAppointments[month]) organizedAppointments[month] = {};
       if (!organizedAppointments[month][date])
         organizedAppointments[month][date] = [];
 
-      organizedAppointments[month][date].push(a);
+      organizedAppointments[month][date].push(parsedAppointment);
     });
     return organizedAppointments;
+  }
+
+  private _parseRawAppointment(appointment: RawAppointment) {
+    const timestamp = this._convertToPacificTz(appointment.timestamp)
+    const end = this._convertToPacificTz(appointment.end) 
+
+    return {...appointment, timestamp, end} as Appointment
+ }
+
+  private _convertToPacificTz(timestamp: string): Date {
+    const localTimestamp = new Date(timestamp)
+    return new Date(localTimestamp.valueOf() - (TZ_OFFSET - localTimestamp.getTimezoneOffset() * ONE_MINUTE))
   }
 }

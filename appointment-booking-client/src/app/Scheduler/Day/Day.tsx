@@ -15,7 +15,7 @@ const Day = () => {
 
   if (!appointments) return <div>loading...</div>;
 
-  return <PageView day={day} appointments={appointments} />;
+  return <PageView day={day} appointments={appointments!} />;
 };
 
 export default Day;

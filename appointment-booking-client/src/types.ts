@@ -6,6 +6,14 @@ export interface Appointment {
   end: Date;
 }
 
+export interface RawAppointment {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  timestamp: string;
+  end: string;
+}
+
 export interface OrganizedAppointments {
   [index: number]: DayIndex;
 }
