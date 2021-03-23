@@ -17,8 +17,8 @@ async function main() {
     args.includes("-a") ||
     !args.includes("-p")
   ) {
-    let days = 10;
-    let appointments = 2;
+    let days = 20;
+    let appointments = 5;
 
     const customFlagIndex = args.indexOf("-a");
     if (args.length < customFlagIndex + 2)
