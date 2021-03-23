@@ -21,6 +21,7 @@ export const createAppointments = (
 
   for (let i = 0; i < daysWithAppointments; i++) {
     timestamper.getNextTimestamp(ONE_DAY, 3);
+    timestamper.setTimeValue(new Date(timestamper.timeValue))
     for (let i = 0; i < appointmentsPerDay; i++) {
       appointmentSeeds.push(
         createNewAppointment(

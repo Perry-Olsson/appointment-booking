@@ -11,7 +11,6 @@ import {
   PushToDbError,
 } from "../../helpers";
 import {
-  appointmentsAreSorted,
   filterUnwantedMonths,
   createAppointmentsOneYearApart,
   deleteAppointmentsOneYearApart,
@@ -44,7 +43,6 @@ describe("GET request", () => {
     expect(response.status).toBe(200);
     expect(appointments).toHaveLength(appointmentsFromDb.length);
     expect(parseRawAppointment(appointments[0])).toEqual(appointmentsFromDb[0]);
-    expect(appointmentsAreSorted(appointments)).toBe(true);
   });
 
   describe("Query string request", () => {
