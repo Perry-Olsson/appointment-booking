@@ -8,7 +8,7 @@
     "tsc": "rm -rf dist/ && tsc",
     "type-check": "tsc --noEmit",
     "watch": "rm -rf dist/ && tsc --watch",
-    "postinstall": "npm run migrate:deploy && tsc",
+    "postinstall": "npm run migrate:deploy && tsc && npm run db:seed",
     "start": "NODE_ENV=production node ./dist/index.js",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "dev:js": "NODE_ENV=development nodemon dist/index.js",
