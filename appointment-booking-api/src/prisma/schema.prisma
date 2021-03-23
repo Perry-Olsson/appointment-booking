@@ -11,8 +11,8 @@ model Appointment {
   id         Int      @id @default(autoincrement())
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
-  timestamp  DateTime @unique @db.Timestamptz()
-  end        DateTime @unique @db.Timestamptz()
+  timestamp  DateTime @unique 
+  end        DateTime @unique 
   customer   Customer @relation(fields: [customerId], references: [email])
   customerId String   @db.VarChar(100)
 }
