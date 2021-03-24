@@ -87,4 +87,15 @@ describe("Error handler middleware", () => {
 
     await prisma.appointment.delete({ where: { id: validResponse.body.id } });
   });
+
+  test("Provides Invalid timestamp response", async () => {
+    const response = await api.get("/api/appointments/invalidTimestamp");
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      error: "Invalid timestamp",
+      message:
+        "timestamp invalidTimestamp is invalid. Timestamp must be in json format",
+    });
+  });
 });

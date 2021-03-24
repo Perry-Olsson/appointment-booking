@@ -39,5 +39,5 @@ export const isDuplicate: IsDuplicate = async function ({ timestamp, end }) {
   });
 
   if (duplicateAppointment.length)
-    throw new DuplicateError("appointment", "timeslot has been taken");
+    throw new DuplicateError("Appointment", "timeslot has been taken");
 };

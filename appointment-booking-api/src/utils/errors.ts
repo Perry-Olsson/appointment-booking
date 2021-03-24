@@ -1,25 +1,25 @@
 export class DuplicateError extends Error {
   constructor(resource: string, message: string) {
     super(message);
-    this.name = `Duplicate ${resource}`;
+    this.name = `duplicate${resource}`;
   }
 }
 
-export class InvalidTimeError extends Error {
+export class TimeError extends Error {
   constructor(
     message = "Appointments must be scheduled and end at quarter hours"
   ) {
     super(message);
-    this.name = "Invalid time";
+    this.name = "invalidTime";
   }
 }
 
-export class InvalidTimestampError extends Error {
+export class TimestampError extends Error {
   constructor(timestamp: any) {
     super(
       `timestamp ${timestamp} is invalid. Timestamp must be in json format`
     );
-    this.name = "Invalid timestamp";
+    this.name = "invalidTimestamp";
   }
 }
 
