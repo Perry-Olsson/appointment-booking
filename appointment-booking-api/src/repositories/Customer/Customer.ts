@@ -3,7 +3,6 @@ import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import { Prisma } from ".prisma/client";
 
-//write password hash logic for USER type customers
 class _Customer {
   public async initialize(reqBody: any): Promise<Prisma.CustomerCreateInput> {
     if (typeof reqBody !== "object") throw new RequestBodyError(reqBody);
