@@ -1,13 +1,5 @@
-import { prisma } from "../../src/prisma";
-import { initializeTestData } from "../helpers";
 import { Customer } from "../../src/repositories/Customer";
 import bycrypt from "bcryptjs";
-
-beforeAll(async () => {
-  await initializeTestData();
-});
-
-afterAll(() => prisma.$disconnect());
 
 describe("Customer Creation", () => {
   test("Initialze function throws error if object isn't provided", async () => {
