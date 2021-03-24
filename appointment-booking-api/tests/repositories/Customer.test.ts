@@ -1,5 +1,6 @@
 import { Customer } from "../../src/repositories/Customer";
 import bycrypt from "bcryptjs";
+import { testGuest, testUser } from "../constants";
 
 describe("Customer Creation", () => {
   test("Initialze function throws error if object isn't provided", async () => {
@@ -37,21 +38,3 @@ describe("Customer Creation", () => {
     expect(Object.keys(guest).length).toBe(Object.keys(testGuest).length - 1);
   });
 });
-
-const testUser = {
-  email: "steve@example.com",
-  type: "USER",
-  phoneNumber: "(60) 1416-4953",
-  password: "steve12",
-  firstName: "Steve",
-  lastName: "Smith",
-};
-
-const testGuest = {
-  email: "bob@example.com",
-  type: "GUEST",
-  phoneNumber: "(123)-543-3212",
-  password: null,
-  firstName: "Bob",
-  lastName: "Dull",
-};

@@ -21,6 +21,16 @@ class _Customer {
   private _validateEmail(email: any): boolean {
     return validator.validate(email);
   }
+
+  public createSelectStatement: Prisma.CustomerSelect = {
+    id: true,
+    email: true,
+    phoneNumber: true,
+    type: true,
+    firstName: true,
+    lastName: true,
+    appointments: true,
+  };
 }
 
 export const Customer = new _Customer();

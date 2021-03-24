@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from "express";
-import { appointmentsRouter } from "./controllers";
+import { appointmentsRouter, customersRouter } from "./controllers";
 import { unknownEndpoint } from "./utils/middleware";
 import { errorHandler } from "./utils/middleware";
 import { requestLogger } from "./utils/middleware";
@@ -13,6 +13,7 @@ app.use(express.json());
 if (process.env.NODE_ENV === "development") app.use(requestLogger);
 
 app.use("/api/appointments", appointmentsRouter);
+app.use("/api/customers", customersRouter);
 
 app.get("/api/ping", (_, res) => {
   res.send("pong");
