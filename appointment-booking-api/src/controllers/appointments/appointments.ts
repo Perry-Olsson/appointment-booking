@@ -1,12 +1,12 @@
 import express from "express";
-import { Appointments } from "../../repositories/Appointments";
+import { appointment } from "../../repositories/appointment";
 
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const where = Appointments.validateQuery(req.query);
-    const appointments = await Appointments.exposed.findManyRaw({
+    const where = appointment.validateQuery(req.query);
+    const appointments = await appointment.exposed.findManyRaw({
       args: where,
     });
 
@@ -18,13 +18,13 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:timestamp", async (req, res, next) => {
   try {
-    const timestamp = Appointments.validateTimestamp(req.params.timestamp);
+    const timestamp = appointment.validateTimestamp(req.params.timestamp);
 
-    const appointment = await Appointments.exposed.findUnique({
+    const createdAppointment = await appointment.exposed.findUnique({
       where: { timestamp },
     });
 
-    res.json(appointment);
+    res.json(createdAppointment);
   } catch (err) {
     next(err);
   }
@@ -32,11 +32,11 @@ router.get("/:timestamp", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const newAppointment = Appointments.initialize(req.body);
+    const newAppointment = appointment.initialize(req.body);
 
-    await Appointments.isDuplicate(newAppointment);
+    await appointment.isDuplicate(newAppointment);
 
-    const createdAppointment = await Appointments.create({
+    const createdAppointment = await appointment.create({
       data: newAppointment,
     });
 

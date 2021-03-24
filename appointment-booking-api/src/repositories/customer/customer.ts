@@ -1,9 +1,9 @@
-import { EmailError, RequestBodyError } from "../../../src/utils";
+import { EmailError, RequestBodyError } from "../../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import { Prisma } from ".prisma/client";
 
-class _Customer {
+class Customer {
   public async initialize(reqBody: any): Promise<Prisma.CustomerCreateInput> {
     if (typeof reqBody !== "object") throw new RequestBodyError(reqBody);
 
@@ -33,4 +33,4 @@ class _Customer {
   };
 }
 
-export const Customer = new _Customer();
+export const customer = new Customer();

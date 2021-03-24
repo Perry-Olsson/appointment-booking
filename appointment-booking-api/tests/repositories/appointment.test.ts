@@ -1,5 +1,5 @@
 import { prisma } from "../../src/prisma";
-import { Appointments } from "../../src/repositories/Appointments";
+import { appointment } from "../../src/repositories/appointment";
 import {
   createTestAppointment,
   initializeTestData,
@@ -15,14 +15,14 @@ afterAll(() => prisma.$disconnect());
 describe("Appointments Repository", () => {
   test("Appointments repository retrieves data", async () => {
     const appointmentsFromDb = await prisma.appointment.findMany();
-    const appointments = await Appointments.findMany();
+    const appointments = await appointment.findMany();
 
     expect(appointments).toEqual(appointmentsFromDb);
   });
 
   describe("exposed", () => {
     test("exposed findMany does not return customerId", async () => {
-      const appointments = await Appointments.exposed.findMany();
+      const appointments = await appointment.exposed.findMany();
 
       expect(appointments[0].customerId).toBeUndefined();
     });
@@ -37,7 +37,7 @@ describe("Appointments Repository", () => {
           end: true,
         },
       });
-      const rawAppointments = await Appointments.exposed.findManyRaw({});
+      const rawAppointments = await appointment.exposed.findManyRaw({});
       const appointments = rawAppointments.map(parseRawAppointment);
 
       expect(appointments).toEqual(appointmentsFromDb);
@@ -48,7 +48,7 @@ describe("Appointments Repository", () => {
   describe("Appointment creation", () => {
     test("Initialize function returns returns NewAppointment object from request", async () => {
       const { data } = await createTestAppointment();
-      const initializedAppointment = Appointments.initialize(
+      const initializedAppointment = appointment.initialize(
         JSON.parse(JSON.stringify(data))
       );
 
@@ -65,7 +65,7 @@ describe("Appointments Repository", () => {
       } = await createTestAppointment();
       timestampWithNonZeroSeconds.timestamp.setSeconds(5);
 
-      const initialize = jest.fn(Appointments.initialize);
+      const initialize = jest.fn(appointment.initialize);
 
       expect(() => initialize(timestampWithInvalidMinutes)).toThrow();
       expect(() => initialize(timestampWithNonZeroSeconds)).toThrow();
@@ -75,7 +75,7 @@ describe("Appointments Repository", () => {
       const { data } = await createTestAppointment({ pushToDb: true });
 
       try {
-        await Appointments.isDuplicate(data);
+        await appointment.isDuplicate(data);
       } catch (e) {
         expect(e.message).toBe("timeslot has been taken");
       }
@@ -84,7 +84,7 @@ describe("Appointments Repository", () => {
 
   describe("Query string is validated correctly", () => {
     test("validate field returns correct fields", () => {
-      const validQuery = Appointments.validateQuery(query);
+      const validQuery = appointment.validateQuery(query);
       expect(validQuery).toEqual({
         year: now.getFullYear(),
         month: now.getMonth(),
@@ -106,9 +106,9 @@ describe("Appointments Repository", () => {
     const invalidTimestamp2 = "Tue, 23 Feb 2021 01:53:24 GMT";
     const invalidTimestamp3 = validTimestamp.slice(0, -1);
 
-    expect(() => Appointments.validateTimestamp(validTimestamp)).not.toThrow();
-    expect(() => Appointments.validateTimestamp(invalidTimestamp1)).toThrow();
-    expect(() => Appointments.validateTimestamp(invalidTimestamp2)).toThrow();
-    expect(() => Appointments.validateTimestamp(invalidTimestamp3)).toThrow();
+    expect(() => appointment.validateTimestamp(validTimestamp)).not.toThrow();
+    expect(() => appointment.validateTimestamp(invalidTimestamp1)).toThrow();
+    expect(() => appointment.validateTimestamp(invalidTimestamp2)).toThrow();
+    expect(() => appointment.validateTimestamp(invalidTimestamp3)).toThrow();
   });
 });

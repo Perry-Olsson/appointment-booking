@@ -22,9 +22,9 @@ const appointmentsMixin: AppointmentMixin = {
   findManyRaw,
 };
 
-const Appointments: AppointmentRepo = Object.assign(
+const appointment: AppointmentRepo = Object.assign(
   prisma.appointment,
   appointmentsMixin
 );
 
-export { Appointments };
+export { appointment };
