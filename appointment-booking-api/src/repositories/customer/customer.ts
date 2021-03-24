@@ -18,11 +18,15 @@ class Customer {
     return reqBody as Prisma.CustomerCreateInput;
   }
 
+  public createToken(customer: any) {
+    return customer;
+  }
+
   private _validateEmail(email: any): boolean {
     return validator.validate(email);
   }
 
-  public createSelectStatement: Prisma.CustomerSelect = {
+  public createSelectStatement = {
     id: true,
     email: true,
     phoneNumber: true,

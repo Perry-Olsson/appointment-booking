@@ -37,4 +37,9 @@ describe("Customer Creation", () => {
     expect(Object.keys(user).length).toBe(Object.keys(testUser).length);
     expect(Object.keys(guest).length).toBe(Object.keys(testGuest).length - 1);
   });
+
+  test.only("create token function returns a valid token", async () => {
+    const token = customer.createToken(testUser);
+    expect(typeof token).toBe("string");
+  });
 });
