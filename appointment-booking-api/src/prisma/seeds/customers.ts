@@ -18,7 +18,7 @@ export const seedCustomers = async (includeAppointments = true) => {
 
     if (includeAppointments) {
       const timestamp = timestamper.getNextTimestamp(ONE_DAY, 3);
-      timestamp.setHours(getRandomNumberV2(8, 17));
+      timestamp.setUTCHours(getRandomNumberV2(16, 23));
       newCustomer.appointments = {
         create: createNewCustomerAppointment(timestamp),
       };
