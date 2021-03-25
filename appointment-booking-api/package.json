@@ -12,6 +12,7 @@
     "start": "NODE_ENV=production node ./dist/index.js",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "dev:js": "NODE_ENV=development nodemon dist/index.js",
+    "jest": "NODE_ENV=test jest",
     "test": "NODE_ENV=test jest -o --runInBand",
     "test:all": "NODE_ENV=test jest --runInBand",
     "lint": "eslint ./src/**/*.ts",

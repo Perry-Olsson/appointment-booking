@@ -38,8 +38,12 @@ describe("Customer Creation", () => {
     expect(Object.keys(guest).length).toBe(Object.keys(testGuest).length - 1);
   });
 
-  test.only("create token function returns a valid token", async () => {
-    const token = customer.createToken(testUser);
+  test("create token function returns a valid token", async () => {
+    const token = customer.createToken(testUser.email);
+
+    const decodedToken = customer.decodeToken(token);
+
+    expect(decodedToken.email).toBe(testUser.email);
     expect(typeof token).toBe("string");
   });
 });

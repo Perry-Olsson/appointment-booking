@@ -1,9 +1,12 @@
 import { EmailError, RequestBodyError } from "../../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { Prisma } from ".prisma/client";
+import config from "../../config";
+import { DecodedToken } from "./types";
 
-class Customer {
+class _Customer {
   public async initialize(reqBody: any): Promise<Prisma.CustomerCreateInput> {
     if (typeof reqBody !== "object") throw new RequestBodyError(reqBody);
 
@@ -18,8 +21,14 @@ class Customer {
     return reqBody as Prisma.CustomerCreateInput;
   }
 
-  public createToken(customer: any) {
-    return customer;
+  public createToken(email: string) {
+    return jwt.sign({ email }, config.jwtSecret);
+  }
+
+  public decodeToken(token: string) {
+    const decodedToken = jwt.verify(token, config.jwtSecret) as DecodedToken;
+
+    return decodedToken;
   }
 
   private _validateEmail(email: any): boolean {
@@ -37,4 +46,4 @@ class Customer {
   };
 }
 
-export const customer = new Customer();
+export const customer = new _Customer();
