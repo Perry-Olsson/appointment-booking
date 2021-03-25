@@ -11,8 +11,12 @@ router.post("/", async (req, res, next) => {
       data: newCustomer,
       select: customer.createSelectStatement,
     });
+    const token =
+      createdCustomer.type === "USER"
+        ? customer.createToken(createdCustomer.email)
+        : null;
 
-    res.json(createdCustomer);
+    res.json({ customer: createdCustomer, token });
   } catch (err) {
     next(err);
   }
