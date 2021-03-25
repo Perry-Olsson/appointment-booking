@@ -37,3 +37,20 @@ export class EmailError extends Error {
     this.name = "Email Error";
   }
 }
+
+export class QueryError extends Error {
+  constructor() {
+    super(
+      "Appointments query string must contain a 'start' and 'finish' field"
+    );
+    this.name = "invalidQuery";
+  }
+}
+
+export class BoundryError extends Error {
+  constructor() {
+    super("The 'start' and 'end' queries must be valid numbers");
+
+    this.name = "invalidBoundry";
+  }
+}

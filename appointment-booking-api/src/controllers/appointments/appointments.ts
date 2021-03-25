@@ -5,10 +5,25 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const where = appointment.validateQuery(req.query);
-    const appointments = await appointment.exposed.findManyRaw({
-      args: where,
-    });
+    const { hasQueryString, start, end } = appointment.validateQuery(req.query);
+    const appointments = await appointment.exposed.findMany(
+      hasQueryString
+        ? {
+            AND: [
+              {
+                timestamp: {
+                  gte: new Date(start),
+                },
+              },
+              {
+                timestamp: {
+                  lt: new Date(end),
+                },
+              },
+            ],
+          }
+        : {}
+    );
 
     res.json(appointments);
   } catch (err) {
