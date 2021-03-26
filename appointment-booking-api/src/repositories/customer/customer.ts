@@ -4,12 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Prisma } from ".prisma/client";
 import config from "../../config";
-import {
-  Credentials,
-  CustomerResponse,
-  DecodedToken,
-  LoginCustomer,
-} from "./types";
+import { CustomerResponse, DecodedToken, LoginCustomer } from "./types";
 import { prisma } from "../../prisma";
 
 class _Customer {
@@ -31,24 +26,28 @@ class _Customer {
     return validator.validate(email);
   }
 
-  public async login({
-    email,
-    password,
-  }: Credentials): Promise<CustomerResponse> {
+  public async login({ email, password }: any): Promise<CustomerResponse> {
     const customer: LoginCustomer | null = await prisma.customer.findUnique({
       where: { email },
       select: this.loginSelectStatement,
     });
 
-    if (!customer || !this._isUser(customer, password)) throw new LoginError();
+    const user = await this._isUser(customer, password);
+    if (!user) throw new LoginError();
 
-    return this._createLoginResponse(customer);
+    return this._createLoginResponse(user);
   }
 
-  private _isUser(customer: LoginCustomer, password: string): boolean {
-    if (!customer.password || !bcrypt.compare(password, customer.password))
-      return false;
-    return true;
+  private async _isUser(
+    customer: LoginCustomer | null,
+    password: string
+  ): Promise<LoginCustomer | false> {
+    if (!customer || !customer.password) return false;
+    console.log(password);
+
+    const isValidPassword = await bcrypt.compare(password, customer.password);
+    if (!isValidPassword) return false;
+    return customer;
   }
 
   private _createLoginResponse(customer: LoginCustomer): CustomerResponse {
@@ -75,7 +74,6 @@ class _Customer {
     type: true,
     firstName: true,
     lastName: true,
-    appointments: true,
   };
 
   public createSelectStatement = this.defaultSelect;

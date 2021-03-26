@@ -2,6 +2,11 @@ import { customer } from "../../src/repositories/customer";
 import bycrypt from "bcryptjs";
 import { testGuest, testUser } from "../constants";
 import { prisma } from "../../src/prisma";
+import { initializeTestData } from "../helpers";
+
+beforeAll(async () => {
+  await initializeTestData();
+});
 
 afterAll(() => prisma.$disconnect());
 
@@ -54,15 +59,34 @@ describe("Customer Creation", () => {
 describe("Customer login", () => {
   test("Login function returns customer response object for valid user", async () => {
     const newCustomer = await prisma.customer.create({
-      data: await customer.initialize(testUser),
+      data: await customer.initialize({ ...testUser }),
       include: { appointments: true },
     });
     const { email, password } = testUser;
-    const CustomerResponse = await customer.login({ email, password });
+    const customerResponse = await customer.login({ email, password });
 
-    expect(typeof CustomerResponse.token).toBe("string");
-    expect(newCustomer).toMatchObject(CustomerResponse.customer);
+    expect(typeof customerResponse.token).toBe("string");
+    expect(newCustomer).toMatchObject(customerResponse.customer);
 
     await prisma.customer.delete({ where: { id: newCustomer.id } });
+  });
+
+  test("Login function returns throw error on invalid input", async () => {
+    const email = "invalid";
+    const password = "invalid";
+
+    await expect(customer.login({ email, password })).rejects.toThrow();
+  });
+
+  test("Login function throws when given valid guest input", async () => {
+    const newGuest = await prisma.customer.create({
+      data: await customer.initialize({ ...testGuest }),
+    });
+
+    const { email } = testGuest;
+
+    await expect(customer.login({ email, password: "" })).rejects.toThrow();
+
+    await prisma.customer.delete({ where: { id: newGuest.id } });
   });
 });
