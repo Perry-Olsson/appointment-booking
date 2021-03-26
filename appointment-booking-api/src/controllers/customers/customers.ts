@@ -22,4 +22,14 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.post("/login", async (req, res, next) => {
+  try {
+    const loggedUser = await customer.login(req.body);
+
+    res.json(loggedUser);
+  } catch (err) {
+    next(err);
+  }
+});
+
 export { router as customersRouter };

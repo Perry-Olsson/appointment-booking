@@ -3,7 +3,7 @@
     "email": "john@example.com",
     "type": "USER",
     "phoneNumber": "4536432222",
-    "password": "johnPassword",
+    "password": "johnsPassword",
     "firstName": "John",
     "lastName": "Doe"
   },

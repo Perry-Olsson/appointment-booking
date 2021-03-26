@@ -37,3 +37,11 @@ export class EmailError extends Error {
     this.name = "Email Error";
   }
 }
+
+export class LoginError extends Error {
+  constructor() {
+    super("Invalid email or password");
+
+    this.name = "loginError";
+  }
+}

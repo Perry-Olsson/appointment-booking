@@ -4,6 +4,7 @@ import { prisma } from "../../../src/prisma";
 import { initializeTestData } from "../../helpers";
 import { testGuest, testUser } from "../../constants";
 import { customer } from "../../../src/repositories/customer";
+import customers from "../../../src/prisma/seeds/json/customers.json";
 
 const api = request(app);
 
@@ -46,5 +47,18 @@ describe("Customer creation", () => {
     expect(body.token).toBe(null);
 
     await prisma.customer.delete({ where: { email: createdGuest.email } });
+  });
+});
+
+describe("Cusotmer login", () => {
+  test("/api/customers/login returns access token to valid user", async () => {
+    const { email, password } = customers[0];
+    const { status, body } = await api
+      .post("/api/customers/login")
+      .send({ email, password });
+
+    expect(status).toBe(200);
+    expect(body.customer.password).toBeUndefined();
+    expect(typeof body.token).toBe("string");
   });
 });

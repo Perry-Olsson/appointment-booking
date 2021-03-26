@@ -1,10 +1,16 @@
-import { EmailError, RequestBodyError } from "../../utils";
+import { EmailError, LoginError, RequestBodyError } from "../../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Prisma } from ".prisma/client";
 import config from "../../config";
-import { DecodedToken } from "./types";
+import {
+  Credentials,
+  CustomerResponse,
+  DecodedToken,
+  LoginCustomer,
+} from "./types";
+import { prisma } from "../../prisma";
 
 class _Customer {
   public async initialize(reqBody: any): Promise<Prisma.CustomerCreateInput> {
@@ -21,6 +27,37 @@ class _Customer {
     return reqBody as Prisma.CustomerCreateInput;
   }
 
+  private _validateEmail(email: any): boolean {
+    return validator.validate(email);
+  }
+
+  public async login({
+    email,
+    password,
+  }: Credentials): Promise<CustomerResponse> {
+    const customer: LoginCustomer | null = await prisma.customer.findUnique({
+      where: { email },
+      select: this.loginSelectStatement,
+    });
+
+    if (!customer || !this._isUser(customer, password)) throw new LoginError();
+
+    return this._createLoginResponse(customer);
+  }
+
+  private _isUser(customer: LoginCustomer, password: string): boolean {
+    if (!customer.password || !bcrypt.compare(password, customer.password))
+      return false;
+    return true;
+  }
+
+  private _createLoginResponse(customer: LoginCustomer): CustomerResponse {
+    const token = this.createToken(customer.email);
+
+    delete customer.password;
+    return { customer, token };
+  }
+
   public createToken(email: string) {
     return jwt.sign({ email }, config.jwtSecret);
   }
@@ -31,11 +68,7 @@ class _Customer {
     return decodedToken;
   }
 
-  private _validateEmail(email: any): boolean {
-    return validator.validate(email);
-  }
-
-  public createSelectStatement = {
+  public defaultSelect = {
     id: true,
     email: true,
     phoneNumber: true,
@@ -44,6 +77,10 @@ class _Customer {
     lastName: true,
     appointments: true,
   };
+
+  public createSelectStatement = this.defaultSelect;
+
+  public loginSelectStatement = { ...this.defaultSelect, password: true };
 }
 
 export const customer = new _Customer();
