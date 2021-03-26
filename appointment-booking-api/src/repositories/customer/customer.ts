@@ -24,6 +24,22 @@ class _Customer {
     return validator.validate(email);
   }
 
+  public async create(
+    newCustomer: Prisma.CustomerCreateInput
+  ): Promise<CustomerResponse> {
+    const createdCustomer = await prisma.customer.create({
+      data: newCustomer,
+      select: customer.createSelectStatement,
+    });
+
+    const token =
+      createdCustomer.type === "USER"
+        ? customer.createToken(createdCustomer.email)
+        : null;
+
+    return { customer: createdCustomer, token };
+  }
+
   public async login({ email, password }: any): Promise<CustomerResponse> {
     const customer: LoginCustomer | null = await prisma.customer.findUnique({
       where: { email },

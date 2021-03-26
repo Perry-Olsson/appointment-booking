@@ -25,5 +25,5 @@ export interface LoginCustomer extends DefaultCustomer {
 
 export interface CustomerResponse {
   customer: DefaultCustomer;
-  token: string;
+  token: string | null;
 }
