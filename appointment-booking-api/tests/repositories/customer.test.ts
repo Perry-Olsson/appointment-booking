@@ -16,7 +16,7 @@ describe("Customer Creation", () => {
   });
 
   test("Initialize function validates email address correctly", async () => {
-    const validCustomer = await customer.initialize(testUser);
+    const validCustomer = await customer.initialize({ ...testUser });
     await expect(
       customer.initialize({
         ...testUser,

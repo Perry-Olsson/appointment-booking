@@ -43,7 +43,6 @@ class _Customer {
     password: string
   ): Promise<LoginCustomer | false> {
     if (!customer || !customer.password) return false;
-    console.log(password);
 
     const isValidPassword = await bcrypt.compare(password, customer.password);
     if (!isValidPassword) return false;

@@ -53,9 +53,8 @@ describe("Cusotmer login", () => {
   test.only("/api/customers/login returns access token to valid user", async () => {
     const { email, password } = {
       email: "john@example.com",
-      password: "johnPassword",
+      password: "johnsPassword",
     };
-    console.log(password);
     const { status, body } = await api
       .post("/api/customers/login")
       .send({ email, password });
