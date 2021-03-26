@@ -1,4 +1,4 @@
-import { EmailError, LoginError, RequestBodyError } from "../../utils";
+import { EmailError, LoginError } from "../../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -9,8 +9,6 @@ import { prisma } from "../../prisma";
 
 class _Customer {
   public async initialize(reqBody: any): Promise<Prisma.CustomerCreateInput> {
-    if (typeof reqBody !== "object") throw new RequestBodyError(reqBody);
-
     if (!this._validateEmail(reqBody.email))
       throw new EmailError(reqBody.email);
 

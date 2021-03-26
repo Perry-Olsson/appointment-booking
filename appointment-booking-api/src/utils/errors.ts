@@ -23,18 +23,11 @@ export class TimestampError extends Error {
   }
 }
 
-export class RequestBodyError extends Error {
-  constructor(reqBody: any) {
-    super(`Request body "${reqBody}" is not in a valid.`);
-    this.name = "Request Body Error";
-  }
-}
-
 export class EmailError extends Error {
   constructor(email: any) {
     super(`email "${email}" is not a valid email`);
 
-    this.name = "Email Error";
+    this.name = "invalidEmail";
   }
 }
 
@@ -42,6 +35,6 @@ export class LoginError extends Error {
   constructor() {
     super("Invalid email or password");
 
-    this.name = "loginError";
+    this.name = "invalidLogin";
   }
 }

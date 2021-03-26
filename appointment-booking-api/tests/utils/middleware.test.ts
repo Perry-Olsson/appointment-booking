@@ -1,6 +1,8 @@
 import request from "supertest";
 import { app } from "../../src/app";
 import { prisma } from "../../src/prisma";
+import { EmailError, LoginError, TimestampError } from "../../src/utils";
+import { testUser } from "../constants";
 import {
   createDefaultTime,
   createTestAppointment,
@@ -89,13 +91,37 @@ describe("Error handler middleware", () => {
   });
 
   test("Provides Invalid timestamp response", async () => {
-    const response = await api.get("/api/appointments/invalidTimestamp");
+    const invalidTimestamp = "dsaifor90234";
+    const { status, body } = await api.get(
+      `/api/appointments/${invalidTimestamp}`
+    );
 
-    expect(response.status).toBe(400);
-    expect(response.body).toEqual({
-      error: "Invalid timestamp",
-      message:
-        "timestamp invalidTimestamp is invalid. Timestamp must be in json format",
-    });
+    expect(status).toBe(400);
+
+    const error = new TimestampError(invalidTimestamp);
+    expect(body.message).toEqual(error.message);
+  });
+
+  test("Provides invalid login response", async () => {
+    const { status, body } = await api
+      .post("/api/customers/login")
+      .send({ email: "invalid", password: "invalid" });
+
+    expect(status).toBe(400);
+
+    const error = new LoginError();
+    expect(body.message).toBe(error.message);
+  });
+
+  test("Provides invalid email response", async () => {
+    const invalidEmail = "fdsafw90r2";
+    const { status, body } = await api
+      .post("/api/customers")
+      .send({ ...testUser, email: invalidEmail });
+
+    expect(status).toBe(400);
+
+    const error = new EmailError(invalidEmail);
+    expect(body.message).toBe(error.message);
   });
 });

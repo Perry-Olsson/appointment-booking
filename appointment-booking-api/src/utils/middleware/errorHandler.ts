@@ -29,7 +29,20 @@ const errorResponses: ErrorResponseObject = {
     error: "Invalid timestamp",
     message,
   }),
+  invalidLogin: (message: string) => ({
+    error: "Invalid Login",
+    message,
+  }),
+  invalidEmail: (message: string) => ({
+    error: "Invalid email",
+    message,
+  }),
 };
+
+// const getErrorResponse = (error: string, message: string) => ({
+//   error,
+//   message,
+// });
 
 interface ErrorResponseObject {
   [key: string]: (message: string) => ErrorResponse;

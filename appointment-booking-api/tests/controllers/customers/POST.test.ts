@@ -50,7 +50,7 @@ describe("Customer creation", () => {
 });
 
 describe("Cusotmer login", () => {
-  test.only("/api/customers/login returns access token to valid user", async () => {
+  test("/api/customers/login returns access token to valid user", async () => {
     const { email, password } = {
       email: "john@example.com",
       password: "johnsPassword",
