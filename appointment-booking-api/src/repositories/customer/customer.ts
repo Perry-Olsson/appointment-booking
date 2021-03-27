@@ -12,7 +12,7 @@ class _Customer {
     if (!this._validateEmail(reqBody.email))
       throw new EmailError(reqBody.email);
 
-    const initializedCustomer = this._handlePassword(reqBody);
+    const initializedCustomer = await this._handlePassword(reqBody);
 
     return initializedCustomer;
   }

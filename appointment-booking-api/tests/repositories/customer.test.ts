@@ -44,6 +44,9 @@ describe("Customer Creation", () => {
 
     expect(Object.keys(user).length).toBe(Object.keys(testUser).length);
     expect(Object.keys(guest).length).toBe(Object.keys(testGuest).length - 1);
+
+    const match = await bycrypt.compare(testUser.password, user.password!);
+    expect(match).toBe(true);
   });
 
   test("create token function returns a valid token", async () => {
