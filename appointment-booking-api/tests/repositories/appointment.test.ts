@@ -9,15 +9,6 @@ beforeAll(async () => {
 afterAll(() => prisma.$disconnect());
 
 describe("Appointments Repository", () => {
-  test("Appointments repository retrieves data", async () => {
-    const appointmentsFromDb = await prisma.appointment.findMany({
-      select: appointment.exposedFields,
-    });
-    const appointments = await appointment.findMany();
-
-    expect(appointments).toEqual(appointmentsFromDb);
-  });
-
   describe("Appointment creation", () => {
     test("Initialize function returns returns NewAppointment object from request", async () => {
       const { data } = await createTestAppointment();
@@ -81,9 +72,17 @@ describe("Appointments Repository", () => {
     const invalidTimestamp2 = "Tue, 23 Feb 2021 01:53:24 GMT";
     const invalidTimestamp3 = validTimestamp.slice(0, -1);
 
-    expect(() => appointment.validateTimestamp(validTimestamp)).not.toThrow();
-    expect(() => appointment.validateTimestamp(invalidTimestamp1)).toThrow();
-    expect(() => appointment.validateTimestamp(invalidTimestamp2)).toThrow();
-    expect(() => appointment.validateTimestamp(invalidTimestamp3)).toThrow();
+    expect(() =>
+      appointment.validateJSONTimestamp(validTimestamp)
+    ).not.toThrow();
+    expect(() =>
+      appointment.validateJSONTimestamp(invalidTimestamp1)
+    ).toThrow();
+    expect(() =>
+      appointment.validateJSONTimestamp(invalidTimestamp2)
+    ).toThrow();
+    expect(() =>
+      appointment.validateJSONTimestamp(invalidTimestamp3)
+    ).toThrow();
   });
 });

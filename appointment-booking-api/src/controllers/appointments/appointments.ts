@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const appointments = await appointment.findMany(req.query);
+    const appointments = await appointment.findMany(req);
 
     res.json(appointments);
   } catch (err) {

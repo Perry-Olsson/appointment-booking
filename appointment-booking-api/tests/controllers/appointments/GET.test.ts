@@ -10,6 +10,7 @@ import {
   parseRawAppointment,
   PushToDbError,
 } from "../../helpers";
+import { appointment } from "../../../src/repositories/appointment";
 
 const api = request(app);
 
@@ -22,13 +23,7 @@ afterAll(() => prisma.$disconnect());
 describe("GET request", () => {
   test("Request to /api/appointments returns appointments without customerId field", async () => {
     const appointmentsFromDb = await prisma.appointment.findMany({
-      select: {
-        id: true,
-        createdAt: true,
-        updatedAt: true,
-        timestamp: true,
-        end: true,
-      },
+      select: appointment.exposedFields,
     });
     const response = await api.get("/api/appointments");
     const appointments: Appointment[] = response.body.map((app: any) =>

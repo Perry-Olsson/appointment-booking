@@ -12,16 +12,24 @@ class _Customer {
     if (!this._validateEmail(reqBody.email))
       throw new EmailError(reqBody.email);
 
+    const initializedCustomer = this._handlePassword(reqBody);
+
+    return initializedCustomer;
+  }
+
+  private _validateEmail(email: any): boolean {
+    return validator.validate(email);
+  }
+
+  private async _handlePassword(
+    reqBody: any
+  ): Promise<Prisma.CustomerCreateInput> {
     if (reqBody.type === "GUEST") delete reqBody.password;
     else {
       reqBody.password = await bcrypt.hash(reqBody.password, 8);
     }
 
     return reqBody as Prisma.CustomerCreateInput;
-  }
-
-  private _validateEmail(email: any): boolean {
-    return validator.validate(email);
   }
 
   public async create(
