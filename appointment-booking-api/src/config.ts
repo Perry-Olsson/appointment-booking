@@ -7,4 +7,5 @@ export default {
   port: process.env.PORT!,
   env: process.env.NODE_ENV!,
   jwtSecret: process.env.JWT_SECRET!,
+  logError: process.env.LOG_ERROR,
 };

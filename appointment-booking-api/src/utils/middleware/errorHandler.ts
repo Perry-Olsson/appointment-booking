@@ -8,7 +8,7 @@ export const errorHandler: ErrorRequestHandler = (
   res,
   next
 ) => {
-  if (config.env !== "production")
+  if (config.logError)
     logger.error("--------------\n", error.message, "\n--------------");
 
   if (!errorResponses[error.name]) return next(error);

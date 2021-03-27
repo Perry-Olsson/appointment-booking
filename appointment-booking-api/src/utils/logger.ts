@@ -6,10 +6,8 @@ const info = (...params: any): any => {
 };
 
 const error = (...params: any): any => {
-  if (process.env.NODE_ENV !== "test") {
-    console.error(...params);
-    return params;
-  }
+  console.error(...params);
+  return params;
 };
 
 export default {
