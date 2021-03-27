@@ -1,4 +1,4 @@
-import { ONE_DAY } from "../../../constants";
+import { ONE_DAY, ONE_HOUR } from "../../../constants";
 
 export const computeDates = (
   monthListCursor: Date,
@@ -15,6 +15,9 @@ export const computeDates = (
     const month: Date[] = [firstOfMonth];
     let nextDay = new Date(firstOfMonth.valueOf() + ONE_DAY);
     while (nextDay.getMonth() === firstOfMonth.getMonth()) {
+      if (nextDay.getHours() === 23)
+        nextDay = new Date(nextDay.valueOf() + ONE_HOUR);
+      else if (nextDay.getHours() === 1) nextDay.setHours(0);
       month.push(nextDay);
       nextDay = new Date(nextDay.valueOf() + ONE_DAY);
     }

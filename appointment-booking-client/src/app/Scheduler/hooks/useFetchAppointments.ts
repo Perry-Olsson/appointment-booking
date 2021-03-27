@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useQuery, UseQueryOptions } from "react-query";
 import { api } from "../../../api";
+import { ONE_DAY } from "../../../constants";
 import { Appointment } from "../../../types";
 
 export const useFetchAppointments = (
@@ -24,10 +25,7 @@ export const useFetchAppointments = (
   return { error };
 };
 
-const createQueryKey = (day: Date) => [
-  "appointments",
-  createQueryString(day, ["year", "month", "day"]),
-];
+const createQueryKey = (day: Date) => ["appointments", createQueryString(day)];
 
 const defaultQueryOptions: UseQueryOptions<
   Appointment[],
@@ -37,33 +35,9 @@ const defaultQueryOptions: UseQueryOptions<
   refetchOnWindowFocus: false,
 };
 
-const createQueryString = (day: Date, fields: QueryField[]): string => {
-  let qString = "?";
-  fields.forEach((field, i) => {
-    if (i !== 0) qString += "&";
+const createQueryString = (day: Date): string => {
+  const start = new Date(day.valueOf());
+  const end = new Date(day.valueOf() + ONE_DAY);
 
-    switch (field) {
-      case "year":
-        qString += `year=${day.getFullYear()}`;
-        break;
-      case "month":
-        qString += `month=${day.getMonth()}`;
-        break;
-      case "day":
-        qString += `day=${day.getDate()}`;
-        break;
-      case "hour":
-        qString += `hour=${day.getHours()}`;
-        break;
-      case "minute":
-        qString += `minute=${day.getMinutes()}`;
-        break;
-      default:
-        const exaustiveCheck: never = field;
-        throw new Error(`Unhandled query field: ${exaustiveCheck}`);
-    }
-  });
-  return qString;
+  return `?start=${start}&end=${end}`;
 };
-
-type QueryField = "year" | "month" | "day" | "hour" | "minute";
