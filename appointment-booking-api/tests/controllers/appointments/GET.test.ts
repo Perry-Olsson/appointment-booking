@@ -10,11 +10,6 @@ import {
   parseRawAppointment,
   PushToDbError,
 } from "../../helpers";
-import {
-  filterUnwantedMonths,
-  createAppointmentsOneYearApart,
-  deleteAppointmentsOneYearApart,
-} from "./helpers";
 
 const api = request(app);
 
@@ -48,15 +43,20 @@ describe("GET request", () => {
   describe("Query string request", () => {
     test("Request with query string returns correct appointments", async () => {
       const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
 
       const appointmentsFromDb = await prisma.appointment.findMany();
       const filteredAppointments = filterAppointmentsFromDb(
         appointmentsFromDb,
-        { year: now.getFullYear(), month: now.getMonth() }
+        { year, month }
       );
 
       const response = await api.get(
-        `/api/appointments/?month=${now.getMonth()}&year=${now.getFullYear()}`
+        `/api/appointments/?start=${new Date(year, month)}&end=${new Date(
+          year,
+          month + 1
+        )}`
       );
 
       expect(response.status).toBe(200);
@@ -90,36 +90,16 @@ describe("GET request", () => {
       );
 
       const response = await api.get(
-        `/api/appointments/?month=${june}&year=${year}`
+        `/api/appointments/?start=${new Date(year, june)}&end=${new Date(
+          year,
+          june + 1
+        )}`
       );
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveLength(filteredAppointments.length);
 
       await prisma.appointment.delete({ where: { id: appointment.id } });
-    });
-
-    test("Query string with month and no year does not return month from past years", async () => {
-      const { id1, id2, month, year } = await createAppointmentsOneYearApart();
-
-      const appointmentsFromDb = filterAppointmentsFromDb(
-        await prisma.appointment.findMany(),
-        { year, month }
-      );
-
-      const response = await api.get(`/api/appointments/?month=${month}`);
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveLength(appointmentsFromDb.length);
-
-      const appointments: Appointment[] = response.body.map((app: any) =>
-        parseRawAppointment(app)
-      );
-
-      expect(filterUnwantedMonths(appointments, month, year)).toHaveLength(
-        appointmentsFromDb.length
-      );
-
-      await deleteAppointmentsOneYearApart({ id1, id2 });
     });
   });
 
