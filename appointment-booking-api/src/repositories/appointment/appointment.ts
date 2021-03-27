@@ -13,6 +13,7 @@ import {
 import { NewAppointment } from "../../types";
 import { DuplicateError, TimestampError } from "../../utils";
 import { Appointment } from "@prisma/client";
+import { Request } from "express";
 
 const appointmentsMixin: AppointmentMixin = {
   validateQuery,
@@ -101,6 +102,21 @@ class _Appointment {
   public async create(newAppointment: NewAppointment): Promise<Appointment> {
     return await prisma.appointment.create({ data: newAppointment });
   }
+
+  public async findUnique({ params: { timestamp } }: Request) {
+    const validTimestamp = this._validateTimestamp(timestamp);
+
+    return await prisma.appointment.findUnique({
+      where: { timestamp: validTimestamp },
+      select: this._exposedFields,
+    });
+  }
+
+  private _exposedFields = {
+    id: true,
+    timestamp: true,
+    end: true,
+  };
 }
 
 export const _appointment = new _Appointment();

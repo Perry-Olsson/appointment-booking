@@ -33,13 +33,9 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:timestamp", async (req, res, next) => {
   try {
-    const timestamp = appointment.validateTimestamp(req.params.timestamp);
+    const appointment = await _appointment.findUnique(req);
 
-    const createdAppointment = await appointment.exposed.findUnique({
-      where: { timestamp },
-    });
-
-    res.json(createdAppointment);
+    res.json(appointment);
   } catch (err) {
     next(err);
   }
