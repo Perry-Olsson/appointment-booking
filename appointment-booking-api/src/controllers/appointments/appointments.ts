@@ -1,11 +1,11 @@
 import express from "express";
-import { _appointment } from "../../repositories/appointment";
+import { appointment } from "../../repositories/appointment";
 
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const appointments = await _appointment.findMany(req.query);
+    const appointments = await appointment.findMany(req.query);
 
     res.json(appointments);
   } catch (err) {
@@ -15,9 +15,9 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:timestamp", async (req, res, next) => {
   try {
-    const appointment = await _appointment.findUnique(req);
+    const _appointment = await appointment.findUnique(req);
 
-    res.json(appointment);
+    res.json(_appointment);
   } catch (err) {
     next(err);
   }
@@ -25,11 +25,11 @@ router.get("/:timestamp", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const newAppointment = _appointment.initialize(req.body);
+    const newAppointment = appointment.initialize(req.body);
 
-    await _appointment.isDuplicate(newAppointment);
+    await appointment.isDuplicate(newAppointment);
 
-    const createdAppointment = await _appointment.create(newAppointment);
+    const createdAppointment = await appointment.create(newAppointment);
 
     res.json(createdAppointment);
   } catch (err) {

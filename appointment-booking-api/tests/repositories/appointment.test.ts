@@ -1,5 +1,5 @@
 import { prisma } from "../../src/prisma";
-import { _appointment } from "../../src/repositories/appointment";
+import { appointment } from "../../src/repositories/appointment";
 import { createTestAppointment, initializeTestData } from "../helpers";
 
 beforeAll(async () => {
@@ -11,9 +11,9 @@ afterAll(() => prisma.$disconnect());
 describe("Appointments Repository", () => {
   test("Appointments repository retrieves data", async () => {
     const appointmentsFromDb = await prisma.appointment.findMany({
-      select: _appointment.exposedFields,
+      select: appointment.exposedFields,
     });
-    const appointments = await _appointment.findMany();
+    const appointments = await appointment.findMany();
 
     expect(appointments).toEqual(appointmentsFromDb);
   });
@@ -21,7 +21,7 @@ describe("Appointments Repository", () => {
   describe("Appointment creation", () => {
     test("Initialize function returns returns NewAppointment object from request", async () => {
       const { data } = await createTestAppointment();
-      const initializedAppointment = _appointment.initialize(
+      const initializedAppointment = appointment.initialize(
         JSON.parse(JSON.stringify(data))
       );
 
@@ -38,7 +38,7 @@ describe("Appointments Repository", () => {
       } = await createTestAppointment();
       timestampWithNonZeroSeconds.timestamp.setSeconds(5);
 
-      const initialize = jest.fn(_appointment.initialize);
+      const initialize = jest.fn(appointment.initialize);
 
       expect(() => initialize(timestampWithInvalidMinutes)).toThrow();
       expect(() => initialize(timestampWithNonZeroSeconds)).toThrow();
@@ -48,7 +48,7 @@ describe("Appointments Repository", () => {
       const { data } = await createTestAppointment({ pushToDb: true });
 
       try {
-        await _appointment.isDuplicate(data);
+        await appointment.isDuplicate(data);
       } catch (e) {
         expect(e.message).toBe("timeslot has been taken");
       }
@@ -57,7 +57,7 @@ describe("Appointments Repository", () => {
 
   describe("Query string is validated correctly", () => {
     test("validate field returns correct fields", () => {
-      const validQuery = _appointment.validateQuery(query);
+      const validQuery = appointment.validateQuery(query);
       expect(validQuery).toEqual({
         start: start.valueOf(),
         end: end.valueOf(),
@@ -81,9 +81,9 @@ describe("Appointments Repository", () => {
     const invalidTimestamp2 = "Tue, 23 Feb 2021 01:53:24 GMT";
     const invalidTimestamp3 = validTimestamp.slice(0, -1);
 
-    expect(() => _appointment.validateTimestamp(validTimestamp)).not.toThrow();
-    expect(() => _appointment.validateTimestamp(invalidTimestamp1)).toThrow();
-    expect(() => _appointment.validateTimestamp(invalidTimestamp2)).toThrow();
-    expect(() => _appointment.validateTimestamp(invalidTimestamp3)).toThrow();
+    expect(() => appointment.validateTimestamp(validTimestamp)).not.toThrow();
+    expect(() => appointment.validateTimestamp(invalidTimestamp1)).toThrow();
+    expect(() => appointment.validateTimestamp(invalidTimestamp2)).toThrow();
+    expect(() => appointment.validateTimestamp(invalidTimestamp3)).toThrow();
   });
 });

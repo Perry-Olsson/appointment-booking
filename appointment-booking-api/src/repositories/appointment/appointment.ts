@@ -1,20 +1,5 @@
 import { prisma } from "../../prisma";
-import {
-  AppointmentMixin,
-  AppointmentRepo,
-  ExposedAppointment,
-  TimeBoundry,
-} from "./types";
-import {
-  initialize,
-  exposed,
-  validateQuery,
-  isDuplicate,
-  validateNewAppointment,
-  validateTimestamp,
-  validateTime,
-  findManyRaw,
-} from "./mixins";
+import { ExposedAppointment, TimeBoundry } from "./types";
 import { NewAppointment } from "../../types";
 import {
   BoundryError,
@@ -24,24 +9,6 @@ import {
 } from "../../utils";
 import { Appointment } from "@prisma/client";
 import { Request } from "express";
-
-const appointmentsMixin: AppointmentMixin = {
-  validateQuery,
-  initialize,
-  isDuplicate,
-  validateNewAppointment,
-  validateTimestamp,
-  validateTime,
-  exposed,
-  findManyRaw,
-};
-
-const appointment: AppointmentRepo = Object.assign(
-  prisma.appointment,
-  appointmentsMixin
-);
-
-export { appointment };
 
 class _Appointment {
   public initialize(reqBody: any): NewAppointment {
@@ -188,4 +155,4 @@ class _Appointment {
   };
 }
 
-export const _appointment = new _Appointment();
+export const appointment = new _Appointment();
