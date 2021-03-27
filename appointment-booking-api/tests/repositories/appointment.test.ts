@@ -1,5 +1,5 @@
 import { prisma } from "../../src/prisma";
-import { appointment, _appointment } from "../../src/repositories/appointment";
+import { _appointment } from "../../src/repositories/appointment";
 import { createTestAppointment, initializeTestData } from "../helpers";
 
 beforeAll(async () => {
@@ -81,9 +81,9 @@ describe("Appointments Repository", () => {
     const invalidTimestamp2 = "Tue, 23 Feb 2021 01:53:24 GMT";
     const invalidTimestamp3 = validTimestamp.slice(0, -1);
 
-    expect(() => appointment.validateTimestamp(validTimestamp)).not.toThrow();
-    expect(() => appointment.validateTimestamp(invalidTimestamp1)).toThrow();
-    expect(() => appointment.validateTimestamp(invalidTimestamp2)).toThrow();
-    expect(() => appointment.validateTimestamp(invalidTimestamp3)).toThrow();
+    expect(() => _appointment.validateTimestamp(validTimestamp)).not.toThrow();
+    expect(() => _appointment.validateTimestamp(invalidTimestamp1)).toThrow();
+    expect(() => _appointment.validateTimestamp(invalidTimestamp2)).toThrow();
+    expect(() => _appointment.validateTimestamp(invalidTimestamp3)).toThrow();
   });
 });
