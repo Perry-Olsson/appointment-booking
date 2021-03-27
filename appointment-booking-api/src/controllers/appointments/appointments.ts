@@ -1,5 +1,5 @@
 import express from "express";
-import { appointment } from "../../repositories/appointment";
+import { appointment, _appointment } from "../../repositories/appointment";
 
 const router = express.Router();
 
@@ -47,13 +47,11 @@ router.get("/:timestamp", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const newAppointment = appointment.initialize(req.body);
+    const newAppointment = _appointment.initialize(req.body);
 
-    await appointment.isDuplicate(newAppointment);
+    await _appointment.isDuplicate(newAppointment);
 
-    const createdAppointment = await appointment.create({
-      data: newAppointment,
-    });
+    const createdAppointment = await _appointment.create(newAppointment);
 
     res.json(createdAppointment);
   } catch (err) {

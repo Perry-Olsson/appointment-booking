@@ -10,6 +10,9 @@ import {
   validateTime,
   findManyRaw,
 } from "./mixins";
+import { NewAppointment } from "../../types";
+import { DuplicateError, TimestampError } from "../../utils";
+import { Appointment } from "@prisma/client";
 
 const appointmentsMixin: AppointmentMixin = {
   validateQuery,
@@ -28,3 +31,76 @@ const appointment: AppointmentRepo = Object.assign(
 );
 
 export { appointment };
+
+class _Appointment {
+  public initialize(reqBody: any): NewAppointment {
+    const newAppointment = this._validateNewAppointment(reqBody);
+
+    appointment.validateTime(newAppointment);
+
+    return newAppointment;
+  }
+
+  private _validateNewAppointment(reqBody: any): NewAppointment {
+    const timestamp = this._validateTimestamp(reqBody.timestamp);
+    const end = this._validateTimestamp(reqBody.end);
+
+    return { ...reqBody, timestamp, end };
+  }
+
+  private _validateTimestamp(timestamp: any): Date {
+    if (
+      typeof timestamp !== "string" ||
+      timestamp.length !== 24 ||
+      isNaN(Date.parse(timestamp))
+    )
+      throw new TimestampError(timestamp);
+    return new Date(timestamp);
+  }
+
+  public async isDuplicate({ timestamp, end }: NewAppointment): Promise<void> {
+    const duplicateAppointment = await prisma.appointment.findMany({
+      where: {
+        OR: [
+          {
+            AND: [
+              {
+                timestamp: {
+                  lte: timestamp,
+                },
+              },
+              {
+                end: {
+                  gt: timestamp,
+                },
+              },
+            ],
+          },
+          {
+            AND: [
+              {
+                timestamp: {
+                  lt: end,
+                },
+              },
+              {
+                end: {
+                  gt: end,
+                },
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    if (duplicateAppointment.length)
+      throw new DuplicateError("Appointment", "timeslot has been taken");
+  }
+
+  public async create(newAppointment: NewAppointment): Promise<Appointment> {
+    return await prisma.appointment.create({ data: newAppointment });
+  }
+}
+
+export const _appointment = new _Appointment();
