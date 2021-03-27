@@ -1,5 +1,10 @@
 import { prisma } from "../../prisma";
-import { AppointmentMixin, AppointmentRepo } from "./types";
+import {
+  AppointmentMixin,
+  AppointmentRepo,
+  ExposedAppointment,
+  TimeBoundry,
+} from "./types";
 import {
   initialize,
   exposed,
@@ -11,7 +16,7 @@ import {
   findManyRaw,
 } from "./mixins";
 import { NewAppointment } from "../../types";
-import { DuplicateError, TimestampError } from "../../utils";
+import { BoundryError, DuplicateError, TimestampError } from "../../utils";
 import { Appointment } from "@prisma/client";
 import { Request } from "express";
 
@@ -112,8 +117,57 @@ class _Appointment {
     });
   }
 
+  public async findMany({ query }: Request): Promise<ExposedAppointment[]> {
+    const { hasQueryString, start, end } = this._validateQuery(query);
+    const where = hasQueryString
+      ? {
+          AND: [
+            {
+              timestamp: {
+                gte: new Date(start),
+              },
+            },
+            {
+              timestamp: {
+                lt: new Date(end),
+              },
+            },
+          ],
+        }
+      : {};
+
+    const appointments = await prisma.appointment.findMany({
+      where,
+      select: this._exposedFields,
+    });
+
+    return appointments;
+  }
+
+  private _validateQuery(query: any): TimeBoundry {
+    if (query.start === undefined || query.end === undefined)
+      return { hasQueryString: false, start: 0, end: 0 };
+
+    const start = this._toMilliseconds(query.start);
+    const end = this._toMilliseconds(query.end);
+
+    if (start === false || end === false) throw new BoundryError();
+
+    return { hasQueryString: true, start, end };
+  }
+
+  private _toMilliseconds(field: any): number | false {
+    const date = new Date(field);
+    const num = Number(date);
+    if (isNaN(num)) {
+      return false;
+    } else return num;
+  }
+
   private _exposedFields = {
     id: true,
+    createdAt: true,
+    updatedAt: true,
     timestamp: true,
     end: true,
   };

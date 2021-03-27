@@ -1,29 +1,11 @@
 import express from "express";
-import { appointment, _appointment } from "../../repositories/appointment";
+import { _appointment } from "../../repositories/appointment";
 
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const { hasQueryString, start, end } = appointment.validateQuery(req.query);
-    const appointments = await appointment.exposed.findMany(
-      hasQueryString
-        ? {
-            AND: [
-              {
-                timestamp: {
-                  gte: new Date(start),
-                },
-              },
-              {
-                timestamp: {
-                  lt: new Date(end),
-                },
-              },
-            ],
-          }
-        : {}
-    );
+    const appointments = await _appointment.findMany(req);
 
     res.json(appointments);
   } catch (err) {

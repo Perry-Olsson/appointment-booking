@@ -56,3 +56,11 @@ export interface Exposed {
     query: Prisma.AppointmentFindUniqueArgs
   ) => Promise<Appointment | null>;
 }
+
+export interface ExposedAppointment {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  timestamp: Date;
+  end: Date;
+}
