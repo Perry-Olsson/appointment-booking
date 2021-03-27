@@ -1,10 +1,6 @@
 import { prisma } from "../../src/prisma";
-import { appointment } from "../../src/repositories/appointment";
-import {
-  createTestAppointment,
-  initializeTestData,
-  parseRawAppointment,
-} from "../helpers";
+import { appointment, _appointment } from "../../src/repositories/appointment";
+import { createTestAppointment, initializeTestData } from "../helpers";
 
 beforeAll(async () => {
   await initializeTestData();
@@ -14,41 +10,18 @@ afterAll(() => prisma.$disconnect());
 
 describe("Appointments Repository", () => {
   test("Appointments repository retrieves data", async () => {
-    const appointmentsFromDb = await prisma.appointment.findMany();
-    const appointments = await appointment.findMany();
+    const appointmentsFromDb = await prisma.appointment.findMany({
+      select: _appointment.exposedFields,
+    });
+    const appointments = await _appointment.findMany();
 
     expect(appointments).toEqual(appointmentsFromDb);
-  });
-
-  describe("exposed", () => {
-    test("exposed findMany does not return customerId", async () => {
-      const appointments = await appointment.exposed.findMany();
-
-      expect(appointments[0].customerId).toBeUndefined();
-    });
-
-    test("exposed findManyRaw does not return private customer fields", async () => {
-      const appointmentsFromDb = await prisma.appointment.findMany({
-        select: {
-          id: true,
-          createdAt: true,
-          updatedAt: true,
-          timestamp: true,
-          end: true,
-        },
-      });
-      const rawAppointments = await appointment.exposed.findManyRaw({});
-      const appointments = rawAppointments.map(parseRawAppointment);
-
-      expect(appointments).toEqual(appointmentsFromDb);
-      expect(appointments[0].customerId).toBeUndefined();
-    });
   });
 
   describe("Appointment creation", () => {
     test("Initialize function returns returns NewAppointment object from request", async () => {
       const { data } = await createTestAppointment();
-      const initializedAppointment = appointment.initialize(
+      const initializedAppointment = _appointment.initialize(
         JSON.parse(JSON.stringify(data))
       );
 
@@ -65,7 +38,7 @@ describe("Appointments Repository", () => {
       } = await createTestAppointment();
       timestampWithNonZeroSeconds.timestamp.setSeconds(5);
 
-      const initialize = jest.fn(appointment.initialize);
+      const initialize = jest.fn(_appointment.initialize);
 
       expect(() => initialize(timestampWithInvalidMinutes)).toThrow();
       expect(() => initialize(timestampWithNonZeroSeconds)).toThrow();
@@ -75,7 +48,7 @@ describe("Appointments Repository", () => {
       const { data } = await createTestAppointment({ pushToDb: true });
 
       try {
-        await appointment.isDuplicate(data);
+        await _appointment.isDuplicate(data);
       } catch (e) {
         expect(e.message).toBe("timeslot has been taken");
       }
@@ -84,7 +57,7 @@ describe("Appointments Repository", () => {
 
   describe("Query string is validated correctly", () => {
     test("validate field returns correct fields", () => {
-      const validQuery = appointment.validateQuery(query);
+      const validQuery = _appointment.validateQuery(query);
       expect(validQuery).toEqual({
         start: start.valueOf(),
         end: end.valueOf(),

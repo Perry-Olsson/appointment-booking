@@ -16,7 +16,12 @@ import {
   findManyRaw,
 } from "./mixins";
 import { NewAppointment } from "../../types";
-import { BoundryError, DuplicateError, TimestampError } from "../../utils";
+import {
+  BoundryError,
+  DuplicateError,
+  TimeError,
+  TimestampError,
+} from "../../utils";
 import { Appointment } from "@prisma/client";
 import { Request } from "express";
 
@@ -42,19 +47,29 @@ class _Appointment {
   public initialize(reqBody: any): NewAppointment {
     const newAppointment = this._validateNewAppointment(reqBody);
 
-    appointment.validateTime(newAppointment);
+    this._validateTime(newAppointment);
 
     return newAppointment;
   }
 
   private _validateNewAppointment(reqBody: any): NewAppointment {
-    const timestamp = this._validateTimestamp(reqBody.timestamp);
-    const end = this._validateTimestamp(reqBody.end);
+    const timestamp = this.validateTimestamp(reqBody.timestamp);
+    const end = this.validateTimestamp(reqBody.end);
 
     return { ...reqBody, timestamp, end };
   }
 
-  private _validateTimestamp(timestamp: any): Date {
+  private _validateTime({ timestamp, end }: NewAppointment): void {
+    const minutes = timestamp.getMinutes() + end.getMinutes();
+    const valueOf = timestamp.valueOf() + end.valueOf();
+
+    //checks if timestamps end on quarter hours and seconds and milliseconds are zeroed out
+    if (minutes % 15 !== 0 || valueOf % 60000 !== 0) {
+      throw new TimeError();
+    }
+  }
+
+  public validateTimestamp(timestamp: any): Date {
     if (
       typeof timestamp !== "string" ||
       timestamp.length !== 24 ||
@@ -109,16 +124,16 @@ class _Appointment {
   }
 
   public async findUnique({ params: { timestamp } }: Request) {
-    const validTimestamp = this._validateTimestamp(timestamp);
+    const validTimestamp = this.validateTimestamp(timestamp);
 
     return await prisma.appointment.findUnique({
       where: { timestamp: validTimestamp },
-      select: this._exposedFields,
+      select: this.exposedFields,
     });
   }
 
-  public async findMany({ query }: Request): Promise<ExposedAppointment[]> {
-    const { hasQueryString, start, end } = this._validateQuery(query);
+  public async findMany(query?: any): Promise<ExposedAppointment[]> {
+    const { hasQueryString, start, end } = this.validateQuery(query);
     const where = hasQueryString
       ? {
           AND: [
@@ -138,14 +153,14 @@ class _Appointment {
 
     const appointments = await prisma.appointment.findMany({
       where,
-      select: this._exposedFields,
+      select: this.exposedFields,
     });
 
     return appointments;
   }
 
-  private _validateQuery(query: any): TimeBoundry {
-    if (query.start === undefined || query.end === undefined)
+  public validateQuery(query: any): TimeBoundry {
+    if (!query || query.start === undefined || query.end === undefined)
       return { hasQueryString: false, start: 0, end: 0 };
 
     const start = this._toMilliseconds(query.start);
@@ -164,7 +179,7 @@ class _Appointment {
     } else return num;
   }
 
-  private _exposedFields = {
+  public exposedFields = {
     id: true,
     createdAt: true,
     updatedAt: true,
