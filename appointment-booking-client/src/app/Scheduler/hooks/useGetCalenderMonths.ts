@@ -24,12 +24,8 @@ export const useGetCalenderMonths = () => {
 };
 
 const isNearingBottomOfPage = (): boolean => {
-  const {
-    body: { scrollHeight },
-  } = document;
-  const { innerHeight, scrollY } = window;
-
-  if ((scrollHeight - innerHeight) * 0.65 < scrollY) return true;
+  if ((document.body.scrollHeight - window.innerHeight) * 0.65 < window.scrollY)
+    return true;
   return false;
 };
 

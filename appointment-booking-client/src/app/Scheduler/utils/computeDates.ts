@@ -1,28 +1,36 @@
-import { ONE_DAY, ONE_HOUR } from "../../../constants";
+import { ONE_DAY } from "../../../constants";
+import { Months } from "../types";
 
-export const computeDates = (
-  monthListCursor: Date,
-  monthsToGenerate = 3
-): { edges: Array<Date[]>; cursor: Date } => {
-  let firstOfMonth = new Date(
-    monthListCursor.getFullYear(),
-    monthListCursor.getMonth(),
-    1
-  );
+export const computeDates = (cursor: Date, monthsToGenerate = 3): Months => {
+  let firstOfMonth = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
   const months: Array<Date[]> = [];
 
   for (let i = 0; i < monthsToGenerate; i++) {
-    const month: Date[] = [firstOfMonth];
-    let nextDay = new Date(firstOfMonth.valueOf() + ONE_DAY);
-    while (nextDay.getMonth() === firstOfMonth.getMonth()) {
-      if (nextDay.getHours() === 23)
-        nextDay = new Date(nextDay.valueOf() + ONE_HOUR);
-      else if (nextDay.getHours() === 1) nextDay.setHours(0);
-      month.push(nextDay);
-      nextDay = new Date(nextDay.valueOf() + ONE_DAY);
-    }
-    months.push(month);
-    firstOfMonth = nextDay;
+    months.push(computeMonth(firstOfMonth));
+
+    firstOfMonth = getNextMonth(firstOfMonth);
   }
+
   return { edges: months, cursor: firstOfMonth };
+};
+
+const computeMonth = (firstOfMonth: Date): Date[] => {
+  const month: Date[] = [firstOfMonth];
+  const currentMonth = firstOfMonth.getMonth();
+  let nextDay = new Date(firstOfMonth.valueOf() + ONE_DAY);
+
+  while (nextDay.getMonth() === currentMonth) {
+    month.push(nextDay);
+    nextDay = new Date(
+      nextDay.getFullYear(),
+      nextDay.getMonth(),
+      nextDay.getDate() + 1
+    );
+  }
+
+  return month;
+};
+
+const getNextMonth = (month: Date) => {
+  return new Date(month.getFullYear(), month.getMonth() + 1);
 };
