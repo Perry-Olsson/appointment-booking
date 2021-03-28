@@ -30,5 +30,5 @@ const createQueryString = (day: Date): string => {
   const start = new Date(day.valueOf());
   const end = new Date(day.valueOf() + ONE_DAY);
 
-  return `?start=${start}&end=${end}`;
+  return `?start=${start.toJSON()}&end=${end.toJSON()}`;
 };
