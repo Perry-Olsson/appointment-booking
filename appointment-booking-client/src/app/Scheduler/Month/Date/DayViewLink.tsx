@@ -5,7 +5,7 @@ import { device } from "../../../../components/device";
 import { nowAtom } from "../../atoms";
 import Link from "next/link";
 
-export const DayViewLink: React.FC<ModalTogglerProps> = ({ day }) => {
+export const DayViewLink: React.FC<DayViewLinkProps> = ({ day }) => {
   const [{ today }] = useAtom(nowAtom);
   const dayHasPassed = day.valueOf() < today.valueOf();
   const [background, setBackground] = useState("white");
@@ -19,13 +19,13 @@ export const DayViewLink: React.FC<ModalTogglerProps> = ({ day }) => {
         onTouchStart={() => setBackground("gray")}
         onTouchEnd={() => setBackground("white")}
       >
-        <Date>{day.getDate()}</Date>
+        <DateValue>{day.getDate()}</DateValue>
       </Container>
     </Link>
   );
 };
 
-interface ModalTogglerProps {
+interface DayViewLinkProps {
   day: Date;
 }
 
@@ -66,6 +66,6 @@ const Container = styled.a<ContainerProps>`
   cursor: ${({ dayHasPassed }) => (dayHasPassed ? null : "pointer")};
 `;
 
-const Date = styled.b`
+const DateValue = styled.b`
   font-size: ${({ theme }) => theme.font.sm_med};
 `;

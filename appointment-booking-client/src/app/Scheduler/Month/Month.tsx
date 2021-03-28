@@ -7,7 +7,7 @@ import { Grid } from "./Grid";
 export const Month: React.FC<MonthProps> = ({ days }) => {
   return (
     <Container>
-      <Header monthIndex={days[0].getMonth()} />
+      <Header month={days[0].getMonth()} />
       <Grid days={days} />
     </Container>
   );

@@ -1,2 +1,2 @@
 export * from "./computeDates";
-export * from "./isInvalidDate";
+export * from "./isValidDate";

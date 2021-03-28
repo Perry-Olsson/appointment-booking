@@ -2,16 +2,15 @@ import { ONE_DAY } from "../../../constants";
 import { Months } from "../types";
 
 export const computeDates = (cursor: Date, monthsToGenerate = 3): Months => {
-  let firstOfMonth = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
   const months: Array<Date[]> = [];
 
   for (let i = 0; i < monthsToGenerate; i++) {
-    months.push(computeMonth(firstOfMonth));
+    months.push(computeMonth(cursor));
 
-    firstOfMonth = getNextMonth(firstOfMonth);
+    cursor = getNextMonth(cursor);
   }
 
-  return { edges: months, cursor: firstOfMonth };
+  return { edges: months, cursor };
 };
 
 const computeMonth = (firstOfMonth: Date): Date[] => {

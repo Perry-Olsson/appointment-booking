@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
-import { TodayMarker } from "./DayMarker";
+import { TodayMarker } from "./TodayMarker";
 import { DayViewLink } from "./DayViewLink";
 
 export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {

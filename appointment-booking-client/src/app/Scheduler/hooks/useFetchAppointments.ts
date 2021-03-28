@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import { useQuery, UseQueryOptions } from "react-query";
+import { useQuery } from "react-query";
 import { api } from "../../../api";
 import { ONE_DAY } from "../../../constants";
 import { Appointment } from "../../../types";
 
 export const useFetchAppointments = (
   day: Date,
-  setAppointments: React.Dispatch<React.SetStateAction<Appointment[] | null>>,
-  options = defaultQueryOptions
+  setAppointments: React.Dispatch<React.SetStateAction<Appointment[] | null>>
 ) => {
   const queryKey = createQueryKey(day);
   const [, queryString] = queryKey;
@@ -15,7 +14,7 @@ export const useFetchAppointments = (
   const { data, error } = useQuery(
     queryKey,
     async () => await api.fetchAppointments(queryString),
-    options
+    { enabled: day.valueOf() > 0 }
   );
 
   useEffect(() => {
@@ -26,14 +25,6 @@ export const useFetchAppointments = (
 };
 
 const createQueryKey = (day: Date) => ["appointments", createQueryString(day)];
-
-const defaultQueryOptions: UseQueryOptions<
-  Appointment[],
-  unknown,
-  Appointment[]
-> = {
-  refetchOnWindowFocus: false,
-};
 
 const createQueryString = (day: Date): string => {
   const start = new Date(day.valueOf());

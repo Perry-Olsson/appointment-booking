@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { device } from "../../../components/device";
 import { CalenderGrid } from "../components";
 import { DateList } from "./DateList";
+import { Date } from "./Date"
 
 export const Grid: React.FC<GridProps> = ({ days }) => {
   return (
     <Container>
+      <GridOffset days={days} />
       <DateList days={days} />
     </Container>
   );
@@ -24,3 +26,11 @@ const Container = styled(CalenderGrid)`
     width: 95%;
   }
 `;
+
+const GridOffset: React.FC<GridProps> = ({ days }) => {
+  const nullDates: React.ReactNode[] = [];
+  for (let i = 0; i < days[0].getDay(); i++) {
+    nullDates.push(<Date key={i} day={null} />);
+  }
+  return <>{nullDates}</>;
+};
