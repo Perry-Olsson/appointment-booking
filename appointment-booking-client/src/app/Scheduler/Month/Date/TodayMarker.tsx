@@ -12,7 +12,7 @@ export const TodayMarker: React.FC<MarkerProps> = ({ day }) => {
 
   const isToday = today.valueOf() === day.valueOf();
 
-  return width > device.tablet.width && isToday ? <Triangle /> : null;
+  return device.isLapTopOrBigger(width) && isToday ? <Triangle /> : null;
 };
 
 interface MarkerProps {
