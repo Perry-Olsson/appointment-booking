@@ -1,13 +1,14 @@
+import { useAtom } from "jotai";
 import { useMemo } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { QUARTER_HOUR } from "../../../../../constants";
-import { useDimensions } from "../../../../../hooks";
+import { dimensionsAtom } from "../../../atoms";
 import { TimeSlot } from "./TimeSlot";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = ({ day }) => {
   const timeSlots = useMemo(() => computeTimeSlots(day), []);
-  const { height } = useDimensions();
+  const [{ height }] = useAtom(dimensionsAtom);
 
   return (
     <Container height={height}>

@@ -1,12 +1,13 @@
+import { useAtom } from "jotai";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { BackButton } from "../../../../components/BackButton";
 import { device } from "../../../../components/device";
 import { dayString, months } from "../../../../constants";
-import { useDimensions } from "../../../../hooks";
+import { dimensionsAtom } from "../../atoms";
 
 export const Header: React.FC<HeaderProps> = ({ day }) => {
-  const { width } = useDimensions();
+  const [{ width }] = useAtom(dimensionsAtom);
   return (
     <Container>
       <StyledBackButton />

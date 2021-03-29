@@ -15,7 +15,7 @@ export const usePrefetchAppointments = () => {
 
   useEffect(() => {
     if (data) setAppointments(data);
-  });
+  }, [data]);
 
   return { error };
 };

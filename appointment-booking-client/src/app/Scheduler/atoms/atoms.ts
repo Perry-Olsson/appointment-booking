@@ -19,4 +19,12 @@ export const monthsAtom = atom<Months>(dates);
 
 export const allAppointmentsAtom = atom<OrganizedAppointments>({});
 
-export const dayAtom = atom<Date | null>(null);
+export const dimensionsAtom = atom<WindowDimensions>({
+  width: 0,
+  height: 0,
+});
+
+interface WindowDimensions {
+  width: number;
+  height: number;
+}

@@ -1,37 +1,27 @@
-import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { dimensionsAtom } from "../app/Scheduler/atoms";
 
-export const useDimensions = (): WindowDimensions => {
-  const [dimensions, setDimensions] = useState<WindowDimensions>(
-    getDimensions()
-  );
+export const useDimensions = (): void => {
+  const [, setDimensions] = useAtom(dimensionsAtom);
 
   useEffect(() => {
+    setDimensions(getDimensions());
+
     let timeoutId: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
-        setDimensions({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
+        setDimensions(getDimensions());
       }, 100);
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  return dimensions;
 };
 
-const getDimensions = () => {
-  return {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  };
-};
-
-interface WindowDimensions {
-  width: number;
-  height: number;
-}
+const getDimensions = () => ({
+  width: window.innerWidth,
+  height: window.innerHeight,
+});
