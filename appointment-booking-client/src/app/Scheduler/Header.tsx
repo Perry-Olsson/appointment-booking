@@ -1,17 +1,11 @@
 import styled from "styled-components";
-import { Flex } from "../../components";
 import { CalenderGrid } from "./components";
+import { DaysOfTheWeek } from "./components/DaysOfTheWeek";
 
-export const DaysOfTheWeek: React.FC = () => {
+export const Header: React.FC = () => {
   return (
     <Container>
-      <Cell>S</Cell>
-      <Cell>M</Cell>
-      <Cell>T</Cell>
-      <Cell>W</Cell>
-      <Cell>Th</Cell>
-      <Cell>F</Cell>
-      <Cell>Sa</Cell>
+      <DaysOfTheWeek />
     </Container>
   );
 };
@@ -24,5 +18,3 @@ const Container = styled(CalenderGrid)`
   font-weight: bold;
   background-color: white;
 `;
-
-const Cell = styled(Flex)``;

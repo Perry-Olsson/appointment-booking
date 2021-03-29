@@ -4,6 +4,7 @@ import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
 import { Appointment } from "../../../../types";
 import { Header } from "./Header";
+import { MonthCard } from "./MonthCard";
 import { TimeSlotList } from "./TimeSlots";
 
 export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
@@ -11,7 +12,7 @@ export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
     <Container>
       <Header day={day} />
       <Grid>
-        <MonthCard>month card todo</MonthCard>
+        <MonthCard />
         <TimeSlotList day={day} />
       </Grid>
     </Container>
@@ -32,13 +33,4 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   width: 100%;
-`;
-
-const MonthCard = styled.div`
-  width: 100%;
-  height: 200px;
-  border: solid;
-  @media (max-width: ${device.desktop.pixels}) {
-    display: none;
-  }
 `;

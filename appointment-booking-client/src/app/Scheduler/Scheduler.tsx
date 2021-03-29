@@ -1,5 +1,5 @@
 import { Flex } from "../../components";
-import { DaysOfTheWeek } from "./DaysOfTheWeek";
+import { Header } from "./Header";
 import { usePrefetchAppointments } from "./hooks";
 import { MonthList } from "./MonthList";
 
@@ -8,7 +8,7 @@ export default function Scheduler() {
 
   return (
     <Flex>
-      <DaysOfTheWeek />
+      <Header />
       <MonthList />
     </Flex>
   );

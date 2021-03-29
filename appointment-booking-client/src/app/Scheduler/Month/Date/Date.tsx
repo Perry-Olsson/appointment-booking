@@ -33,3 +33,8 @@ const GridCell = styled(Flex)`
   height: ${({ theme }) => theme.grid.cellHeight};
   max-height: ${({ theme }) => theme.grid.cellMaxHeight};
 `;
+
+const SmGridCell = styled(Flex)`
+  height: ${({ theme }) => theme.grid.cellHeight};
+  max-height: ${({ theme }) => theme.grid.cellMaxHeight};
+`;

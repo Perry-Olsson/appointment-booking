@@ -34,7 +34,7 @@ const monthListIsNotMaxed = ({ cursor }: Months, today: Date): boolean => {
   return false;
 };
 
-const concatMonths = (months: Months) => {
+export const concatMonths = (months: Months) => {
   const { edges: newEdges, cursor } = computeDates(months.cursor, 10);
   const edges = months.edges;
 
