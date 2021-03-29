@@ -22,7 +22,7 @@ const getDateString = (day: Date, screenWidth: number) => {
         0,
         3
       )}. ${day.getDate()}, ${day.getFullYear()}`
-    : `${dayString[day.getDay()]} ${day.getMonth()}/${day.getDate()}`;
+    : `${dayString[day.getDay()]} ${day.getMonth() + 1}/${day.getDate()}`;
 };
 
 interface HeaderProps {

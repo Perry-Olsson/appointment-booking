@@ -6,35 +6,37 @@ import { device } from "../../../../components/device";
 import { TodayMarker } from "./TodayMarker";
 import { DayViewLink } from "./DayViewLink";
 
-export const Date: React.FC<DayProps> = ({ day, ...restProps }) => {
-  if (day === null) return <GridCell {...restProps}>{null}</GridCell>;
+export const Date: React.FC<DayProps> = ({ day, small, ...restProps }) => {
+  if (day === null)
+    return (
+      <GridCell small={small} {...restProps}>
+        {null}
+      </GridCell>
+    );
 
   return (
-    <GridCell {...restProps}>
-      <TodayMarker day={day} />
-      <DayViewLink day={day} />
+    <GridCell small={small} {...restProps}>
+      {small ? null : <TodayMarker day={day} />}
+      <DayViewLink day={day} small={small} />
     </GridCell>
   );
 };
 
 interface DayProps {
   day: Date | null;
+  small: boolean | undefined;
   restProps?: React.HTMLAttributes<any>[];
 }
 
-const GridCell = styled(Flex)`
-  @media (min-width: ${device.tablet.pixels}) {
+const GridCell = styled(Flex)<{ small: boolean | undefined }>`
+  @media (min-width: ${({ small }) =>
+      small ? "100000px" : device.tablet.pixels}) {
     justify-content: flex-start;
     align-items: flex-start;
     border-bottom: 1px solid;
     border-right: 1px solid;
     border-color: ${({ theme }) => theme.grid.borderColor};
   }
-  height: ${({ theme }) => theme.grid.cellHeight};
-  max-height: ${({ theme }) => theme.grid.cellMaxHeight};
-`;
-
-const SmGridCell = styled(Flex)`
-  height: ${({ theme }) => theme.grid.cellHeight};
+  height: ${({ theme, small }) => (small ? "3vw" : theme.grid.cellHeight)};
   max-height: ${({ theme }) => theme.grid.cellMaxHeight};
 `;

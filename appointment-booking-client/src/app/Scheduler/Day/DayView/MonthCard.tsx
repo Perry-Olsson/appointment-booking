@@ -4,6 +4,8 @@ import { monthsAtom, nowAtom } from "../../atoms";
 import { CalenderGrid } from "../../components";
 import { DaysOfTheWeek } from "../../components/DaysOfTheWeek";
 import { useAtom } from "jotai";
+import { Grid } from "../../Month/Grid";
+import { Flex } from "../../../../components";
 
 export const MonthCard: React.FC = () => {
   const [{ today }] = useAtom(nowAtom);
@@ -11,19 +13,30 @@ export const MonthCard: React.FC = () => {
 
   return (
     <Container>
-      <Header>
-        <DaysOfTheWeek />
-      </Header>
+      <GridContainer>
+        {months.edges[0][0].getMonth()}
+        <Header>
+          <DaysOfTheWeek />
+        </Header>
+        <Grid days={months.edges[0]} small={true} />
+      </GridContainer>
     </Container>
   );
 };
 
-const Container = styled.div`
+const Container = styled(Flex)`
+  flex-direction: column;
+  justify-content: start;
   border: solid;
-  padding: 1rem 0;
   @media (max-width: ${device.desktop.pixels}) {
     display: none;
   }
+`;
+
+const GridContainer = styled.div`
+  margin: 1rem 0;
+  width: 90%;
+  text-align: center;
 `;
 
 const Header = styled(CalenderGrid)``;
