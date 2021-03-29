@@ -1,19 +1,37 @@
 import { useMemo } from "react";
 import styled from "styled-components";
-import { Flex } from "../../../../../components";
+import { device } from "../../../../../components/device";
 import { QUARTER_HOUR } from "../../../../../constants";
+import { useDimensions } from "../../../../../hooks";
 import { TimeSlot } from "./TimeSlot";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = ({ day }) => {
   const timeSlots = useMemo(() => computeTimeSlots(day), []);
+  const { height } = useDimensions();
+
   return (
-    <Container>
+    <Container height={height}>
       {timeSlots.map(slot => (
         <TimeSlot key={slot.valueOf()} timeSlot={slot} />
       ))}
     </Container>
   );
 };
+
+const Container = styled.div<{ height: number }>`
+  width: 100%;
+  height: ${({ theme, height }) => `${height - theme.dayView.headerOffset}px`};
+  overflow-y: auto;
+  @media (max-width: ${device.desktop.pixels}) {
+    grid-column: 1 / 4;
+    max-width: ${device.tablet.pixels};
+    margin: auto;
+  }
+`;
+
+interface TimeSlotsProps {
+  day: Date;
+}
 
 const computeTimeSlots = (day: Date): Date[] => {
   const timeSlots: Date[] = [];
@@ -25,14 +43,3 @@ const computeTimeSlots = (day: Date): Date[] => {
   }
   return timeSlots;
 };
-
-const Container = styled(Flex)`
-  flex-direction: column;
-  border-bottom: 1px solid;
-  margin: 1rem 0;
-  width: 100%;
-`;
-
-interface TimeSlotsProps {
-  day: Date;
-}

@@ -31,8 +31,10 @@ interface HeaderProps {
 const StyledBackButton = styled(BackButton)`
   position: absolute;
   left: 0;
-  margin: 1rem;
   cursor: pointer;
 `;
 
-const Container = styled(Flex)``;
+const Container = styled(Flex)`
+  width: 100%;
+  height: ${({ theme }) => theme.dayView.headerHeight};
+`;

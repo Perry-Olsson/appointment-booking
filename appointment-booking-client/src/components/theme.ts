@@ -2,14 +2,14 @@ import { DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
   navBar: {
-    height: "3.7rem",
+    height: "60px",
   },
   scheduler: {
-    headerHeight: "1.8rem",
+    headerHeight: "30px",
   },
-  modal: {
-    topOffset: "5.5rem", //navBar.height + schedule.headerHeight
-    transitionTime: 300,
+  dayView: {
+    headerHeight: "45px",
+    headerOffset: 105, // navBar height + dayView header height
   },
   grid: {
     width: "100%",
@@ -44,9 +44,9 @@ declare module "styled-components" {
     scheduler: {
       headerHeight: string;
     };
-    modal: {
-      topOffset: string;
-      transitionTime: number;
+    dayView: {
+      headerHeight: string;
+      headerOffset: number;
     };
     grid: {
       width: string;
