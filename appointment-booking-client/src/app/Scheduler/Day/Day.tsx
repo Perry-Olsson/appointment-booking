@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFetchAppointments } from "../hooks";
 import { useGetSelectedDay } from "./hooks";
-import { PageView } from "./PageView";
+import { DayView } from "./DayView";
 import { isValidDate } from "../utils";
 
 const Day = () => {
@@ -15,7 +15,7 @@ const Day = () => {
 
   if (!appointments || day.valueOf() === 0) return <div>loading...</div>;
 
-  return <PageView day={day} appointments={appointments!} />;
+  return <DayView day={day} appointments={appointments!} />;
 };
 
 export default Day;

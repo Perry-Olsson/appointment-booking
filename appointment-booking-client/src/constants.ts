@@ -25,6 +25,8 @@ export const dayString = [
 
 export const ONE_MINUTE = 1000 * 60;
 
+export const QUARTER_HOUR = ONE_MINUTE * 15;
+
 export const ONE_HOUR = ONE_MINUTE * 60;
 
 export const ONE_DAY = ONE_HOUR * 24;
