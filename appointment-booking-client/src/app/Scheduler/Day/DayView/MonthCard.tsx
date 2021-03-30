@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { device } from "../../../../components/device";
-import { monthsAtom, nowAtom } from "../../atoms";
+import { monthsAtom } from "../../atoms";
 import { CalenderGrid } from "../../components";
 import { DaysOfTheWeek } from "../../components/DaysOfTheWeek";
 import { useAtom } from "jotai";
