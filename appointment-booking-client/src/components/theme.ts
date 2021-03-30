@@ -27,6 +27,7 @@ export const theme: DefaultTheme = {
   },
   colors: {
     primary: "#5eab55",
+    primaryFaded: "#5eab5540",
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
   },
@@ -64,6 +65,7 @@ declare module "styled-components" {
     };
     colors: {
       primary: string;
+      primaryFaded: string;
       textPrimary: string;
       textSecondary: string;
     };

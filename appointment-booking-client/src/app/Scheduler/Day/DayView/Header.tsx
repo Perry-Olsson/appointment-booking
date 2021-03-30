@@ -10,7 +10,7 @@ export const Header: React.FC<HeaderProps> = ({ day }) => {
   const [{ width }] = useAtom(dimensionsAtom);
   return (
     <Container>
-      <StyledBackButton />
+      <StyledBackButton href={"/schedule"} />
       <h2>{getDateString(day, width)}</h2>
     </Container>
   );

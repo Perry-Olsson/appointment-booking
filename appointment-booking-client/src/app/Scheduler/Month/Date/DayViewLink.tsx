@@ -4,8 +4,10 @@ import { useAtom } from "jotai";
 import { device } from "../../../../components/device";
 import { nowAtom } from "../../atoms";
 import Link from "next/link";
+import { useHandleUrlParam } from "../../Day/hooks";
 
 export const DayViewLink: React.FC<DayViewLinkProps> = ({ day, small }) => {
+  const routedDay = useHandleUrlParam();
   const [{ today }] = useAtom(nowAtom);
   const dayHasPassed = day.valueOf() < today.valueOf();
   const [background, setBackground] = useState("white");
@@ -13,6 +15,8 @@ export const DayViewLink: React.FC<DayViewLinkProps> = ({ day, small }) => {
   return (
     <Link href={dayHasPassed ? "" : `/schedule/${day.toJSON()}`}>
       <Container
+        day={day}
+        route={routedDay}
         today={today.valueOf() === day.valueOf()}
         dayHasPassed={dayHasPassed}
         background={background}
@@ -32,6 +36,8 @@ interface DayViewLinkProps {
 }
 
 interface ContainerProps {
+  day: Date;
+  route: Date;
   today: boolean;
   dayHasPassed: boolean;
   background: string;
@@ -39,7 +45,10 @@ interface ContainerProps {
 }
 
 const Container = styled.a<ContainerProps>`
-  background-color: ${({ background }) => background};
+  background-color: ${({ theme, background, small, day, route }) =>
+    small && day.valueOf() === route.valueOf()
+      ? theme.colors.primaryFaded
+      : background};
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -56,7 +65,7 @@ const Container = styled.a<ContainerProps>`
   @media (hover: hover) {
     :hover {
       background-color: ${({ theme, dayHasPassed }) =>
-        dayHasPassed ? null : `${theme.colors.primary}40`};
+        dayHasPassed ? null : theme.colors.primaryFaded};
     }
   }
   @media (max-width: ${({ small }) =>

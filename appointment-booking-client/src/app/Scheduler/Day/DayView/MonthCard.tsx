@@ -11,18 +11,18 @@ import { Months } from "../../types";
 
 export const MonthCard: React.FC<MonthCardProps> = ({ day }) => {
   const [months] = useAtom(monthsAtom);
-  console.log(day);
+  const month = getMonth(months, day);
 
   return (
     <Container>
       <MonthName>
-        {/* {monthString[month[0].getMonth()]} {months.edges[0][0].getFullYear()} */}
+        {monthString[month[0].getMonth()]} {month[0].getFullYear()}
       </MonthName>
       <GridContainer>
         <Header>
           <DaysOfTheWeek />
         </Header>
-        <Grid days={months.edges[0]} small={true} />
+        <Grid days={month} small={true} />
       </GridContainer>
     </Container>
   );
@@ -57,6 +57,6 @@ const GridContainer = styled.div`
 const Header = styled(CalenderGrid)``;
 
 const MonthName = styled.div`
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   font-weight: bold;
 `;
