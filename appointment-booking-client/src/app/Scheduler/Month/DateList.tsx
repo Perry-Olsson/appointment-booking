@@ -1,10 +1,10 @@
 import { Date } from "./Date";
 
-export const DateList: React.FC<DateListProps> = ({ days, small }) => {
+export const DateList: React.FC<DateListProps> = ({ days }) => {
   return (
     <>
       {days.map(day => {
-        return <Date key={day.valueOf()} day={day} small={small} />;
+        return <Date key={day.valueOf()} day={day} />;
       })}
     </>
   );
@@ -12,5 +12,4 @@ export const DateList: React.FC<DateListProps> = ({ days, small }) => {
 
 interface DateListProps {
   days: Date[];
-  small: boolean | undefined;
 }

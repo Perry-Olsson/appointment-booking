@@ -3,15 +3,19 @@ import React from "react";
 import styled from "styled-components";
 import { device } from "../../../../components/device";
 import { dimensionsAtom, nowAtom } from "../../atoms";
+import { useIsCard } from "../context/IsMonthCard";
 
 //for expanded view only
 export const TodayMarker: React.FC<MarkerProps> = ({ day }) => {
   const [{ today }] = useAtom(nowAtom);
   const [{ width }] = useAtom(dimensionsAtom);
+  const isMonthCard = useIsCard();
 
   const isToday = today.valueOf() === day.valueOf();
 
-  return device.isLapTopOrBigger(width) && isToday ? <Triangle /> : null;
+  return isToday && device.isLapTopOrBigger(width) && !isMonthCard ? (
+    <Triangle />
+  ) : null;
 };
 
 interface MarkerProps {

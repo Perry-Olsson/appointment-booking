@@ -22,7 +22,7 @@ export const MonthCard: React.FC<MonthCardProps> = ({ day }) => {
         <Header>
           <DaysOfTheWeek />
         </Header>
-        <Grid days={month} small={true} />
+        <Grid days={month} isMonthCard={true} />
       </GridContainer>
     </Container>
   );
