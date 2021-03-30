@@ -13,7 +13,15 @@ export const DayViewLink: React.FC<DayViewLinkProps> = ({ day, small }) => {
   const [background, setBackground] = useState("white");
 
   return (
-    <Link href={dayHasPassed ? "" : `/schedule/${day.toJSON()}`}>
+    <Link
+      href={
+        dayHasPassed
+          ? small
+            ? `/schedule/${routedDay.toJSON()}`
+            : ""
+          : `/schedule/${day.toJSON()}`
+      }
+    >
       <Container
         day={day}
         route={routedDay}
