@@ -1,14 +1,16 @@
 import { IoIosArrowBack } from "react-icons/io";
 import styled from "styled-components";
+import { Flex } from "./Flex";
 
 export const BackButton: React.FC<BackButtonProps> = ({
   size = "sm",
   ...restProps
 }) => {
   return (
-    <div onClick={goBack} {...restProps}>
+    <Container onClick={goBack} {...restProps}>
       <StyledBackIcon size={getWidth(size)} />
-    </div>
+      back
+    </Container>
   );
 };
 
@@ -39,6 +41,11 @@ interface BackButtonProps {
   restProps?: React.HTMLAttributes<any>;
   size?: string;
 }
+
+const Container = styled(Flex)`
+  font-weight: bold;
+  font-size: ${({ theme }) => theme.font.med};
+`;
 
 const StyledBackIcon = styled(IoIosArrowBack)`
   &:hover {

@@ -12,7 +12,7 @@ export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
     <Container>
       <Header day={day} />
       <Grid>
-        <MonthCard />
+        <MonthCard day={day} />
         <TimeSlotList day={day} />
       </Grid>
     </Container>

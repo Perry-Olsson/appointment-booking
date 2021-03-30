@@ -6,15 +6,19 @@ import { DaysOfTheWeek } from "../../components/DaysOfTheWeek";
 import { useAtom } from "jotai";
 import { Grid } from "../../Month/Grid";
 import { Flex } from "../../../../components";
+import { monthString } from "../../../../constants";
+import { Months } from "../../types";
 
-export const MonthCard: React.FC = () => {
-  const [{ today }] = useAtom(nowAtom);
+export const MonthCard: React.FC<MonthCardProps> = ({ day }) => {
   const [months] = useAtom(monthsAtom);
+  console.log(day);
 
   return (
     <Container>
+      <MonthName>
+        {/* {monthString[month[0].getMonth()]} {months.edges[0][0].getFullYear()} */}
+      </MonthName>
       <GridContainer>
-        {months.edges[0][0].getMonth()}
         <Header>
           <DaysOfTheWeek />
         </Header>
@@ -24,19 +28,35 @@ export const MonthCard: React.FC = () => {
   );
 };
 
+const getMonth = ({ edges }: Months, day: Date): Date[] => {
+  const year = day.getFullYear();
+  const month = day.getMonth();
+  for (let i = 0; i < edges.length; i++) {
+    if (year === edges[i][0].getFullYear() && month === edges[i][0].getMonth())
+      return edges[i];
+  }
+  return edges[0];
+};
+
+interface MonthCardProps {
+  day: Date;
+}
+
 const Container = styled(Flex)`
   flex-direction: column;
   justify-content: start;
-  border: solid;
   @media (max-width: ${device.desktop.pixels}) {
     display: none;
   }
 `;
 
 const GridContainer = styled.div`
-  margin: 1rem 0;
   width: 90%;
-  text-align: center;
 `;
 
 const Header = styled(CalenderGrid)``;
+
+const MonthName = styled.div`
+  margin: 1rem 0;
+  font-weight: bold;
+`;

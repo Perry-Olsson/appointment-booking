@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { BackButton } from "../../../../components/BackButton";
 import { device } from "../../../../components/device";
-import { dayString, months } from "../../../../constants";
+import { dayString, monthString } from "../../../../constants";
 import { dimensionsAtom } from "../../atoms";
 
 export const Header: React.FC<HeaderProps> = ({ day }) => {
@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({ day }) => {
 
 const getDateString = (day: Date, screenWidth: number) => {
   return device.isTabletOrSmaller(screenWidth)
-    ? `${months[day.getMonth()].slice(
+    ? `${monthString[day.getMonth()].slice(
         0,
         3
       )}. ${day.getDate()}, ${day.getFullYear()}`

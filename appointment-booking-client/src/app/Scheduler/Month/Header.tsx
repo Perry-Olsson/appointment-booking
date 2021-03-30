@@ -1,7 +1,7 @@
-import { months } from "../../../constants";
+import { monthString } from "../../../constants";
 
 export const Header: React.FC<HeaderProps> = ({ month }) => {
-  return <h1>{months[month]}</h1>;
+  return <h1>{monthString[month]}</h1>;
 };
 
 interface HeaderProps {
