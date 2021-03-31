@@ -3,6 +3,7 @@ import bycrypt from "bcryptjs";
 import { testGuest, testUser } from "../constants";
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
+import customers from "../../src/prisma/seeds/json/customers.json";
 
 beforeAll(async () => {
   await initializeTestData();
@@ -91,5 +92,22 @@ describe("Customer login", () => {
     await expect(customer.login({ email, password: "" })).rejects.toThrow();
 
     await prisma.customer.delete({ where: { id: newGuest.id } });
+  });
+});
+
+describe("miscellaneous", () => {
+  test("findUnique returns correct fields", async () => {
+    const _customer = await customer.findUnique({
+      where: { email: customers[0].email },
+    });
+    const customerPassword = await customer.findUnique({
+      where: { email: customers[0].email },
+      select: { password: true },
+    });
+    if (!_customer || !customerPassword) throw new Error("Customer not found");
+
+    expect(_customer.email).toBe(customers[0].email);
+    expect(_customer.password).toBeUndefined();
+    expect(customerPassword.password).toHaveLength(60);
   });
 });

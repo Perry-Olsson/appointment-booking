@@ -88,6 +88,12 @@ class _Customer {
     return decodedToken;
   }
 
+  public async findUnique(args: Prisma.CustomerFindUniqueArgs) {
+    if (!args.select) args.select = this.defaultSelect;
+
+    return await prisma.customer.findUnique(args);
+  }
+
   public defaultSelect = {
     id: true,
     email: true,

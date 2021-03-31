@@ -11,7 +11,7 @@ import { ONE_DAY } from "../../constants";
 
 export const seedCustomers = async (includeAppointments = true) => {
   for (let i = 0; i < customers.length; i++) {
-    const newCustomer = customers[i] as Prisma.CustomerCreateInput;
+    const newCustomer = { ...customers[i] } as Prisma.CustomerCreateInput;
 
     if (newCustomer.type === "USER")
       newCustomer.password = await bcrypt.hash(newCustomer.password!, 8);

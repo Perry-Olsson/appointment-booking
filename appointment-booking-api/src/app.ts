@@ -1,14 +1,17 @@
 import cors from "cors";
 import express from "express";
+import passport from "passport";
 import { appointmentsRouter, customersRouter } from "./controllers";
 import { unknownEndpoint } from "./utils/middleware";
 import { errorHandler } from "./utils/middleware";
 import { requestLogger } from "./utils/middleware";
+import { jwtStrategy } from "./utils/middleware/JwtStrategy";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+passport.use(jwtStrategy);
 
 if (process.env.NODE_ENV === "development") app.use(requestLogger);
 

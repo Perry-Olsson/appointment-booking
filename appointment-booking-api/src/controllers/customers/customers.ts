@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import { customer } from "../../repositories/customer";
 
 const router = express.Router();
@@ -23,5 +24,17 @@ router.post("/login", async (req, res, next) => {
     next(err);
   }
 });
+
+router.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    try {
+      res.send(req.user);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 export { router as customersRouter };
