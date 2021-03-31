@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
-import { device } from "../../../../components/device";
 import { Appointment } from "../../../../types";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";
 import { TimeSlotList } from "./TimeSlots";
 
 export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
+  console.log(appointments);
   return (
     <Container>
       <Header day={day} />
