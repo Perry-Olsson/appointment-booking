@@ -7,13 +7,19 @@ import { MonthCard } from "./MonthCard";
 import { TimeSlotList } from "./TimeSlots";
 
 export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
-  console.log(appointments);
   return (
     <Container>
       <Header day={day} />
       <Grid>
         <MonthCard day={day} />
         <TimeSlotList day={day} />
+        <div>
+          {appointments.map(a => (
+            <div>
+              {a.timestamp.toLocaleTimeString()} - {a.end.toLocaleTimeString()}
+            </div>
+          ))}
+        </div>
       </Grid>
     </Container>
   );
