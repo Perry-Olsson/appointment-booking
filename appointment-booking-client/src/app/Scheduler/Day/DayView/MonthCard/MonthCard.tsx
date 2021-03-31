@@ -18,7 +18,7 @@ export const MonthCard: React.FC<DayProps> = memo(({ day }) => {
 
   return (
     <Container>
-      <MonthName month={month} />
+      <MonthName day={day} />
       <GridContainer>
         <CalenderGrid>
           <DaysOfTheWeek />

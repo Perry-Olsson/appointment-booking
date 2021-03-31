@@ -1,13 +1,10 @@
 import styled from "styled-components";
-import { getMonthString } from "./utils/getMonthString";
+import { DayProps } from "../../type";
 
-export const MonthName: React.FC<MonthNameProps> = ({ month }) => {
-  return <Container>{getMonthString(month)}</Container>;
+export const MonthName: React.FC<DayProps> = ({ day }) => {
+  return <Container>{day.getMonthCardString()}</Container>;
 };
 
-interface MonthNameProps {
-  month: Date[];
-}
 const Container = styled.div`
   margin-bottom: 1rem;
   font-weight: bold;

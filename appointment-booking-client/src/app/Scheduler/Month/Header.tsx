@@ -1,9 +1,5 @@
-import { monthString } from "../../../constants";
+import { MonthProps } from "./types";
 
-export const Header: React.FC<HeaderProps> = ({ month }) => {
-  return <h1>{monthString[month]}</h1>;
+export const Header: React.FC<MonthProps> = ({ days }) => {
+  return <h1>{days[0].getMonthString()}</h1>;
 };
-
-interface HeaderProps {
-  month: number;
-}

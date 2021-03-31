@@ -3,19 +3,16 @@ import styled from "styled-components";
 import { Flex } from "../../../components";
 import { Header } from "./Header";
 import { Grid } from "./Grid";
+import { MonthProps } from "./types";
 
 export const Month: React.FC<MonthProps> = ({ days }) => {
   return (
     <Container>
-      <Header month={days[0].getMonth()} />
+      <Header days={days} />
       <Grid days={days} />
     </Container>
   );
 };
-
-interface MonthProps {
-  days: Date[];
-}
 
 const Container = styled(Flex)`
   width: 100%;

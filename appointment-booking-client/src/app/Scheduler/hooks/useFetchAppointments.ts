@@ -14,7 +14,7 @@ export const useFetchAppointments = (
   const { data, error } = useQuery(
     queryKey,
     async () => await api.fetchAppointments(queryString),
-    { enabled: day.valueOf() > 0 }
+    { enabled: day.isValidDate() }
   );
 
   useEffect(() => {

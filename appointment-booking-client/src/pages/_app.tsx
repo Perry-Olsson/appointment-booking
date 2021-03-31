@@ -5,6 +5,7 @@ import { NavBarOffset } from "../app/NavBar/NavBarOffset";
 import { theme } from "../components";
 import { getLayoutProvider } from "../utils";
 import { HeadTags } from "../components/HeadTags";
+import "../utils/date.extensions";
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = getLayoutProvider(Component.displayName);
