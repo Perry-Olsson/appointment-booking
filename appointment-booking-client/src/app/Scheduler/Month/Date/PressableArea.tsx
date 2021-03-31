@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import styled from "styled-components";
 import { device } from "../../../../components/device";
 import { useHandleUrlParam } from "../../Day/hooks";
@@ -10,24 +10,27 @@ interface PressableAreaProps {
   today: boolean;
 }
 
-export const PressableArea: React.FC<PressableAreaProps> = props => {
-  const isMonthCard = useIsCard();
-  const route = useHandleUrlParam();
-  const [background, setBackground] = useState("white"); //fixes sticky hover effect
+export const PressableArea = forwardRef<HTMLAnchorElement, PressableAreaProps>(
+  (props, ref) => {
+    const isMonthCard = useIsCard();
+    const route = useHandleUrlParam();
+    const [background, setBackground] = useState("white"); //fixes sticky hover effect
 
-  return (
-    <Container
-      route={route}
-      background={background}
-      onTouchStart={() => setBackground("gray")}
-      onTouchEnd={() => setBackground("white")}
-      isMonthCard={isMonthCard}
-      {...props}
-    >
-      <DateValue isMonthCard={isMonthCard}>{props.day.getDate()}</DateValue>
-    </Container>
-  );
-};
+    return (
+      <Container
+        ref={ref}
+        route={route}
+        background={background}
+        onTouchStart={() => setBackground("gray")}
+        onTouchEnd={() => setBackground("white")}
+        isMonthCard={isMonthCard}
+        {...props}
+      >
+        <DateValue isMonthCard={isMonthCard}>{props.day.getDate()}</DateValue>
+      </Container>
+    );
+  }
+);
 
 interface ContainerProps extends PressableAreaProps {
   route: Date;
