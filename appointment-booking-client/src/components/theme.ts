@@ -27,7 +27,7 @@ export const theme: DefaultTheme = {
   },
   colors: {
     primary: "#5eab55",
-    primaryFaded: "#5eab5540",
+    primaryFaded: "#5eab5560",
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
   },

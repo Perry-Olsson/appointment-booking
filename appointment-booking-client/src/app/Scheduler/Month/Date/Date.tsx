@@ -37,6 +37,6 @@ const GridCell = styled(Flex)<{ isMonthCard: boolean }>`
     border-color: ${({ theme }) => theme.grid.borderColor};
   }
   height: ${({ theme, isMonthCard }) =>
-    isMonthCard ? "3vw" : theme.grid.cellHeight};
+    isMonthCard ? "3.1vw" : theme.grid.cellHeight};
   max-height: ${({ theme }) => theme.grid.cellMaxHeight};
 `;

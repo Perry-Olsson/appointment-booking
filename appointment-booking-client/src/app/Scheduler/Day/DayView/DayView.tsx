@@ -15,7 +15,7 @@ export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
         <TimeSlotList day={day} />
         <div>
           {appointments.map(a => (
-            <div>
+            <div key={a.timestamp.valueOf()}>
               {a.timestamp.toLocaleTimeString()} - {a.end.toLocaleTimeString()}
             </div>
           ))}
