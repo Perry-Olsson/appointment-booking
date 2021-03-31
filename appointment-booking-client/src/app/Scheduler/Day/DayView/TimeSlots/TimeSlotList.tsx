@@ -1,12 +1,13 @@
 import { useAtom } from "jotai";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { QUARTER_HOUR } from "../../../../../constants";
 import { dimensionsAtom } from "../../../atoms";
+import { isDayEqual } from "../../../utils";
 import { TimeSlot } from "./TimeSlot";
 
-export const TimeSlotList: React.FC<TimeSlotsProps> = ({ day }) => {
+export const TimeSlotList: React.FC<TimeSlotsProps> = memo(({ day }) => {
   const timeSlots = useMemo(() => computeTimeSlots(day), []);
   const [{ height }] = useAtom(dimensionsAtom);
 
@@ -17,7 +18,7 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = ({ day }) => {
       ))}
     </Container>
   );
-};
+}, isDayEqual);
 
 const Container = styled.div<{ height: number }>`
   width: 100%;

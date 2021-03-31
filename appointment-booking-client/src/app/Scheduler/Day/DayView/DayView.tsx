@@ -1,17 +1,22 @@
+import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
+import { device } from "../../../../components/device";
 import { Appointment } from "../../../../types";
+import { dimensionsAtom } from "../../atoms";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";
 import { TimeSlotList } from "./TimeSlots";
 
 export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
+  const [{ width }] = useAtom(dimensionsAtom);
+
   return (
     <Container>
       <Header day={day} />
       <Grid>
-        <MonthCard day={day} />
+        {width >= device.desktop.width ? <MonthCard day={day} /> : null}
         <TimeSlotList day={day} />
         <div>
           {appointments.map(a => (

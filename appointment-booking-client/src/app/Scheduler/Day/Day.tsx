@@ -1,22 +1,16 @@
-import React, { useState } from "react";
-import { concatMonths, useFetchAppointments } from "../hooks";
-import { useGetSelectedDay } from "./hooks";
+import { concatMonths } from "../hooks";
+import { useDayState } from "./hooks";
 import { DayView } from "./DayView";
 import { isValidDate } from "../utils";
-import { useAtom } from "jotai";
-import { monthsAtom } from "../atoms";
 
 const Day = () => {
-  const { day, prefetchedAppointments } = useGetSelectedDay();
-  const [appointments, setAppointments] = useState(prefetchedAppointments);
-  const { error } = useFetchAppointments(day, setAppointments);
-  const [months, setMonths] = useAtom(monthsAtom);
+  const { error, day, appointments, months, setMonths } = useDayState();
 
   if (!isValidDate(day)) return <div>invalid url. Rerouting...</div>;
 
   if (error) return <div>Can't connect to server</div>;
 
-  if (!appointments || day.valueOf() === 0) return <div>loading...</div>;
+  if (!appointments) return <div>loading...</div>;
 
   if (months.cursor.valueOf() < day.valueOf()) setMonths(concatMonths(months));
 

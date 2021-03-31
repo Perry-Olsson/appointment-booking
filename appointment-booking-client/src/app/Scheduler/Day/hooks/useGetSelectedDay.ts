@@ -7,7 +7,7 @@ export const useGetSelectedDay = (): SelectedDay => {
   const [allAppointments] = useAtom(allAppointmentsAtom);
   const day = useHandleUrlParam();
 
-  if (pageRefreshed(allAppointmentsAtom))
+  if (pageRefreshed(allAppointments))
     return { day, prefetchedAppointments: null };
 
   const month = day.getMonth();
