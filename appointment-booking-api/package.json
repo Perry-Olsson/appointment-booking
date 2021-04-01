@@ -39,7 +39,7 @@
     "@types/supertest": "^2.0.10",
     "jest": "^26.6.3",
     "nodemon": "^2.0.7",
-    "prisma": "^2.18.0",
+    "prisma": "^2.20.1",
     "superagent": "^6.1.0",
     "supertest": "^6.1.3",
     "ts-jest": "^26.5.4",
@@ -48,7 +48,7 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@prisma/client": "^2.17.0",
+    "@prisma/client": "^2.20.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
