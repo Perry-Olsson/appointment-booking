@@ -1,17 +1,21 @@
+import { useAtom } from "jotai";
 import Link from "next/link";
 import { IoIosArrowBack } from "react-icons/io";
 import styled from "styled-components";
+import { dimensionsAtom } from "../app/Scheduler/atoms";
+import { device } from "./device";
 
 export const BackButton: React.FC<BackButtonProps> = ({
   href,
   size = "sm",
   ...restProps
 }) => {
+  const [{ width }] = useAtom(dimensionsAtom);
   return (
     <Link href={href}>
       <Container {...restProps}>
         <IoIosArrowBack size={getWidth(size)} />
-        back
+        {device.isLapTopOrBigger(width) ? "back" : null}
       </Container>
     </Link>
   );

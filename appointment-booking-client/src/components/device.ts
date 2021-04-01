@@ -13,4 +13,7 @@ export const device = {
   isLapTopOrBigger: function (width: number) {
     return width > this.tablet.width;
   },
+  isDesktop: function (width: number) {
+    return width > this.desktop.width;
+  },
 };

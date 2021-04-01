@@ -8,7 +8,7 @@ export const theme: DefaultTheme = {
     headerHeight: "30px",
   },
   dayView: {
-    headerHeight: "45px",
+    headerHeight: "50px",
     headerOffset: 105, // navBar height + dayView header height
   },
   grid: {
@@ -30,6 +30,7 @@ export const theme: DefaultTheme = {
     primaryFaded: "#5eab5560",
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
+    gray: "#454545",
   },
   icons: {
     small: "1rem",
@@ -68,6 +69,7 @@ declare module "styled-components" {
       primaryFaded: string;
       textPrimary: string;
       textSecondary: string;
+      gray: string;
     };
     icons: {
       small: string;

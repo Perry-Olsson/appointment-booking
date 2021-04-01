@@ -10,6 +10,8 @@ declare global {
     getMobileDateString(): string;
     getDesktopDateString(): string;
     getMonthCardString(): string;
+    getNextDay(): Date;
+    getPreviousDay(): Date;
   }
 }
 
@@ -38,6 +40,14 @@ Date.prototype.getDesktopDateString = function () {
 
 Date.prototype.getMonthCardString = function () {
   return `${this.getMonthString()} ${this.getFullYear()}`;
+};
+
+Date.prototype.getPreviousDay = function () {
+  return new Date(this.getFullYear(), this.getMonth(), this.getDate() - 1);
+};
+
+Date.prototype.getNextDay = function () {
+  return new Date(this.getFullYear(), this.getMonth(), this.getDate() + 1);
 };
 
 Date.prototype.monthStrings = [

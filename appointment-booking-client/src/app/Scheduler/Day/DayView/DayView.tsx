@@ -16,7 +16,7 @@ export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
     <Container>
       <Header day={day} />
       <Grid>
-        {width >= device.desktop.width ? <MonthCard day={day} /> : null}
+        {device.isDesktop(width) ? <MonthCard day={day} /> : null}
         <TimeSlotList day={day} />
         <div>
           {appointments.map(a => (

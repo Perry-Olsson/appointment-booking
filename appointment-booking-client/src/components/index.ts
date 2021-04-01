@@ -4,3 +4,4 @@ export * from "./BackButton";
 export * from "./HeadTags";
 export * from "./Link";
 export * from "./device";
+export * from "./Arrows";

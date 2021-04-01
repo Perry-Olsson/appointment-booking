@@ -64,8 +64,8 @@ const Container = styled.a<ContainerProps>`
   }
   @media (max-width: ${({ isMonthCard }) =>
       isMonthCard ? "100000px" : device.tablet.pixels}) {
-    height: 59%;
-    width: 60%;
+    height: 68%;
+    width: 70%;
     border: ${({ today }) => (today ? "solid 1px" : null)};
     border-radius: 50%;
     border-color: gray;
