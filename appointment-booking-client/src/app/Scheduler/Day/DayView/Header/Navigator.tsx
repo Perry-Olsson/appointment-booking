@@ -37,8 +37,11 @@ const Container = styled(Flex)`
   max-width: 400px;
 `;
 
-const DateString = styled(Flex)`
+const DateString = styled.h3`
+  text-align: center;
   padding: 0 5px;
-  font-size: ${({ theme }) => theme.font.sm};
   font-weight: bold;
+  @media (min-width: ${device.mobile.pixels}) {
+    font-size: ${({ theme }) => theme.font.med};
+  }
 `;
