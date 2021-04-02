@@ -33,8 +33,12 @@ const Container = styled(Flex)`
   border: solid 1px;
   border-radius: 2px;
   height: 80%;
+  width: 65vw;
+  max-width: 400px;
 `;
 
-const DateString = styled.h2`
+const DateString = styled(Flex)`
   padding: 0 5px;
+  font-size: ${({ theme }) => theme.font.sm};
+  font-weight: bold;
 `;

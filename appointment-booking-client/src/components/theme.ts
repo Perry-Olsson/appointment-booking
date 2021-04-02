@@ -8,8 +8,8 @@ export const theme: DefaultTheme = {
     headerHeight: "30px",
   },
   dayView: {
-    headerHeight: "50px",
-    headerOffset: 110, // navBar height + dayView header height
+    headerHeight: "55px",
+    headerOffset: 115, // navBar height + dayView header height
     appointmentBlockRadius: "9px",
     appointmentBlockColor: "#909090",
   },
