@@ -17,14 +17,7 @@ export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
       <Header day={day} />
       <Grid>
         {device.isDesktop(width) ? <MonthCard day={day} /> : null}
-        <TimeSlotList day={day} />
-        <div>
-          {appointments.map(a => (
-            <div key={a.timestamp.valueOf()}>
-              {a.timestamp.toLocaleTimeString()} - {a.end.toLocaleTimeString()}
-            </div>
-          ))}
-        </div>
+        <TimeSlotList day={day} appointments={appointments} />
       </Grid>
     </Container>
   );

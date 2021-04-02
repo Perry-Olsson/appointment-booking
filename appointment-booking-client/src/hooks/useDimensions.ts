@@ -8,6 +8,7 @@ export const useDimensions = (): void => {
   useEffect(() => {
     setDimensions(getDimensions());
 
+    //debounce resize
     let timeoutId: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(timeoutId);

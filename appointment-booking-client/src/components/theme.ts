@@ -9,7 +9,9 @@ export const theme: DefaultTheme = {
   },
   dayView: {
     headerHeight: "50px",
-    headerOffset: 105, // navBar height + dayView header height
+    headerOffset: 110, // navBar height + dayView header height
+    appointmentBlockRadius: "9px",
+    appointmentBlockColor: "#909090",
   },
   grid: {
     width: "100%",
@@ -31,6 +33,7 @@ export const theme: DefaultTheme = {
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
     gray: "#454545",
+    lightGray: "#45454555",
   },
   icons: {
     small: "1rem",
@@ -49,6 +52,8 @@ declare module "styled-components" {
     dayView: {
       headerHeight: string;
       headerOffset: number;
+      appointmentBlockRadius: string;
+      appointmentBlockColor: string;
     };
     grid: {
       width: string;
@@ -70,6 +75,7 @@ declare module "styled-components" {
       textPrimary: string;
       textSecondary: string;
       gray: string;
+      lightGray: string;
     };
     icons: {
       small: string;
