@@ -8,8 +8,8 @@ export const theme: DefaultTheme = {
     headerHeight: "30px",
   },
   dayView: {
-    headerHeight: "55px",
-    headerOffset: 115, // navBar height + dayView header height
+    headerHeight: "65px",
+    headerOffset: 125, // navBar height + dayView header height
     appointmentBlockRadius: "9px",
     appointmentBlockColor: "#909090",
   },
@@ -29,6 +29,8 @@ export const theme: DefaultTheme = {
   },
   colors: {
     primary: "#5eab55",
+    primaryLight: "#71d466",
+    primaryLightFaded: "#71d466bb",
     primaryFaded: "#5eab5560",
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
@@ -71,6 +73,8 @@ declare module "styled-components" {
     };
     colors: {
       primary: string;
+      primaryLight: string;
+      primaryLightFaded: string;
       primaryFaded: string;
       textPrimary: string;
       textSecondary: string;

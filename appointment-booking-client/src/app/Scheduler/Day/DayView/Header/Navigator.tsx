@@ -13,11 +13,13 @@ export const Navigator: React.FC<DayProps> = ({ day }) => {
   return device.isDesktop(width) ? (
     <DateString>{getDateString(day, width)}</DateString>
   ) : (
-    <Container>
-      <PreviousDay />
-      <DateString>{getDateString(day, width)}</DateString>
-      <NextDay />
-    </Container>
+    <Flex>
+      <Container>
+        <PreviousDay />
+        <DateString>{getDateString(day, width)}</DateString>
+        <NextDay />
+      </Container>
+    </Flex>
   );
 };
 
@@ -32,13 +34,15 @@ const Container = styled(Flex)`
   grid-template-columns: 1fr 4fr 1fr;
   border: solid 1px;
   border-radius: 2px;
-  height: 80%;
+  height: 70%;
   width: 65vw;
   max-width: 400px;
 `;
 
 const DateString = styled.h3`
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0 5px;
   font-weight: bold;
   @media (min-width: ${device.mobile.pixels}) {

@@ -48,7 +48,7 @@ interface BackButtonProps {
 
 const Container = styled.a`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   font-weight: bold;
   font-size: ${({ theme }) => theme.font.med};

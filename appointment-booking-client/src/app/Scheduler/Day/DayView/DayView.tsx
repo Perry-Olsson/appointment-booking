@@ -37,4 +37,10 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   width: 100%;
+  height: ${({ theme }) =>
+    `${window.innerHeight - theme.dayView.headerOffset}px`};
+  @media (min-width: ${device.desktop.pixels}) {
+    border-top: solid 1px #90909090;
+    padding-top: 20px;
+  }
 `;

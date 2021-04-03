@@ -1,20 +1,17 @@
-import { useAtom } from "jotai";
 import { memo, useMemo } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { QUARTER_HOUR } from "../../../../../constants";
 import { Appointment } from "../../../../../types";
-import { dimensionsAtom } from "../../../atoms";
 import { TimeSlot } from "./TimeSlot";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
   ({ day, appointments }) => {
     const timeSlots = useMemo(() => computeTimeSlots(day), [day]);
-    const [{ height }] = useAtom(dimensionsAtom);
 
     let index = 0;
     return (
-      <Container height={height}>
+      <Container>
         {timeSlots.map(slot => {
           if (slot.valueOf() === appointments[index]?.end.valueOf()) index++;
           return (
@@ -41,9 +38,9 @@ interface TimeSlotsProps {
   appointments: Appointment[];
 }
 
-const Container = styled.div<{ height: number }>`
+const Container = styled.div`
   width: 100%;
-  height: ${({ theme, height }) => `${height - theme.dayView.headerOffset}px`};
+  height: 100%;
   overflow-y: auto;
   @media (max-width: ${device.desktop.pixels}) {
     grid-column: 1 / 4;
