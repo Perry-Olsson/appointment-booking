@@ -1,25 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 
-export const CreateAppointment: React.FC<CreateAppointmentProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   handleClick,
+  text,
   className,
 }) => {
-  return (
-    <Button
-      handleClick={handleClick}
-      text="Create Appointment"
-      className={className}
-    />
-  );
-};
-
-interface CreateAppointmentProps {
-  handleClick: () => void;
-  className?: string;
-}
-
-const Button: React.FC<ButtonProps> = ({ handleClick, text, className }) => {
   return (
     <BaseButton onClick={handleClick} className={className}>
       {text}

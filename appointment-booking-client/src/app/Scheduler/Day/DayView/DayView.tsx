@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
 import { Appointment } from "../../../../types";
+import { TabletMobileCreateAppointment } from "../../AppointmentForm";
 import { dimensionsAtom } from "../../atoms";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";
@@ -19,6 +20,7 @@ export const DayView: React.FC<DayProps> = ({ day, appointments }) => {
         {device.isDesktop(width) ? <MonthCard day={day} /> : null}
         <TimeSlotList day={day} appointments={appointments} />
       </Grid>
+      {width < device.desktop.width ? <TabletMobileCreateAppointment /> : null}
     </Container>
   );
 };
@@ -42,5 +44,13 @@ const Grid = styled.div`
   @media (min-width: ${device.desktop.pixels}) {
     border-top: solid 1px #90909090;
     padding-top: 20px;
+  }
+  @media (max-width: ${device.desktop.pixels}) {
+    height: ${({ theme }) =>
+      `${
+        window.innerHeight -
+        theme.dayView.headerOffset -
+        theme.dayView.footerOffset
+      }px`};
   }
 `;
