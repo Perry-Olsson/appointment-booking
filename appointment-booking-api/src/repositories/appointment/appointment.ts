@@ -66,6 +66,7 @@ class _Appointment extends TimestampValidator {
     const appointments = await prisma.appointment.findMany({
       where,
       select: this.exposedFields,
+      orderBy: { timestamp: "asc" },
     });
 
     return appointments;
