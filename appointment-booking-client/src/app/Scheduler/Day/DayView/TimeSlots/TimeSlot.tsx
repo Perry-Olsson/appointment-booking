@@ -21,17 +21,21 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
   );
 };
 
-interface TimeSlotProps {
-  timeSlot: Date;
-  appointment: Appointment | undefined;
-}
-
 const Container = styled.div<{ isOnHour: boolean }>`
   border-top: solid 1px;
   border-color: ${({ theme, isOnHour }) =>
     isOnHour ? theme.colors.gray : theme.colors.lightGray};
   width: 100%;
   height: 1.7rem;
+`;
+
+interface TimeSlotProps {
+  timeSlot: Date;
+  appointment: Appointment | undefined;
+}
+
+const TimeString = styled.div`
+  margin-left: 5px;
 `;
 
 const getTimeString = (timeSlot: Date) => {
@@ -41,7 +45,3 @@ const getTimeString = (timeSlot: Date) => {
     hours === 0 ? 12 : hours > 12 ? hours - 12 : hours
   } ${localeTimestring.slice(localeTimestring.length - 3)}`;
 };
-
-const TimeString = styled.div`
-  margin-left: 5px;
-`;

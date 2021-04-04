@@ -21,7 +21,7 @@ export const DayView: React.FC<DayProps> = memo(
           {device.isDesktop(width) ? <MonthCard day={day} /> : null}
           <TimeSlotList day={day} appointments={appointments} />
         </Grid>
-        {device.isNotWideScreen(width) ? <Footer /> : null}
+        {device.isNotWideScreen(width) ? <Footer day={day} /> : null}
       </Container>
     );
   },

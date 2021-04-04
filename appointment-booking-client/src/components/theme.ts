@@ -38,6 +38,7 @@ export const theme: DefaultTheme = {
     textSecondary: "#ffffff",
     gray: "#454545",
     lightGray: "#45454555",
+    shadeGray: "#90909020",
   },
   icons: {
     small: "1rem",
@@ -84,6 +85,7 @@ declare module "styled-components" {
       textSecondary: string;
       gray: string;
       lightGray: string;
+      shadeGray: string;
     };
     icons: {
       small: string;

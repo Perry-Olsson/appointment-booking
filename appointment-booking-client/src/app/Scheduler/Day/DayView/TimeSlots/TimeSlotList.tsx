@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { Appointment } from "../../../../../types";
 import { TimeSlot } from "./TimeSlot";
-import { appointmentsAreEqual, computeTimeSlots } from "./utils";
+import { appointmentsAreEqual } from "./utils";
+import { computeTimeSlots } from "./utils";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
   ({ day, appointments }) => {

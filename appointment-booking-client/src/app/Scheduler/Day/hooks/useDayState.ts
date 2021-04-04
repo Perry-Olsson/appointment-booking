@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useGetSelectedDay } from ".";
 import { monthsAtom } from "../../atoms";
-import { useFetchAppointments } from "../../hooks";
+import { concatMonths, useFetchAppointments } from "../../hooks";
 
 export const useDayState = () => {
   const { day, prefetchedAppointments } = useGetSelectedDay();
@@ -11,8 +11,10 @@ export const useDayState = () => {
   const [months, setMonths] = useAtom(monthsAtom);
 
   useEffect(() => {
+    if (months.cursor.valueOf() < day.valueOf())
+      setMonths(concatMonths(months));
     if (prefetchedAppointments) setAppointments(prefetchedAppointments);
   }, [day.valueOf()]);
 
-  return { day, appointments, months, setMonths, error };
+  return { day, appointments, error };
 };
