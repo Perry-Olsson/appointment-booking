@@ -9,6 +9,7 @@ interface GrayedOutProps {
 
 export const GrayedOut = styled.div<GrayedOutProps>`
   height: 100%;
+  margin: 0 2px;
   background-color: ${({ theme, timeSlotValue, timestampValue, endValue }) =>
     timeSlotValue >= timestampValue && timeSlotValue < endValue
       ? theme.dayView.appointmentBlockColor
