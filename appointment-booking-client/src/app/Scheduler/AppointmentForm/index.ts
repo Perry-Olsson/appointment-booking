@@ -1,1 +1,1 @@
-export * from "./CreateAppointment";
+export * from "./CreateAppointmentButton";

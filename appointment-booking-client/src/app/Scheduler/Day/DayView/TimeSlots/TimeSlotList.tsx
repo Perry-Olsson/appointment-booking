@@ -1,9 +1,9 @@
 import { memo, useMemo } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
-import { QUARTER_HOUR } from "../../../../../constants";
 import { Appointment } from "../../../../../types";
 import { TimeSlot } from "./TimeSlot";
+import { appointmentsAreEqual, computeTimeSlots } from "./utils";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
   ({ day, appointments }) => {
@@ -25,15 +25,10 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
       </Container>
     );
   },
-  (prev, next) => {
-    return (
-      prev.day.valueOf() === next.day.valueOf() &&
-      prev.appointments === next.appointments
-    );
-  }
+  appointmentsAreEqual
 );
 
-interface TimeSlotsProps {
+export interface TimeSlotsProps {
   day: Date;
   appointments: Appointment[];
 }
@@ -48,13 +43,3 @@ const Container = styled.div`
     margin: auto;
   }
 `;
-
-const computeTimeSlots = (day: Date): Date[] => {
-  const timeSlots: Date[] = [];
-  let currentTime = day;
-  while (currentTime.getDate() === day.getDate()) {
-    timeSlots.push(currentTime);
-    currentTime = new Date(currentTime.valueOf() + QUARTER_HOUR);
-  }
-  return timeSlots;
-};

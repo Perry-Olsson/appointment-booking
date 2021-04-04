@@ -23,4 +23,7 @@ export const device = {
   isDesktop: function (width: number) {
     return width > this.desktop.width;
   },
+  isNotWideScreen: function (width: number) {
+    return width < this.desktop.width;
+  },
 };

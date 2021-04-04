@@ -9,8 +9,8 @@ import { Grid } from "../../../Month/Grid";
 import { Flex } from "../../../../../components";
 import { MonthName } from "./MonthName";
 import { getMonth } from "./utils";
-import { isDayEqual } from "../../../utils";
 import { DayProps } from "../../type";
+import { isDayEqual } from "../../../utils";
 
 export const MonthCard: React.FC<DayProps> = memo(({ day }) => {
   const [months] = useAtom(monthsAtom);
