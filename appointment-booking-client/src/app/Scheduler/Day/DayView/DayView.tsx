@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
@@ -10,10 +10,12 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";
 import { TimeSlotList } from "./TimeSlots";
+import { computeTimeSlots } from "./TimeSlots/utils";
 
 export const DayView: React.FC<DayProps> = memo(
   ({ day, appointments }) => {
     const [{ width }] = useAtom(dimensionsAtom);
+    const timeSlots = useMemo(() => computeTimeSlots(day), [day.valueOf()]);
 
     const isDesktop = device.isDesktop(width);
     return (
@@ -21,8 +23,13 @@ export const DayView: React.FC<DayProps> = memo(
         <Header day={day} />
         <Grid>
           {isDesktop ? <MonthCard day={day} /> : null}
-          <TimeSlotList day={day} appointments={appointments} />
-          {isDesktop ? <AppointmentForm /> : null}
+          <TimeSlotList timeSlots={timeSlots} appointments={appointments} />
+          {isDesktop ? (
+            <AppointmentForm
+              appointments={appointments}
+              timeSlots={timeSlots}
+            />
+          ) : null}
         </Grid>
         {device.isNotWideScreen(width) ? <Footer day={day} /> : null}
       </Container>

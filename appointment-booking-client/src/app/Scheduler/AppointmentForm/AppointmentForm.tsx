@@ -6,9 +6,13 @@ import { Button, Flex } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { FormValues } from "./types";
-import { ErrorText, Label, Select, TextArea } from "./components";
+import { Comments, Provider, Time } from "./fields";
+import { Appointment } from "../../../types";
 
-export const AppointmentForm: React.FC = () => {
+export const AppointmentForm: React.FC<AppointmentFormProps> = ({
+  timeSlots,
+  appointments,
+}) => {
   const [show] = useAtom(showAppointmentsFormAtom);
   const {
     register,
@@ -22,38 +26,25 @@ export const AppointmentForm: React.FC = () => {
   return (
     <Container>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {/* register your input into the hook by invoking the "register" function */}
         <Procedure register={register} errors={errors} />
 
         <Seperator />
 
-        <Label>
-          With:
-          <Select {...register("provider", { required: true })} defaultValue="">
-            <option disabled value="">
-              {" "}
-              -- select an option --{" "}
-            </option>
-            <option value="provider1">provider #1</option>
-            <option value="provider2">provider #2</option>
-          </Select>
-          {errors.provider && <ErrorText>This field is required</ErrorText>}
-        </Label>
+        <Provider register={register} errors={errors} />
 
         <Seperator />
 
-        <Label>
-          Time:
-          <Select {...register("time", { required: true })} />
-          {errors.time && <ErrorText>This field is required</ErrorText>}
-        </Label>
+        <Time
+          appointments={appointments}
+          timeSlots={timeSlots}
+          register={register}
+          errors={errors}
+        />
 
         <Seperator />
 
-        <Label>
-          questions or comments:
-          <TextArea {...register("comments")} />
-        </Label>
+        <Comments register={register} errors={errors} />
+
         <Submit type="submit" text="Submit" />
       </Form>
     </Container>
@@ -79,3 +70,8 @@ const Submit = styled(Button)`
 const Seperator = styled.div`
   height: 20px;
 `;
+
+interface AppointmentFormProps {
+  timeSlots: Date[];
+  appointments: Appointment[];
+}

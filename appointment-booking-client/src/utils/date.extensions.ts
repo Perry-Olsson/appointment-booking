@@ -7,6 +7,7 @@ declare global {
     isValidDate(): boolean;
     getMonthString(): string;
     getDayString(): string;
+    getTimeString(): string;
     getMobileDateString(): string;
     getDesktopDateString(): string;
     getMonthCardString(): string;
@@ -27,6 +28,15 @@ Date.prototype.getMonthString = function () {
 
 Date.prototype.getDayString = function () {
   return this.dayStrings[this.getDay()];
+};
+
+Date.prototype.getTimeString = function () {
+  const hours = this.getHours() % 12;
+  const minutes = this.getMinutes();
+  const suffix = this.getHours() < 11 ? "AM" : "PM";
+  return `${hours === 0 ? 12 : hours}:${
+    minutes === 0 ? "00" : minutes
+  } ${suffix}`;
 };
 
 Date.prototype.getMobileDateString = function () {

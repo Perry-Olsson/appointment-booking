@@ -1,15 +1,12 @@
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { Appointment } from "../../../../../types";
 import { TimeSlot } from "./TimeSlot";
 import { appointmentsAreEqual } from "./utils";
-import { computeTimeSlots } from "./utils";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
-  ({ day, appointments }) => {
-    const timeSlots = useMemo(() => computeTimeSlots(day), [day]);
-
+  ({ timeSlots, appointments }) => {
     let index = 0;
     return (
       <Container>
@@ -30,7 +27,7 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
 );
 
 export interface TimeSlotsProps {
-  day: Date;
+  timeSlots: Date[];
   appointments: Appointment[];
 }
 
