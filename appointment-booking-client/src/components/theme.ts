@@ -40,6 +40,9 @@ export const theme: DefaultTheme = {
     lightGray: "#45454555",
     shadeGray: "#90909020",
   },
+  form: {
+    height: "40px",
+  },
   icons: {
     small: "1rem",
     medium: "2rem",
@@ -86,6 +89,9 @@ declare module "styled-components" {
       gray: string;
       lightGray: string;
       shadeGray: string;
+    };
+    form: {
+      height: string;
     };
     icons: {
       small: string;

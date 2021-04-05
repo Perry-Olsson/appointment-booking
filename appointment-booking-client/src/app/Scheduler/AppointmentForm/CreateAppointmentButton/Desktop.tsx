@@ -15,11 +15,5 @@ export const DesktopCreateAppointment: React.FC = () => {
 };
 
 const StyledCreateAppointment = styled(CreateAppointment)`
-  padding: 10px;
   width: fit-content;
-  @media (hover: hover) {
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.primaryLightFaded};
-    }
-  }
 `;
