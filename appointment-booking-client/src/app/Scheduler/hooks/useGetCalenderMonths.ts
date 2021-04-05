@@ -29,7 +29,10 @@ const isNearingBottomOfPage = (): boolean => {
   return false;
 };
 
-const monthListIsNotMaxed = ({ cursor }: Months, today: Date): boolean => {
+export const monthListIsNotMaxed = (
+  { cursor }: Months,
+  today: Date
+): boolean => {
   if (cursor.valueOf() < today.valueOf() + ONE_YEAR) return true;
   return false;
 };

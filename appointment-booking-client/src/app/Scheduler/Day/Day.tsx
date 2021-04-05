@@ -1,8 +1,10 @@
 import { useDayState } from "./hooks";
 import { DayView } from "./DayView";
+import { useUpdateMonthList } from "./hooks/useUpdateMonthList";
 
 const Day = () => {
   const { error, day, appointments } = useDayState();
+  useUpdateMonthList();
 
   if (!appointments) return <div>loading...</div>;
 

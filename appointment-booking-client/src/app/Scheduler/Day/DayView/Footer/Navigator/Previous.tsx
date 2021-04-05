@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { LeftArrow, Link } from "../../../../../../components";
-import { monthsAtom, nowAtom } from "../../../../atoms";
+import { nowAtom } from "../../../../atoms";
 import { useHandleUrlParam } from "../../../hooks";
 import { NavigatorBox } from "./NavigatorBox";
 import { ArrowProps, NavigationType } from "./types";
