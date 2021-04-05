@@ -28,3 +28,5 @@ interface WindowDimensions {
   width: number;
   height: number;
 }
+
+export const showAppointmentsFormAtom = atom<boolean>(false);

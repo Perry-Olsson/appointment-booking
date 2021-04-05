@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
 import { Appointment } from "../../../../types";
+import { AppointmentForm } from "../../AppointmentForm";
 import { dimensionsAtom } from "../../atoms";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -14,12 +15,14 @@ export const DayView: React.FC<DayProps> = memo(
   ({ day, appointments }) => {
     const [{ width }] = useAtom(dimensionsAtom);
 
+    const isDesktop = device.isDesktop(width);
     return (
       <Container>
         <Header day={day} />
         <Grid>
-          {device.isDesktop(width) ? <MonthCard day={day} /> : null}
+          {isDesktop ? <MonthCard day={day} /> : null}
           <TimeSlotList day={day} appointments={appointments} />
+          {isDesktop ? <AppointmentForm text="hello" /> : null}
         </Grid>
         {device.isNotWideScreen(width) ? <Footer day={day} /> : null}
       </Container>
