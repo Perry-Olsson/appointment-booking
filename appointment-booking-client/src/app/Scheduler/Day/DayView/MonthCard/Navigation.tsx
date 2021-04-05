@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Flex } from "../../../../../components";
 import { DayProps } from "../../type";
-import { Navigator } from "../Footer/Navigator";
+import { Navigator } from "../components";
 
-export const MonthName: React.FC<DayProps> = ({ day }) => {
+export const Navigation: React.FC<DayProps> = ({ day }) => {
   return (
     <Container>
       <StyledNavigator type="month">{day.getMonthCardString()}</StyledNavigator>

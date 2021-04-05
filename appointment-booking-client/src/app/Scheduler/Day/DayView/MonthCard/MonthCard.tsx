@@ -7,7 +7,7 @@ import { DaysOfTheWeek } from "../../../components/DaysOfTheWeek";
 import { useAtom } from "jotai";
 import { Grid } from "../../../Month/Grid";
 import { Flex } from "../../../../../components";
-import { MonthName } from "./MonthName";
+import { Navigation } from "./Navigation";
 import { getMonth } from "./utils";
 import { DayProps } from "../../type";
 import { isDayEqual } from "../../../utils";
@@ -18,7 +18,7 @@ export const MonthCard: React.FC<DayProps> = memo(({ day }) => {
 
   return (
     <Container>
-      <MonthName day={day} />
+      <Navigation day={day} />
       <GridContainer>
         <CalenderGrid>
           <DaysOfTheWeek />
