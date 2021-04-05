@@ -4,8 +4,28 @@ import { useAtom } from "jotai";
 import { Link, RightArrow } from "../../../../../../components";
 import { monthsAtom } from "../../../../atoms";
 import { useHandleUrlParam } from "../../../hooks";
-import { NavigatorBox } from "./NavigatorBox";
 import { ArrowProps, NavigationType } from "./types";
+import { NavigatorArrow } from "./components";
+
+export const Next: React.FC<ArrowProps> = ({ type }) => {
+  const [{ cursor }] = useAtom(monthsAtom);
+  const day = useHandleUrlParam();
+  const href =
+    type === "day" ? day.getNextDay().toJSON() : day.getNextMonth().toJSON();
+
+  const isDisabled = disable(type, day, cursor);
+  return (
+    <Link href={href} disable={isDisabled}>
+      <Container isDisabled={isDisabled}>
+        <RightArrow />
+      </Container>
+    </Link>
+  );
+};
+
+const Container = styled(NavigatorArrow)`
+  border-left: solid 1px;
+`;
 
 const disable = (type: NavigationType, day: Date, cursor: Date): boolean => {
   if (type === "day") {
@@ -18,23 +38,3 @@ const disable = (type: NavigationType, day: Date, cursor: Date): boolean => {
     );
   }
 };
-
-export const Next: React.FC<ArrowProps> = ({ type }) => {
-  const [{ cursor }] = useAtom(monthsAtom);
-  const day = useHandleUrlParam();
-  const href =
-    type === "day" ? day.getNextDay().toJSON() : day.getNextMonth().toJSON();
-
-  return (
-    <Link href={href} disable={disable(type, day, cursor)}>
-      <Container>
-        <RightArrow />
-      </Container>
-    </Link>
-  );
-};
-
-const Container = styled(NavigatorBox)`
-  border-left: solid 1px;
-  cursor: pointer;
-`;

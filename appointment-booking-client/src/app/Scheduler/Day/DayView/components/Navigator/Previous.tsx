@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { LeftArrow, Link } from "../../../../../../components";
 import { nowAtom } from "../../../../atoms";
 import { useHandleUrlParam } from "../../../hooks";
-import { NavigatorBox } from "./NavigatorBox";
+import { NavigatorArrow } from "./components";
 import { ArrowProps, NavigationType } from "./types";
 
 const disable = (type: NavigationType, day: Date, today: Date): boolean => {
@@ -26,16 +26,16 @@ export const Previous: React.FC<ArrowProps> = ({ type }) => {
       ? day.getPreviousDay().toJSON()
       : day.getPreviousMonth().toJSON();
 
+  const isDisabled = disable(type, day, today);
   return (
-    <Link href={href} disable={disable(type, day, today)}>
-      <Container>
+    <Link href={href} disable={isDisabled}>
+      <Container isDisabled={isDisabled}>
         <LeftArrow />
       </Container>
     </Link>
   );
 };
 
-const Container = styled(NavigatorBox)`
+const Container = styled(NavigatorArrow)`
   border-right: solid 1px;
-  cursor: pointer;
 `;
