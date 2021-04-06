@@ -10,9 +10,9 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";
 import { TimeSlotList } from "./TimeSlots";
-import { computeTimeSlots } from "./TimeSlots/utils";
+import { appointmentsAreEqual, computeTimeSlots } from "./TimeSlots/utils";
 
-export const DayView: React.FC<DayProps> = memo(
+export const DayView: React.FC<DayViewProps> = memo(
   ({ day, appointments }) => {
     const [{ width }] = useAtom(dimensionsAtom);
     const timeSlots = useMemo(() => computeTimeSlots(day), [day.valueOf()]);
@@ -37,10 +37,10 @@ export const DayView: React.FC<DayProps> = memo(
   },
   (prev, next) =>
     prev.day.valueOf() === next.day.valueOf() &&
-    prev.appointments === next.appointments
+    appointmentsAreEqual(prev, next)
 );
 
-interface DayProps {
+export interface DayViewProps {
   appointments: Appointment[];
   day: Date;
 }
