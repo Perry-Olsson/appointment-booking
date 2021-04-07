@@ -7,6 +7,7 @@ import { CreateAppointment } from "./CreateAppointment";
 
 export const DesktopCreateAppointment: React.FC = () => {
   const [, setShowForm] = useAtom(showAppointmentsFormAtom);
+
   return (
     <Flex>
       <StyledCreateAppointment handleClick={() => setShowForm(prev => !prev)} />

@@ -1,12 +1,16 @@
+import { useAtom } from "jotai";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
+import { showAppointmentsFormAtom } from "../../atoms";
 import { CreateAppointment } from "./CreateAppointment";
 
 export const TabletMobileCreateAppointment: React.FC = () => {
+  const [, setShowForm] = useAtom(showAppointmentsFormAtom);
+
   return (
     <Flex>
       <StyledCreateAppointmentButton
-        handleClick={() => console.log("tablet mobile create appointment")}
+        handleClick={() => setShowForm(prev => !prev)}
       />
     </Flex>
   );

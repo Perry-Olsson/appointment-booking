@@ -12,6 +12,7 @@ import { Appointment } from "../../../types";
 export const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
   appointments,
+  className,
 }) => {
   const [show] = useAtom(showAppointmentsFormAtom);
   const {
@@ -24,7 +25,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
   if (!show) return null;
 
   return (
-    <Container>
+    <Container className={className}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Procedure register={register} errors={errors} />
 
@@ -71,7 +72,8 @@ const Seperator = styled.div`
   height: 20px;
 `;
 
-interface AppointmentFormProps {
+export interface AppointmentFormProps {
   timeSlots: Date[];
   appointments: Appointment[];
+  className?: string;
 }
