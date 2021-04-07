@@ -47,6 +47,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
         <Comments register={register} errors={errors} />
 
         <Submit type="submit" text="Submit" />
+        <Seperator />
       </Form>
     </Container>
   );
@@ -70,6 +71,8 @@ const Submit = styled(Button)`
 
 const Seperator = styled.div`
   height: 20px;
+  border: solid;
+  border-color: #ffffff00;
 `;
 
 export interface AppointmentFormProps {

@@ -16,4 +16,5 @@ const StyledAppointmentForm = styled(AppointmentForm)`
   border: solid 2px gray;
   border-radius: 3px;
   padding-top: 20px;
+  overflow-y: scroll;
 `;

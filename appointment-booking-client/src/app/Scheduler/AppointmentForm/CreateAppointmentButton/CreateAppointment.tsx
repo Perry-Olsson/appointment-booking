@@ -8,7 +8,7 @@ export const CreateAppointment: React.FC<CreateAppointmentProps> = ({
   return (
     <Button
       handleClick={handleClick}
-      text="Create Appointment"
+      text="Schedule Appointment"
       className={className}
     />
   );

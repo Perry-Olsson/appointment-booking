@@ -7,7 +7,6 @@ import { appointmentsAreEqual } from "./utils";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
   ({ timeSlots, appointments }) => {
-    console.log("timeslot list");
     let index = 0;
     return (
       <Container>
