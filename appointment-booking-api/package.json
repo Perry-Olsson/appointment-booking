@@ -8,7 +8,7 @@
     "tsc": "rm -rf dist/ && tsc",
     "type-check": "tsc --noEmit",
     "watch": "rm -rf dist/ && tsc --watch",
-    "heroku-postbuild": "npm run migrate:deploy && tsc && npm run db:seed",
+    "heroku-postbuild": "npm run db:reset && npm run migrate:deploy && tsc && npm run db:seed",
     "start": "NODE_ENV=production node ./dist/index.js",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "dev:js": "NODE_ENV=development nodemon dist/index.js",
@@ -27,7 +27,7 @@
     "db:seed": "ts-node ./src/prisma/seeds/seed.ts",
     "db:test": "ts-node ./src/prisma/prismaTest.ts",
     "db:alter-schema-dev": "psql appointments -f ./src/prisma/schema/*",
-    "db:alter-schema-prod": "psql $DATABASE_URL -f ./src/prisma/schema/*"
+    "db:reset": "psql $DATABASE_URL -f ./src/prisma/resetDb.sql"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
