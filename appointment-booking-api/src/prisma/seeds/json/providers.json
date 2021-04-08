@@ -1,0 +1,16 @@
+[
+  {
+    "email": "john@provider.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "title": "Doctor",
+    "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Suspendisse sed nisi lacus sed viverra tellus. In pellentesque massa placerat duis ultricies lacus sed turpis."
+  },
+  {
+    "email": "jane@provider.com",
+    "firstName": "Jane",
+    "lastName": "Parker",
+    "title": "Estitician",
+    "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Suspendisse sed nisi lacus sed viverra tellus. In pellentesque massa placerat duis ultricies lacus sed turpis."
+  }
+]

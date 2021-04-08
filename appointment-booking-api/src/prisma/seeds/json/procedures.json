@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Acne Treatment",
+    "duration": 60,
+    "description": "lorem ipsum",
+    "providers": { "connect": [{ "email": "john@provider.com" }]}
+  },
+  {
+    "name": "Botox",
+    "duration": 30,
+    "description": "Et leo duis ut diam quam nulla porttitor. Augue eget arcu dictum varius duis at consectetur lorem donec.",
+    "providers": { "connect": [{ "email": "john@provider.com" }]}
+  },
+  {
+    "name": "Facial",
+    "duration": 30,
+    "description": "Elit ut aliquam purus sit amet luctus venenatis lectus magna.",
+    "providers": { "connect": [{ "email": "john@provider.com" }, { "email": "jane@provider.com"}]}
+  },
+  {
+    "name": "Skin Tightening",
+    "duration": 90,
+    "description" : "Ornare quam viverra orci sagittis eu volutpat odio facilisis mauris. Nullam vehicula ipsum a arcu cursus vitae congue.",
+    "providers": { "connect": [{ "email": "john@provider.com" }]}
+  }
+]

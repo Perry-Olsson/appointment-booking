@@ -11,10 +11,10 @@ model Appointment {
   id         Int      @id @default(autoincrement())
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
-  timestamp  DateTime @unique @db.Timestamptz
-  end        DateTime @unique @db.Timestamptz
-  customer   Customer @relation(fields: [customerId], references: [email])
+  timestamp  DateTime @unique @db.Timestamptz(6)
+  end        DateTime @unique @db.Timestamptz(6)
   customerId String   @db.VarChar(100)
+  customer   Customer @relation(fields: [customerId], references: [email])
 }
 
 model Customer {
@@ -30,34 +30,49 @@ model Customer {
   appointments Appointment[]
 }
 
+model Provider {
+  email      String      @id @db.VarChar(100)
+  firstName  String      @db.VarChar(50)
+  lastName   String      @db.VarChar(50)
+  title      String      @db.VarChar(100)
+  bio        String?     @db.Text
+  schedule   Schedule?
+  procedures Procedure[]
+}
+
+model Schedule {
+  id         Int      @id @default(autoincrement())
+  providerId String   @db.VarChar(100)
+  provider   Provider @relation(fields: [providerId], references: [email])
+  Sunday     String[] @db.VarChar(15)
+  Monday     String[] @db.VarChar(15)
+  Tuesday    String[] @db.VarChar(15)
+  Wednesday  String[] @db.VarChar(15)
+  Thursday   String[] @db.VarChar(15)
+  Friday     String[] @db.VarChar(15)
+  Saturday   String[] @db.VarChar(15)
+}
+
+model Procedure {
+  name        String     @id @db.VarChar(100)
+  duration    Int        @db.SmallInt
+  description String?
+  providers   Provider[]
+}
+
 model RecurringSchedule {
-  day Day @id
-  open Int @default(9)
+  day   Int @id
+  open  Int @default(9)
   close Int @default(17)
 }
 
-model ScheduleChanges {
-  date DateTime @id @db.Date
-  open Int? 
-  close Int?
-}
-
 model Test {
-  id   Int    @id @default(autoincrement())
+  id   Int      @id @default(autoincrement())
   text String
+  time DateTime @db.Time
 }
 
 enum Type {
   USER
   GUEST
-}
-
-enum Day {
-  SUNDAY
-  MONDAY
-  TUESDAY
-  WEDNESDAY
-  THURSDAY
-  FRIDAY
-  SATURDAY
 }

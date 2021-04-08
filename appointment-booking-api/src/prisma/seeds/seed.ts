@@ -1,12 +1,18 @@
 import { prisma } from "../../prisma";
 import { createAppointments, seedAppointments } from "./appointments";
 import { seedCustomers } from "./customers";
+import { seedProcedures } from "./procedures";
+import { seedProviders } from "./providers";
+import { seedSchedules } from "./schedules";
 import { clearDb } from "./utils";
 
 async function main() {
   const args = process.argv;
 
   await clearDb();
+  await seedProviders();
+  await seedProcedures();
+  await seedSchedules();
 
   if (args.includes("customers") || !args.includes("-p")) {
     await seedCustomers();
