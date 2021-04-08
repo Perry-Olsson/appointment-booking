@@ -125,5 +125,3 @@ ALTER TABLE "_ProcedureToProvider" ADD FOREIGN KEY ("A") REFERENCES "Procedure"(
 
 -- AddForeignKey
 ALTER TABLE "_ProcedureToProvider" ADD FOREIGN KEY ("B") REFERENCES "Provider"("email") ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE "ServiceHours" ADD CONSTRAINT day_check CHECK(day >= 0 AND day <= 6);

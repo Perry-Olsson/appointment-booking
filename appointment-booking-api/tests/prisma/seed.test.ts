@@ -1,13 +1,30 @@
-import { Appointment } from "@prisma/client";
+import {
+  Appointment,
+  Customer,
+  Procedure,
+  Provider,
+  Schedule,
+  ServiceHours,
+} from "@prisma/client";
 import { getDaysBetweenAppointments } from "./helpers";
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
 
 let appointments: Appointment[];
+let customers: Customer[];
+let providers: Provider[];
+let procedures: Procedure[];
+let schedules: Schedule[];
+let serviceHours: ServiceHours[];
 
 beforeAll(async () => {
   await initializeTestData();
   appointments = await prisma.appointment.findMany();
+  customers = await prisma.customer.findMany();
+  providers = await prisma.provider.findMany();
+  procedures = await prisma.procedure.findMany();
+  schedules = await prisma.schedule.findMany();
+  serviceHours = await prisma.serviceHours.findMany();
 });
 
 afterAll(() => prisma.$disconnect());
@@ -15,6 +32,11 @@ afterAll(() => prisma.$disconnect());
 describe("Database seeding", () => {
   test("Database is emptied and seeded", async () => {
     expect(appointments.length).toBeGreaterThan(1);
+    expect(customers.length).toBeGreaterThan(1);
+    expect(providers.length).toBeGreaterThan(1);
+    expect(procedures.length).toBeGreaterThan(1);
+    expect(schedules.length).toBeGreaterThan(1);
+    expect(serviceHours.length).toBeGreaterThan(1);
   });
 
   test("appointment seeds are randomly assigned dates", async () => {
@@ -48,5 +70,20 @@ describe("Database seeding", () => {
     });
 
     expect(invalidTimes).toHaveLength(0);
+  });
+  test("Providers have correct procedures assigned", async () => {
+    const provider = await prisma.provider.findFirst({
+      include: { appointments: true, schedule: true, procedures: true },
+    });
+    if (!provider) throw Error("Something went wrong");
+
+    const filtered = provider.appointments.filter(appointment => {
+      if (provider.procedures.find(p => p.name === appointment.procedureId)) {
+        return false;
+      }
+      return true;
+    });
+
+    expect(filtered).toHaveLength(0);
   });
 });

@@ -35,14 +35,14 @@ model Customer {
 }
 
 model Provider {
-  email       String        @id @db.VarChar(100)
-  firstName   String        @db.VarChar(50)
-  lastName    String        @db.VarChar(50)
-  title       String        @db.VarChar(100)
-  bio         String?       @db.Text
-  schedule    Schedule?
-  procedures  Procedure[]
-  Appointment Appointment[]
+  email        String        @id @db.VarChar(100)
+  firstName    String        @db.VarChar(50)
+  lastName     String        @db.VarChar(50)
+  title        String        @db.VarChar(100)
+  bio          String?       @db.Text
+  schedule     Schedule?
+  procedures   Procedure[]
+  appointments Appointment[]
 }
 
 model Schedule {
