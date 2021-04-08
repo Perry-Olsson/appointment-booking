@@ -30,6 +30,18 @@ model Customer {
   appointments Appointment[]
 }
 
+model RecurringSchedule {
+  day Day @id
+  open Int @default(9)
+  close Int @default(17)
+}
+
+model ScheduleChanges {
+  date DateTime @id @db.Date
+  open Int? 
+  close Int?
+}
+
 model Test {
   id   Int    @id @default(autoincrement())
   text String
@@ -38,4 +50,14 @@ model Test {
 enum Type {
   USER
   GUEST
+}
+
+enum Day {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
 }
