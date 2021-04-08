@@ -8,6 +8,8 @@ CREATE TABLE "Appointment" (
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "timestamp" TIMESTAMPTZ(6) NOT NULL,
     "end" TIMESTAMPTZ(6) NOT NULL,
+    "procedureId" VARCHAR(100) NOT NULL,
+    "providerId" VARCHAR(100) NOT NULL,
     "customerId" VARCHAR(100) NOT NULL,
 
     PRIMARY KEY ("id")
@@ -64,10 +66,11 @@ CREATE TABLE "Procedure" (
 );
 
 -- CreateTable
-CREATE TABLE "RecurringSchedule" (
+CREATE TABLE "ServiceHours" (
     "day" INTEGER NOT NULL,
-    "open" INTEGER NOT NULL DEFAULT 9,
-    "close" INTEGER NOT NULL DEFAULT 17,
+    "open" CHAR(5) NOT NULL DEFAULT E'09:00',
+    "close" CHAR(5) NOT NULL DEFAULT E'18:00',
+    "isClosed" BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY ("day")
 );
@@ -106,6 +109,12 @@ CREATE UNIQUE INDEX "_ProcedureToProvider_AB_unique" ON "_ProcedureToProvider"("
 CREATE INDEX "_ProcedureToProvider_B_index" ON "_ProcedureToProvider"("B");
 
 -- AddForeignKey
+ALTER TABLE "Appointment" ADD FOREIGN KEY ("procedureId") REFERENCES "Procedure"("name") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Appointment" ADD FOREIGN KEY ("providerId") REFERENCES "Provider"("email") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Appointment" ADD FOREIGN KEY ("customerId") REFERENCES "Customer"("email") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -116,3 +125,5 @@ ALTER TABLE "_ProcedureToProvider" ADD FOREIGN KEY ("A") REFERENCES "Procedure"(
 
 -- AddForeignKey
 ALTER TABLE "_ProcedureToProvider" ADD FOREIGN KEY ("B") REFERENCES "Provider"("email") ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE "ServiceHours" ADD CONSTRAINT day_check CHECK(day >= 0 AND day <= 6);

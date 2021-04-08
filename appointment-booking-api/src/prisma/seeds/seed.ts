@@ -4,6 +4,7 @@ import { seedCustomers } from "./customers";
 import { seedProcedures } from "./procedures";
 import { seedProviders } from "./providers";
 import { seedSchedules } from "./schedules";
+import { seedServiceHours } from "./serviceHours";
 import { clearDb } from "./utils";
 
 async function main() {
@@ -13,6 +14,7 @@ async function main() {
   await seedProviders();
   await seedProcedures();
   await seedSchedules();
+  await seedServiceHours();
 
   if (args.includes("customers") || !args.includes("-p")) {
     await seedCustomers();

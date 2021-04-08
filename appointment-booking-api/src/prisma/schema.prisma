@@ -8,13 +8,17 @@ datasource db {
 }
 
 model Appointment {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
-  timestamp  DateTime @unique @db.Timestamptz(6)
-  end        DateTime @unique @db.Timestamptz(6)
-  customerId String   @db.VarChar(100)
-  customer   Customer @relation(fields: [customerId], references: [email])
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  timestamp   DateTime  @unique @db.Timestamptz(6)
+  end         DateTime  @unique @db.Timestamptz(6)
+  procedureId String    @db.VarChar(100)
+  procedure   Procedure @relation(fields: [procedureId], references: [name])
+  providerId  String    @db.VarChar(100)
+  provider    Provider  @relation(fields: [providerId], references: [email])
+  customerId  String    @db.VarChar(100)
+  customer    Customer  @relation(fields: [customerId], references: [email])
 }
 
 model Customer {
@@ -31,13 +35,14 @@ model Customer {
 }
 
 model Provider {
-  email      String      @id @db.VarChar(100)
-  firstName  String      @db.VarChar(50)
-  lastName   String      @db.VarChar(50)
-  title      String      @db.VarChar(100)
-  bio        String?     @db.Text
-  schedule   Schedule?
-  procedures Procedure[]
+  email       String        @id @db.VarChar(100)
+  firstName   String        @db.VarChar(50)
+  lastName    String        @db.VarChar(50)
+  title       String        @db.VarChar(100)
+  bio         String?       @db.Text
+  schedule    Schedule?
+  procedures  Procedure[]
+  Appointment Appointment[]
 }
 
 model Schedule {
@@ -54,16 +59,18 @@ model Schedule {
 }
 
 model Procedure {
-  name        String     @id @db.VarChar(100)
-  duration    Int        @db.SmallInt
+  name        String        @id @db.VarChar(100)
+  duration    Int           @db.SmallInt
   description String?
   providers   Provider[]
+  Appointment Appointment[]
 }
 
-model RecurringSchedule {
-  day   Int @id
-  open  Int @default(9)
-  close Int @default(17)
+model ServiceHours {
+  day      Int     @id
+  open     String  @default("09:00") @db.Char(5)
+  close    String  @default("18:00") @db.Char(5)
+  isClosed Boolean @default(false)
 }
 
 model Test {
