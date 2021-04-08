@@ -9,6 +9,7 @@ export const theme: DefaultTheme = {
   },
   dayView: {
     headerHeight: "65px",
+    headerOffsetPixels: "125px",
     headerOffset: 125, // navBar height + dayView header height
     footerHeight: "60px",
     footerOffset: 60,
@@ -60,6 +61,7 @@ declare module "styled-components" {
     dayView: {
       headerHeight: string;
       headerOffset: number;
+      headerOffsetPixels: string;
       footerHeight: string;
       footerOffset: number;
       appointmentBlockRadius: string;
