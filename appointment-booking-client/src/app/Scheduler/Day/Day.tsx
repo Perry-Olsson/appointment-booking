@@ -1,15 +1,10 @@
 import { useDayState } from "./hooks";
 import { DayView } from "./DayView";
 import { useUpdateMonthList } from "./hooks/useUpdateMonthList";
-import { useEffect } from "react";
 
 const Day = () => {
   const { error, day, appointments } = useDayState();
   useUpdateMonthList();
-  useEffect(() => {
-    const html = document.getElementsByTagName("html");
-    html[0].style.overflow = "hidden";
-  }, []);
 
   if (!appointments) return <div>loading...</div>;
 
