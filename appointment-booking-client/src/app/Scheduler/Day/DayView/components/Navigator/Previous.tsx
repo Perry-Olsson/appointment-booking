@@ -38,4 +38,5 @@ export const Previous: React.FC<ArrowProps> = ({ type }) => {
 
 const Container = styled(NavigatorArrow)`
   border-right: solid 1px;
+  width: 100%;
 `;

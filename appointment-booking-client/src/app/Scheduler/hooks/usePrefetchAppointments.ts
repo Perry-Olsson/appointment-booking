@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { api } from "../../../api";
+import { appointmentService } from "../../../api";
 import { allAppointmentsAtom } from "../atoms";
 
 export const usePrefetchAppointments = (enabled = true) => {
@@ -9,7 +9,7 @@ export const usePrefetchAppointments = (enabled = true) => {
 
   const { data, error } = useQuery(
     "appointments",
-    async () => api.prefetchAppointments(),
+    async () => appointmentService.prefetchAppointments(),
     { refetchOnMount: false, refetchOnWindowFocus: false, enabled }
   );
 

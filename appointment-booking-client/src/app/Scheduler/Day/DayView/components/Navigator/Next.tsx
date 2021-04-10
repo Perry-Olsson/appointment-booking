@@ -25,6 +25,7 @@ export const Next: React.FC<ArrowProps> = ({ type }) => {
 
 const Container = styled(NavigatorArrow)`
   border-left: solid 1px;
+  width: 100%;
 `;
 
 const disable = (type: NavigationType, day: Date, cursor: Date): boolean => {

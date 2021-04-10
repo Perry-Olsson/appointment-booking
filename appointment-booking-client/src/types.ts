@@ -21,3 +21,10 @@ export interface OrganizedAppointments {
 interface DayIndex {
   [index: number]: Appointment[];
 }
+
+export interface ServiceDay {
+  day: number;
+  open: string;
+  close: string;
+  isClosed: boolean;
+}

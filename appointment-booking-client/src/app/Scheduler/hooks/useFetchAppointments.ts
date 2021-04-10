@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { api } from "../../../api";
+import { appointmentService } from "../../../api";
 import { ONE_DAY } from "../../../constants";
 import { Appointment } from "../../../types";
 
@@ -13,7 +13,7 @@ export const useFetchAppointments = (
 
   const { data, error } = useQuery(
     queryKey,
-    async () => await api.fetchAppointments(queryString),
+    async () => await appointmentService.fetchAppointments(queryString),
     { enabled: day.isValidDate() }
   );
 

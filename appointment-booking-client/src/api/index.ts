@@ -1,3 +1,5 @@
-import { Api } from "./Api";
+import { AppointmentService } from "./Api";
+import { ServiceHourService } from "./Api";
 
-export const api = new Api();
+export const appointmentService = new AppointmentService();
+export const serviceHourService = new ServiceHourService();

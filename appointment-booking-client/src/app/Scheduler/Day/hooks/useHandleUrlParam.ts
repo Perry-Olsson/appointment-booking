@@ -1,8 +1,11 @@
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { serviceHoursAtom } from "../../atoms";
 
 export const useHandleUrlParam = () => {
   const router = useRouter();
+  const [serviceHours] = useAtom(serviceHoursAtom);
 
   const day =
     typeof router.query.day === "string" && router.query.day.length === 24

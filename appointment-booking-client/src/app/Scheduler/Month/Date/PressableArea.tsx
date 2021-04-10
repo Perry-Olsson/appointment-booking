@@ -6,7 +6,7 @@ import { useIsCard } from "../context/IsMonthCard";
 
 interface PressableAreaProps {
   day: Date;
-  dayHasPassed: boolean;
+  disabled: boolean;
   today: boolean;
 }
 
@@ -47,7 +47,7 @@ const Container = styled.a<ContainerProps>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: ${({ dayHasPassed }) => (dayHasPassed ? "rgba(0, 0, 0, 0.3)" : null)};
+  color: ${({ disabled }) => (disabled ? "rgba(0, 0, 0, 0.3)" : null)};
   @media (min-width: ${({ isMonthCard }) =>
       isMonthCard ? "100000px" : device.tablet.pixels}) {
     height: 100%;
@@ -58,23 +58,28 @@ const Container = styled.a<ContainerProps>`
   }
   @media (hover: hover) {
     :hover {
-      background-color: ${({ theme, dayHasPassed }) =>
-        dayHasPassed ? null : theme.colors.primaryFaded};
+      background-color: ${({ theme, disabled }) =>
+        disabled ? null : theme.colors.primaryFaded};
     }
   }
   @media (max-width: ${({ isMonthCard }) =>
       isMonthCard ? "100000px" : device.tablet.pixels}) {
-    height: 68%;
+    height: 70%;
     width: 70%;
     border: ${({ today }) => (today ? "solid 1px" : null)};
     border-radius: 50%;
     border-color: gray;
     transition: 0.15s;
   }
-  cursor: ${({ dayHasPassed }) => (dayHasPassed ? null : "pointer")};
+  cursor: ${({ disabled }) => (disabled ? null : "pointer")};
 `;
 
 const DateValue = styled.b<{ isMonthCard: boolean }>`
   font-size: ${({ theme, isMonthCard }) =>
     isMonthCard ? theme.font.sm : theme.font.sm_med};
+  @media (max-width: ${({ isMonthCard }) =>
+      isMonthCard ? "100000px" : device.tablet.pixels}) {
+    position: relative;
+    top: 1px;
+  }
 `;

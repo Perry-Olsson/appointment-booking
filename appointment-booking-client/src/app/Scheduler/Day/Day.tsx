@@ -3,14 +3,14 @@ import { DayView } from "./DayView";
 import { useUpdateMonthList } from "./hooks/useUpdateMonthList";
 
 const Day = () => {
-  const { error, day, appointments } = useDayState();
+  const { error, loading, day, appointments } = useDayState();
   useUpdateMonthList();
 
-  if (!appointments) return <div>loading...</div>;
+  if (error) return <div>Can't connect to server</div>;
+
+  if (!appointments || loading) return <div>loading...</div>;
 
   if (!day.isValidDate()) return <div>invalid url. Rerouting...</div>;
-
-  if (error) return <div>Can't connect to server</div>;
 
   return <DayView day={day} appointments={appointments} />;
 };

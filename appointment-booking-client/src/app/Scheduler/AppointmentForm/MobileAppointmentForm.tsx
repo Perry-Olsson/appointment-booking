@@ -1,8 +1,15 @@
+import { useAtom } from "jotai";
 import styled from "styled-components";
+import { device } from "../../../components";
+import { dimensionsAtom } from "../atoms";
 import { AppointmentForm, AppointmentFormProps } from "./AppointmentForm";
 
 export const MobileAppointmentForm: React.FC<AppointmentFormProps> = props => {
-  return <StyledAppointmentForm {...props} />;
+  const [{ width }] = useAtom(dimensionsAtom);
+
+  return device.isNotWideScreen(width) ? (
+    <StyledAppointmentForm {...props} />
+  ) : null;
 };
 
 const StyledAppointmentForm = styled(AppointmentForm)`

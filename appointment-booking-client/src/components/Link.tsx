@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import React from "react";
 import styled from "styled-components";
+import { Flex } from "./Flex";
 
 export const Link: React.FC<LinkProps> = ({
   children,
@@ -15,7 +16,7 @@ export const Link: React.FC<LinkProps> = ({
   );
 };
 
-const Container = styled.div`
+const Container = styled(Flex)`
   height: 100%;
   width: 100%;
 `;

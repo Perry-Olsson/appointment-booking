@@ -2,14 +2,14 @@ import { useAtom } from "jotai";
 import React from "react";
 import { showAppointmentsFormAtom } from "../atoms";
 import { useForm } from "react-hook-form";
-import { Button, Flex } from "../../../components";
+import { Button, device, Flex } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { FormValues } from "./types";
 import { Comments, Provider, Time } from "./fields";
 import { Appointment } from "../../../types";
 
-export const AppointmentForm: React.FC<AppointmentFormProps> = ({
+const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
   appointments,
   className,
@@ -80,3 +80,26 @@ export interface AppointmentFormProps {
   appointments: Appointment[];
   className?: string;
 }
+
+export const ResponsiveAppointmentForm = styled(AppointmentForm)`
+  @media (max-width: ${device.desktop.pixels}) {
+    position: absolute;
+    top: ${({ theme }) => theme.dayView.headerOffsetPixels};
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: white;
+    height: ${({ theme }) =>
+      `${
+        window.innerHeight -
+        theme.dayView.headerOffset -
+        theme.dayView.footerOffset
+      }px`};
+    border: solid 2px gray;
+    border-radius: 3px;
+    padding-top: 20px;
+    overflow-y: scroll;
+  }
+`;
+
+export { ResponsiveAppointmentForm as AppointmentForm };
