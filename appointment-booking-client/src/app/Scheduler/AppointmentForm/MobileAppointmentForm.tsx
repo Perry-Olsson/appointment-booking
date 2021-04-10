@@ -6,7 +6,7 @@ export const MobileAppointmentForm: React.FC<AppointmentFormProps> = props => {
 };
 
 const StyledAppointmentForm = styled(AppointmentForm)`
-  position: fixed;
+  position: absolute;
   top: ${({ theme }) => theme.dayView.headerOffsetPixels};
   right: 0;
   left: 0;
