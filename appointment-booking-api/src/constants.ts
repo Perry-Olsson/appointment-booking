@@ -11,3 +11,5 @@ export const exposedFields = {
   timestamp: true,
   end: true,
 };
+
+export const timeStringRegExp = /^\d{2}:\d{2}$/;

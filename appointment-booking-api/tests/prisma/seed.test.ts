@@ -9,6 +9,7 @@ import {
 import { getDaysBetweenAppointments } from "./helpers";
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
+import { timeStringRegExp } from "../../src/constants";
 
 let appointments: Appointment[];
 let customers: Customer[];
@@ -85,5 +86,13 @@ describe("Database seeding", () => {
     });
 
     expect(filtered).toHaveLength(0);
+  });
+  test("service hour times are in correct format", async () => {
+    const hours = serviceHours.filter(
+      day =>
+        day.open.match(timeStringRegExp) && day.close.match(timeStringRegExp)
+    );
+
+    expect(hours).toHaveLength(7);
   });
 });
