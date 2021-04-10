@@ -1,2 +1,2 @@
-export * from "./appointments";
-export * from "./customers";
+export * from "./CustomerController";
+export * from "./AppointmentsController";

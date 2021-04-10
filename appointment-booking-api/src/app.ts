@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import passport from "passport";
-import { appointmentsRouter, customersRouter } from "./controllers";
+import { appointmentsRouter, customersRouter } from "./routers";
 import { unknownEndpoint } from "./utils/middleware";
 import { errorHandler } from "./utils/middleware";
 import { requestLogger } from "./utils/middleware";
