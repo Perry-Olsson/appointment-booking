@@ -15,3 +15,5 @@ export const nowAtom = atom<Today>({
 const dates = computeDates(monthListCursor);
 
 export const monthsAtom = atom<Months>(dates);
+
+export const dayPageAtom = atom<Date>(today);

@@ -5,7 +5,7 @@ import { useHandleUrlParam } from "./useHandleUrlParam";
 
 export const useGetSelectedDay = (): SelectedDay => {
   const [allAppointments] = useAtom(allAppointmentsAtom);
-  const day = useHandleUrlParam();
+  const day = useHandleUrlParam({ setDay: true });
 
   if (pageRefreshed(allAppointments))
     return { day, prefetchedAppointments: null };

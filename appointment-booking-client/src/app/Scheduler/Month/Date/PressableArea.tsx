@@ -1,6 +1,8 @@
+import { useAtom } from "jotai";
 import { forwardRef, useState } from "react";
 import styled from "styled-components";
 import { device } from "../../../../components/device";
+import { dayPageAtom } from "../../atoms";
 import { useHandleUrlParam } from "../../Day/hooks";
 import { useIsCard } from "../context/IsMonthCard";
 
@@ -13,7 +15,7 @@ interface PressableAreaProps {
 export const PressableArea = forwardRef<HTMLAnchorElement, PressableAreaProps>(
   (props, ref) => {
     const isMonthCard = useIsCard();
-    const route = useHandleUrlParam();
+    const [route] = useAtom(dayPageAtom);
     const [background, setBackground] = useState("white"); //fixes sticky hover effect
 
     return (
