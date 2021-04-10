@@ -5,7 +5,7 @@ import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
 import { Appointment } from "../../../../types";
 import { AppointmentForm } from "../../AppointmentForm";
-import { dimensionsAtom } from "../../atoms";
+import { dimensionsAtom, serviceHoursAtom } from "../../atoms";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";

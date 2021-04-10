@@ -31,7 +31,9 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
       </Container>
     );
   },
-  (prev, next) => appointmentsAreEqual(prev, next)
+  (prev, next) =>
+    prev.timeSlots[0].valueOf() === next.timeSlots[0].valueOf() &&
+    appointmentsAreEqual(prev, next)
 );
 
 export interface TimeSlotsProps {

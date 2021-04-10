@@ -3,7 +3,6 @@ import { forwardRef, useState } from "react";
 import styled from "styled-components";
 import { device } from "../../../../components/device";
 import { dayPageAtom } from "../../atoms";
-import { useHandleUrlParam } from "../../Day/hooks";
 import { useIsCard } from "../context/IsMonthCard";
 
 interface PressableAreaProps {
