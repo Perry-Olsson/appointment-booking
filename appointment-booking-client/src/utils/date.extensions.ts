@@ -1,3 +1,5 @@
+import { ServiceDay } from "../types";
+
 export {};
 
 declare global {
@@ -13,8 +15,8 @@ declare global {
     getMonthCardString(): string;
     getNextDay(): Date;
     getPreviousDay(): Date;
-    getNextMonth(): Date;
-    getPreviousMonth(): Date;
+    getNextMonth(serviceHours?: ServiceDay[]): Date;
+    getPreviousMonth(serviceHours?: ServiceDay[]): Date;
   }
 }
 
@@ -62,15 +64,31 @@ Date.prototype.getNextDay = function () {
   return new Date(this.getFullYear(), this.getMonth(), this.getDate() + 1);
 };
 
-Date.prototype.getNextMonth = function () {
-  return new Date(this.getFullYear(), this.getMonth() + 1, 1);
+Date.prototype.getNextMonth = function (serviceHours) {
+  const timestamp = new Date(this.getFullYear(), this.getMonth() + 1, 1);
+  if (serviceHours) {
+    let counter = 0;
+    while (serviceHours[timestamp.getDay()].isClosed && counter < 7) {
+      timestamp.setDate(timestamp.getDate() + 1);
+      counter++;
+    }
+  }
+  return timestamp;
 };
 
-Date.prototype.getPreviousMonth = function () {
+Date.prototype.getPreviousMonth = function (serviceHours) {
   const now = new Date();
   const month = this.getMonth() - 1;
   const date = month === now.getMonth() ? now.getDate() : 1;
-  return new Date(this.getFullYear(), month, date);
+  const timestamp = new Date(this.getFullYear(), month, date);
+  if (serviceHours) {
+    let counter = 0;
+    while (serviceHours[timestamp.getDay()].isClosed && counter < 7) {
+      timestamp.setDate(timestamp.getDate() + 1);
+      counter++;
+    }
+  }
+  return timestamp;
 };
 
 Date.prototype.monthStrings = [

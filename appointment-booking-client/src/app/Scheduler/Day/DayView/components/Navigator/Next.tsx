@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useAtom } from "jotai";
 import { Link, RightArrow } from "../../../../../../components";
-import { monthsAtom } from "../../../../atoms";
+import { monthsAtom, serviceHoursAtom } from "../../../../atoms";
 import { useHandleUrlParam } from "../../../hooks";
 import { ArrowProps, NavigationType } from "./types";
 import { NavigatorArrow } from "./components";
@@ -10,8 +10,11 @@ import { NavigatorArrow } from "./components";
 export const Next: React.FC<ArrowProps> = ({ type }) => {
   const [{ cursor }] = useAtom(monthsAtom);
   const day = useHandleUrlParam();
+  const [serviceHours] = useAtom(serviceHoursAtom);
   const href =
-    type === "day" ? day.getNextDay().toJSON() : day.getNextMonth().toJSON();
+    type === "day"
+      ? day.getNextDay().toJSON()
+      : day.getNextMonth(serviceHours).toJSON();
 
   const isDisabled = disable(type, day, cursor);
   return (

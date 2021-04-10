@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import { GrayedOut } from "./GrayedOut";
 import { Appointment, ServiceDay } from "../../../../../types";
-import { nowAtom, serviceHoursAtom } from "../../../atoms";
+import { nowAtom } from "../../../atoms";
 import { useAtom } from "jotai";
 
 export const TimeSlot: React.FC<TimeSlotProps> = ({
   timeSlot,
   appointment,
+  serviceHours,
 }) => {
   const [{ today }] = useAtom(nowAtom);
-  const [serviceHours] = useAtom(serviceHoursAtom);
   const isOnHour = timeSlot.getMinutes() === 0;
 
   return (
@@ -58,6 +58,7 @@ interface ContainerProps {
 interface TimeSlotProps {
   timeSlot: Date;
   appointment: Appointment | undefined;
+  serviceHours: ServiceDay[];
 }
 
 const TimeString = styled.div`
