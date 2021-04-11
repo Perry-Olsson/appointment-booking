@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { customerController } from "../../controllers";
+import { customerController } from "../controllers";
 
 const router = express.Router();
 

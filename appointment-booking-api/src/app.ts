@@ -4,6 +4,7 @@ import passport from "passport";
 import {
   appointmentsRouter,
   customersRouter,
+  providerRouter,
   serviceHoursRouter,
 } from "./routers";
 import { unknownEndpoint } from "./utils/middleware";
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === "development") app.use(requestLogger);
 app.use("/api/appointments", appointmentsRouter);
 app.use("/api/customers", customersRouter);
 app.use("/api/serviceHours", serviceHoursRouter);
+app.use("/api/providers", providerRouter);
 
 app.get("/api/ping", (_, res) => {
   res.send("pong");
