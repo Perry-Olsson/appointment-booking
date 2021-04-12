@@ -1,10 +1,12 @@
 import { useDayState } from "./hooks";
 import { DayView } from "./DayView";
 import { useUpdateMonthList } from "./hooks/useUpdateMonthList";
+import { useSetOverflow } from "./hooks/useSetOverflow";
 
 const Day = () => {
   const { error, loading, day, appointments } = useDayState();
   useUpdateMonthList();
+  useSetOverflow();
 
   if (error) return <div>Can't connect to server</div>;
 
