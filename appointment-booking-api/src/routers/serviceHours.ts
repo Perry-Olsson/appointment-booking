@@ -3,6 +3,8 @@ import { serviceHoursController } from "../controllers";
 
 const router = express.Router();
 
-router.get("/", serviceHoursController.getServiceHours);
+router.get("/", (req, res, next) =>
+  serviceHoursController.getServiceHours(req, res, next)
+);
 
 export { router as serviceHoursRouter };
