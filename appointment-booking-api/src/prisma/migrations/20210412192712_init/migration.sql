@@ -45,13 +45,13 @@ CREATE TABLE "providers" (
 CREATE TABLE "schedules" (
     "id" SERIAL NOT NULL,
     "provider_id" VARCHAR(100) NOT NULL,
-    "Sunday" CHAR(6)[],
-    "Monday" CHAR(6)[],
-    "Tuesday" CHAR(6)[],
-    "Wednesday" CHAR(6)[],
-    "Thursday" CHAR(6)[],
-    "Friday" CHAR(6)[],
-    "Saturday" CHAR(6)[],
+    "sunday" CHAR(6)[],
+    "monday" CHAR(6)[],
+    "tuesday" CHAR(6)[],
+    "wednesday" CHAR(6)[],
+    "thursday" CHAR(6)[],
+    "friday" CHAR(6)[],
+    "saturday" CHAR(6)[],
 
     PRIMARY KEY ("id")
 );

@@ -15,5 +15,7 @@ describe("Provider read operations", () => {
     expect(providers).not.toBe(null);
     expect(providers[0]).toHaveProperty("schedule");
     expect(providers[0]).toHaveProperty("procedures");
+    expect(providers[0].schedule).toHaveProperty("Sunday");
+    expect(providers[0].procedures.length).toBeGreaterThan(0);
   });
 });
