@@ -1,48 +1,20 @@
-import { EmailError, LoginError } from "../../utils";
-import validator from "email-validator";
+import { LoginError } from "../../utils";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { Prisma } from ".prisma/client";
-import config from "../../config";
-import { CustomerResponse, DecodedToken, LoginCustomer } from "./types";
+import { CustomerResponse, LoginCustomer } from "./types";
 import { prisma } from "../../prisma";
+import { auth } from "../../utils/auth";
 
 class _Customer {
-  public async initialize(reqBody: any): Promise<Prisma.CustomerCreateInput> {
-    if (!this._validateEmail(reqBody.email))
-      throw new EmailError(reqBody.email);
-
-    const initializedCustomer = await this._handlePassword(reqBody);
-
-    return initializedCustomer;
-  }
-
-  private _validateEmail(email: any): boolean {
-    return validator.validate(email);
-  }
-
-  private async _handlePassword(
-    reqBody: any
-  ): Promise<Prisma.CustomerCreateInput> {
-    if (reqBody.type === "GUEST") delete reqBody.password;
-    else {
-      reqBody.password = await bcrypt.hash(reqBody.password, 8);
-    }
-
-    return reqBody as Prisma.CustomerCreateInput;
-  }
-
-  public async create(
-    newCustomer: Prisma.CustomerCreateInput
-  ): Promise<CustomerResponse> {
+  public async create(reqBody: any): Promise<CustomerResponse> {
     const createdCustomer = await prisma.customer.create({
-      data: newCustomer,
+      data: reqBody,
       select: customer.createSelectStatement,
     });
 
     const token =
       createdCustomer.type === "USER"
-        ? customer.createToken(createdCustomer.email)
+        ? auth.createToken(createdCustomer.email)
         : null;
 
     return { customer: createdCustomer, token };
@@ -72,20 +44,10 @@ class _Customer {
   }
 
   private _createLoginResponse(customer: LoginCustomer): CustomerResponse {
-    const token = this.createToken(customer.email);
+    const token = auth.createToken(customer.email);
 
     delete customer.password;
     return { customer, token };
-  }
-
-  public createToken(email: string) {
-    return jwt.sign({ email }, config.jwtSecret);
-  }
-
-  public decodeToken(token: string) {
-    const decodedToken = jwt.verify(token, config.jwtSecret) as DecodedToken;
-
-    return decodedToken;
   }
 
   public async findUnique(args: Prisma.CustomerFindUniqueArgs) {

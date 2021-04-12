@@ -3,7 +3,7 @@ import request from "supertest";
 import { prisma } from "../../../src/prisma";
 import { initializeTestData } from "../../helpers";
 import { testGuest, testUser } from "../../constants";
-import { customer } from "../../../src/repositories/customer";
+import { auth } from "../../../src/utils/auth";
 
 const api = request(app);
 
@@ -26,7 +26,7 @@ describe("Customer creation", () => {
     expect(body.customer.password).toBeUndefined();
     expect(createdUser).toMatchObject(body.customer);
 
-    const decodedToken = customer.decodeToken(body.token);
+    const decodedToken = auth.decodeToken(body.token);
     expect(decodedToken.email).toBe(testUser.email);
 
     await prisma.customer.delete({ where: { email: createdUser.email } });

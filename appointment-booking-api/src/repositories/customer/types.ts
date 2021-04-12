@@ -1,10 +1,5 @@
 import { Type } from "@prisma/client";
 
-export interface DecodedToken {
-  email: string;
-  iat: number;
-}
-
 export interface Credentials {
   email: string;
   password: string;

@@ -1,9 +1,9 @@
 import { customer } from "../../src/repositories/customer";
-import bycrypt from "bcryptjs";
 import { testGuest, testUser } from "../constants";
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
 import customers from "../../src/prisma/seeds/json/customers.json";
+import { customerController } from "../../src/controllers";
 
 beforeAll(async () => {
   await initializeTestData();
@@ -12,58 +12,25 @@ beforeAll(async () => {
 afterAll(() => prisma.$disconnect());
 
 describe("Customer Creation", () => {
-  test("Initialze function throws error if object isn't provided", async () => {
-    await expect(customer.initialize("hello")).rejects.toThrow();
-  });
+  test("create function return valid customer", async () => {
+    const initializeCustomer = await customerController.initialize({
+      ...testUser,
+    });
+    const createdCustomer = await customer.create(initializeCustomer);
+    expect(createdCustomer.token).toBeDefined();
+    expect(createdCustomer.customer).toHaveProperty("id");
+    expect(createdCustomer.customer.email).toBe(testUser.email);
 
-  test("Initialize function validates email address correctly", async () => {
-    const validCustomer = await customer.initialize({ ...testUser });
-    await expect(
-      customer.initialize({
-        ...testUser,
-        email: "invalidEmail",
-      })
-    ).rejects.toThrow();
-
-    expect(validCustomer).toBeDefined();
-  });
-
-  test("Initialize function hashes user password and deletes guest password field", async () => {
-    const user = await customer.initialize({ ...testUser });
-    const guest = await customer.initialize({ ...testGuest });
-
-    expect(guest.password).toBeUndefined();
-    expect(user.password).toHaveLength(60);
-    expect(
-      await bycrypt.compare(testUser.password, user.password!)
-    ).toBeTruthy();
-  });
-
-  test("Initialize returns a valid customer", async () => {
-    const user = await customer.initialize({ ...testUser });
-    const guest = await customer.initialize({ ...testGuest });
-
-    expect(Object.keys(user).length).toBe(Object.keys(testUser).length);
-    expect(Object.keys(guest).length).toBe(Object.keys(testGuest).length - 1);
-
-    const match = await bycrypt.compare(testUser.password, user.password!);
-    expect(match).toBe(true);
-  });
-
-  test("create token function returns a valid token", async () => {
-    const token = customer.createToken(testUser.email);
-
-    const decodedToken = customer.decodeToken(token);
-
-    expect(decodedToken.email).toBe(testUser.email);
-    expect(typeof token).toBe("string");
+    await prisma.customer.delete({
+      where: { id: createdCustomer.customer.id },
+    });
   });
 });
 
 describe("Customer login", () => {
   test("Login function returns customer response object for valid user", async () => {
     const newCustomer = await prisma.customer.create({
-      data: await customer.initialize({ ...testUser }),
+      data: await customerController.initialize({ ...testUser }),
       include: { appointments: true },
     });
     const { email, password } = testUser;
@@ -84,7 +51,7 @@ describe("Customer login", () => {
 
   test("Login function throws when given valid guest input", async () => {
     const newGuest = await prisma.customer.create({
-      data: await customer.initialize({ ...testGuest }),
+      data: await customerController.initialize({ ...testGuest }),
     });
 
     const { email } = testGuest;

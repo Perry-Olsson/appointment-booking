@@ -4,14 +4,18 @@ import { customerController } from "../controllers";
 
 const router = express.Router();
 
-router.post("/", customerController.createCustomer);
+router.post("/", (req, res, next) =>
+  customerController.createCustomer(req, res, next)
+);
 
-router.post("/login", customerController.login);
+router.post("/login", (req, res, next) =>
+  customerController.login(req, res, next)
+);
 
 router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
-  customerController.getProfile
+  (req, res, next) => customerController.getProfile(req, res, next)
 );
 
 export { router as customersRouter };
