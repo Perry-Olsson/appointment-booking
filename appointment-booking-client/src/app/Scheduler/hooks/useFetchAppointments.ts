@@ -11,7 +11,7 @@ export const useFetchAppointments = (
   const queryKey = createQueryKey(day);
   const [, queryString] = queryKey;
 
-  const { data, error } = useQuery(
+  const { data, isLoading, error } = useQuery(
     queryKey,
     async () => await appointmentService.fetchAppointments(queryString),
     { enabled: day.isValidDate() }
@@ -21,7 +21,7 @@ export const useFetchAppointments = (
     if (data) setAppointments(data);
   }, [data]);
 
-  return { error };
+  return { appointmentsLoading: isLoading, appointmentsError: error };
 };
 
 const createQueryKey = (day: Date) => ["appointments", createQueryString(day)];

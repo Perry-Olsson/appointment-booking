@@ -13,14 +13,14 @@ import { TimeSlotList } from "./TimeSlots";
 import { appointmentsAreEqual, computeTimeSlots } from "./TimeSlots/utils";
 
 export const DayView: React.FC<DayViewProps> = memo(
-  ({ day, appointments }) => {
+  ({ day, appointments, loading }) => {
     const [{ width }] = useAtom(dimensionsAtom);
     const timeSlots = useMemo(() => computeTimeSlots(day), [day.valueOf()]);
-
     const isDesktop = device.isDesktop(width);
+
     return (
       <Container>
-        <Header day={day} />
+        <Header day={day} loading={loading} />
         <Grid>
           {isDesktop ? <MonthCard day={day} /> : null}
           <TimeSlotList timeSlots={timeSlots} appointments={appointments} />
@@ -32,12 +32,14 @@ export const DayView: React.FC<DayViewProps> = memo(
   },
   (prev, next) =>
     prev.day.valueOf() === next.day.valueOf() &&
+    prev.loading === next.loading &&
     appointmentsAreEqual(prev, next)
 );
 
 export interface DayViewProps {
   appointments: Appointment[];
   day: Date;
+  loading: boolean;
 }
 
 const Container = styled(Flex)`

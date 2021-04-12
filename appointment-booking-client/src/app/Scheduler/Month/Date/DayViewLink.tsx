@@ -1,21 +1,24 @@
 import React from "react";
 import { useAtom } from "jotai";
-import { nowAtom, serviceHoursAtom } from "../../atoms";
+import { nowAtom } from "../../atoms";
 import { Link } from "../../../../components";
 import { PressableArea } from "./PressableArea";
+import { useStaticState } from "../../Day/context";
 
 export const DayViewLink: React.FC<DayViewLinkProps> = ({ day }) => {
   const [{ today }] = useAtom(nowAtom);
-  const serviceHours = useAtom(serviceHoursAtom)[0][day.getDay()];
+  const { serviceHours } = useStaticState();
   const dayHasPassed = day.valueOf() < today.valueOf();
-  const disabled = dayHasPassed || (serviceHours && serviceHours.isClosed);
+  const disabled =
+    dayHasPassed ||
+    (serviceHours.length && serviceHours[day.getDay()].isClosed);
 
   return (
-    <Link href={`/schedule/${day.toJSON()}`} disable={disabled}>
+    <Link href={`/schedule/${day.toJSON()}`} disable={disabled || false}>
       <PressableArea
         day={day}
         today={today.valueOf() === day.valueOf()}
-        disabled={disabled}
+        disabled={disabled || false}
       />
     </Link>
   );

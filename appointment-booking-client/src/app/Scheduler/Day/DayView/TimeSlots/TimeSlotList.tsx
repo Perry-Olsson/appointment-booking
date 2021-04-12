@@ -1,17 +1,16 @@
-import { useAtom } from "jotai";
 import { memo } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { Appointment } from "../../../../../types";
-import { serviceHoursAtom } from "../../../atoms";
+import { useStaticState } from "../../context";
 import { TimeSlot } from "./TimeSlot";
 import { appointmentsAreEqual } from "./utils";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
   ({ timeSlots, appointments }) => {
-    const [serviceHours] = useAtom(serviceHoursAtom);
+    const { serviceHours } = useStaticState();
 
-    if (serviceHours[timeSlots[0].getDay()].isClosed)
+    if (serviceHours.length && serviceHours[timeSlots[0].getDay()].isClosed)
       return <div>Sorry we're closed</div>;
 
     let index = 0;

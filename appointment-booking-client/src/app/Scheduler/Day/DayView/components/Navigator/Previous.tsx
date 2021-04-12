@@ -2,7 +2,8 @@ import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { LeftArrow, Link } from "../../../../../../components";
-import { dayPageAtom, nowAtom, serviceHoursAtom } from "../../../../atoms";
+import { dayPageAtom, nowAtom } from "../../../../atoms";
+import { useStaticState } from "../../../context";
 import { NavigatorArrow } from "./components";
 import { ArrowProps, NavigationType } from "./types";
 
@@ -20,7 +21,7 @@ const disable = (type: NavigationType, day: Date, today: Date): boolean => {
 export const Previous: React.FC<ArrowProps> = ({ type }) => {
   const [{ today }] = useAtom(nowAtom);
   const [day] = useAtom(dayPageAtom);
-  const [serviceHours] = useAtom(serviceHoursAtom);
+  const { serviceHours } = useStaticState();
   const href =
     type === "day"
       ? day.getPreviousDay().toJSON()

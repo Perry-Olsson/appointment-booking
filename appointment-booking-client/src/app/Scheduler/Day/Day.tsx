@@ -2,19 +2,31 @@ import { useDayState } from "./hooks";
 import { DayView } from "./DayView";
 import { useUpdateMonthList } from "./hooks/useUpdateMonthList";
 import { useSetOverflow } from "./hooks/useSetOverflow";
+import { StaticStateProvider } from "./context";
 
 const Day = () => {
-  const { error, loading, day, appointments } = useDayState();
+  const {
+    error,
+    providers,
+    serviceHours,
+    loading,
+    day,
+    appointments,
+  } = useDayState();
   useUpdateMonthList();
   useSetOverflow();
 
   if (error) return <div>Can't connect to server</div>;
 
-  if (!appointments || loading) return <div>loading...</div>;
+  if (!appointments) return <div>loading...</div>;
 
   if (!day.isValidDate()) return <div>invalid url. Rerouting...</div>;
 
-  return <DayView day={day} appointments={appointments} />;
+  return (
+    <StaticStateProvider value={{ providers, serviceHours }}>
+      <DayView day={day} appointments={appointments} loading={loading} />
+    </StaticStateProvider>
+  );
 };
 
 export default Day;

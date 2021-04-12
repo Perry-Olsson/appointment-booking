@@ -2,6 +2,7 @@ import { ONE_MINUTE, TZ_OFFSET } from "../constants";
 import {
   Appointment,
   OrganizedAppointments,
+  Provider,
   RawAppointment,
   ServiceDay,
 } from "../types";
@@ -76,5 +77,18 @@ export class ServiceHourService extends AxiosClient {
 
   public async fetchServiceHours() {
     return await this.instance.get<ServiceDay[]>("/");
+  }
+}
+
+export class ProviderService extends AxiosClient {
+  constructor() {
+    super(
+      `${process.env.NEXT_PUBLIC_API_URI}/providers` ||
+        "http://localhost:3001/api/providers"
+    );
+  }
+
+  public async fetchProviders() {
+    return await this.instance.get<Provider[]>("/");
   }
 }

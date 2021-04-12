@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { useGetSelectedDay } from ".";
-import { useFetchAppointments, usePrefetchAppointments } from "../../hooks";
+import {
+  useFetchAppointments,
+  useFetchProviders,
+  usePrefetchAppointments,
+} from "../../hooks";
 import { useFetchServiceHours } from "../../hooks/useFetchServiceHours";
 
 export const useDayState = () => {
   const { day, prefetchedAppointments } = useGetSelectedDay();
   const [appointments, setAppointments] = useState(prefetchedAppointments);
-  const { error } = useFetchAppointments(day, setAppointments);
-  const { isLoading, error: serviceHoursError } = useFetchServiceHours();
+  const { appointmentsError } = useFetchAppointments(day, setAppointments);
+  const { serviceHours, serviceHoursError } = useFetchServiceHours();
+  const { providers, providerError } = useFetchProviders();
   usePrefetchAppointments(prefetchedAppointments ? false : true);
 
   useEffect(() => {
@@ -16,8 +21,10 @@ export const useDayState = () => {
 
   return {
     day,
-    loading: isLoading,
+    providers,
+    serviceHours,
+    loading: !appointments || !providers || !serviceHours,
     appointments,
-    error: error || serviceHoursError,
+    error: appointmentsError || serviceHoursError || providerError,
   };
 };

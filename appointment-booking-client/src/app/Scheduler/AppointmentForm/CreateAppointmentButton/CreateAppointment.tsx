@@ -1,16 +1,17 @@
 import { useAtom } from "jotai";
 import React from "react";
 import { Button } from "../../../../components";
-import { dayPageAtom, serviceHoursAtom } from "../../atoms";
+import { dayPageAtom } from "../../atoms";
+import { useStaticState } from "../../Day/context";
 
 export const CreateAppointment: React.FC<CreateAppointmentProps> = ({
   handleClick,
   className,
 }) => {
-  const [serviceHours] = useAtom(serviceHoursAtom);
+  const { serviceHours } = useStaticState();
   const [day] = useAtom(dayPageAtom);
 
-  if (serviceHours[day.getDay()].isClosed) return null;
+  if (serviceHours.length && serviceHours[day.getDay()].isClosed) return null;
 
   return (
     <Button
