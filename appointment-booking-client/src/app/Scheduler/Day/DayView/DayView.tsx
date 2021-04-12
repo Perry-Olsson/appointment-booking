@@ -6,6 +6,7 @@ import { device } from "../../../../components/device";
 import { Appointment } from "../../../../types";
 import { AppointmentForm } from "../../AppointmentForm";
 import { dimensionsAtom } from "../../atoms";
+import { useStaticState } from "../context";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";
@@ -15,15 +16,22 @@ import { appointmentsAreEqual, computeTimeSlots } from "./TimeSlots/utils";
 export const DayView: React.FC<DayViewProps> = memo(
   ({ day, appointments, loading }) => {
     const [{ width }] = useAtom(dimensionsAtom);
+    const { serviceHours } = useStaticState();
     const timeSlots = useMemo(() => computeTimeSlots(day), [day.valueOf()]);
     const isDesktop = device.isDesktop(width);
+
+    if (!serviceHours.length) return <div>loading...</div>;
 
     return (
       <Container>
         <Header day={day} loading={loading} />
         <Grid>
           {isDesktop ? <MonthCard day={day} /> : null}
-          <TimeSlotList timeSlots={timeSlots} appointments={appointments} />
+          <TimeSlotList
+            timeSlots={timeSlots}
+            appointments={appointments}
+            serviceHours={serviceHours[day.getDay()]}
+          />
           <AppointmentForm appointments={appointments} timeSlots={timeSlots} />
         </Grid>
         {!isDesktop ? <Footer day={day} /> : null}

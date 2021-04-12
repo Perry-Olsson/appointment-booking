@@ -1,17 +1,13 @@
 import { memo } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
-import { Appointment } from "../../../../../types";
-import { useStaticState } from "../../context";
+import { Appointment, ServiceDay } from "../../../../../types";
 import { TimeSlot } from "./TimeSlot";
 import { appointmentsAreEqual } from "./utils";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
-  ({ timeSlots, appointments }) => {
-    const { serviceHours } = useStaticState();
-
-    if (serviceHours.length && serviceHours[timeSlots[0].getDay()].isClosed)
-      return <div>Sorry we're closed</div>;
+  ({ timeSlots, appointments, serviceHours }) => {
+    if (serviceHours.isClosed) return <div>Sorry we're closed</div>;
 
     let index = 0;
     return (
@@ -31,13 +27,14 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
     );
   },
   (prev, next) =>
-    prev.timeSlots[0].valueOf() === next.timeSlots[0].valueOf() &&
+    prev.serviceHours.isClosed !== next.serviceHours.isClosed &&
     appointmentsAreEqual(prev, next)
 );
 
 export interface TimeSlotsProps {
   timeSlots: Date[];
   appointments: Appointment[];
+  serviceHours: ServiceDay;
 }
 
 const Container = styled.div`
