@@ -3,10 +3,16 @@ import { appointmentController } from "../controllers";
 
 const router = express.Router();
 
-router.get("/", appointmentController.getAppointments);
+router.get("/", (req, res, next) =>
+  appointmentController.getAppointments(req, res, next)
+);
 
-router.get("/:timestamp", appointmentController.getOneAppointment);
+router.get("/:timestamp", (req, res, next) =>
+  appointmentController.getOneAppointment(req, res, next)
+);
 
-router.post("/", appointmentController.createAppointment);
+router.post("/", (req, res, next) =>
+  appointmentController.createAppointment(req, res, next)
+);
 
 export { router as appointmentsRouter };

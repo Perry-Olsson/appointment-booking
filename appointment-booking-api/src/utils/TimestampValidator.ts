@@ -1,5 +1,5 @@
 import { NewAppointment } from "src/types";
-import { BoundryError, TimeError, TimestampError } from "../../utils";
+import { BoundryError, TimeError, TimestampError } from ".";
 
 export class TimestampValidator {
   public validateJSONTimestamp(timestamp: any): Date {
