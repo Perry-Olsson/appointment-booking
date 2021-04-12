@@ -92,14 +92,12 @@ describe("Error handler middleware", () => {
 
   test("Provides Invalid timestamp response", async () => {
     const invalidTimestamp = "dsaifor90234";
-    const { status, body } = await api.get(
-      `/api/appointments/${invalidTimestamp}`
-    );
+    const response = await api.get(`/api/appointments/${invalidTimestamp}`);
 
-    expect(status).toBe(400);
+    expect(response.status).toBe(400);
 
     const error = new TimestampError(invalidTimestamp);
-    expect(body.message).toEqual(error.message);
+    expect(response.body.message).toEqual(error.message);
   });
 
   test("Provides invalid login response", async () => {

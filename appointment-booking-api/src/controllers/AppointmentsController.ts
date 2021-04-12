@@ -4,7 +4,7 @@ import { appointment } from "../repositories";
 class AppointmentController {
   async getAppointments(req: Request, res: Response, next: NextFunction) {
     try {
-      const appointments = await appointment.findMany(req);
+      const appointments = await appointment.findMany(req.query);
 
       res.json(appointments);
     } catch (err) {
@@ -14,7 +14,7 @@ class AppointmentController {
 
   async getOneAppointment(req: Request, res: Response, next: NextFunction) {
     try {
-      const _appointment = await appointment.findUnique(req);
+      const _appointment = await appointment.findUnique(req.params.timestamp);
 
       res.json(_appointment);
     } catch (err) {

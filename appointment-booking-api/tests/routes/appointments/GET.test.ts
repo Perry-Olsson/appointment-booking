@@ -24,6 +24,7 @@ describe("GET request", () => {
   test("Request to /api/appointments returns appointments without customerId field", async () => {
     const appointmentsFromDb = await prisma.appointment.findMany({
       select: appointment.exposedFields,
+      orderBy: { timestamp: "asc" },
     });
     const response = await api.get("/api/appointments");
     const appointments: Appointment[] = response.body.map((app: any) =>

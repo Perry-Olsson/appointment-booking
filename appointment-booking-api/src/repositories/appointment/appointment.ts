@@ -3,7 +3,6 @@ import { ExposedAppointment, TimeBoundry } from "./types";
 import { NewAppointment } from "../../types";
 import { DuplicateError } from "../../utils";
 import { Appointment } from "@prisma/client";
-import { Request } from "express";
 import { TimestampValidator } from "../utils";
 
 class _Appointment extends TimestampValidator {
@@ -35,7 +34,7 @@ class _Appointment extends TimestampValidator {
     return await prisma.appointment.create({ data: newAppointment });
   }
 
-  public async findUnique({ params: { timestamp } }: Request) {
+  public async findUnique(timestamp: string) {
     const validTimestamp = this.validateJSONTimestamp(timestamp);
 
     return await prisma.appointment.findUnique({
@@ -44,8 +43,8 @@ class _Appointment extends TimestampValidator {
     });
   }
 
-  public async findMany(req: Request): Promise<ExposedAppointment[]> {
-    const { hasQueryString, start, end } = this.validateQuery(req.query);
+  public async findMany(query: any): Promise<ExposedAppointment[]> {
+    const { hasQueryString, start, end } = this.validateQuery(query);
     const where = hasQueryString
       ? {
           AND: [

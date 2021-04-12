@@ -1,3 +1,4 @@
+import { ONE_DAY } from "../../src/constants";
 import { prisma } from "../../src/prisma";
 import { appointment } from "../../src/repositories/appointment";
 import { createTestAppointment, initializeTestData } from "../helpers";
@@ -84,5 +85,19 @@ describe("Appointments Repository", () => {
     expect(() =>
       appointment.validateJSONTimestamp(invalidTimestamp3)
     ).toThrow();
+  });
+  test("get appointments function returns correct appointments from given parameter", async () => {
+    const now = new Date();
+    const later = new Date(now.valueOf() + ONE_DAY * 10);
+    const appointmentsFromDb = await prisma.appointment.findMany({
+      where: {
+        AND: [{ timestamp: { gte: now } }, { timestamp: { lt: later } }],
+      },
+    });
+    const appointments = await appointment.findMany({
+      start: now.toJSON(),
+      end: later.toJSON(),
+    });
+    expect(appointments).toHaveLength(appointmentsFromDb.length);
   });
 });
