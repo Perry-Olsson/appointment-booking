@@ -4,8 +4,6 @@ import { appointmentsAreEqual } from "../../../Day/DayView/TimeSlots/utils";
 
 export const AvailableTimes: React.FC<AvailableTimesProps> = memo(
   ({ timeSlots, appointments, serviceHours }) => {
-    if (!serviceHours.length) return null;
-
     let i = 0;
     return (
       <>
@@ -14,7 +12,7 @@ export const AvailableTimes: React.FC<AvailableTimesProps> = memo(
             if (slot.valueOf() === appointments[i].end.valueOf()) i++;
             if (slotIsTaken(slot, appointments, i)) return null;
           }
-          return isClosed(slot, serviceHours[slot.getDay()]) ? null : (
+          return isClosed(slot, serviceHours) ? null : (
             <option key={slot.valueOf()} value={slot.toJSON()}>
               {slot.getTimeString()}
             </option>
@@ -51,5 +49,5 @@ const isClosed = (timeSlot: Date, serviceHours: ServiceDay) => {
 interface AvailableTimesProps {
   appointments: Appointment[];
   timeSlots: Date[];
-  serviceHours: ServiceDay[];
+  serviceHours: ServiceDay;
 }

@@ -12,6 +12,7 @@ export const Time: React.FC<TimeProps> = ({
   errors,
 }) => {
   const { serviceHours } = useStaticState();
+  if (!serviceHours.length) return null;
   return (
     <Label>
       Time:
@@ -20,7 +21,7 @@ export const Time: React.FC<TimeProps> = ({
         <AvailableTimes
           timeSlots={timeSlots}
           appointments={appointments}
-          serviceHours={serviceHours}
+          serviceHours={serviceHours[timeSlots[0].getDay()]}
         />
       </Select>
       {errors.time && <ErrorText>This field is required</ErrorText>}
