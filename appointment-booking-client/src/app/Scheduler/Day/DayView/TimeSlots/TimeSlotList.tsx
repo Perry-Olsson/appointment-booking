@@ -27,7 +27,7 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
     );
   },
   (prev, next) =>
-    prev.serviceHours.isClosed !== next.serviceHours.isClosed &&
+    prev.serviceHours.isClosed === next.serviceHours.isClosed &&
     appointmentsAreEqual(prev, next)
 );
 
