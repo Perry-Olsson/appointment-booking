@@ -6,6 +6,7 @@ export class ProviderDataAccess {
       include: {
         schedule: true,
         procedures: true,
+        appointments: true,
       },
     });
   }
