@@ -1,16 +1,22 @@
 import { NextFunction, Request, Response } from "express";
-import { serviceHours } from "../repositories";
+import { ServiceHoursDataAccess } from "../repositories";
 
 class ServiceHoursController {
+  private dataAccess: ServiceHoursDataAccess;
+
+  constructor(dataAccess: ServiceHoursDataAccess) {
+    this.dataAccess = dataAccess;
+  }
+
   async getServiceHours(_req: Request, res: Response, next: NextFunction) {
     try {
-      const _serviceHours = await serviceHours.getServiceHours();
-
-      res.json(_serviceHours);
+      res.json(await this.dataAccess.getServiceHours());
     } catch (err) {
       next(err);
     }
   }
 }
 
-export const serviceHoursController = new ServiceHoursController();
+export const serviceHoursController = new ServiceHoursController(
+  new ServiceHoursDataAccess()
+);

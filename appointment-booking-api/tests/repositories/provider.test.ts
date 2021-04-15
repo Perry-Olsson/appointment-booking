@@ -1,6 +1,8 @@
 import { initializeTestData } from "../helpers";
 import { prisma } from "../../src/prisma";
-import { provider } from "../../src/repositories";
+import { ProviderDataAccess } from "../../src/repositories";
+
+const provider = new ProviderDataAccess();
 
 beforeAll(async () => {
   await initializeTestData();

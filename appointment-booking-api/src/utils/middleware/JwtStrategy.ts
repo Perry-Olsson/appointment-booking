@@ -1,6 +1,6 @@
 import passportJwt from "passport-jwt";
 import config from "../../config";
-import { customer } from "../../repositories";
+import { prisma } from "../../prisma";
 
 const JwtStrategy = passportJwt.Strategy;
 const ExtractJwt = passportJwt.ExtractJwt;
@@ -14,11 +14,11 @@ export const jwtStrategy = new JwtStrategy(
   options,
   async function (jwt_payload, done) {
     try {
-      const _customer = await customer.findUnique({
+      const customer = await prisma.customer.findUnique({
         where: { email: jwt_payload.email },
       });
 
-      if (_customer && _customer.type === "USER") return done(null, _customer);
+      if (customer && customer.type === "USER") return done(null, customer);
       else return done(null, false);
     } catch (err) {
       return done(err, false);

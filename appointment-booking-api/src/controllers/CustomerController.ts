@@ -1,14 +1,19 @@
 import { NextFunction, Request, Response } from "express";
-import { customer } from "../repositories";
+import { CustomerDataAccess } from "../repositories";
 import { EmailError } from "../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
 
 class CustomerController {
+  private dataAccess: CustomerDataAccess;
+
+  constructor(dataAccess: CustomerDataAccess) {
+    this.dataAccess = dataAccess;
+  }
   async createCustomer(req: Request, res: Response, next: NextFunction) {
     try {
       const newCustomer = await this.initialize(req.body);
-      const response = await customer.create(newCustomer);
+      const response = await this.dataAccess.create(newCustomer);
 
       res.json(response);
     } catch (err) {
@@ -40,7 +45,7 @@ class CustomerController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const response = await customer.login(req.body);
+      const response = await this.dataAccess.login(req.body);
 
       res.json(response);
     } catch (err) {
@@ -57,4 +62,6 @@ class CustomerController {
   }
 }
 
-export const customerController = new CustomerController();
+export const customerController = new CustomerController(
+  new CustomerDataAccess()
+);

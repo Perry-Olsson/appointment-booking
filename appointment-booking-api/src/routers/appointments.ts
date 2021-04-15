@@ -15,4 +15,4 @@ router.post("/", (req, res, next) =>
   appointmentController.createAppointment(req, res, next)
 );
 
-export { router as appointmentsRouter };
+export { router as appointmentRouter };

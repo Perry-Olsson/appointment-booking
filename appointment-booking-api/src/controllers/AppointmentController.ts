@@ -1,14 +1,20 @@
 import { NextFunction, Request, Response } from "express";
-import { appointment } from "../repositories";
+import { AppointmentDataAccess } from "../repositories";
 import { TimeBoundry } from "../repositories/appointment/types";
 import { NewAppointment } from "../types";
 import { TimestampValidator } from "../utils";
 
 class AppointmentController extends TimestampValidator {
+  private dataAccess: AppointmentDataAccess;
+
+  constructor(dataAccess: AppointmentDataAccess) {
+    super();
+    this.dataAccess = dataAccess;
+  }
   async getAppointments(req: Request, res: Response, next: NextFunction) {
     try {
       const parsedQuery = this.validateQuery(req.query);
-      const appointments = await appointment.findMany(parsedQuery);
+      const appointments = await this.dataAccess.findMany(parsedQuery);
 
       res.json(appointments);
     } catch (err) {
@@ -29,7 +35,7 @@ class AppointmentController extends TimestampValidator {
   async getOneAppointment(req: Request, res: Response, next: NextFunction) {
     try {
       const validTimestamp = this.validateJSONTimestamp(req.params.timestamp);
-      const _appointment = await appointment.findUnique(validTimestamp);
+      const _appointment = await this.dataAccess.findUnique(validTimestamp);
 
       res.json(_appointment);
     } catch (err) {
@@ -41,9 +47,9 @@ class AppointmentController extends TimestampValidator {
     try {
       const newAppointment = this.initialize(req.body);
 
-      await appointment.isDuplicate(newAppointment);
+      await this.dataAccess.isDuplicate(newAppointment);
 
-      const createdAppointment = await appointment.create(newAppointment);
+      const createdAppointment = await this.dataAccess.create(newAppointment);
 
       res.json(createdAppointment);
     } catch (err) {
@@ -67,4 +73,6 @@ class AppointmentController extends TimestampValidator {
   }
 }
 
-export const appointmentController = new AppointmentController();
+export const appointmentController = new AppointmentController(
+  new AppointmentDataAccess()
+);

@@ -2,8 +2,8 @@ import cors from "cors";
 import express from "express";
 import passport from "passport";
 import {
-  appointmentsRouter,
-  customersRouter,
+  appointmentRouter,
+  customerRouter,
   procedureRouter,
   providerRouter,
   serviceHoursRouter,
@@ -21,8 +21,8 @@ passport.use(jwtStrategy);
 
 if (process.env.NODE_ENV === "development") app.use(requestLogger);
 
-app.use("/api/appointments", appointmentsRouter);
-app.use("/api/customers", customersRouter);
+app.use("/api/appointments", appointmentRouter);
+app.use("/api/customers", customerRouter);
 app.use("/api/serviceHours", serviceHoursRouter);
 app.use("/api/providers", providerRouter);
 app.use("/api/procedures", procedureRouter);

@@ -1,7 +1,9 @@
 import { ONE_DAY } from "../../src/constants";
 import { prisma } from "../../src/prisma";
-import { appointment } from "../../src/repositories/appointment";
+import { AppointmentDataAccess } from "../../src/repositories/appointment";
 import { createTestAppointment, initializeTestData } from "../helpers";
+
+const appointment = new AppointmentDataAccess();
 
 beforeAll(async () => {
   await initializeTestData();

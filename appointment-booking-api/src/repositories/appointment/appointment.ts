@@ -4,7 +4,7 @@ import { NewAppointment } from "../../types";
 import { DuplicateError } from "../../utils";
 import { Appointment } from "@prisma/client";
 
-class _Appointment {
+export class AppointmentDataAccess {
   public async isDuplicate({ timestamp, end }: NewAppointment): Promise<void> {
     const duplicateAppointment = await prisma.appointment.findMany(
       this._getIsDuplicateFilter(timestamp, end)
@@ -101,5 +101,3 @@ class _Appointment {
     };
   }
 }
-
-export const appointment = new _Appointment();

@@ -1,6 +1,8 @@
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
-import { serviceHours } from "../../src/repositories/serviceHours";
+import { ServiceHoursDataAccess } from "../../src/repositories/serviceHours";
+
+const serviceHours = new ServiceHoursDataAccess();
 
 beforeAll(async () => {
   await initializeTestData();

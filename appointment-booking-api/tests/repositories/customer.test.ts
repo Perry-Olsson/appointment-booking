@@ -1,9 +1,11 @@
-import { customer } from "../../src/repositories/customer";
+import { CustomerDataAccess } from "../../src/repositories/customer";
 import { testGuest, testUser } from "../constants";
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
 import customers from "../../src/prisma/seeds/json/customers.json";
 import { customerController } from "../../src/controllers";
+
+const customer = new CustomerDataAccess();
 
 beforeAll(async () => {
   await initializeTestData();

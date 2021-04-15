@@ -5,11 +5,11 @@ import { CustomerResponse, LoginCustomer } from "./types";
 import { prisma } from "../../prisma";
 import { auth } from "../../utils/auth";
 
-class _Customer {
+export class CustomerDataAccess {
   public async create(reqBody: any): Promise<CustomerResponse> {
     const createdCustomer = await prisma.customer.create({
       data: reqBody,
-      select: customer.createSelectStatement,
+      select: this.createSelectStatement,
     });
 
     const token =
@@ -69,5 +69,3 @@ class _Customer {
 
   public loginSelectStatement = { ...this.defaultSelect, password: true };
 }
-
-export const customer = new _Customer();

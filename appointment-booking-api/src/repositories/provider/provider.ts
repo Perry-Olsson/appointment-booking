@@ -1,6 +1,6 @@
 import { prisma } from "../../prisma";
 
-class _Provider {
+export class ProviderDataAccess {
   public async getProviders() {
     return await prisma.provider.findMany({
       include: {
@@ -10,5 +10,3 @@ class _Provider {
     });
   }
 }
-
-export const provider = new _Provider();

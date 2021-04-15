@@ -18,4 +18,4 @@ router.get(
   (req, res, next) => customerController.getProfile(req, res, next)
 );
 
-export { router as customersRouter };
+export { router as customerRouter };

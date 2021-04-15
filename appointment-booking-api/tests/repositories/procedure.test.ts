@@ -1,6 +1,8 @@
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
-import { procedure } from "../../src/repositories";
+import { ProcedureDataAccess } from "../../src/repositories";
+
+const procedure = new ProcedureDataAccess();
 
 beforeAll(async () => {
   await initializeTestData();
