@@ -1,9 +1,8 @@
+import { Procedure } from ".prisma/client";
 import { prisma } from "../../prisma";
 
-class _Procedure {
-  public async getProcedures() {
+export class ProcedureDataAccess {
+  public async getProcedures(): Promise<Procedure[]> {
     return await prisma.procedure.findMany();
   }
 }
-
-export const procedure = new _Procedure();

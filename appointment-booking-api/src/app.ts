@@ -4,6 +4,7 @@ import passport from "passport";
 import {
   appointmentsRouter,
   customersRouter,
+  procedureRouter,
   providerRouter,
   serviceHoursRouter,
 } from "./routers";
@@ -24,6 +25,7 @@ app.use("/api/appointments", appointmentsRouter);
 app.use("/api/customers", customersRouter);
 app.use("/api/serviceHours", serviceHoursRouter);
 app.use("/api/providers", providerRouter);
+app.use("/api/procedures", procedureRouter);
 
 app.get("/api/ping", (_, res) => {
   res.send("pong");
