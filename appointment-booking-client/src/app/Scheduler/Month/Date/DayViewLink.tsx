@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { nowAtom } from "../../atoms";
 import { Link } from "../../../../components";
 import { PressableArea } from "./PressableArea";
-import { useStaticState } from "../../Day/context";
+import { useStaticState } from "../../context";
 
 export const DayViewLink: React.FC<DayViewLinkProps> = ({ day }) => {
   const [{ today }] = useAtom(nowAtom);

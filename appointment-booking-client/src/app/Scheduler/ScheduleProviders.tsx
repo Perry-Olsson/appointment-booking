@@ -1,16 +1,30 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useDimensions } from "../../hooks";
+import { useFetchProviders, useFetchServiceHours } from "./hooks";
+import { StaticStateProvider } from "./context";
 
 const queryClient = new QueryClient();
 
-export const ScheduleProviders: React.FC<ProvidersProps> = ({ children }) => {
+const ScheduleProviders: React.FC<ProviderProps> = ({ children }) => {
   useDimensions();
+  const { serviceHours } = useFetchServiceHours();
+  const { providers } = useFetchProviders();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <StaticStateProvider value={{ serviceHours, providers }}>
+      {children}
+    </StaticStateProvider>
   );
 };
 
-interface ProvidersProps {
+export const QueryClientWrapper: React.FC<ProviderProps> = ({ children }) => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ScheduleProviders>{children}</ScheduleProviders>
+    </QueryClientProvider>
+  );
+};
+
+interface ProviderProps {
   children: React.ReactNode;
 }

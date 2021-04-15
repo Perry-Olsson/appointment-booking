@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { Provider, ServiceDay } from "../../../../types";
+import { Provider, ServiceDay } from "../../../types";
 
 const StaticDayState = createContext<StaticState | undefined>(undefined);
 

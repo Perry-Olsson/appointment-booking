@@ -1,6 +1,6 @@
 import React from "react";
 import { Appointment } from "../../../../../types";
-import { useStaticState } from "../../../Day/context";
+import { useStaticState } from "../../../context";
 import { Label, Select, ErrorText, DefaultOption } from "../../components";
 import { FieldProps } from "../../types";
 import { AvailableTimes } from "./AvailableTimes";

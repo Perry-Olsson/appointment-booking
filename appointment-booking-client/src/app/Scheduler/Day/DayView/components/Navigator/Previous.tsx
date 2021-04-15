@@ -3,20 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import { LeftArrow, Link } from "../../../../../../components";
 import { dayPageAtom, nowAtom } from "../../../../atoms";
-import { useStaticState } from "../../../context";
+import { useStaticState } from "../../../../context";
 import { NavigatorArrow } from "./components";
 import { ArrowProps, NavigationType } from "./types";
-
-const disable = (type: NavigationType, day: Date, today: Date): boolean => {
-  if (type === "day") {
-    return day.valueOf() === today.valueOf();
-  } else {
-    return (
-      day.getMonth() === today.getMonth() &&
-      day.getFullYear() === today.getFullYear()
-    );
-  }
-};
 
 export const Previous: React.FC<ArrowProps> = ({ type }) => {
   const [{ today }] = useAtom(nowAtom);
@@ -35,6 +24,17 @@ export const Previous: React.FC<ArrowProps> = ({ type }) => {
       </Container>
     </Link>
   );
+};
+
+const disable = (type: NavigationType, day: Date, today: Date): boolean => {
+  if (type === "day") {
+    return day.valueOf() === today.valueOf();
+  } else {
+    return (
+      day.getMonth() === today.getMonth() &&
+      day.getFullYear() === today.getFullYear()
+    );
+  }
 };
 
 const Container = styled(NavigatorArrow)`

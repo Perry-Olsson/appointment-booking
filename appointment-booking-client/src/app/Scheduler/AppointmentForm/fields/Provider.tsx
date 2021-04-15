@@ -1,5 +1,5 @@
 import React from "react";
-import { useStaticState } from "../../Day/context";
+import { useStaticState } from "../../context";
 import { Label, Select, ErrorText, DefaultOption } from "../components";
 import { FieldProps } from "../types";
 

@@ -8,6 +8,7 @@ export const useFetchProviders = () => {
     {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      staleTime: Infinity,
     }
   );
 

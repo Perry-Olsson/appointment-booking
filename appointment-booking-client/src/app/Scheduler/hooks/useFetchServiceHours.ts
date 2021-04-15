@@ -5,7 +5,7 @@ export const useFetchServiceHours = () => {
   const { data, isLoading, error } = useQuery(
     "serviceHours",
     async () => serviceHourService.fetchServiceHours(),
-    { refetchOnMount: false, refetchOnWindowFocus: false }
+    { refetchOnMount: false, refetchOnWindowFocus: false, staleTime: Infinity }
   );
 
   return {

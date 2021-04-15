@@ -5,7 +5,7 @@ import { Link, RightArrow } from "../../../../../../components";
 import { dayPageAtom, monthsAtom } from "../../../../atoms";
 import { ArrowProps, NavigationType } from "./types";
 import { NavigatorArrow } from "./components";
-import { useStaticState } from "../../../context";
+import { useStaticState } from "../../../../context";
 
 export const Next: React.FC<ArrowProps> = ({ type }) => {
   const [{ cursor }] = useAtom(monthsAtom);

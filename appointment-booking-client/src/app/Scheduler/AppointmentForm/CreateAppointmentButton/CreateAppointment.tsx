@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import React from "react";
 import { Button } from "../../../../components";
 import { dayPageAtom } from "../../atoms";
-import { useStaticState } from "../../Day/context";
+import { useStaticState } from "../../context";
 
 export const CreateAppointment: React.FC<CreateAppointmentProps> = ({
   handleClick,
