@@ -1,5 +1,4 @@
 import React from "react";
-import { Appointment } from "../../../../../types";
 import { useStaticState } from "../../../context";
 import { Label, Select, ErrorText, DefaultOption } from "../../components";
 import { FieldProps } from "../../types";
@@ -7,7 +6,6 @@ import { AvailableTimes } from "./AvailableTimes";
 
 export const Time: React.FC<TimeProps> = ({
   timeSlots,
-  appointments,
   register,
   errors,
   watch,
@@ -24,7 +22,6 @@ export const Time: React.FC<TimeProps> = ({
         <DefaultOption />
         <AvailableTimes
           timeSlots={timeSlots}
-          appointments={appointments}
           serviceHours={serviceHours[timeSlots[0].getDay()]}
           selectedProvider={providers.find(p => p.email === selectedProvider)}
         />
@@ -36,5 +33,4 @@ export const Time: React.FC<TimeProps> = ({
 
 interface TimeProps extends FieldProps {
   timeSlots: Date[];
-  appointments: Appointment[];
 }

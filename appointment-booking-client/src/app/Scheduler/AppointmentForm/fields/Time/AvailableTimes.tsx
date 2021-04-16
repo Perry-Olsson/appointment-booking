@@ -1,6 +1,5 @@
 import { memo } from "react";
-import { Appointment, Provider, ServiceDay } from "../../../../../types";
-import { appointmentsAreEqual } from "../../../Day/DayView/TimeSlots/utils";
+import { Provider, ServiceDay } from "../../../../../types";
 import { to4DigitTimeNumber } from "../../../utils";
 
 export const AvailableTimes: React.FC<AvailableTimesProps> = memo(
@@ -53,18 +52,15 @@ export const AvailableTimes: React.FC<AvailableTimesProps> = memo(
   },
   (prev, next) =>
     prev.selectedProvider === next.selectedProvider &&
-    prev.timeSlots[0].valueOf() === next.timeSlots[0].valueOf() &&
-    appointmentsAreEqual(prev, next)
+    prev.timeSlots[0].valueOf() === next.timeSlots[0].valueOf()
 );
 
-const slotIsTaken = (slot: Date, appointments: Appointment[], i: number) => {
-  return (
-    i < appointments.length &&
-    slot.valueOf() >= appointments[i].timestamp.valueOf()
-  );
-};
-
-// const providerIsAvailable = (time: string, available: boolean) => {};
+// const slotIsTaken = (slot: Date, appointments: Appointment[], i: number) => {
+//   return (
+//     i < appointments.length &&
+//     slot.valueOf() >= appointments[i].timestamp.valueOf()
+//   );
+// };
 
 const isClosed = (timeSlot: Date, serviceHours: ServiceDay) => {
   const open =
@@ -80,7 +76,6 @@ const isClosed = (timeSlot: Date, serviceHours: ServiceDay) => {
 };
 
 interface AvailableTimesProps {
-  appointments: Appointment[];
   timeSlots: Date[];
   serviceHours: ServiceDay;
   selectedProvider: Provider | undefined;

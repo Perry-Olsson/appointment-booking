@@ -10,7 +10,7 @@ import {
 } from "../../../AppointmentForm";
 import { DateString } from "../components";
 
-export const Header: React.FC<HeaderProps> = ({ day, loading }) => {
+export const Header: React.FC<DayProps> = ({ day }) => {
   const [{ width }] = useAtom(dimensionsAtom);
 
   return (
@@ -21,14 +21,9 @@ export const Header: React.FC<HeaderProps> = ({ day, loading }) => {
       ) : (
         <TabletMobileCreateAppointment />
       )}
-      {loading ? <Loading>...</Loading> : null}
     </Container>
   );
 };
-
-interface HeaderProps extends DayProps {
-  loading: boolean;
-}
 
 const Container = styled.div`
   display: grid;
@@ -49,8 +44,3 @@ const Desktop: React.FC<DayProps> = ({ day }) => {
     </>
   );
 };
-
-const Loading = styled.div`
-  position: absolute;
-  right: 0;
-`;

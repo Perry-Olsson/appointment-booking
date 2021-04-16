@@ -1,2 +1,2 @@
-export * from "./appointmentsAreEqual";
+// export * from "./appointmentsAreEqual";
 export * from "./computeTimeSlots";

@@ -7,11 +7,9 @@ import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { FormValues } from "./types";
 import { Comments, Provider, Time } from "./fields";
-import { Appointment } from "../../../types";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
-  appointments,
   className,
 }) => {
   const [show] = useAtom(showAppointmentsFormAtom);
@@ -37,7 +35,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
         <Seperator />
 
         <Time
-          appointments={appointments}
           timeSlots={timeSlots}
           register={register}
           errors={errors}
@@ -79,7 +76,6 @@ const Seperator = styled.div`
 
 export interface AppointmentFormProps {
   timeSlots: Date[];
-  appointments: Appointment[];
   className?: string;
 }
 

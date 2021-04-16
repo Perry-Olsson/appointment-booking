@@ -3,7 +3,6 @@ import React, { memo, useMemo } from "react";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
-import { Appointment } from "../../../../types";
 import { AppointmentForm } from "../../AppointmentForm";
 import { dimensionsAtom } from "../../atoms";
 import { useStaticState } from "../../context";
@@ -11,10 +10,10 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";
 import { TimeSlotList } from "./TimeSlots";
-import { appointmentsAreEqual, computeTimeSlots } from "./TimeSlots/utils";
+import { computeTimeSlots } from "./TimeSlots/utils";
 
 export const DayView: React.FC<DayViewProps> = memo(
-  ({ day, appointments, loading }) => {
+  ({ day }) => {
     const [{ width }] = useAtom(dimensionsAtom);
     const { serviceHours } = useStaticState();
     const timeSlots = useMemo(() => computeTimeSlots(day), [day.valueOf()]);
@@ -24,30 +23,24 @@ export const DayView: React.FC<DayViewProps> = memo(
 
     return (
       <Container>
-        <Header day={day} loading={loading} />
+        <Header day={day} />
         <Grid>
           {isDesktop ? <MonthCard day={day} /> : null}
           <TimeSlotList
             timeSlots={timeSlots}
-            appointments={appointments}
             serviceHours={serviceHours[day.getDay()]}
           />
-          <AppointmentForm appointments={appointments} timeSlots={timeSlots} />
+          <AppointmentForm timeSlots={timeSlots} />
         </Grid>
         {!isDesktop ? <Footer day={day} /> : null}
       </Container>
     );
   },
-  (prev, next) =>
-    prev.day.valueOf() === next.day.valueOf() &&
-    prev.loading === next.loading &&
-    appointmentsAreEqual(prev, next)
+  (prev, next) => prev.day.valueOf() === next.day.valueOf()
 );
 
 export interface DayViewProps {
-  appointments: Appointment[];
   day: Date;
-  loading: boolean;
 }
 
 const Container = styled(Flex)`
