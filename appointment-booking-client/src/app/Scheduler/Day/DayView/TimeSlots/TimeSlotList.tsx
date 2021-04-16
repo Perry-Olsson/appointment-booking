@@ -1,7 +1,7 @@
 import { memo } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
-import { Appointment, Provider, ServiceDay } from "../../../../../types";
+import { Appointment, ServiceDay } from "../../../../../types";
 import { TimeSlot } from "./TimeSlot";
 import { appointmentsAreEqual } from "./utils/appointmentsAreEqual";
 
