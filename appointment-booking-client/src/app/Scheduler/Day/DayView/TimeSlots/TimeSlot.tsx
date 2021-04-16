@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { GrayedOut } from "./GrayedOut";
 import { Appointment, ServiceDay } from "../../../../../types";
+import { to4DigitTimeNumber } from "../../../utils";
 
 export const TimeSlot: React.FC<TimeSlotProps> = ({
   timeSlot,
@@ -33,13 +34,9 @@ const Container = styled.div<ContainerProps>`
   width: 100%;
   height: 1.7rem;
   background-color: ${({ theme, timeSlot, serviceHours }) => {
-    const open =
-      Number(serviceHours.open.slice(0, 2)) * 100 +
-      Number(serviceHours.close.slice(3));
-    const close =
-      Number(serviceHours.close.slice(0, 2)) * 100 +
-      Number(serviceHours.close.slice(3));
-    const time = timeSlot.getHours() * 100 + timeSlot.getMinutes();
+    const open = to4DigitTimeNumber(serviceHours.open);
+    const close = to4DigitTimeNumber(serviceHours.close);
+    const time = timeSlot.get4DigitTimeNumber();
 
     if (time < open || time >= close) return theme.colors.lightGray;
     else return null;

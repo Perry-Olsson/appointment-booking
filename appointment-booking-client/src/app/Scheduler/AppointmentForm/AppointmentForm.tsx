@@ -18,6 +18,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormValues>();
   const onSubmit = (data: any) => console.log(data);
@@ -27,11 +28,11 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   return (
     <Container className={className}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Procedure register={register} errors={errors} />
+        <Procedure register={register} errors={errors} watch={watch} />
 
         <Seperator />
 
-        <Provider register={register} errors={errors} />
+        <Provider register={register} errors={errors} watch={watch} />
 
         <Seperator />
 
@@ -40,11 +41,12 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
           timeSlots={timeSlots}
           register={register}
           errors={errors}
+          watch={watch}
         />
 
         <Seperator />
 
-        <Comments register={register} errors={errors} />
+        <Comments register={register} errors={errors} watch={watch} />
 
         <Submit type="submit" text="Submit" />
         <Seperator />

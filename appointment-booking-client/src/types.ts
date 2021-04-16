@@ -29,7 +29,15 @@ export interface ServiceDay {
   isClosed: boolean;
 }
 
-export interface Provider {
+export interface RawProvider extends BaseProvider {
+  appointments: RawAppointment[];
+}
+
+export interface Provider extends BaseProvider {
+  appointments: OrganizedAppointments;
+}
+
+interface BaseProvider {
   bio: string;
   firstName: string;
   lastName: string;

@@ -5,10 +5,10 @@ export {};
 declare global {
   interface Date {
     monthStrings: string[];
-    dayStrings: string[];
+    dayStrings: Daystring[];
     isValidDate(): boolean;
     getMonthString(): string;
-    getDayString(): string;
+    getDayString(): Daystring;
     getTimeString(): string;
     getMobileDateString(): string;
     getDesktopDateString(): string;
@@ -17,6 +17,7 @@ declare global {
     getPreviousDay(): Date;
     getNextMonth(serviceHours?: ServiceDay[]): Date;
     getPreviousMonth(serviceHours?: ServiceDay[]): Date;
+    get4DigitTimeNumber(): number;
   }
 }
 
@@ -75,7 +76,6 @@ Date.prototype.getNextMonth = function (serviceHours) {
   }
   return timestamp;
 };
-
 Date.prototype.getPreviousMonth = function (serviceHours) {
   const now = new Date();
   const month = this.getMonth() - 1;
@@ -89,6 +89,10 @@ Date.prototype.getPreviousMonth = function (serviceHours) {
     }
   }
   return timestamp;
+};
+
+Date.prototype.get4DigitTimeNumber = function () {
+  return this.getHours() * 100 + this.getMinutes();
 };
 
 Date.prototype.monthStrings = [
@@ -115,3 +119,12 @@ Date.prototype.dayStrings = [
   "Friday",
   "Saturday",
 ];
+
+type Daystring =
+  | "Sunday"
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday";

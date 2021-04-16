@@ -10,9 +10,13 @@ export const Time: React.FC<TimeProps> = ({
   appointments,
   register,
   errors,
+  watch,
 }) => {
-  const { serviceHours } = useStaticState();
+  const { serviceHours, providers } = useStaticState();
+  const selectedProvider = watch("provider");
+
   if (!serviceHours.length) return null;
+
   return (
     <Label>
       Time:
@@ -22,6 +26,7 @@ export const Time: React.FC<TimeProps> = ({
           timeSlots={timeSlots}
           appointments={appointments}
           serviceHours={serviceHours[timeSlots[0].getDay()]}
+          selectedProvider={providers.find(p => p.email === selectedProvider)}
         />
       </Select>
       {errors.time && <ErrorText>This field is required</ErrorText>}
