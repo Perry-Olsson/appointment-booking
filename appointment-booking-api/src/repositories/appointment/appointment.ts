@@ -3,6 +3,7 @@ import { ExposedAppointment, TimeBoundry } from "./types";
 import { NewAppointment } from "../../types";
 import { DuplicateError } from "../../utils";
 import { Appointment } from "@prisma/client";
+import { exposedAppointmentFields } from "../constants";
 
 export class AppointmentDataAccess {
   public async isDuplicate({ timestamp, end }: NewAppointment): Promise<void> {
@@ -21,7 +22,7 @@ export class AppointmentDataAccess {
   public async findUnique(timestamp: Date) {
     return await prisma.appointment.findUnique({
       where: { timestamp },
-      select: this.exposedFields,
+      select: exposedAppointmentFields,
     });
   }
 
@@ -49,20 +50,12 @@ export class AppointmentDataAccess {
 
     const appointments = await prisma.appointment.findMany({
       where,
-      select: this.exposedFields,
+      select: exposedAppointmentFields,
       orderBy: { timestamp: "asc" },
     });
 
     return appointments;
   }
-
-  public exposedFields = {
-    id: true,
-    createdAt: true,
-    updatedAt: true,
-    timestamp: true,
-    end: true,
-  };
 
   private _getIsDuplicateFilter(timestamp: Date, end: Date) {
     return {

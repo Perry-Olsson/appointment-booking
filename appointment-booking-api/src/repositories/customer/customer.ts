@@ -4,6 +4,7 @@ import { Prisma } from ".prisma/client";
 import { CustomerResponse, LoginCustomer } from "./types";
 import { prisma } from "../../prisma";
 import { auth } from "../../utils/auth";
+import { defaultCustomerSelect } from "../constants";
 
 export class CustomerDataAccess {
   public async create(reqBody: any): Promise<CustomerResponse> {
@@ -51,21 +52,12 @@ export class CustomerDataAccess {
   }
 
   public async findUnique(args: Prisma.CustomerFindUniqueArgs) {
-    if (!args.select) args.select = this.defaultSelect;
+    if (!args.select) args.select = defaultCustomerSelect;
 
     return await prisma.customer.findUnique(args);
   }
 
-  public defaultSelect = {
-    id: true,
-    email: true,
-    phoneNumber: true,
-    type: true,
-    firstName: true,
-    lastName: true,
-  };
+  public createSelectStatement = defaultCustomerSelect;
 
-  public createSelectStatement = this.defaultSelect;
-
-  public loginSelectStatement = { ...this.defaultSelect, password: true };
+  public loginSelectStatement = { ...defaultCustomerSelect, password: true };
 }
