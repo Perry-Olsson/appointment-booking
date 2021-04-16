@@ -1,3 +1,4 @@
+import { exposedAppointmentFields } from "../constants";
 import { prisma } from "../../prisma";
 
 export class ProviderDataAccess {
@@ -6,7 +7,10 @@ export class ProviderDataAccess {
       include: {
         schedule: true,
         procedures: true,
-        appointments: true,
+        appointments: {
+          orderBy: { timestamp: "asc" },
+          select: exposedAppointmentFields,
+        },
       },
     });
   }
