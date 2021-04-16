@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { Appointment, Provider, ServiceDay } from "../../../../../types";
 import { TimeSlot } from "./TimeSlot";
+import { appointmentsAreEqual } from "./utils/appointmentsAreEqual";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
   ({ timeSlots, serviceHours, appointments }) => {
@@ -32,13 +33,12 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
   },
   (prev, next) =>
     prev.serviceHours.isClosed === next.serviceHours.isClosed &&
-    prev.provider?.email === next.provider?.email
+    appointmentsAreEqual(prev, next)
 );
 
 export interface TimeSlotsProps {
   timeSlots: Date[];
   serviceHours: ServiceDay;
-  provider: Provider | undefined;
   appointments: Appointment[] | undefined;
 }
 

@@ -30,7 +30,6 @@ export const DayView: React.FC<DayViewProps> = memo(
           <TimeSlotList
             timeSlots={timeSlots}
             serviceHours={serviceHours[day.getDay()]}
-            provider={selectedProvider}
             appointments={
               selectedProvider &&
               selectedProvider.appointments[day.getMonth()] &&
