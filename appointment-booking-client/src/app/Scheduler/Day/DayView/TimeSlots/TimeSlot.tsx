@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import { ServiceDay } from "../../../../../types";
+import { Appointment, ServiceDay } from "../../../../../types";
 import { to4DigitTimeNumber } from "../../../utils";
+import { GrayedOut } from "./GrayedOut";
 
 export const TimeSlot: React.FC<TimeSlotProps> = ({
   timeSlot,
   serviceHours,
+  appointment,
 }) => {
   const isOnHour = timeSlot.getMinutes() === 0;
 
@@ -14,7 +16,13 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
       timeSlot={timeSlot}
       serviceHours={serviceHours}
     >
-      {isOnHour ? <TimeString>{getTimeString(timeSlot)}</TimeString> : null}
+      <GrayedOut
+        timeSlotValue={timeSlot.valueOf()}
+        timestampValue={appointment?.timestamp.valueOf()}
+        endValue={appointment?.end.valueOf()}
+      >
+        {isOnHour ? <TimeString>{getTimeString(timeSlot)}</TimeString> : null}
+      </GrayedOut>
     </Container>
   );
 };
@@ -44,6 +52,7 @@ interface ContainerProps {
 interface TimeSlotProps {
   timeSlot: Date;
   serviceHours: ServiceDay;
+  appointment: Appointment | undefined;
 }
 
 const TimeString = styled.div`

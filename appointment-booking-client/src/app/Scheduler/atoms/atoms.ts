@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { OrganizedAppointments, ServiceDay } from "../../../types";
+import { OrganizedAppointments, Provider, ServiceDay } from "../../../types";
 
 export const allAppointmentsAtom = atom<OrganizedAppointments>({});
 export const showAppointmentsFormAtom = atom<boolean>(false);
@@ -14,3 +14,5 @@ interface WindowDimensions {
 }
 
 export const serviceHoursAtom = atom<ServiceDay[]>([]);
+
+export const providerAtom = atom<Provider | undefined>(undefined);

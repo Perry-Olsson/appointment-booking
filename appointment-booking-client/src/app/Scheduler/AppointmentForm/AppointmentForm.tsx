@@ -1,12 +1,13 @@
 import { useAtom } from "jotai";
-import React from "react";
-import { showAppointmentsFormAtom } from "../atoms";
+import React, { useEffect } from "react";
+import { providerAtom, showAppointmentsFormAtom } from "../atoms";
 import { useForm } from "react-hook-form";
 import { Button, device, Flex } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { FormValues } from "./types";
 import { Comments, Provider, Time } from "./fields";
+import { useStaticState } from "../context";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -20,6 +21,13 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     formState: { errors },
   } = useForm<FormValues>();
   const onSubmit = (data: any) => console.log(data);
+  const { providers } = useStaticState();
+  const [, setProvider] = useAtom(providerAtom);
+  const provider = watch("provider");
+
+  useEffect(() => {
+    setProvider(providers.find(p => p.email === provider));
+  }, [provider]);
 
   if (!show) return null;
 

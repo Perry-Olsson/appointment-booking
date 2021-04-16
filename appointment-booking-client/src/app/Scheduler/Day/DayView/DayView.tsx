@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
 import { AppointmentForm } from "../../AppointmentForm";
-import { dimensionsAtom } from "../../atoms";
+import { dimensionsAtom, providerAtom } from "../../atoms";
 import { useStaticState } from "../../context";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -16,6 +16,7 @@ export const DayView: React.FC<DayViewProps> = memo(
   ({ day }) => {
     const [{ width }] = useAtom(dimensionsAtom);
     const { serviceHours } = useStaticState();
+    const [selectedProvider] = useAtom(providerAtom);
     const timeSlots = useMemo(() => computeTimeSlots(day), [day.valueOf()]);
     const isDesktop = device.isDesktop(width);
 
@@ -29,6 +30,12 @@ export const DayView: React.FC<DayViewProps> = memo(
           <TimeSlotList
             timeSlots={timeSlots}
             serviceHours={serviceHours[day.getDay()]}
+            provider={selectedProvider}
+            appointments={
+              selectedProvider &&
+              selectedProvider.appointments[day.getMonth()] &&
+              selectedProvider.appointments[day.getMonth()][day.getDate()]
+            }
           />
           <AppointmentForm timeSlots={timeSlots} />
         </Grid>

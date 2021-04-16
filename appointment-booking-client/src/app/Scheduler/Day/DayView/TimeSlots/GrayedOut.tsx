@@ -2,16 +2,20 @@ import styled from "styled-components";
 import { QUARTER_HOUR } from "../../../../../constants";
 
 interface GrayedOutProps {
-  timeSlotValue: number;
-  timestampValue: number;
-  endValue: number;
+  timeSlotValue: number | undefined;
+  timestampValue: number | undefined;
+  endValue: number | undefined;
 }
 
 export const GrayedOut = styled.div<GrayedOutProps>`
   height: 100%;
   margin: 0 2px;
   background-color: ${({ theme, timeSlotValue, timestampValue, endValue }) =>
-    timeSlotValue >= timestampValue && timeSlotValue < endValue
+    timeSlotValue &&
+    timestampValue &&
+    endValue &&
+    timeSlotValue >= timestampValue &&
+    timeSlotValue < endValue
       ? theme.dayView.appointmentBlockColor
       : null};
   border-top-left-radius: ${({ theme, timeSlotValue, timestampValue }) =>
@@ -23,11 +27,11 @@ export const GrayedOut = styled.div<GrayedOutProps>`
       ? theme.dayView.appointmentBlockRadius
       : null};
   border-bottom-left-radius: ${({ theme, timeSlotValue, endValue }) =>
-    timeSlotValue === endValue - QUARTER_HOUR
+    endValue && timeSlotValue === endValue - QUARTER_HOUR
       ? theme.dayView.appointmentBlockRadius
       : null};
   border-bottom-right-radius: ${({ theme, timeSlotValue, endValue }) =>
-    timeSlotValue === endValue - QUARTER_HOUR
+    endValue && timeSlotValue === endValue - QUARTER_HOUR
       ? theme.dayView.appointmentBlockRadius
       : null};
 `;
