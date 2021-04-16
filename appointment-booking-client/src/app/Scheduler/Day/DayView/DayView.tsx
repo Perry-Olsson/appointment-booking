@@ -1,40 +1,26 @@
-import { useAtom } from "jotai";
-import React, { memo, useMemo } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
+import { Appointment, ServiceDay } from "../../../../types";
 import { AppointmentForm } from "../../AppointmentForm";
-import { dimensionsAtom, providerAtom } from "../../atoms";
-import { useStaticState } from "../../context";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { MonthCard } from "./MonthCard";
 import { TimeSlotList } from "./TimeSlots";
-import { computeTimeSlots } from "./TimeSlots/utils";
+import { appointmentsAreEqual } from "./TimeSlots/utils/appointmentsAreEqual";
 
 export const DayView: React.FC<DayViewProps> = memo(
-  ({ day }) => {
-    const [{ width }] = useAtom(dimensionsAtom);
-    const { serviceHours } = useStaticState();
-    const [selectedProvider] = useAtom(providerAtom);
-    const timeSlots = useMemo(() => computeTimeSlots(day), [day.valueOf()]);
-    const isDesktop = device.isDesktop(width);
-
-    if (!serviceHours.length) return <div>loading...</div>;
-
+  ({ day, serviceHours, timeSlots, isDesktop, appointments }) => {
     return (
       <Container>
-        <Header day={day} />
+        <Header />
         <Grid>
           {isDesktop ? <MonthCard day={day} /> : null}
           <TimeSlotList
             timeSlots={timeSlots}
             serviceHours={serviceHours[day.getDay()]}
-            appointments={
-              selectedProvider &&
-              selectedProvider.appointments[day.getMonth()] &&
-              selectedProvider.appointments[day.getMonth()][day.getDate()]
-            }
+            appointments={appointments}
           />
           <AppointmentForm timeSlots={timeSlots} />
         </Grid>
@@ -42,11 +28,17 @@ export const DayView: React.FC<DayViewProps> = memo(
       </Container>
     );
   },
-  (prev, next) => prev.day.valueOf() === next.day.valueOf()
+  (prev, next) =>
+    prev.day.valueOf() === next.day.valueOf() &&
+    appointmentsAreEqual(prev, next)
 );
 
 export interface DayViewProps {
   day: Date;
+  appointments: Appointment[] | undefined;
+  timeSlots: Date[];
+  isDesktop: boolean;
+  serviceHours: ServiceDay[];
 }
 
 const Container = styled(Flex)`

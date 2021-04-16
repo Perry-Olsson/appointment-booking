@@ -6,6 +6,7 @@ import { FieldProps } from "../types";
 export const Provider: React.FC<FieldProps> = ({ register, errors, watch }) => {
   const { providers } = useStaticState();
   const procedure = watch("procedure");
+
   return (
     <Label>
       With:

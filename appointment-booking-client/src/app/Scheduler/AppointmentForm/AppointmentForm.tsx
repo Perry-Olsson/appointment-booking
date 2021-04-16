@@ -1,6 +1,10 @@
 import { useAtom } from "jotai";
 import React, { useEffect } from "react";
-import { providerAtom, showAppointmentsFormAtom } from "../atoms";
+import {
+  procedureAtom,
+  providerAtom,
+  showAppointmentsFormAtom,
+} from "../atoms";
 import { useForm } from "react-hook-form";
 import { Button, device, Flex } from "../../../components";
 import styled from "styled-components";
@@ -21,13 +25,19 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     formState: { errors },
   } = useForm<FormValues>();
   const onSubmit = (data: any) => console.log(data);
-  const { providers } = useStaticState();
-  const [, setProvider] = useAtom(providerAtom);
+  const { providers, procedures } = useStaticState();
+  const [, setSelectedProvider] = useAtom(providerAtom);
+  const [, setSelectedProcedure] = useAtom(procedureAtom);
   const provider = watch("provider");
+  const procedure = watch("procedure");
 
   useEffect(() => {
-    setProvider(providers.find(p => p.email === provider));
+    setSelectedProvider(providers.find(p => p.email === provider));
   }, [provider]);
+
+  useEffect(() => {
+    setSelectedProcedure(procedures.find(p => p.name === procedure));
+  }, [procedure]);
 
   if (!show) return null;
 

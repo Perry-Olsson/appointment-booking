@@ -2,14 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { useAtom } from "jotai";
 import { Link, RightArrow } from "../../../../../../components";
-import { dayPageAtom, monthsAtom } from "../../../../atoms";
+import { monthsAtom } from "../../../../atoms";
 import { ArrowProps, NavigationType } from "./types";
 import { NavigatorArrow } from "./components";
 import { useStaticState } from "../../../../context";
+import { useHandleUrlParam } from "../../../hooks";
 
 export const Next: React.FC<ArrowProps> = ({ type }) => {
   const [{ cursor }] = useAtom(monthsAtom);
-  const [day] = useAtom(dayPageAtom);
+  const day = useHandleUrlParam();
   const { serviceHours } = useStaticState();
   const href =
     type === "day"

@@ -2,14 +2,15 @@ import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { LeftArrow, Link } from "../../../../../../components";
-import { dayPageAtom, nowAtom } from "../../../../atoms";
+import { nowAtom } from "../../../../atoms";
 import { useStaticState } from "../../../../context";
+import { useHandleUrlParam } from "../../../hooks";
 import { NavigatorArrow } from "./components";
 import { ArrowProps, NavigationType } from "./types";
 
 export const Previous: React.FC<ArrowProps> = ({ type }) => {
   const [{ today }] = useAtom(nowAtom);
-  const [day] = useAtom(dayPageAtom);
+  const day = useHandleUrlParam();
   const { serviceHours } = useStaticState();
   const href =
     type === "day"

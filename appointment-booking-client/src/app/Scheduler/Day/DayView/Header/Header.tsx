@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { device } from "../../../../../components";
 import { BackButton } from "../../../../../components/BackButton";
-import { DayProps } from "../../type";
 import { useAtom } from "jotai";
 import { dimensionsAtom } from "../../../atoms";
 import {
@@ -10,14 +9,14 @@ import {
 } from "../../../AppointmentForm";
 import { DateString } from "../components";
 
-export const Header: React.FC<DayProps> = ({ day }) => {
+export const Header: React.FC = () => {
   const [{ width }] = useAtom(dimensionsAtom);
 
   return (
     <Container>
       <StyledBackButton href={"/schedule"} />
       {device.isDesktop(width) ? (
-        <Desktop day={day} />
+        <Desktop />
       ) : (
         <TabletMobileCreateAppointment />
       )}
@@ -36,10 +35,10 @@ const StyledBackButton = styled(BackButton)`
   cursor: pointer;
 `;
 
-const Desktop: React.FC<DayProps> = ({ day }) => {
+const Desktop: React.FC = () => {
   return (
     <>
-      <DateString day={day} />
+      <DateString />
       <DesktopCreateAppointment />
     </>
   );

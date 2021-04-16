@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useDimensions } from "../../hooks";
 import { useFetchProviders, useFetchServiceHours } from "./hooks";
 import { StaticStateProvider } from "./context";
+import { getProcedureListFromProviders } from "./utils";
 
 const queryClient = new QueryClient();
 
@@ -11,7 +12,13 @@ const ScheduleProviders: React.FC<ProviderProps> = ({ children }) => {
   const { providers } = useFetchProviders();
 
   return (
-    <StaticStateProvider value={{ serviceHours, providers }}>
+    <StaticStateProvider
+      value={{
+        serviceHours,
+        providers,
+        procedures: getProcedureListFromProviders(providers),
+      }}
+    >
       {children}
     </StaticStateProvider>
   );
