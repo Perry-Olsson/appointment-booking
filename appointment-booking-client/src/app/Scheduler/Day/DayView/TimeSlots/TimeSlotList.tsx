@@ -1,49 +1,44 @@
-import { memo } from "react";
+import { useAtom } from "jotai";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
-import { Appointment, ServiceDay } from "../../../../../types";
+import { ServiceDay } from "../../../../../types";
+import { providerAtom } from "../../../atoms";
+import { useAppointments } from "../../context";
 import { TimeSlot } from "./TimeSlot";
-import { appointmentsAreEqual } from "./utils/appointmentsAreEqual";
 
-export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
-  ({ timeSlots, serviceHours, appointments }) => {
-    if (serviceHours.isClosed) return <div>Sorry we're closed</div>;
+export const TimeSlotList: React.FC<TimeSlotsProps> = ({
+  timeSlots,
+  serviceHours,
+}) => {
+  const appointments = useAppointments();
+  const [provider] = useAtom(providerAtom);
 
-    let i = 0;
-    return (
-      <Container>
-        {timeSlots.map(slot => {
-          if (
-            i < appointments.length - 1 &&
-            slot.valueOf() === appointments[i].end.valueOf()
-          ) {
-            i++;
-          }
+  if (serviceHours.isClosed) return <div>Sorry we're closed</div>;
 
-          return (
-            <TimeSlot
-              key={slot.valueOf()}
-              timeSlot={slot}
-              serviceHours={serviceHours}
-              appointment={
-                appointments.length > 0 ? appointments[i] : undefined
-              }
-            />
-          );
-        })}
-      </Container>
-    );
-  },
-  (prev, next) =>
-    prev.serviceHours.isClosed === next.serviceHours.isClosed &&
-    appointmentsAreEqual(prev, next)
-);
+  let i = 0;
+  return (
+    <Container>
+      {timeSlots.map(slot => {
+        if (
+          i < appointments.length - 1 &&
+          slot.valueOf() === appointments[i].end.valueOf()
+        ) {
+          i++;
+        }
 
-export interface TimeSlotsProps {
-  timeSlots: Date[];
-  serviceHours: ServiceDay;
-  appointments: Appointment[];
-}
+        return (
+          <TimeSlot
+            key={slot.valueOf()}
+            timeSlot={slot}
+            serviceHours={serviceHours}
+            appointment={appointments.length > 0 ? appointments[i] : undefined}
+            provider={provider}
+          />
+        );
+      })}
+    </Container>
+  );
+};
 
 const Container = styled.div`
   width: 100%;
@@ -55,3 +50,8 @@ const Container = styled.div`
     margin: auto;
   }
 `;
+
+export interface TimeSlotsProps {
+  timeSlots: Date[];
+  serviceHours: ServiceDay;
+}

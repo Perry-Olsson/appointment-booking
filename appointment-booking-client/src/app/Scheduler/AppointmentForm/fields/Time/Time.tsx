@@ -1,5 +1,6 @@
 import React from "react";
 import { useStaticState } from "../../../context";
+import { useAppointments } from "../../../Day/context";
 import { Label, Select, ErrorText, DefaultOption } from "../../components";
 import { FieldProps } from "../../types";
 import { AvailableTimes } from "./AvailableTimes";
@@ -11,6 +12,7 @@ export const Time: React.FC<TimeProps> = ({
   watch,
 }) => {
   const { serviceHours, providers } = useStaticState();
+  const appointments = useAppointments();
   const selectedProvider = watch("provider");
 
   if (!serviceHours.length) return null;
@@ -24,6 +26,7 @@ export const Time: React.FC<TimeProps> = ({
           timeSlots={timeSlots}
           serviceHours={serviceHours[timeSlots[0].getDay()]}
           selectedProvider={providers.find(p => p.email === selectedProvider)}
+          appointments={appointments}
         />
       </Select>
       {errors.time && <ErrorText>This field is required</ErrorText>}

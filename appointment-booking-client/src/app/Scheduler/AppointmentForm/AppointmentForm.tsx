@@ -1,17 +1,13 @@
 import { useAtom } from "jotai";
-import React, { useEffect } from "react";
-import {
-  procedureAtom,
-  providerAtom,
-  showAppointmentsFormAtom,
-} from "../atoms";
+import React from "react";
+import { showAppointmentsFormAtom } from "../atoms";
 import { useForm } from "react-hook-form";
 import { Button, device, Flex } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { FormValues } from "./types";
 import { Comments, Provider, Time } from "./fields";
-import { useStaticState } from "../context";
+import { useWatchFormValues } from "./hooks/useWatchFormValues";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -25,19 +21,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     formState: { errors },
   } = useForm<FormValues>();
   const onSubmit = (data: any) => console.log(data);
-  const { providers, procedures } = useStaticState();
-  const [, setSelectedProvider] = useAtom(providerAtom);
-  const [, setSelectedProcedure] = useAtom(procedureAtom);
-  const provider = watch("provider");
-  const procedure = watch("procedure");
-
-  useEffect(() => {
-    setSelectedProvider(providers.find(p => p.email === provider));
-  }, [provider]);
-
-  useEffect(() => {
-    setSelectedProcedure(procedures.find(p => p.name === procedure));
-  }, [procedure]);
+  useWatchFormValues(watch);
 
   if (!show) return null;
 
@@ -92,11 +76,6 @@ const Seperator = styled.div`
   border-color: #ffffff00;
 `;
 
-export interface AppointmentFormProps {
-  timeSlots: Date[];
-  className?: string;
-}
-
 export const ResponsiveAppointmentForm = styled(AppointmentForm)`
   @media (max-width: ${device.desktop.pixels}) {
     position: absolute;
@@ -117,5 +96,10 @@ export const ResponsiveAppointmentForm = styled(AppointmentForm)`
     overflow-y: scroll;
   }
 `;
+
+export interface AppointmentFormProps {
+  timeSlots: Date[];
+  className?: string;
+}
 
 export { ResponsiveAppointmentForm as AppointmentForm };

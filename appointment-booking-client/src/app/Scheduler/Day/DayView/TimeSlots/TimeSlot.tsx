@@ -1,7 +1,5 @@
-import { useAtom } from "jotai";
 import styled from "styled-components";
 import { Appointment, Provider, ServiceDay } from "../../../../../types";
-import { providerAtom } from "../../../atoms";
 import { to4DigitTimeNumber } from "../../../utils";
 import { GrayedOut } from "./GrayedOut";
 
@@ -9,8 +7,8 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
   timeSlot,
   serviceHours,
   appointment,
+  provider,
 }) => {
-  const [provider] = useAtom(providerAtom);
   const isOnHour = timeSlot.getMinutes() === 0;
 
   return (
@@ -60,6 +58,7 @@ interface TimeSlotProps {
   timeSlot: Date;
   serviceHours: ServiceDay;
   appointment: Appointment | undefined;
+  provider: Provider | undefined;
 }
 
 const TimeString = styled.div`
