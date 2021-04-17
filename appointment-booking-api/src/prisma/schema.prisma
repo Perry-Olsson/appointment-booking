@@ -89,7 +89,7 @@ model Test {
   id   Int      @id @default(autoincrement())
   text String
   date DateTime @db.Date
-  time DateTime @db.Timetz
+  time DateTime @db.Time
 
   @@map("test")
 }
