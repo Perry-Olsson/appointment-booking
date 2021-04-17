@@ -88,7 +88,8 @@ model ServiceHours {
 model Test {
   id   Int      @id @default(autoincrement())
   text String
-  time DateTime @db.Time
+  date DateTime @db.Date
+  time DateTime @db.Timetz
 
   @@map("test")
 }
