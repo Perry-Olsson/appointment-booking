@@ -14,17 +14,20 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
       <Container>
         {timeSlots.map(slot => {
           if (
-            appointments &&
             i < appointments.length - 1 &&
             slot.valueOf() === appointments[i].end.valueOf()
-          )
+          ) {
             i++;
+          }
+
           return (
             <TimeSlot
               key={slot.valueOf()}
               timeSlot={slot}
               serviceHours={serviceHours}
-              appointment={appointments && appointments[i]}
+              appointment={
+                appointments.length > 0 ? appointments[i] : undefined
+              }
             />
           );
         })}
@@ -39,7 +42,7 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = memo(
 export interface TimeSlotsProps {
   timeSlots: Date[];
   serviceHours: ServiceDay;
-  appointments: Appointment[] | undefined;
+  appointments: Appointment[];
 }
 
 const Container = styled.div`

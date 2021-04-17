@@ -35,7 +35,7 @@ export const DayView: React.FC<DayViewProps> = memo(
 
 export interface DayViewProps {
   day: Date;
-  appointments: Appointment[] | undefined;
+  appointments: Appointment[];
   timeSlots: Date[];
   isDesktop: boolean;
   serviceHours: ServiceDay[];
