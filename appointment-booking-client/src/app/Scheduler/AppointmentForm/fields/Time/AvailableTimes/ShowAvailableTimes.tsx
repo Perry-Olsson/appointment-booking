@@ -1,5 +1,8 @@
+import { useAtom } from "jotai";
 import React from "react";
-import { Appointment } from "../../../../../../types";
+import { ONE_MINUTE } from "../../../../../../constants";
+import { Appointment, Procedure } from "../../../../../../types";
+import { procedureAtom } from "../../../../atoms";
 import { to4DigitTimeNumber } from "../../../../utils";
 
 export const ShowAvailableTimes: React.FC<ShowAvailableTimesProps> = ({
@@ -7,6 +10,9 @@ export const ShowAvailableTimes: React.FC<ShowAvailableTimesProps> = ({
   appointments,
   schedule,
 }) => {
+  const [selectedProcedure] = useAtom(procedureAtom);
+  console.log(selectedProcedure);
+
   let appointmentIndex = 0;
   let scheduleIndex = 0;
   let providerIsAvailable = false;
@@ -27,7 +33,15 @@ export const ShowAvailableTimes: React.FC<ShowAvailableTimesProps> = ({
           if (appointmentBoundryHit(slotValue, appointments, appointmentIndex))
             appointmentIndex++;
 
-          if (isTaken(slotValue, appointments[appointmentIndex])) return null;
+          if (
+            isTaken(
+              slotValue,
+              appointments[appointmentIndex],
+              selectedProcedure
+            ) ||
+            isUnavailable(slot, schedule[scheduleIndex], selectedProcedure)
+          )
+            return null;
         }
 
         if (!providerIsAvailable) return null;
@@ -42,13 +56,41 @@ export const ShowAvailableTimes: React.FC<ShowAvailableTimesProps> = ({
   );
 };
 
-const isTaken = (slotValue: number, appointment: Appointment) => {
+const isTaken = (
+  slotValue: number,
+  appointment: Appointment,
+  selectedProcedure: Procedure | undefined
+) => {
+  const procedureEnd = selectedProcedure
+    ? slotValue + selectedProcedure.duration * ONE_MINUTE
+    : 0;
+
+  const appointmentStart = appointment.timestamp.valueOf();
+  const appointmentEnd = appointment.end.valueOf();
+
   if (
-    slotValue >= appointment.timestamp.valueOf() &&
-    slotValue < appointment.end.valueOf()
+    (slotValue >= appointmentStart && slotValue < appointmentEnd) ||
+    (slotValue < appointmentStart && procedureEnd > appointmentStart)
   ) {
     return true;
   }
+  return false;
+};
+
+const isUnavailable = (
+  slot: Date,
+  scheduleBoundry: string,
+  selectedProcedure: Procedure | undefined
+): boolean => {
+  const timeValue = slot.valueOf();
+  const procedureEnd = selectedProcedure
+    ? new Date(
+        timeValue + ONE_MINUTE * selectedProcedure.duration
+      ).get4DigitTimeNumber()
+    : 0;
+  const scheduleBoundryTime = to4DigitTimeNumber(scheduleBoundry);
+
+  if (procedureEnd > scheduleBoundryTime) return true;
   return false;
 };
 
