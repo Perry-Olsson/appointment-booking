@@ -8,6 +8,7 @@ import {
   providerRouter,
   serviceHoursRouter,
 } from "./routers";
+import { simulateSlowInternet } from "./utils";
 import { unknownEndpoint } from "./utils/middleware";
 import { errorHandler } from "./utils/middleware";
 import { requestLogger } from "./utils/middleware";
@@ -18,6 +19,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 passport.use(jwtStrategy);
+
+if (process.env.SLOW_INTERNET) app.use(simulateSlowInternet);
 
 if (process.env.NODE_ENV === "development") app.use(requestLogger);
 
