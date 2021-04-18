@@ -1,9 +1,11 @@
+import { useAtom } from "jotai";
 import React, { memo } from "react";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
 import { Appointment, ServiceDay } from "../../../../types";
 import { AppointmentForm } from "../../AppointmentForm";
+import { dimensionsAtom } from "../../atoms";
 import { AppointmentProvider } from "../context";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -12,7 +14,10 @@ import { TimeSlotList } from "./TimeSlots";
 import { appointmentsAreEqual } from "./TimeSlots/utils/appointmentsAreEqual";
 
 export const DayView: React.FC<DayViewProps> = memo(
-  ({ day, serviceHours, timeSlots, isDesktop, appointments }) => {
+  ({ day, serviceHours, timeSlots, appointments }) => {
+    const [{ width }] = useAtom(dimensionsAtom);
+    const isDesktop = device.isDesktop(width);
+
     return (
       <AppointmentProvider value={appointments}>
         <Container>
@@ -34,14 +39,6 @@ export const DayView: React.FC<DayViewProps> = memo(
     prev.day.valueOf() === next.day.valueOf() &&
     appointmentsAreEqual(prev, next)
 );
-
-export interface DayViewProps {
-  day: Date;
-  appointments: Appointment[];
-  timeSlots: Date[];
-  isDesktop: boolean;
-  serviceHours: ServiceDay[];
-}
 
 const Container = styled(Flex)`
   flex-direction: column;
@@ -67,3 +64,10 @@ const Grid = styled.div`
       }px`};
   }
 `;
+
+export interface DayViewProps {
+  day: Date;
+  appointments: Appointment[];
+  timeSlots: Date[];
+  serviceHours: ServiceDay[];
+}
