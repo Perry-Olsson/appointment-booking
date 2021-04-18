@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "yarn dev:client & (cd ../appointment-booking-api && yarn tsc && yarn dev:js)",
+    "dev:slowInternet": "yarn dev:client & (cd ../appointment-booking-api && yarn tsc && yarn dev:jsSlowInternet)",
     "dev:client": "next",
     "build": "next build",
     "start": "next start",

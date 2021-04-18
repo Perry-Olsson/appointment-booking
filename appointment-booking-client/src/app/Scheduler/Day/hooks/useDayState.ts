@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useGetSelectedDay } from ".";
 import { device } from "../../../../components";
 import { Appointment, Provider } from "../../../../types";
@@ -11,18 +11,13 @@ export const useDayState = () => {
   const day = useGetSelectedDay();
   const [{ width }] = useAtom(dimensionsAtom);
   const [selectedProvider] = useAtom(providerAtom);
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-
-  useEffect(() => {
-    setAppointments(getAppointmentsFromProvider(selectedProvider, day));
-  }, [selectedProvider, day.valueOf()]);
 
   return {
     day,
     serviceHours: useStaticState().serviceHours,
     timeSlots: useMemo(() => computeTimeSlots(day), [day.valueOf()]),
     isDesktop: device.isDesktop(width),
-    appointments,
+    appointments: getAppointmentsFromProvider(selectedProvider, day),
   };
 };
 

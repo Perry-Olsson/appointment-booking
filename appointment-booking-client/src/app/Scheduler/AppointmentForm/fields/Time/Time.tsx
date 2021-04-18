@@ -5,15 +5,9 @@ import { Label, Select, ErrorText, DefaultOption } from "../../components";
 import { FieldProps } from "../../types";
 import { AvailableTimes } from "./AvailableTimes";
 
-export const Time: React.FC<TimeProps> = ({
-  timeSlots,
-  register,
-  errors,
-  watch,
-}) => {
-  const { serviceHours, providers } = useStaticState();
+export const Time: React.FC<TimeProps> = ({ timeSlots, register, errors }) => {
+  const { serviceHours } = useStaticState();
   const appointments = useAppointments();
-  const selectedProvider = watch("provider");
 
   if (!serviceHours.length) return null;
 
@@ -25,7 +19,6 @@ export const Time: React.FC<TimeProps> = ({
         <AvailableTimes
           timeSlots={timeSlots}
           serviceHours={serviceHours[timeSlots[0].getDay()]}
-          selectedProvider={providers.find(p => p.email === selectedProvider)}
           appointments={appointments}
         />
       </Select>

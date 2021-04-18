@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Appointment, Provider, ServiceDay } from "../../../../../types";
 import { to4DigitTimeNumber } from "../../../utils";
+import { isInService } from "../../../utils/isInService";
 import { GrayedOut } from "./GrayedOut";
 
 export const TimeSlot: React.FC<TimeSlotProps> = ({
@@ -89,13 +90,4 @@ const grayOutUnavailableTime = (
     }
   }
   return false;
-};
-
-const isInService = (timeSlot: Date, serviceHours: ServiceDay): boolean => {
-  const open = to4DigitTimeNumber(serviceHours.open);
-  const close = to4DigitTimeNumber(serviceHours.close);
-  const time = timeSlot.get4DigitTimeNumber();
-
-  if (time < open || time >= close) return false;
-  else return true;
 };
