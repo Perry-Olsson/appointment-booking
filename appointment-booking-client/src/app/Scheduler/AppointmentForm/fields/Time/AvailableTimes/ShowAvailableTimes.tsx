@@ -38,13 +38,15 @@ export const ShowAvailableTimes: React.FC<ShowAvailableTimesProps> = ({
               slotValue,
               appointments[appointmentIndex],
               selectedProcedure
-            ) ||
-            isUnavailable(slot, schedule[scheduleIndex], selectedProcedure)
+            )
           )
             return null;
         }
 
         if (!providerIsAvailable) return null;
+
+        if (isUnavailable(slot, schedule[scheduleIndex], selectedProcedure))
+          return null;
 
         return (
           <option key={slot.valueOf()} value={slot.toJSON()}>
