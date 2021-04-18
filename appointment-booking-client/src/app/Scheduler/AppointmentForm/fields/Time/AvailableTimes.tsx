@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Appointment, Provider, ServiceDay } from "../../../../../types";
 import { to4DigitTimeNumber } from "../../../utils";
 

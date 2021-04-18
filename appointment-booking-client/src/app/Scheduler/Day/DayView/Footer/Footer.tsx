@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Flex } from "../../../../../components";
-import { DayProps } from "../../type";
 import { DateString } from "../components";
 import { Navigator } from "../components";
 
-export const Footer: React.FC<DayProps> = ({ day }) => {
+export const Footer: React.FC = () => {
   return (
     <Container>
       <StyledNavigator type="day">
-        <DateString day={day} />
+        <DateString />
       </StyledNavigator>
     </Container>
   );

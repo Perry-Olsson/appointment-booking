@@ -25,7 +25,7 @@ export const DayView: React.FC<DayViewProps> = memo(
             />
             <AppointmentForm timeSlots={timeSlots} />
           </Grid>
-          {!isDesktop ? <Footer day={day} /> : null}
+          {!isDesktop ? <Footer /> : null}
         </Container>
       </AppointmentProvider>
     );
