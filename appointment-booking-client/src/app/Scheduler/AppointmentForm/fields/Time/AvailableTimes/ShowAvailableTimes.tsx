@@ -11,7 +11,6 @@ export const ShowAvailableTimes: React.FC<ShowAvailableTimesProps> = ({
   schedule,
 }) => {
   const [selectedProcedure] = useAtom(procedureAtom);
-  console.log(selectedProcedure);
 
   let appointmentIndex = 0;
   let scheduleIndex = 0;
