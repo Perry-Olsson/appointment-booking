@@ -12,10 +12,9 @@ export const Procedure: React.FC<FieldProps> = ({
   const { providers } = useStaticState();
   const selectedProvider = watch("provider");
 
-  const procedures = useMemo(
-    () => getProcedureListFromProviders(providers, selectedProvider),
-    [selectedProvider]
-  );
+  const procedures = useMemo(() => getProcedureListFromProviders(providers), [
+    selectedProvider,
+  ]);
 
   return (
     <Label>
