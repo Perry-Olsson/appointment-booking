@@ -1,8 +1,6 @@
-import { useAtom } from "jotai";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { ServiceDay } from "../../../../../types";
-import { providerAtom } from "../../../atoms";
 import { useAppointments } from "../../context";
 import { TimeSlot } from "./TimeSlot";
 
@@ -11,7 +9,6 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = ({
   serviceHours,
 }) => {
   const appointments = useAppointments();
-  const [provider] = useAtom(providerAtom);
 
   if (serviceHours.isClosed) return <div>Sorry we're closed</div>;
 
@@ -32,7 +29,6 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = ({
             timeSlot={slot}
             serviceHours={serviceHours}
             appointment={appointments.length > 0 ? appointments[i] : undefined}
-            provider={provider}
           />
         );
       })}

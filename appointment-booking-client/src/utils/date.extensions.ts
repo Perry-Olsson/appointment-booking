@@ -10,6 +10,7 @@ declare global {
     getMonthString(): string;
     getDayString(): Daystring;
     getTimeString(): string;
+    getTimeSlotString(): string;
     getMobileDateString(): string;
     getDesktopDateString(): string;
     getMonthCardString(): string;
@@ -40,6 +41,14 @@ Date.prototype.getTimeString = function () {
   return `${hours === 0 ? 12 : hours}:${
     minutes === 0 ? "00" : minutes
   } ${suffix}`;
+};
+
+Date.prototype.getTimeSlotString = function () {
+  const localeTimestring = this.toLocaleTimeString();
+  const hours = this.getHours();
+  return `${
+    hours === 0 ? 12 : hours > 12 ? hours - 12 : hours
+  } ${localeTimestring.slice(localeTimestring.length - 3)}`;
 };
 
 Date.prototype.getMobileDateString = function () {

@@ -22,3 +22,9 @@ export const serviceHoursAtom = atom<ServiceDay[]>([]);
 
 export const providerAtom = atom<Provider | undefined>(undefined);
 export const procedureAtom = atom<Procedure | undefined>(undefined);
+
+export const selectedAppointmentAtom = atom<AppointmentBoundries | null>(null);
+export interface AppointmentBoundries {
+  start: Date;
+  end: Date;
+}

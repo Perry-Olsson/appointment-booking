@@ -18,10 +18,11 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>();
   const onSubmit = (data: any) => console.log(data);
-  useWatchFormValues(watch);
+  useWatchFormValues(watch, setValue);
 
   if (!show) return null;
 
@@ -41,6 +42,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
           register={register}
           errors={errors}
           watch={watch}
+          setValue={setValue}
         />
 
         <Seperator />
