@@ -1,32 +1,13 @@
-import { useAtom } from "jotai";
-import React, { useEffect } from "react";
-import { UseFormSetValue } from "react-hook-form";
-import { selectedAppointmentAtom } from "../../../atoms";
+import React from "react";
 import { useStaticState } from "../../../context";
-import { useAppointments, useDay } from "../../../Day/context";
+import { useAppointments } from "../../../Day/context";
 import { Label, Select, ErrorText, DefaultOption } from "../../components";
-import { FieldProps, FormValues } from "../../types";
+import { FieldProps } from "../../types";
 import { AvailableTimes } from "./AvailableTimes";
 
-export const Time: React.FC<TimeProps> = ({
-  timeSlots,
-  register,
-  errors,
-  setValue,
-}) => {
-  const day = useDay();
+export const Time: React.FC<TimeProps> = ({ timeSlots, register, errors }) => {
   const { serviceHours } = useStaticState();
   const appointments = useAppointments();
-  const [selectedAppointment] = useAtom(selectedAppointmentAtom);
-
-  useEffect(() => {
-    if (selectedAppointment === null) setValue("time", "");
-    else setValue("time", selectedAppointment.start.toJSON());
-  }, [selectedAppointment]);
-
-  useEffect(() => {
-    setValue("time", "");
-  }, [day.valueOf()]);
 
   if (!serviceHours.length) return null;
 
@@ -48,5 +29,4 @@ export const Time: React.FC<TimeProps> = ({
 
 interface TimeProps extends FieldProps {
   timeSlots: Date[];
-  setValue: UseFormSetValue<FormValues>;
 }

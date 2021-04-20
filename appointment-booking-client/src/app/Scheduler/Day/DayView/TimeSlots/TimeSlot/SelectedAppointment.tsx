@@ -22,12 +22,11 @@ export const SelectedAppointment: React.FC<SelectedAppointmentProps> = ({
         {children}
       </Container>
     );
-  return <Margin>{children}</Margin>;
+  return <>{children}</>;
 };
 
 export const Container = styled.div<ContainerProps>`
   height: 100%;
-  margin: 0 2px;
   background-color: ${({ theme, timeSlot, selectedAppointment }) => {
     return timeSlot.valueOf() >= selectedAppointment.start.valueOf() &&
       timeSlot.valueOf() < selectedAppointment.end.valueOf()
@@ -62,8 +61,3 @@ interface ContainerProps {
   timeSlot: Date;
   selectedAppointment: { start: Date; end: Date };
 }
-
-const Margin = styled.div`
-  height: 100%;
-  margin: 0 2px;
-`;

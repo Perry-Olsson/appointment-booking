@@ -17,6 +17,9 @@ import { isInService } from "../../../../utils/isInService";
 import { SelectedAppointment } from "./SelectedAppointment";
 import { GrayedOut } from "./GrayedOut";
 import { appointmentFitsSlot, grayOutUnavailableTime } from "./utils";
+import { useFormApi } from "../../../context";
+import { UseFormSetValue } from "react-hook-form";
+import { FormValues } from "../../../../AppointmentForm/types";
 
 export const TimeSlot: React.FC<TimeSlotProps> = ({
   timeSlot,
@@ -28,6 +31,7 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
   );
   const [provider] = useAtom(providerAtom);
   const [procedure] = useAtom(procedureAtom);
+  const { setValue } = useFormApi();
   const isOnHour = timeSlot.getMinutes() === 0;
 
   return (
@@ -43,26 +47,29 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
           timeSlot,
           selectedAppointment,
           setSelectedAppointment,
+          setValue,
           appointment,
         })
       }
     >
-      <SelectedAppointment
-        timeSlot={timeSlot}
-        selectedAppointment={selectedAppointment}
-        provider={provider}
-        procedure={procedure}
-      >
-        <GrayedOut
-          timeSlotValue={timeSlot.valueOf()}
-          timestampValue={appointment ? appointment.timestamp.valueOf() : 0}
-          endValue={appointment ? appointment.end.valueOf() : 0}
+      <Margin>
+        <SelectedAppointment
+          timeSlot={timeSlot}
+          selectedAppointment={selectedAppointment}
+          provider={provider}
+          procedure={procedure}
         >
-          {isOnHour ? (
-            <TimeString>{timeSlot.getTimeSlotString()}</TimeString>
-          ) : null}
-        </GrayedOut>
-      </SelectedAppointment>
+          <GrayedOut
+            timeSlotValue={timeSlot.valueOf()}
+            timestampValue={appointment ? appointment.timestamp.valueOf() : 0}
+            endValue={appointment ? appointment.end.valueOf() : 0}
+          >
+            {isOnHour ? (
+              <TimeString>{timeSlot.getTimeSlotString()}</TimeString>
+            ) : null}
+          </GrayedOut>
+        </SelectedAppointment>
+      </Margin>
     </Container>
   );
 };
@@ -73,10 +80,12 @@ const handleClick = ({
   timeSlot,
   selectedAppointment,
   setSelectedAppointment,
+  setValue,
   appointment,
 }: HandleClickArgs) => {
   if (provider && procedure) {
     if (selectedAppointment?.start === timeSlot) {
+      setValue("time", "");
       setSelectedAppointment(null);
       return;
     }
@@ -91,11 +100,13 @@ const handleClick = ({
 
     const schedule = provider.schedule[timeSlot.getDayString()];
 
-    if (appointmentFitsSlot(schedule, timeSlot, appointmentEnd))
+    if (appointmentFitsSlot(schedule, timeSlot, appointmentEnd)) {
+      setValue("time", timeSlot.toJSON());
       setSelectedAppointment({
         start: timeSlot,
         end: appointmentEnd,
       });
+    }
   }
 };
 
@@ -103,6 +114,7 @@ interface HandleClickArgs {
   provider: Provider | undefined;
   procedure: Procedure | undefined;
   timeSlot: Date;
+  setValue: UseFormSetValue<FormValues>;
   selectedAppointment: AppointmentBoundries | null;
   appointment: Appointment | undefined;
   setSelectedAppointment: (
@@ -130,6 +142,11 @@ const Container = styled.div<ContainerProps>`
 
 const TimeString = styled.div`
   margin-left: 5px;
+`;
+
+const Margin = styled.div`
+  height: 100%;
+  margin: 0 2px;
 `;
 
 interface ContainerProps {

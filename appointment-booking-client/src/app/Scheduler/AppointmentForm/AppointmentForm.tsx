@@ -1,13 +1,12 @@
 import { useAtom } from "jotai";
 import React from "react";
 import { showAppointmentsFormAtom } from "../atoms";
-import { useForm } from "react-hook-form";
 import { Button, device, Flex } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
-import { FormValues } from "./types";
 import { Comments, Provider, Time } from "./fields";
 import { useWatchFormValues } from "./hooks/useWatchFormValues";
+import { useFormApi } from "../Day/context";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -15,12 +14,12 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
 }) => {
   const [show] = useAtom(showAppointmentsFormAtom);
   const {
-    register,
-    handleSubmit,
     watch,
     setValue,
     formState: { errors },
-  } = useForm<FormValues>();
+    register,
+    handleSubmit,
+  } = useFormApi();
   const onSubmit = (data: any) => console.log(data);
   useWatchFormValues(watch, setValue);
 
@@ -42,7 +41,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
           register={register}
           errors={errors}
           watch={watch}
-          setValue={setValue}
         />
 
         <Seperator />
