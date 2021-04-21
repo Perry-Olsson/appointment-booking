@@ -1,27 +1,21 @@
 import { LoginError } from "../../utils";
 import bcrypt from "bcryptjs";
 import { Prisma } from ".prisma/client";
-import { CustomerResponse, LoginCustomer } from "./types";
+import { DefaultCustomer, LoginCustomer } from "./types";
 import { prisma } from "../../prisma";
-import { auth } from "../../utils/auth";
 import { defaultCustomerSelect } from "../constants";
 
 export class CustomerDataAccess {
-  public async create(reqBody: any): Promise<CustomerResponse> {
+  public async create(reqBody: any): Promise<DefaultCustomer> {
     const createdCustomer = await prisma.customer.create({
       data: reqBody,
       select: this.createSelectStatement,
     });
 
-    const token =
-      createdCustomer.type === "USER"
-        ? auth.createToken(createdCustomer.email)
-        : null;
-
-    return { customer: createdCustomer, token };
+    return createdCustomer;
   }
 
-  public async login({ email, password }: any): Promise<CustomerResponse> {
+  public async login({ email, password }: any): Promise<DefaultCustomer> {
     const customer: LoginCustomer | null = await prisma.customer.findUnique({
       where: { email },
       select: this.loginSelectStatement,
@@ -30,7 +24,7 @@ export class CustomerDataAccess {
     const user = await this._isUser(customer, password);
     if (!user) throw new LoginError();
 
-    return this._createLoginResponse(user);
+    return user;
   }
 
   private async _isUser(
@@ -42,13 +36,6 @@ export class CustomerDataAccess {
     const isValidPassword = await bcrypt.compare(password, customer.password);
     if (!isValidPassword) return false;
     return customer;
-  }
-
-  private _createLoginResponse(customer: LoginCustomer): CustomerResponse {
-    const token = auth.createToken(customer.email);
-
-    delete customer.password;
-    return { customer, token };
   }
 
   public async findUnique(args: Prisma.CustomerFindUniqueArgs) {

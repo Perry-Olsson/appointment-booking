@@ -3,7 +3,6 @@ import request from "supertest";
 import { prisma } from "../../../src/prisma";
 import { initializeTestData } from "../../helpers";
 import { testGuest, testUser } from "../../constants";
-import { auth } from "../../../src/utils/auth";
 
 const api = request(app);
 
@@ -23,11 +22,8 @@ describe("Customer creation", () => {
     if (!createdUser) throw Error("Customer was not created");
 
     expect(status).toBe(200);
-    expect(body.customer.password).toBeUndefined();
-    expect(createdUser).toMatchObject(body.customer);
-
-    const decodedToken = auth.decodeToken(body.token);
-    expect(decodedToken.email).toBe(testUser.email);
+    expect(body.password).toBeUndefined();
+    expect(createdUser).toMatchObject(body);
 
     await prisma.customer.delete({ where: { email: createdUser.email } });
   });
@@ -42,8 +38,7 @@ describe("Customer creation", () => {
 
     expect(status).toBe(200);
     expect(createdGuest.password).toBeNull();
-    expect(createdGuest).toMatchObject(body.customer);
-    expect(body.token).toBe(null);
+    expect(createdGuest).toMatchObject(body);
 
     await prisma.customer.delete({ where: { email: createdGuest.email } });
   });
@@ -60,7 +55,6 @@ describe("Cusotmer login", () => {
       .send({ email, password });
 
     expect(status).toBe(200);
-    expect(body.customer.password).toBeUndefined();
-    expect(typeof body.token).toBe("string");
+    expect(typeof body.accessToken).toBe("string");
   });
 });

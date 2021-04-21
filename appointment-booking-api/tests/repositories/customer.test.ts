@@ -20,18 +20,17 @@ describe("Customer Creation", () => {
       ...testUser,
     });
     const createdCustomer = await customer.create(initializeCustomer);
-    expect(createdCustomer.token).toBeDefined();
-    expect(createdCustomer.customer).toHaveProperty("id");
-    expect(createdCustomer.customer.email).toBe(testUser.email);
+    expect(createdCustomer).toHaveProperty("id");
+    expect(createdCustomer.email).toBe(testUser.email);
 
     await prisma.customer.delete({
-      where: { id: createdCustomer.customer.id },
+      where: { id: createdCustomer.id },
     });
   });
 });
 
 describe("Customer login", () => {
-  test("Login function returns customer response object for valid user", async () => {
+  test("Login function returns customer for valid user", async () => {
     const newCustomer = await prisma.customer.create({
       data: await customerController.initialize({ ...testUser }),
       include: { appointments: true },
@@ -39,8 +38,7 @@ describe("Customer login", () => {
     const { email, password } = testUser;
     const customerResponse = await customer.login({ email, password });
 
-    expect(typeof customerResponse.token).toBe("string");
-    expect(newCustomer).toMatchObject(customerResponse.customer);
+    expect(newCustomer).toMatchObject(customerResponse);
 
     await prisma.customer.delete({ where: { id: newCustomer.id } });
   });

@@ -21,14 +21,14 @@ describe("user profile", () => {
 
   test("profile is returned with valid token", async () => {
     const {
-      body: { token },
+      body: { accessToken },
     } = await api
       .post("/api/customers/login")
       .send({ email: customers[0].email, password: customers[0].password });
 
     const response = await api
       .get("/api/customers/profile")
-      .set({ Authorization: `bearer ${token}` });
+      .set({ Authorization: `bearer ${accessToken}` });
 
     expect(response.status).toBe(200);
     expect(response.body.email).toBe(customers[0].email);

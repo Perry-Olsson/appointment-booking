@@ -3,11 +3,14 @@ import config from "../config";
 
 class Auth {
   public createToken(email: string) {
-    return jwt.sign({ email }, config.jwtSecret);
+    return jwt.sign({ email }, config.accessTokenSecret);
   }
 
   public decodeToken(token: string) {
-    const decodedToken = jwt.verify(token, config.jwtSecret) as DecodedToken;
+    const decodedToken = jwt.verify(
+      token,
+      config.accessTokenSecret
+    ) as DecodedToken;
 
     return decodedToken;
   }

@@ -6,6 +6,6 @@ dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
 export default {
   port: process.env.PORT!,
   env: process.env.NODE_ENV!,
-  jwtSecret: process.env.JWT_SECRET!,
+  accessTokenSecret: process.env.ACCESS_TOKEN_SECRET!,
   logError: process.env.LOG_ERROR,
 };

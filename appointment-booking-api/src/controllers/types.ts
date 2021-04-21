@@ -3,7 +3,7 @@ import {
   ExposedAppointment,
   TimeBoundry,
 } from "../repositories/appointment/types";
-import { CustomerResponse } from "../repositories/customer/types";
+import { DefaultCustomer } from "../repositories/customer/types";
 import { NewAppointment } from "../types";
 
 export interface AppointmentDAO {
@@ -14,8 +14,8 @@ export interface AppointmentDAO {
 }
 
 export interface CustomerDAO {
-  create(req: any): Promise<CustomerResponse>;
-  login(req: any): Promise<CustomerResponse>;
+  create(req: any): Promise<DefaultCustomer>;
+  login(req: any): Promise<DefaultCustomer>;
 }
 
 export interface ProcedureDAO {

@@ -3,6 +3,7 @@ import { EmailError } from "../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import { CustomerDAO } from "./types";
+import { auth } from "../utils/auth";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
@@ -13,9 +14,9 @@ export class CustomerController {
   async createCustomer(req: Request, res: Response, next: NextFunction) {
     try {
       const newCustomer = await this.initialize(req.body);
-      const response = await this.dataAccess.create(newCustomer);
+      const customer = await this.dataAccess.create(newCustomer);
 
-      res.json(response);
+      res.json(customer);
     } catch (err) {
       next(err);
     }
@@ -45,9 +46,11 @@ export class CustomerController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const response = await this.dataAccess.login(req.body);
+      const user = await this.dataAccess.login(req.body);
 
-      res.json(response);
+      const accessToken = auth.createToken(user.email);
+
+      res.json({ accessToken });
     } catch (err) {
       next(err);
     }
