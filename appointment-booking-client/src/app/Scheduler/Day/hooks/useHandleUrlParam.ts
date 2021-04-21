@@ -10,8 +10,9 @@ export const useHandleUrlParam = () => {
       : new Date("");
 
   useEffect(() => {
-    if (router.query.day && !day.isValidDate())
+    if (router.query.day && !day.isValidDate()) {
       setTimeout(() => router.push("/schedule"), 1000);
+    }
   }, [router.query.day]);
 
   return day;

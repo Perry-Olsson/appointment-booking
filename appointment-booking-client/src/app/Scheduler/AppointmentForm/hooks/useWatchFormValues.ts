@@ -1,37 +1,35 @@
 import { useAtom } from "jotai";
 import { useEffect } from "react";
-import { UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { UseFormWatch } from "react-hook-form";
 import {
   providerAtom,
   procedureAtom,
   selectedAppointmentAtom,
 } from "../../atoms";
 import { useStaticState } from "../../context";
+import { useDeselectTime } from "../../hooks";
 import { FormValues } from "../types";
 
-export const useWatchFormValues = (
-  watch: UseFormWatch<FormValues>,
-  setValue: UseFormSetValue<FormValues>
-) => {
+export const useWatchFormValues = (watch: UseFormWatch<FormValues>) => {
   const { providers, procedures } = useStaticState();
   const [, setSelectedProvider] = useAtom(providerAtom);
   const [selectedProcedure, setSelectedProcedure] = useAtom(procedureAtom);
   const [selectedAppointment, setSelectedAppointment] = useAtom(
     selectedAppointmentAtom
   );
+  const deselectTime = useDeselectTime();
+
   const provider = watch("provider");
   const procedure = watch("procedure");
   const time = watch("time");
 
   useEffect(() => {
-    setSelectedAppointment(null);
-    setValue("time", "");
+    deselectTime();
     setSelectedProvider(providers.find(p => p.email === provider));
   }, [provider]);
 
   useEffect(() => {
-    setSelectedAppointment(null);
-    setValue("time", "");
+    deselectTime();
     setSelectedProcedure(procedures.find(p => p.name === procedure));
   }, [procedure]);
 

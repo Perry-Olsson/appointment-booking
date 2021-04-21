@@ -15,13 +15,12 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   const [show] = useAtom(showAppointmentsFormAtom);
   const {
     watch,
-    setValue,
     formState: { errors },
     register,
     handleSubmit,
   } = useFormApi();
   const onSubmit = (data: any) => console.log(data);
-  useWatchFormValues(watch, setValue);
+  useWatchFormValues(watch);
 
   if (!show) return null;
 

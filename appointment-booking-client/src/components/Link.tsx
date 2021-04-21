@@ -7,12 +7,15 @@ export const Link: React.FC<LinkProps> = ({
   children,
   href,
   disable,
+  onClick,
   ...restProps
 }) => {
   return disable ? (
     <Container {...restProps}>{children}</Container>
   ) : (
-    <NextLink href={href}>{children}</NextLink>
+    <Container onClick={onClick}>
+      <NextLink href={href}>{children}</NextLink>
+    </Container>
   );
 };
 
@@ -26,4 +29,5 @@ interface LinkProps {
   children: React.ReactNode;
   disable?: boolean;
   restProps?: React.HTMLAttributes<any>;
+  onClick?: () => void;
 }

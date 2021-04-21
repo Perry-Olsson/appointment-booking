@@ -12,7 +12,7 @@ export const DayProvider: React.FC<{
 export const useDay = () => {
   const context = useContext(DayState);
   if (context === undefined) {
-    throw Error("useStaticState must be called within StaticStateProvider");
+    return new Date("");
   }
   return context;
 };
