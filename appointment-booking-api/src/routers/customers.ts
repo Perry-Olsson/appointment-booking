@@ -21,4 +21,8 @@ router.get(
   (req, res, next) => customerController.getProfile(req, res, next)
 );
 
+router.post("/refreshToken", (req, res, next) =>
+  customerController.refreshToken(req, res, next)
+);
+
 export { router as customerRouter };

@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { EmailError } from "../utils";
+import { EmailError, NotAuthenticatedError } from "../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import { CustomerDAO } from "./types";
 import { auth } from "../utils/auth";
+import { refreshTokens } from "../utils/refreshTokens";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
@@ -48,11 +49,33 @@ export class CustomerController {
     try {
       const user = await this.dataAccess.login(req.body);
 
-      const accessToken = auth.createToken(user.email);
+      const accessToken = auth.createAccessToken(user.email);
+      const refreshToken = auth.createRefreshToken(user.email);
+      refreshTokens[refreshToken] = true;
+
+      res
+        .cookie("renewal_center_refreshJwt", refreshToken)
+        .json({ accessToken });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async refreshToken(req: Request, res: Response, next: NextFunction) {
+    try {
+      const refreshToken = req.cookies["renewal_center_refreshJwt"];
+      if (!refreshToken) throw new NotAuthenticatedError(401);
+
+      auth.checkRefreshToken(refreshToken);
+
+      const decodedToken = auth.decodeRefreshToken(refreshToken);
+      const accessToken = auth.createAccessToken(decodedToken.email);
 
       res.json({ accessToken });
     } catch (err) {
-      next(err);
+      if (err.name === "JsonWebTokenError")
+        res.status(403).json({ error: err.name, message: err.message });
+      else next(err);
     }
   }
 

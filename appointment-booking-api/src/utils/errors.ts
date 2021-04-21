@@ -1,11 +1,19 @@
-export class DuplicateError extends Error {
+export class ExpectedError extends Error {
+  status: number;
+  constructor(message: string, status: number = 400) {
+    super(message);
+    this.status = status;
+  }
+}
+
+export class DuplicateError extends ExpectedError {
   constructor(resource: string, message: string) {
     super(message);
     this.name = `duplicate${resource}`;
   }
 }
 
-export class TimeError extends Error {
+export class TimeError extends ExpectedError {
   constructor(
     message = "Appointments must be scheduled and end at quarter hours"
   ) {
@@ -14,7 +22,7 @@ export class TimeError extends Error {
   }
 }
 
-export class TimestampError extends Error {
+export class TimestampError extends ExpectedError {
   constructor(timestamp: any) {
     super(
       `timestamp ${timestamp} is invalid. Timestamp must be in json format`
@@ -23,7 +31,7 @@ export class TimestampError extends Error {
   }
 }
 
-export class EmailError extends Error {
+export class EmailError extends ExpectedError {
   constructor(email: any) {
     super(`email "${email}" is not a valid email`);
 
@@ -31,7 +39,7 @@ export class EmailError extends Error {
   }
 }
 
-export class LoginError extends Error {
+export class LoginError extends ExpectedError {
   constructor() {
     super("Invalid email or password");
 
@@ -39,7 +47,7 @@ export class LoginError extends Error {
   }
 }
 
-export class QueryError extends Error {
+export class QueryError extends ExpectedError {
   constructor() {
     super(
       "Appointments query string must contain a 'start' and 'finish' field"
@@ -48,10 +56,35 @@ export class QueryError extends Error {
   }
 }
 
-export class BoundryError extends Error {
+export class BoundryError extends ExpectedError {
   constructor() {
     super("The 'start' and 'end' queries must be valid numbers");
 
     this.name = "invalidBoundry";
+  }
+}
+
+export class NotAuthenticatedError extends ExpectedError {
+  constructor(status: number) {
+    super("User has not been authenticated", status);
+
+    this.name = "notAuthenticated";
+  }
+}
+
+export class TokenNotFoundError extends ExpectedError {
+  constructor(status: number) {
+    super("Token has not been found please login again", status);
+
+    this.name = "tokenNotFound";
+  }
+}
+
+//not implemented in error handler yet
+export class AccessRevokedError extends ExpectedError {
+  constructor(status: number) {
+    super("Access to use this service has been revoked", status);
+
+    this.name = "accessRevoked";
   }
 }

@@ -43,7 +43,7 @@ describe("Customer login", () => {
     await prisma.customer.delete({ where: { id: newCustomer.id } });
   });
 
-  test("Login function returns throw error on invalid input", async () => {
+  test("Login function returns throw error on invalid credentials", async () => {
     const email = "invalid";
     const password = "invalid";
 

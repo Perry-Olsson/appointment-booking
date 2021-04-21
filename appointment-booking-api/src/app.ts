@@ -13,11 +13,13 @@ import { unknownEndpoint } from "./utils/middleware";
 import { errorHandler } from "./utils/middleware";
 import { requestLogger } from "./utils/middleware";
 import { jwtStrategy } from "./utils/middleware/JwtStrategy";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 passport.use(jwtStrategy);
 
 if (process.env.SLOW_INTERNET) app.use(simulateSlowInternet);

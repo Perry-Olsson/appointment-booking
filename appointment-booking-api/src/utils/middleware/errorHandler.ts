@@ -1,9 +1,10 @@
 import { ErrorRequestHandler } from "express";
+import { ExpectedError } from "..";
 import config from "../../config";
 import logger from "../logger";
 
 export const errorHandler: ErrorRequestHandler = (
-  error: Error,
+  error: ExpectedError,
   _,
   res,
   next
@@ -13,7 +14,9 @@ export const errorHandler: ErrorRequestHandler = (
 
   if (!errorResponses[error.name]) return next(error);
 
-  return res.status(400).json(errorResponses[error.name](error.message));
+  return res
+    .status(error.status)
+    .json(errorResponses[error.name](error.message));
 };
 
 const errorResponses: ErrorResponseObject = {
@@ -35,6 +38,14 @@ const errorResponses: ErrorResponseObject = {
   }),
   invalidEmail: (message: string) => ({
     error: "Invalid email",
+    message,
+  }),
+  notAuthenticated: (message: string) => ({
+    error: "Not authenticated",
+    message,
+  }),
+  tokenNotFound: (message: string) => ({
+    error: "Token not found",
     message,
   }),
 };
