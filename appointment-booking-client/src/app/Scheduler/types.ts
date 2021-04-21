@@ -10,3 +10,8 @@ export interface Months {
 }
 
 export type MonthArray = Array<Date[]>;
+
+export interface AppointmentBoundries {
+  start: Date;
+  end: Date;
+}

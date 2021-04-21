@@ -1,8 +1,7 @@
-import { useAtom } from "jotai";
 import React from "react";
 import { ONE_MINUTE } from "../../../../../../constants";
 import { Appointment, Procedure } from "../../../../../../types";
-import { procedureAtom } from "../../../../atoms";
+import { useWatchProcedure } from "../../../../hooks";
 import { to4DigitTimeNumber } from "../../../../utils";
 
 export const ShowAvailableTimes: React.FC<ShowAvailableTimesProps> = ({
@@ -10,7 +9,7 @@ export const ShowAvailableTimes: React.FC<ShowAvailableTimesProps> = ({
   appointments,
   schedule,
 }) => {
-  const [selectedProcedure] = useAtom(procedureAtom);
+  const selectedProcedure = useWatchProcedure();
 
   let appointmentIndex = 0;
   let scheduleIndex = 0;

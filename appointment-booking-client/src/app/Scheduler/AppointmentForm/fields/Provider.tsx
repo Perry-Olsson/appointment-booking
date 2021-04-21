@@ -1,11 +1,12 @@
 import React from "react";
 import { useStaticState } from "../../context";
+import { useWatchProcedure } from "../../hooks";
 import { Label, Select, ErrorText, DefaultOption } from "../components";
 import { FieldProps } from "../types";
 
-export const Provider: React.FC<FieldProps> = ({ register, errors, watch }) => {
+export const Provider: React.FC<FieldProps> = ({ register, errors }) => {
   const { providers } = useStaticState();
-  const procedure = watch("procedure");
+  const procedure = useWatchProcedure();
 
   return (
     <Label>
@@ -15,7 +16,10 @@ export const Provider: React.FC<FieldProps> = ({ register, errors, watch }) => {
         {providers.map(provider => {
           const fullName = `${provider.firstName} ${provider.lastName}`;
 
-          if (!procedure || provider.procedures.find(p => p.name === procedure))
+          if (
+            !procedure ||
+            provider.procedures.find(p => p.name === procedure.name)
+          )
             return (
               <option key={provider.email} value={provider.email}>
                 {fullName}

@@ -1,20 +1,9 @@
-import React, { useMemo } from "react";
 import { useStaticState } from "../../context";
-import { getProcedureListFromProviders } from "../../utils";
 import { DefaultOption, ErrorText, Label, Select } from "../components";
 import { FieldProps } from "../types";
 
-export const Procedure: React.FC<FieldProps> = ({
-  register,
-  errors,
-  watch,
-}) => {
-  const { providers } = useStaticState();
-  const selectedProvider = watch("provider");
-
-  const procedures = useMemo(() => getProcedureListFromProviders(providers), [
-    selectedProvider,
-  ]);
+export const Procedure: React.FC<FieldProps> = ({ register, errors }) => {
+  const { procedures } = useStaticState();
 
   return (
     <Label>

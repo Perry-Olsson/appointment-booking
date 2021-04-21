@@ -5,8 +5,8 @@ import { Button, device, Flex } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
-import { useWatchFormValues } from "./hooks/useWatchFormValues";
 import { useFormApi } from "../Day/context";
+import { useDeselectFieldsOnChange } from "./hooks";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -14,37 +14,31 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
 }) => {
   const [show] = useAtom(showAppointmentsFormAtom);
   const {
-    watch,
     formState: { errors },
     register,
     handleSubmit,
   } = useFormApi();
   const onSubmit = (data: any) => console.log(data);
-  useWatchFormValues(watch);
+  useDeselectFieldsOnChange();
 
   if (!show) return null;
 
   return (
     <Container className={className}>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Procedure register={register} errors={errors} watch={watch} />
+        <Procedure register={register} errors={errors} />
 
         <Seperator />
 
-        <Provider register={register} errors={errors} watch={watch} />
+        <Provider register={register} errors={errors} />
 
         <Seperator />
 
-        <Time
-          timeSlots={timeSlots}
-          register={register}
-          errors={errors}
-          watch={watch}
-        />
+        <Time timeSlots={timeSlots} register={register} errors={errors} />
 
         <Seperator />
 
-        <Comments register={register} errors={errors} watch={watch} />
+        <Comments register={register} errors={errors} />
 
         <Submit type="submit" text="Submit" />
         <Seperator />

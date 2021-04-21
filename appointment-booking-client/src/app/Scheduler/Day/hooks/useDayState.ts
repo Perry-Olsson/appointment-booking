@@ -1,14 +1,13 @@
-import { useAtom } from "jotai";
 import { useMemo } from "react";
 import { useGetSelectedDay } from ".";
 import { Appointment, Provider } from "../../../../types";
-import { providerAtom } from "../../atoms";
 import { useStaticState } from "../../context";
+import { useWatchProvider } from "../../hooks";
 import { computeTimeSlots } from "../DayView/TimeSlots/utils";
 
 export const useDayState = () => {
   const day = useGetSelectedDay();
-  const [selectedProvider] = useAtom(providerAtom);
+  const selectedProvider = useWatchProvider();
 
   return {
     day,

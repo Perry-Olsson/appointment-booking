@@ -1,5 +1,3 @@
-import { useAtom } from "jotai";
-import { SetStateAction } from "jotai/core/types";
 import styled from "styled-components";
 import {
   Appointment,
@@ -7,30 +5,30 @@ import {
   Provider,
   ServiceDay,
 } from "../../../../../../types";
-import {
-  AppointmentBoundries,
-  selectedAppointmentAtom,
-  procedureAtom,
-  providerAtom,
-} from "../../../../atoms";
 import { isInService } from "../../../../utils/isInService";
-import { SelectedAppointment } from "./SelectedAppointment";
-import { GrayedOut } from "./GrayedOut";
-import { appointmentFitsSlot, grayOutUnavailableTime } from "./utils";
+import {
+  appointmentFitsSlot,
+  getSelectedAppointment,
+  grayOutUnavailableTime,
+} from "./utils";
 import { useFormApi } from "../../../context";
 import { UseFormSetValue } from "react-hook-form";
 import { FormValues } from "../../../../AppointmentForm/types";
+import {
+  useWatchProcedure,
+  useWatchProvider,
+  useWatchTime,
+} from "../../../../hooks";
+import { ColorInSlot } from "./ColorInSlot";
 
 export const TimeSlot: React.FC<TimeSlotProps> = ({
   timeSlot,
   serviceHours,
   appointment,
 }) => {
-  const [selectedAppointment, setSelectedAppointment] = useAtom(
-    selectedAppointmentAtom
-  );
-  const [provider] = useAtom(providerAtom);
-  const [procedure] = useAtom(procedureAtom);
+  const provider = useWatchProvider();
+  const procedure = useWatchProcedure();
+  const time = useWatchTime();
   const { setValue } = useFormApi();
   const isOnHour = timeSlot.getMinutes() === 0;
 
@@ -45,31 +43,19 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
           provider,
           procedure,
           timeSlot,
-          selectedAppointment,
-          setSelectedAppointment,
+          time,
           setValue,
           appointment,
         })
       }
     >
-      <Margin>
-        <SelectedAppointment
-          timeSlot={timeSlot}
-          selectedAppointment={selectedAppointment}
-          provider={provider}
-          procedure={procedure}
-        >
-          <GrayedOut
-            timeSlotValue={timeSlot.valueOf()}
-            timestampValue={appointment ? appointment.timestamp.valueOf() : 0}
-            endValue={appointment ? appointment.end.valueOf() : 0}
-          >
-            {isOnHour ? (
-              <TimeString>{timeSlot.getTimeSlotString()}</TimeString>
-            ) : null}
-          </GrayedOut>
-        </SelectedAppointment>
-      </Margin>
+      <ColorInSlot
+        appointment={appointment}
+        timeSlot={timeSlot}
+        time={time}
+        provider={provider}
+        procedure={procedure}
+      />
     </Container>
   );
 };
@@ -78,15 +64,14 @@ const handleClick = ({
   provider,
   procedure,
   timeSlot,
-  selectedAppointment,
-  setSelectedAppointment,
+  time,
   setValue,
   appointment,
 }: HandleClickArgs) => {
   if (provider && procedure) {
+    const selectedAppointment = getSelectedAppointment(time, procedure);
     if (selectedAppointment?.start === timeSlot) {
       setValue("time", "");
-      setSelectedAppointment(null);
       return;
     }
 
@@ -102,10 +87,6 @@ const handleClick = ({
 
     if (appointmentFitsSlot(schedule, timeSlot, appointmentEnd)) {
       setValue("time", timeSlot.toJSON());
-      setSelectedAppointment({
-        start: timeSlot,
-        end: appointmentEnd,
-      });
     }
   }
 };
@@ -115,11 +96,8 @@ interface HandleClickArgs {
   procedure: Procedure | undefined;
   timeSlot: Date;
   setValue: UseFormSetValue<FormValues>;
-  selectedAppointment: AppointmentBoundries | null;
+  time: Date | undefined;
   appointment: Appointment | undefined;
-  setSelectedAppointment: (
-    update: SetStateAction<AppointmentBoundries | null>
-  ) => void | Promise<void>;
 }
 
 const Container = styled.div<ContainerProps>`
@@ -138,15 +116,6 @@ const Container = styled.div<ContainerProps>`
       return theme.colors.lightGray;
     }
   }};
-`;
-
-const TimeString = styled.div`
-  margin-left: 5px;
-`;
-
-const Margin = styled.div`
-  height: 100%;
-  margin: 0 2px;
 `;
 
 interface ContainerProps {

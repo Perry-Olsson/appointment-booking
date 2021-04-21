@@ -1,6 +1,5 @@
-import { useAtom } from "jotai";
 import { Appointment, ServiceDay } from "../../../../../../types";
-import { providerAtom } from "../../../../atoms";
+import { useWatchProvider } from "../../../../hooks";
 import { ProviderUnavailable } from "./ProviderUnavailable";
 import { ShowAvailableTimes } from "./ShowAvailableTimes";
 import { ShowServiceHours } from "./ShowServiceHours";
@@ -10,7 +9,7 @@ export const AvailableTimes: React.FC<AvailableTimesProps> = ({
   serviceHours,
   appointments,
 }) => {
-  const [selectedProvider] = useAtom(providerAtom);
+  const selectedProvider = useWatchProvider();
 
   if (!selectedProvider)
     return (
