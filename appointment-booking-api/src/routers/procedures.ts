@@ -1,5 +1,8 @@
 import express from "express";
-import { procedureController } from "../controllers/ProcedureController";
+import { ProcedureController } from "../controllers/ProcedureController";
+import { ProcedureDataAccess } from "../repositories";
+
+const procedureController = new ProcedureController(new ProcedureDataAccess());
 
 const router = express.Router();
 

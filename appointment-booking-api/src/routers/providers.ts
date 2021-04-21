@@ -1,5 +1,8 @@
 import express from "express";
-import { providerController } from "../controllers";
+import { ProviderController } from "../controllers";
+import { ProviderDataAccess } from "../repositories";
+
+const providerController = new ProviderController(new ProviderDataAccess());
 
 const router = express.Router();
 

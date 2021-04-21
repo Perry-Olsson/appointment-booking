@@ -19,14 +19,16 @@ export class AppointmentDataAccess {
     return await prisma.appointment.create({ data: newAppointment });
   }
 
-  public async findUnique(timestamp: Date) {
+  public async getUniqueAppointment(
+    timestamp: Date
+  ): Promise<ExposedAppointment | null> {
     return await prisma.appointment.findUnique({
       where: { timestamp },
       select: exposedAppointmentFields,
     });
   }
 
-  public async findMany({
+  public async getAppointments({
     hasQueryString,
     start,
     end,

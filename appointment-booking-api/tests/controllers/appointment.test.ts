@@ -1,6 +1,11 @@
 import { prisma } from "../../src/prisma";
 import { createTestAppointment, initializeTestData } from "../helpers";
-import { appointmentController } from "../../src/controllers";
+import { AppointmentController } from "../../src/controllers";
+import { AppointmentDataAccess } from "../../src/repositories";
+
+const appointmentController = new AppointmentController(
+  new AppointmentDataAccess()
+);
 
 beforeAll(async () => {
   await initializeTestData();

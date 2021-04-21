@@ -32,7 +32,7 @@ describe("Appointments Repository", () => {
         AND: [{ timestamp: { gte: now } }, { timestamp: { lt: later } }],
       },
     });
-    const appointments = await appointment.findMany({
+    const appointments = await appointment.getAppointments({
       hasQueryString: true,
       start: now.valueOf(),
       end: later.valueOf(),

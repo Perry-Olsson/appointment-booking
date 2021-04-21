@@ -1,6 +1,9 @@
 import express from "express";
 import passport from "passport";
-import { customerController } from "../controllers";
+import { CustomerController } from "../controllers";
+import { CustomerDataAccess } from "../repositories";
+
+const customerController = new CustomerController(new CustomerDataAccess());
 
 const router = express.Router();
 

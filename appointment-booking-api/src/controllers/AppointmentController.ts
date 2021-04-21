@@ -1,20 +1,20 @@
 import { NextFunction, Request, Response } from "express";
-import { AppointmentDataAccess } from "../repositories";
 import { TimeBoundry } from "../repositories/appointment/types";
 import { NewAppointment } from "../types";
 import { TimestampValidator } from "../utils";
+import { AppointmentDAO } from "./types";
 
-class AppointmentController extends TimestampValidator {
-  private dataAccess: AppointmentDataAccess;
+export class AppointmentController extends TimestampValidator {
+  private dataAccess: AppointmentDAO;
 
-  constructor(dataAccess: AppointmentDataAccess) {
+  constructor(dataAccess: AppointmentDAO) {
     super();
     this.dataAccess = dataAccess;
   }
   async getAppointments(req: Request, res: Response, next: NextFunction) {
     try {
       const parsedQuery = this.validateQuery(req.query);
-      const appointments = await this.dataAccess.findMany(parsedQuery);
+      const appointments = await this.dataAccess.getAppointments(parsedQuery);
 
       res.json(appointments);
     } catch (err) {
@@ -35,7 +35,9 @@ class AppointmentController extends TimestampValidator {
   async getOneAppointment(req: Request, res: Response, next: NextFunction) {
     try {
       const validTimestamp = this.validateJSONTimestamp(req.params.timestamp);
-      const _appointment = await this.dataAccess.findUnique(validTimestamp);
+      const _appointment = await this.dataAccess.getUniqueAppointment(
+        validTimestamp
+      );
 
       res.json(_appointment);
     } catch (err) {
@@ -72,7 +74,3 @@ class AppointmentController extends TimestampValidator {
     return { ...reqBody, timestamp, end };
   }
 }
-
-export const appointmentController = new AppointmentController(
-  new AppointmentDataAccess()
-);

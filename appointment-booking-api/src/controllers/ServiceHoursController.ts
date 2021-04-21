@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { ServiceHoursDataAccess } from "../repositories";
+import { ServiceHoursDAO } from "./types";
 
-class ServiceHoursController {
-  private dataAccess: ServiceHoursDataAccess;
+export class ServiceHoursController {
+  private dataAccess: ServiceHoursDAO;
 
-  constructor(dataAccess: ServiceHoursDataAccess) {
+  constructor(dataAccess: ServiceHoursDAO) {
     this.dataAccess = dataAccess;
   }
 
@@ -16,7 +16,3 @@ class ServiceHoursController {
     }
   }
 }
-
-export const serviceHoursController = new ServiceHoursController(
-  new ServiceHoursDataAccess()
-);

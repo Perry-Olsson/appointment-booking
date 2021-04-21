@@ -3,9 +3,10 @@ import { testGuest, testUser } from "../constants";
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
 import customers from "../../src/prisma/seeds/json/customers.json";
-import { customerController } from "../../src/controllers";
+import { CustomerController } from "../../src/controllers";
 
 const customer = new CustomerDataAccess();
+const customerController = new CustomerController(customer);
 
 beforeAll(async () => {
   await initializeTestData();

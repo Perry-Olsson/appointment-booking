@@ -1,5 +1,10 @@
 import express from "express";
-import { appointmentController } from "../controllers";
+import { AppointmentController } from "../controllers";
+import { AppointmentDataAccess } from "../repositories";
+
+const appointmentController = new AppointmentController(
+  new AppointmentDataAccess()
+);
 
 const router = express.Router();
 

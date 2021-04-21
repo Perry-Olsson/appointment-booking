@@ -1,8 +1,11 @@
 import { prisma } from "../../src/prisma";
 import { initializeTestData } from "../helpers";
-import { customerController } from "../../src/controllers";
+import { CustomerController } from "../../src/controllers";
 import { testGuest, testUser } from "../constants";
 import bcrypt from "bcryptjs";
+import { CustomerDataAccess } from "../../src/repositories";
+
+const customerController = new CustomerController(new CustomerDataAccess());
 
 beforeAll(async () => {
   await initializeTestData();

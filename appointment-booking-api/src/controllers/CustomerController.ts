@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { CustomerDataAccess } from "../repositories";
 import { EmailError } from "../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
+import { CustomerDAO } from "./types";
 
-class CustomerController {
-  private dataAccess: CustomerDataAccess;
+export class CustomerController {
+  private dataAccess: CustomerDAO;
 
-  constructor(dataAccess: CustomerDataAccess) {
+  constructor(dataAccess: CustomerDAO) {
     this.dataAccess = dataAccess;
   }
   async createCustomer(req: Request, res: Response, next: NextFunction) {
@@ -61,7 +61,3 @@ class CustomerController {
     }
   }
 }
-
-export const customerController = new CustomerController(
-  new CustomerDataAccess()
-);

@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { ProcedureDataAccess } from "../repositories";
+import { ProcedureDAO } from "./types";
 
-class ProcedureController {
-  private dataAccess: ProcedureDataAccess;
+export class ProcedureController {
+  private dataAccess: ProcedureDAO;
 
-  constructor(dataAccess: ProcedureDataAccess) {
+  constructor(dataAccess: ProcedureDAO) {
     this.dataAccess = dataAccess;
   }
 
@@ -16,7 +16,3 @@ class ProcedureController {
     }
   }
 }
-
-export const procedureController = new ProcedureController(
-  new ProcedureDataAccess()
-);

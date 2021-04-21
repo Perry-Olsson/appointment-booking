@@ -1,5 +1,10 @@
 import express from "express";
-import { serviceHoursController } from "../controllers";
+import { ServiceHoursController } from "../controllers";
+import { ServiceHoursDataAccess } from "../repositories";
+
+const serviceHoursController = new ServiceHoursController(
+  new ServiceHoursDataAccess()
+);
 
 const router = express.Router();
 

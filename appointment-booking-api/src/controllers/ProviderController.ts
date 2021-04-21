@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { ProviderDataAccess } from "../repositories";
+import { ProviderDAO } from "./types";
 
-class ProviderController {
-  private dataAccess: ProviderDataAccess;
+export class ProviderController {
+  private dataAccess: ProviderDAO;
 
-  constructor(dataAccess: ProviderDataAccess) {
+  constructor(dataAccess: ProviderDAO) {
     this.dataAccess = dataAccess;
   }
 
@@ -16,7 +16,3 @@ class ProviderController {
     }
   }
 }
-
-export const providerController = new ProviderController(
-  new ProviderDataAccess()
-);
