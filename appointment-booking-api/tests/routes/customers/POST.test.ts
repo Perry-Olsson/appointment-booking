@@ -78,7 +78,7 @@ describe("Refresh token route", () => {
     expect(loginResponse.status).toBe(200);
 
     const cookie = loginResponse.get("Set-Cookie");
-    const parsedCookie = cookie[0].match(/^(.+)=(.+); /);
+    const parsedCookie = cookie[0].match(/^(.+)=(.+); /); //extract cookie key and value
     if (!parsedCookie) throw Error("Bad regex");
 
     const refreshResponse = await api
