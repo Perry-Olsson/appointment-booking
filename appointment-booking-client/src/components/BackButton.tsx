@@ -47,6 +47,7 @@ interface BackButtonProps {
 }
 
 const Container = styled.a`
+  width: fit-content;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -54,5 +55,8 @@ const Container = styled.a`
   font-size: ${({ theme }) => theme.font.med};
   &:hover {
     color: gray;
+  }
+  @media (min-width: ${device.tablet.pixels}) {
+    padding-right: 0.6em;
   }
 `;
