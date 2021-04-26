@@ -5,7 +5,7 @@ import { Button, device, Flex } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
-import { useFormApi } from "../Day/context";
+import { useFormApi } from "../context";
 import { useDeselectFieldsOnChange } from "./hooks";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({

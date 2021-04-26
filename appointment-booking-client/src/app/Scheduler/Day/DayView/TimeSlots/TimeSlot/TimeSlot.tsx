@@ -11,7 +11,7 @@ import {
   getSelectedAppointment,
   grayOutUnavailableTime,
 } from "./utils";
-import { useFormApi } from "../../../context";
+import { useFormApi } from "../../../../context";
 import { UseFormSetValue } from "react-hook-form";
 import { FormValues } from "../../../../AppointmentForm/types";
 import {

@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { FormValues } from "../../AppointmentForm/types";
+import { FormValues } from "../AppointmentForm/types";
 
 const FormApi = createContext<UseFormReturn<FormValues> | undefined>(undefined);
 

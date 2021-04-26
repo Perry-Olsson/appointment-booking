@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useFetchProviders, useFetchServiceHours } from "./hooks";
 import { StaticStateProvider } from "./context";
 import { getProcedureListFromProviders } from "./utils";
-import { FormProvider } from "./Day/context";
+import { FormProvider } from "./context";
 
 const queryClient = new QueryClient();
 
