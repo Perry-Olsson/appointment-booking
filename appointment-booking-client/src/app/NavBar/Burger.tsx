@@ -7,14 +7,14 @@ export const Burger: React.FC = () => {
 
   return (
     <Menu isOpen={isOpen} onStateChange={state => setIsOpen(state.isOpen)}>
-      <SetMenuContext.Provider value={setIsOpen}>
+      <SetOpenProvider value={setIsOpen}>
         <BurgerTab href="/" isFirst={true}>
           Home
         </BurgerTab>
         <BurgerTab href="/about">About</BurgerTab>
         <BurgerTab href="/schedule">Book Online</BurgerTab>
         <BurgerTab href="/login">Log in</BurgerTab>
-      </SetMenuContext.Provider>
+      </SetOpenProvider>
     </Menu>
   );
 };
@@ -22,6 +22,8 @@ export const Burger: React.FC = () => {
 const SetMenuContext = createContext<
   React.Dispatch<React.SetStateAction<boolean>> | undefined
 >(undefined);
+
+const SetOpenProvider = SetMenuContext.Provider;
 
 export const useIsOpen = () => {
   const context = useContext(SetMenuContext);

@@ -2,30 +2,16 @@ import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { device } from "../../components";
-import { Flex } from "../../components/Flex";
 import { dimensionsAtom } from "../Scheduler/atoms";
 import { Burger } from "./Burger";
-import { Tab } from "./Tab";
+import { TabList } from "./TabList";
 
 export const NavBar: React.FC = () => {
   const [{ width }] = useAtom(dimensionsAtom);
 
   return (
     <Container>
-      {width > device.tablet.width ? (
-        <>
-          <Flex>
-            <Tab href="/">Home</Tab>
-            <Tab href="/about">About</Tab>
-            <Tab href="/schedule">Book Online</Tab>
-          </Flex>
-          <Flex>
-            <Tab href="/login">Log in</Tab>
-          </Flex>
-        </>
-      ) : (
-        <Burger />
-      )}
+      {width > device.tablet.width ? <TabList /> : <Burger />}
     </Container>
   );
 };
