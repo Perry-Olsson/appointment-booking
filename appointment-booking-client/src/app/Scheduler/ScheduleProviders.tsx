@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "react-query";
-import { useDimensions } from "../../hooks";
 import { useFetchProviders, useFetchServiceHours } from "./hooks";
 import { StaticStateProvider } from "./context";
 import { getProcedureListFromProviders } from "./utils";
@@ -8,7 +7,6 @@ import { FormProvider } from "./Day/context";
 const queryClient = new QueryClient();
 
 const ScheduleProviders: React.FC<ProviderProps> = ({ children }) => {
-  useDimensions();
   const { serviceHours } = useFetchServiceHours();
   const { providers } = useFetchProviders();
 
