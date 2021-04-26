@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import React from "react";
 import { showAppointmentsFormAtom } from "../atoms";
-import { Button, device, Flex } from "../../../components";
+import { device, Flex, Form, Seperator, Submit } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
@@ -47,26 +47,8 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   );
 };
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 80%;
-`;
-
 const Container = styled(Flex)`
   align-items: flex-start;
-`;
-
-const Submit = styled(Button)`
-  padding: 10px 30px;
-  margin: 20px auto;
-`;
-
-const Seperator = styled.div`
-  height: 20px;
-  border: solid;
-  border-color: #ffffff00;
 `;
 
 export const ResponsiveAppointmentForm = styled(AppointmentForm)`
@@ -75,7 +57,7 @@ export const ResponsiveAppointmentForm = styled(AppointmentForm)`
     top: ${({ theme }) => theme.dayView.headerOffsetPixels};
     right: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 2;
     background-color: white;
     height: ${({ theme }) =>
       `${

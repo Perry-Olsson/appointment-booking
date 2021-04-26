@@ -59,3 +59,23 @@ export class ProviderService extends AxiosClient {
     });
   }
 }
+
+export class CustomerService extends AxiosClient {
+  constructor() {
+    super(
+      `${process.env.NEXT_PUBLIC_API_URI}/customers` ||
+        "http://localhost:3001/api/customers"
+    );
+  }
+
+  public async login(credentials: Credentials) {
+    const accessToken = await this.instance.post("/login", credentials);
+
+    console.log(accessToken);
+  }
+}
+
+interface Credentials {
+  email: string;
+  password: string;
+}
