@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, TextArea } from "../components";
+import { Label, TextArea } from "../../../../components";
 import { FieldProps } from "../types";
 
 export const Comments: React.FC<FieldProps> = ({ register }) => {

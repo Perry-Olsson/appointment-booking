@@ -33,3 +33,12 @@ export const ErrorText = styled.span`
   font-weight: normal;
   color: red;
 `;
+
+export const DefaultOption: React.FC = () => {
+  return (
+    <option disabled value="">
+      {" "}
+      -- Select an option --{" "}
+    </option>
+  );
+};

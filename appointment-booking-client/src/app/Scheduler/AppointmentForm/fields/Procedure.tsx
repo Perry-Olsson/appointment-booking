@@ -1,5 +1,10 @@
 import { useStaticState } from "../../context";
-import { DefaultOption, ErrorText, Label, Select } from "../components";
+import {
+  DefaultOption,
+  ErrorText,
+  Label,
+  Select,
+} from "../../../../components";
 import { FieldProps } from "../types";
 
 export const Procedure: React.FC<FieldProps> = ({ register, errors }) => {

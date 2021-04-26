@@ -1,7 +1,12 @@
 import React from "react";
 import { useStaticState } from "../../context";
 import { useWatchProcedure } from "../../hooks";
-import { Label, Select, ErrorText, DefaultOption } from "../components";
+import {
+  Label,
+  Select,
+  ErrorText,
+  DefaultOption,
+} from "../../../../components";
 import { FieldProps } from "../types";
 
 export const Provider: React.FC<FieldProps> = ({ register, errors }) => {
