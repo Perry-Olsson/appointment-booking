@@ -52,9 +52,10 @@ export class CustomerController {
       const accessToken = auth.createAccessToken(user.email);
       const refreshToken = auth.createRefreshToken(user.email);
       refreshTokens[refreshToken] = true;
+      console.log("hello");
 
       res
-        .cookie("renewal_center_refreshJwt", refreshToken)
+        .cookie("renewal_center_refreshJwt", refreshToken, { httpOnly: true })
         .json({ accessToken });
     } catch (err) {
       next(err);
