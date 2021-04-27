@@ -52,7 +52,6 @@ export class CustomerController {
       const accessToken = auth.createAccessToken(user.email);
       const refreshToken = auth.createRefreshToken(user.email);
       refreshTokens[refreshToken] = true;
-      console.log("hello");
 
       res
         .cookie("renewal_center_refreshJwt", refreshToken, { httpOnly: true })
@@ -70,6 +69,16 @@ export class CustomerController {
       auth.checkRefreshToken(refreshToken);
 
       const decodedToken = auth.decodeRefreshToken(refreshToken);
+
+      const user = this.dataAccess.findOne({ where: {} });
+
+      //todo | create error
+      if (!user)
+        res.status(404).json({
+          error: "User not found",
+          message: "No user found to match token",
+        });
+
       const accessToken = auth.createAccessToken(decodedToken.email);
 
       res.json({ accessToken });

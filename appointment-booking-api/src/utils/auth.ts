@@ -5,7 +5,7 @@ import { refreshTokens } from "./refreshTokens";
 
 class Auth {
   public createAccessToken(email: string) {
-    return jwt.sign({ email }, config.accessTokenSecret, { expiresIn: "30s" });
+    return jwt.sign({ email }, config.accessTokenSecret, { expiresIn: "2m" });
   }
 
   public decodeAccessToken(token: string) {

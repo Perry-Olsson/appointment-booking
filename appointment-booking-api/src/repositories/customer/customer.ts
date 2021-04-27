@@ -38,7 +38,7 @@ export class CustomerDataAccess {
     return customer;
   }
 
-  public async findUnique(args: Prisma.CustomerFindUniqueArgs) {
+  public async findOne(args: Prisma.CustomerFindUniqueArgs) {
     if (!args.select) args.select = defaultCustomerSelect;
 
     return await prisma.customer.findUnique(args);

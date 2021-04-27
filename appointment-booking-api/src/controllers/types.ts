@@ -1,4 +1,11 @@
-import { Appointment, Procedure, Provider, ServiceHours } from "@prisma/client";
+import {
+  Appointment,
+  Customer,
+  Prisma,
+  Procedure,
+  Provider,
+  ServiceHours,
+} from "@prisma/client";
 import {
   ExposedAppointment,
   TimeBoundry,
@@ -16,6 +23,7 @@ export interface AppointmentDAO {
 export interface CustomerDAO {
   create(req: any): Promise<DefaultCustomer>;
   login(req: any): Promise<DefaultCustomer>;
+  findOne(arg: Prisma.CustomerFindUniqueArgs): Promise<Customer | null>;
 }
 
 export interface ProcedureDAO {
