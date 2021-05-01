@@ -20,7 +20,7 @@ export const TabList: React.FC = () => {
         <Tab href="/schedule">Book Online</Tab>
       </Flex>
       <Flex>
-        {user ? (
+        {user && user !== "loading" ? (
           <>
             <span style={{ margin: "10px" }}>
               logged in as {user.firstName}

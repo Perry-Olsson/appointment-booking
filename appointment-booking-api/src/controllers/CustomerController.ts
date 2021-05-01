@@ -66,8 +66,10 @@ export class CustomerController {
     try {
       res
         .cookie("renewal_center_refreshJwt", "", { httpOnly: true })
-        .sendStatus(204);
+        .status(204)
+        .send();
     } catch (err) {
+      console.log("------ ----- ---", err);
       next(err);
     }
   }
@@ -105,9 +107,9 @@ export class CustomerController {
   async getUser(req: Request, res: Response, next: NextFunction) {
     try {
       passport.authenticate("jwt", { session: false }, (err, user) => {
-        if (err) next(err);
-        if (!user) res.status(200).send("Unauthorized");
-        res.json(user);
+        if (err) return next(err);
+        if (!user) return res.status(200).send("Unauthorized");
+        return res.json(user);
       })(req, res, next);
     } catch (err) {
       next(err);
