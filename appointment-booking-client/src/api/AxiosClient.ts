@@ -1,5 +1,6 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { auth } from "../pages/_app";
+import { refreshToken } from "./utils/refreshToken";
 
 declare module "axios" {
   interface AxiosResponse<T = any> extends Promise<T> {}
@@ -27,20 +28,23 @@ const _handleResponse = ({ data }: AxiosResponse) => data;
 const _handleError = (error: any) => Promise.reject(error);
 
 const _initializeRequestIntercepter = (client: AxiosInstance) => {
-  client.interceptors.request.use(async config => {
-    if (config.url !== "/customers/refreshToken") {
-      if (auth.getAccessToken()) {
-        config.headers["authorization"] = `Bearer ${auth.getAccessToken()}`;
-      } else {
-        const response = await client.post("/customers/refreshToken");
-        if (response.accessToken) {
-          auth.setAccessToken(response.accessToken);
-          config.headers["authorization"] = `Bearer ${auth.getAccessToken()}`;
-        }
-      }
-    }
-    return config;
-  }, _handleError);
+  client.interceptors.request.use(_handleAuth, _handleError);
 };
+
+const _handleAuth = async (config: AxiosRequestConfig) => {
+  if (_isRefreshingToken(config)) return config;
+
+  if (auth.getAccessToken() && auth.isValidAccessToken()) {
+    config.headers["authorization"] = `Bearer ${auth.getAccessToken()}`;
+    return config;
+  }
+
+  await refreshToken();
+  config.headers["authorization"] = `Bearer ${auth.getAccessToken()}`;
+  return config;
+};
+
+const _isRefreshingToken = (config: AxiosRequestConfig) =>
+  config.url === "/customers/refreshToken";
 
 export const httpClient = initializeAxios();
