@@ -1,13 +1,20 @@
+import { AxiosInstance } from "axios";
 import { User } from "../app/App";
 import { Appointment, RawAppointment, RawProvider, ServiceDay } from "../types";
-import { AxiosClient } from "./AxiosClient";
 import { AppointmentParser } from "./utils";
 
 const appointmentParser = new AppointmentParser();
 
-export class AppointmentService extends AxiosClient {
-  public constructor() {
-    super(process.env.NEXT_PUBLIC_API_URI || "http://localhost:3001/api");
+abstract class ClientInjection {
+  instance: AxiosInstance;
+  constructor(httpClient: AxiosInstance) {
+    this.instance = httpClient;
+  }
+}
+
+export class AppointmentService extends ClientInjection {
+  public constructor(httpClient: AxiosInstance) {
+    super(httpClient);
   }
 
   public async fetchAppointments(query: string): Promise<Appointment[]> {
@@ -26,29 +33,23 @@ export class AppointmentService extends AxiosClient {
   };
 }
 
-export class ServiceHourService extends AxiosClient {
-  constructor() {
-    super(
-      `${process.env.NEXT_PUBLIC_API_URI}/serviceHours` ||
-        "http://localhost:3001/api/serviceHours"
-    );
+export class ServiceHourService extends ClientInjection {
+  constructor(httpClient: AxiosInstance) {
+    super(httpClient);
   }
 
   public async fetchServiceHours() {
-    return await this.instance.get<ServiceDay[]>("/");
+    return await this.instance.get<ServiceDay[]>("/serviceHours");
   }
 }
 
-export class ProviderService extends AxiosClient {
-  constructor() {
-    super(
-      `${process.env.NEXT_PUBLIC_API_URI}/providers` ||
-        "http://localhost:3001/api/providers"
-    );
+export class ProviderService extends ClientInjection {
+  constructor(httpClient: AxiosInstance) {
+    super(httpClient);
   }
 
   public async fetchProviders() {
-    const providers = await this.instance.get<RawProvider[]>("/");
+    const providers = await this.instance.get<RawProvider[]>("/providers");
 
     return providers.map(provider => {
       return {
@@ -61,22 +62,21 @@ export class ProviderService extends AxiosClient {
   }
 }
 
-export class CustomerService extends AxiosClient {
-  constructor() {
-    super(
-      `${process.env.NEXT_PUBLIC_API_URI}/customers` ||
-        "http://localhost:3001/api/customers"
-    );
+export class CustomerService extends ClientInjection {
+  constructor(httpClient: AxiosInstance) {
+    super(httpClient);
   }
 
   public async login(credentials: Credentials) {
-    const response = await this.instance.post("/login", credentials);
+    const response = await this.instance.post("/customers/login", credentials);
 
     return response;
   }
 
   public async user() {
-    const response = await this.instance.get<User | "Unauthorized">("/user");
+    const response = await this.instance.get<User | "Unauthorized">(
+      "/customers/user"
+    );
 
     return response;
   }

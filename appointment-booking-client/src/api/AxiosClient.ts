@@ -5,42 +5,42 @@ declare module "axios" {
   interface AxiosResponse<T = any> extends Promise<T> {}
 }
 
-export abstract class AxiosClient {
-  protected readonly instance: AxiosInstance;
+const initializeAxios = () => {
+  const client = axios.create({
+    baseURL:
+      `${process.env.NEXT_PUBLIC_API_URI}` || "http://localhost:3000/api",
+    withCredentials: true,
+    validateStatus: status => status < 500,
+  });
 
-  public constructor(baseURL: string) {
-    this.instance = axios.create({
-      baseURL,
-      withCredentials: true,
-      validateStatus: status => status < 500,
-    });
+  _initializeRequestIntercepter(client);
+  _initializeResponseInterceptor(client);
 
-    this._initializeRequestIntercepter();
-    this._initializeResponseInterceptor();
-  }
+  return client;
+};
 
-  private _initializeResponseInterceptor() {
-    this.instance.interceptors.response.use(
-      this._handleResponse,
-      this._handleError
-    );
-  }
+const _initializeResponseInterceptor = (client: AxiosInstance) => {
+  client.interceptors.response.use(_handleResponse, _handleError);
+};
 
-  private _handleResponse = ({ data }: AxiosResponse) => data;
-  private _handleError = (error: any) => Promise.reject(error);
+const _handleResponse = ({ data }: AxiosResponse) => data;
+const _handleError = (error: any) => Promise.reject(error);
 
-  private _initializeRequestIntercepter() {
-    this.instance.interceptors.request.use(async config => {
-      console.log(auth.getAccessToken());
+const _initializeRequestIntercepter = (client: AxiosInstance) => {
+  client.interceptors.request.use(async config => {
+    if (config.url !== "/customers/refreshToken") {
       if (auth.getAccessToken()) {
         config.headers["authorization"] = `Bearer ${auth.getAccessToken()}`;
       } else {
-        // if (response.accessToken) {
-        //   auth.setAccessToken(response.accessToken);
-        //   config.headers["authorization"] = `Bearer ${auth.getAccessToken()}`;
-        // }
+        const response = await client.post("/customers/refreshToken");
+        if (response.accessToken) {
+          auth.setAccessToken(response.accessToken);
+          config.headers["authorization"] = `Bearer ${auth.getAccessToken()}`;
+        }
       }
-      return config;
-    }, this._handleError);
-  }
-}
+    }
+    return config;
+  }, _handleError);
+};
+
+export const httpClient = initializeAxios();

@@ -4,8 +4,9 @@ import {
   ProviderService,
   ServiceHourService,
 } from "./Api";
+import { httpClient } from "./AxiosClient";
 
-export const appointmentService = new AppointmentService();
-export const serviceHourService = new ServiceHourService();
-export const providerService = new ProviderService();
-export const customerService = new CustomerService();
+export const appointmentService = new AppointmentService(httpClient);
+export const serviceHourService = new ServiceHourService(httpClient);
+export const providerService = new ProviderService(httpClient);
+export const customerService = new CustomerService(httpClient);
