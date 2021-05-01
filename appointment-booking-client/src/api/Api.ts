@@ -69,9 +69,12 @@ export class CustomerService extends AxiosClient {
   }
 
   public async login(credentials: Credentials) {
-    const accessToken = await this.instance.post("/login", credentials);
+    const accessToken = await this.instance.post<{ accessToken: string }>(
+      "/login",
+      credentials
+    );
 
-    console.log(accessToken);
+    return accessToken;
   }
 }
 

@@ -11,6 +11,7 @@ import {
   Seperator,
   Submit,
 } from "../../components";
+import { auth } from "../../utils/accessToken";
 import { LoginFormValues } from "./types";
 
 export const Login: FC = () => {
@@ -19,8 +20,10 @@ export const Login: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>();
-  const onSubmit = (data: LoginFormValues) => {
-    customerService.login(data);
+  const onSubmit = async (data: LoginFormValues) => {
+    const { accessToken } = await customerService.login(data);
+
+    auth.setAccessToken(accessToken);
   };
 
   return (
