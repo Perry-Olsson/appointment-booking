@@ -21,7 +21,7 @@ export const jwtStrategy = new JwtStrategy(
       });
 
       if (customer && customer.type === "USER") return done(null, customer);
-      else done(null, { user: "ehlo" });
+      else done(null, false);
     } catch (err) {
       return done(err, false);
     }
