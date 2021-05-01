@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import styled from "styled-components";
@@ -20,11 +20,14 @@ export const Login: FC = () => {
   const {
     register,
     reset,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>();
   const client = useQueryClient();
   const router = useRouter();
+  const [error, setError] = useState(null);
+
   const onSubmit = async (data: LoginFormValues) => {
     const response = await customerService.login(data);
 
@@ -33,12 +36,16 @@ export const Login: FC = () => {
       reset();
       client.invalidateQueries("user");
       router.push("/schedule");
+    } else {
+      setError(response.message);
+      setValue("password", "");
     }
   };
 
   return (
     <Container>
       <Header>Login</Header>
+      {error ? <StyledErrorText>{error}</StyledErrorText> : null}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Label>
           Email
@@ -68,5 +75,9 @@ const Container = styled(Flex)`
 `;
 
 const Header = styled.h2`
+  margin: 1rem;
+`;
+
+const StyledErrorText = styled(ErrorText)`
   margin: 1rem;
 `;
