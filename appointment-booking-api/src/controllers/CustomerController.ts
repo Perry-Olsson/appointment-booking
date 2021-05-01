@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { CustomerDAO } from "./types";
 import { auth } from "../utils/auth";
 import { refreshTokens } from "../utils/refreshTokens";
+import passport from "passport";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
@@ -61,6 +62,16 @@ export class CustomerController {
     }
   }
 
+  async logout(_req: Request, res: Response, next: NextFunction) {
+    try {
+      res
+        .cookie("renewal_center_refreshJwt", "", { httpOnly: true })
+        .sendStatus(204);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async refreshToken(req: Request, res: Response, next: NextFunction) {
     try {
       const refreshToken = req.cookies["renewal_center_refreshJwt"];
@@ -93,7 +104,11 @@ export class CustomerController {
 
   async getUser(req: Request, res: Response, next: NextFunction) {
     try {
-      res.json(req.user);
+      passport.authenticate("jwt", { session: false }, (err, user) => {
+        if (err) next(err);
+        if (!user) res.status(200).send("Unauthorized");
+        res.json(user);
+      })(req, res, next);
     } catch (err) {
       next(err);
     }
