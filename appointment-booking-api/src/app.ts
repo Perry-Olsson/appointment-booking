@@ -1,4 +1,4 @@
-import cors from "cors";
+import { cors } from "./utils/middleware";
 import express from "express";
 import passport from "passport";
 import {
@@ -17,15 +17,7 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(
-  cors({
-    credentials: true,
-    origin: function (origin, callback) {
-      if (origin) callback(null, true);
-      else callback(new Error("Not allowed by cors"));
-    },
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 passport.use(jwtStrategy);
