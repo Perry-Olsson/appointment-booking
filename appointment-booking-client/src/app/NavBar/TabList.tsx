@@ -1,10 +1,17 @@
+import { useRouter } from "next/router";
 import React from "react";
+import { useQueryClient } from "react-query";
+import { customerService } from "../../api";
 import { Flex } from "../../components";
 import { useGetUser } from "../../context/User";
+import { auth } from "../../pages/_app";
 import { Tab } from "./Tab";
 
 export const TabList: React.FC = () => {
   const user = useGetUser();
+  const client = useQueryClient();
+  const router = useRouter();
+
   return (
     <>
       <Flex>
@@ -14,7 +21,22 @@ export const TabList: React.FC = () => {
       </Flex>
       <Flex>
         {user ? (
-          `logged in as ${user.firstName}`
+          <>
+            <span style={{ margin: "10px" }}>
+              logged in as {user.firstName}
+            </span>
+
+            <button
+              onClick={async () => {
+                await customerService.logout();
+                auth.setAccessToken("");
+                client.resetQueries();
+                router.push("/");
+              }}
+            >
+              logout
+            </button>
+          </>
         ) : (
           <Tab href="/login">Log in</Tab>
         )}

@@ -74,6 +74,10 @@ export class CustomerService extends ClientInjection {
     return response;
   }
 
+  public async logout() {
+    await this.instance.post("/customers/logout");
+  }
+
   public async user() {
     const response = await this.instance.get<User | "Unauthorized">(
       "/customers/user"
