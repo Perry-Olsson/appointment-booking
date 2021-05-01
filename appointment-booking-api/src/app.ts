@@ -17,7 +17,15 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: function (origin, callback) {
+      if (origin) callback(null, true);
+      else callback(new Error("Not allowed by cors"));
+    },
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 passport.use(jwtStrategy);
