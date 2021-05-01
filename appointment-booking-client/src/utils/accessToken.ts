@@ -1,4 +1,4 @@
-class Auth {
+export class Auth {
   accessToken: string;
 
   constructor() {
@@ -13,5 +13,3 @@ class Auth {
     return this.accessToken;
   }
 }
-
-export const auth = new Auth();

@@ -1,3 +1,4 @@
+import { User } from "../app/App";
 import { Appointment, RawAppointment, RawProvider, ServiceDay } from "../types";
 import { AxiosClient } from "./AxiosClient";
 import { AppointmentParser } from "./utils";
@@ -69,12 +70,15 @@ export class CustomerService extends AxiosClient {
   }
 
   public async login(credentials: Credentials) {
-    const accessToken = await this.instance.post<{ accessToken: string }>(
-      "/login",
-      credentials
-    );
+    const response = await this.instance.post("/login", credentials);
 
-    return accessToken;
+    return response;
+  }
+
+  public async user() {
+    const response = await this.instance.get<User | "Unauthorized">("/user");
+
+    return response;
   }
 }
 

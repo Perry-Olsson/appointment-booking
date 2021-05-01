@@ -1,8 +1,10 @@
 import React from "react";
 import { Flex } from "../../components";
+import { useGetUser } from "../App";
 import { Tab } from "./Tab";
 
 export const TabList: React.FC = () => {
+  const user = useGetUser();
   return (
     <>
       <Flex>
@@ -11,7 +13,11 @@ export const TabList: React.FC = () => {
         <Tab href="/schedule">Book Online</Tab>
       </Flex>
       <Flex>
-        <Tab href="/login">Log in</Tab>
+        {user ? (
+          `logged in as ${user.firstName}`
+        ) : (
+          <Tab href="/login">Log in</Tab>
+        )}
       </Flex>
     </>
   );

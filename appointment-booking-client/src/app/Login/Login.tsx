@@ -1,5 +1,7 @@
+import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import styled from "styled-components";
 import { customerService } from "../../api";
 import {
@@ -11,19 +13,27 @@ import {
   Seperator,
   Submit,
 } from "../../components";
-import { auth } from "../../utils/accessToken";
+import { auth } from "../../pages/_app";
 import { LoginFormValues } from "./types";
 
 export const Login: FC = () => {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>();
+  const client = useQueryClient();
+  const router = useRouter();
   const onSubmit = async (data: LoginFormValues) => {
-    const { accessToken } = await customerService.login(data);
+    const response = await customerService.login(data);
 
-    auth.setAccessToken(accessToken);
+    if (response.accessToken) {
+      auth.setAccessToken(response.accessToken);
+      reset();
+      client.invalidateQueries("user");
+      router.push("/schedule");
+    }
   };
 
   return (

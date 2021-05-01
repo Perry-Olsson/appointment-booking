@@ -25,9 +25,9 @@ const ScheduleProviders: React.FC<ProviderProps> = ({ children }) => {
 
 export const QueryClientWrapper: React.FC<ProviderProps> = ({ children }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ScheduleProviders>{children}</ScheduleProviders>
-    </QueryClientProvider>
+    // <QueryClientProvider client={queryClient}>
+    <ScheduleProviders>{children}</ScheduleProviders>
+    // </QueryClientProvider>
   );
 };
 
