@@ -6,6 +6,7 @@ export const requestLogger: MiddlewareFn = (req, _, next) => {
   logger.info("Path: ", req.path);
   logger.info("Query: ", req.query);
   logger.info("Body: ", req.body);
+  logger.info("Headers: ", req.headers);
   logger.info("--------------------");
   next();
 };

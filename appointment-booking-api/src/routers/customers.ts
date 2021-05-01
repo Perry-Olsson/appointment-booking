@@ -16,9 +16,9 @@ router.post("/login", (req, res, next) =>
 );
 
 router.get(
-  "/profile",
+  "/user",
   passport.authenticate("jwt", { session: false }),
-  (req, res, next) => customerController.getProfile(req, res, next)
+  (req, res, next) => customerController.getUser(req, res, next)
 );
 
 router.post("/refreshToken", (req, res, next) =>

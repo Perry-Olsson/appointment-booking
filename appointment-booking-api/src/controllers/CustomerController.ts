@@ -91,9 +91,9 @@ export class CustomerController {
     }
   }
 
-  async getProfile(req: Request, res: Response, next: NextFunction) {
+  async getUser(req: Request, res: Response, next: NextFunction) {
     try {
-      res.send(req.user);
+      res.json(req.user);
     } catch (err) {
       next(err);
     }
