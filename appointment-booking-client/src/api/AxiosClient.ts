@@ -8,7 +8,7 @@ export abstract class AxiosClient {
   protected readonly instance: AxiosInstance;
 
   public constructor(baseURL: string) {
-    this.instance = axios.create({ baseURL });
+    this.instance = axios.create({ baseURL, withCredentials: true });
 
     this._initializeResponseInterceptor();
   }

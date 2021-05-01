@@ -20,7 +20,6 @@ export const Login: FC = () => {
     formState: { errors },
   } = useForm<LoginFormValues>();
   const onSubmit = (data: LoginFormValues) => {
-    console.log(data);
     customerService.login(data);
   };
 
