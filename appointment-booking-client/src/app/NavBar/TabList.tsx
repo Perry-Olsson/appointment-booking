@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex } from "../../components";
-import { useGetUser } from "../App";
+import { useGetUser } from "../../context/User";
 import { Tab } from "./Tab";
 
 export const TabList: React.FC = () => {

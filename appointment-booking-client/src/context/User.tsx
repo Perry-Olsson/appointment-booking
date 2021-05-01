@@ -2,8 +2,12 @@ import React, { createContext, FC, useContext } from "react";
 import { useQuery } from "react-query";
 import { customerService } from "../api";
 
-export const MyApp: React.FC = ({ children }) => {
-  const { data } = useQuery("user", async () => await customerService.user());
+export const User: React.FC = ({ children }) => {
+  const { data } = useQuery("user", async () => await customerService.user(), {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: Infinity,
+  });
   return (
     <UserProvider value={!data || data === "Unauthorized" ? null : data}>
       {children}

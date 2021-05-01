@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { User } from "../app/App";
+import { User } from "../context/User";
 import { auth } from "../pages/_app";
 import { Appointment, RawAppointment, RawProvider, ServiceDay } from "../types";
 import { AppointmentParser } from "./utils";

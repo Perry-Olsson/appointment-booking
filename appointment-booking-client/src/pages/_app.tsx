@@ -8,7 +8,7 @@ import { HeadTags } from "../components/HeadTags";
 import "../utils/date.extensions";
 import { useDimensions } from "../hooks";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { MyApp } from "../app/App";
+import { User } from "../context";
 
 const queryClient = new QueryClient();
 export const auth = new Auth();
@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <MyApp>
+      <User>
         <HeadTags />
         <GlobalStyle />
         <ThemeProvider theme={theme}>
@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <NavBarOffset />
           {getLayout(<Component {...pageProps}></Component>)}
         </ThemeProvider>
-      </MyApp>
+      </User>
     </QueryClientProvider>
   );
 }

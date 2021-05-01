@@ -32,7 +32,7 @@ const _initializeRequestIntercepter = (client: AxiosInstance) => {
 };
 
 const _handleAuth = async (config: AxiosRequestConfig) => {
-  if (_isRefreshingToken(config)) return config;
+  if (_isAuthenticating(config)) return config;
 
   if (auth.getAccessToken() && auth.isValidAccessToken()) {
     config.headers["authorization"] = `Bearer ${auth.getAccessToken()}`;
@@ -44,7 +44,7 @@ const _handleAuth = async (config: AxiosRequestConfig) => {
   return config;
 };
 
-const _isRefreshingToken = (config: AxiosRequestConfig) =>
-  config.url === "/customers/refreshToken";
+const _isAuthenticating = (config: AxiosRequestConfig) =>
+  config.url === "/customers/refreshToken" || config.url === "/customers/login";
 
 export const httpClient = initializeAxios();
