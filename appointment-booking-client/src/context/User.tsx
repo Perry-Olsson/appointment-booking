@@ -8,14 +8,16 @@ export const User: React.FC = ({ children }) => {
     refetchOnWindowFocus: false,
     refetchInterval: Infinity,
   });
-  return (
-    <UserProvider value={!data || data === "Unauthorized" ? null : data}>
-      {children}
-    </UserProvider>
-  );
+
+  let value: User | null | "loading";
+  if (!data) value = "loading";
+  else if (data === "Unauthorized") value = null;
+  else value = data;
+
+  return <UserProvider value={value}>{children}</UserProvider>;
 };
 
-const UserContext = createContext<User | null>(null);
+const UserContext = createContext<User | null | "loading">(null);
 
 export interface User {
   id: number;
@@ -28,7 +30,7 @@ export interface User {
 
 const UserProvider: FC<{
   children: React.ReactNode;
-  value: User | null;
+  value: User | null | "loading";
 }> = ({ children, value }) => {
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

@@ -34,7 +34,7 @@ export const Login: FC = () => {
     if (response.accessToken) {
       auth.setAccessToken(response.accessToken);
       reset();
-      client.invalidateQueries("user");
+      await client.invalidateQueries("user");
       router.push("/schedule");
     } else {
       setError(response.message);
