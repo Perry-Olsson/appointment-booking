@@ -65,10 +65,10 @@ describe("Customer login", () => {
 
 describe("miscellaneous", () => {
   test("findUnique returns correct fields", async () => {
-    const _customer = await customer.findUnique({
+    const _customer = await customer.findOne({
       where: { email: customers[0].email },
     });
-    const customerPassword = await customer.findUnique({
+    const customerPassword = await customer.findOne({
       where: { email: customers[0].email },
       select: { password: true },
     });

@@ -70,7 +70,9 @@ export class CustomerController {
 
       const decodedToken = auth.decodeRefreshToken(refreshToken);
 
-      const user = this.dataAccess.findOne({ where: {} });
+      const user = this.dataAccess.findOne({
+        where: { email: decodedToken.email },
+      });
 
       //todo | create error
       if (!user)
