@@ -1,10 +1,10 @@
-import { QueryClient, QueryClientProvider } from "react-query";
+// import { QueryClient, QueryClientProvider } from "react-query";
 import { useFetchProviders, useFetchServiceHours } from "./hooks";
 import { StaticStateProvider } from "./context";
 import { getProcedureListFromProviders } from "./utils";
 import { FormProvider } from "./context";
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 const ScheduleProviders: React.FC<ProviderProps> = ({ children }) => {
   const { serviceHours } = useFetchServiceHours();
