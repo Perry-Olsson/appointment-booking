@@ -3,7 +3,7 @@ import React from "react";
 import { useQueryClient } from "react-query";
 import { customerService } from "../../api";
 import { Flex } from "../../components";
-import { useGetUser } from "../../context/User";
+import { useGetUser } from "../../context/UserProvider";
 import { accessToken } from "../../pages/_app";
 import { Tab } from "./Tab";
 

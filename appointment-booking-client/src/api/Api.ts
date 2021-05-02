@@ -1,7 +1,12 @@
 import { AxiosInstance } from "axios";
-import { User } from "../context/User";
 import { accessToken } from "../pages/_app";
-import { Appointment, RawAppointment, RawProvider, ServiceDay } from "../types";
+import {
+  Appointment,
+  RawAppointment,
+  RawProvider,
+  ServiceDay,
+  User,
+} from "../types";
 import { AppointmentParser } from "./utils";
 
 const appointmentParser = new AppointmentParser();

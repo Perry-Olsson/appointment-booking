@@ -64,3 +64,12 @@ export interface Schedule {
   id: number;
   providerId: string;
 }
+
+export interface User {
+  id: number;
+  email: string;
+  phoneNumber: string;
+  type: "USER";
+  firstName: string;
+  lastName: string;
+}
