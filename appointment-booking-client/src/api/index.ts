@@ -3,7 +3,7 @@ import {
   CustomerService,
   ProviderService,
   ServiceHourService,
-} from "./Api";
+} from "./services";
 import { httpClient } from "./AxiosClient";
 
 export const appointmentService = new AppointmentService(httpClient);

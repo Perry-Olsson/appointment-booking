@@ -42,3 +42,5 @@ export class AppointmentParser {
     );
   }
 }
+
+export const appointmentParser = new AppointmentParser();
