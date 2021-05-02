@@ -83,7 +83,7 @@ export class CustomerController {
       const refreshToken = req.cookies["renewal_center_refreshJwt"];
       if (!refreshToken) throw new NotAuthenticatedError(200);
 
-      auth.checkRefreshToken(refreshToken);
+      // auth.checkRefreshToken(refreshToken);
 
       const decodedToken = auth.decodeRefreshToken(refreshToken);
 
