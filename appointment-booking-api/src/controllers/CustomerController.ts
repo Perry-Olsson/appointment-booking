@@ -6,6 +6,7 @@ import { CustomerDAO } from "./types";
 import { auth } from "../utils/auth";
 import { refreshTokens } from "../utils/refreshTokens";
 import passport from "passport";
+import { cookieOptions } from "../constants";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
@@ -55,11 +56,7 @@ export class CustomerController {
       refreshTokens[refreshToken] = true;
 
       res
-        .cookie("renewal_center_refreshJwt", refreshToken, {
-          httpOnly: true,
-          sameSite: "none",
-          secure: true,
-        })
+        .cookie("renewal_center_refreshJwt", refreshToken, cookieOptions)
         .json({ accessToken });
     } catch (err) {
       next(err);
@@ -69,7 +66,7 @@ export class CustomerController {
   async logout(_req: Request, res: Response, next: NextFunction) {
     try {
       res
-        .cookie("renewal_center_refreshJwt", "", { httpOnly: true })
+        .cookie("renewal_center_refreshJwt", "", cookieOptions)
         .status(204)
         .send();
     } catch (err) {
