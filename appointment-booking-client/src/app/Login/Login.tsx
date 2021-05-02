@@ -2,18 +2,9 @@ import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import styled from "styled-components";
 import { customerService } from "../../api";
-import {
-  ErrorText,
-  Flex,
-  Form,
-  Input,
-  Label,
-  Seperator,
-  Submit,
-} from "../../components";
 import { accessToken } from "../../pages/_app";
+import { LoginView } from "./LoginView";
 import { LoginFormValues } from "./types";
 
 export const Login: FC = () => {
@@ -26,7 +17,7 @@ export const Login: FC = () => {
   } = useForm<LoginFormValues>();
   const client = useQueryClient();
   const router = useRouter();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginFormValues) => {
     const response = await customerService.login(data);
@@ -43,41 +34,12 @@ export const Login: FC = () => {
   };
 
   return (
-    <Container>
-      <Header>Login</Header>
-      {error ? <StyledErrorText>{error}</StyledErrorText> : null}
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Label>
-          Email
-          <Input {...register("email", { required: true })} />
-          {errors.email && <ErrorText>This field is required</ErrorText>}
-        </Label>
-
-        <Seperator />
-
-        <Label>
-          Password
-          <Input
-            {...register("password", { required: true })}
-            type="password"
-          />
-          {errors.password && <ErrorText>This field is required</ErrorText>}
-        </Label>
-
-        <Submit type="submit" text="Log in" />
-      </Form>
-    </Container>
+    <LoginView
+      onSubmit={onSubmit}
+      handleSubmit={handleSubmit}
+      register={register}
+      fieldErrors={errors}
+      error={error}
+    />
   );
 };
-
-const Container = styled(Flex)`
-  flex-direction: column;
-`;
-
-const Header = styled.h2`
-  margin: 1rem;
-`;
-
-const StyledErrorText = styled(ErrorText)`
-  margin: 1rem;
-`;
