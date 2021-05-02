@@ -55,7 +55,11 @@ export class CustomerController {
       refreshTokens[refreshToken] = true;
 
       res
-        .cookie("renewal_center_refreshJwt", refreshToken, { httpOnly: true })
+        .cookie("renewal_center_refreshJwt", refreshToken, {
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
         .json({ accessToken });
     } catch (err) {
       next(err);
