@@ -33,6 +33,26 @@ export const BurgerTab: React.FC<TabProps> = ({ children, href, isFirst }) => {
   );
 };
 
+export const BurgerButton: React.FC<{
+  isFirst?: boolean;
+  handleClick: () => void;
+}> = ({ children, handleClick, isFirst }) => {
+  const setIsOpen = useIsOpen();
+
+  return (
+    <BurgerItemContainer
+      className="menu-item"
+      style={isFirst ? { borderTop: "solid 1px" } : undefined}
+      onClick={() => {
+        setIsOpen(false);
+        handleClick();
+      }}
+    >
+      <BurgerAnchor>{children}</BurgerAnchor>
+    </BurgerItemContainer>
+  );
+};
+
 const StyledAnchor = styled.a`
   margin: 0 1rem;
   font-size: ${({ theme }) => theme.font.med};

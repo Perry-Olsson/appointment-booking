@@ -1,21 +1,31 @@
 import React, { createContext, useContext, useState } from "react";
 import { slide as Menu } from "react-burger-menu";
+import { useGetUser } from "../../context";
 import { BurgerTab } from "./Tab";
+import { UserTabs } from "./UserTabs";
 
 export const Burger: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const user = useGetUser();
 
   return (
-    <Menu isOpen={isOpen} onStateChange={state => setIsOpen(state.isOpen)}>
-      <SetOpenProvider value={setIsOpen}>
-        <BurgerTab href="/" isFirst={true}>
-          Home
-        </BurgerTab>
-        <BurgerTab href="/about">About</BurgerTab>
-        <BurgerTab href="/schedule">Book Online</BurgerTab>
-        <BurgerTab href="/login">Log in</BurgerTab>
-      </SetOpenProvider>
-    </Menu>
+    <>
+      <Menu isOpen={isOpen} onStateChange={state => setIsOpen(state.isOpen)}>
+        <SetOpenProvider value={setIsOpen}>
+          <BurgerTab href="/" isFirst={true}>
+            Home
+          </BurgerTab>
+          <BurgerTab href="/about">About</BurgerTab>
+          <BurgerTab href="/schedule">Book Online</BurgerTab>
+          <UserTabs isBurger />
+        </SetOpenProvider>
+      </Menu>
+      {user && user !== "loading" ? (
+        <span style={{ margin: "auto 1rem" }}>
+          logged in as {user.firstName}
+        </span>
+      ) : null}
+    </>
   );
 };
 
