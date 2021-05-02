@@ -3,7 +3,7 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { NavBar } from "../app/NavBar/NavBar";
 import { NavBarOffset } from "../app/NavBar/NavBarOffset";
 import { theme } from "../components";
-import { Auth, getLayoutProvider } from "../utils";
+import { AccessToken, getLayoutProvider } from "../utils";
 import { HeadTags } from "../components/HeadTags";
 import "../utils/date.extensions";
 import { useDimensions } from "../hooks";
@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { User } from "../context";
 
 const queryClient = new QueryClient();
-export const auth = new Auth();
+export const accessToken = new AccessToken();
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = getLayoutProvider(Component.displayName);
@@ -19,9 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <HeadTags />
+      <GlobalStyle />
       <User>
-        <HeadTags />
-        <GlobalStyle />
         <ThemeProvider theme={theme}>
           <NavBar />
           <NavBarOffset />

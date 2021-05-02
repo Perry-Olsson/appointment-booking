@@ -1,11 +1,10 @@
-import { QueryClientWrapper } from "../app/Scheduler/ScheduleProviders";
+import { ScheduleProviders } from "../app/Scheduler/ScheduleProviders";
 
 export const getLayoutProvider = (displayName: string | undefined) => {
   switch (displayName) {
     case "schedule":
     case "day":
-    case "login":
-      return (page: any) => <QueryClientWrapper>{page}</QueryClientWrapper>;
+      return (page: any) => <ScheduleProviders>{page}</ScheduleProviders>;
     default:
       return (page: any) => page;
   }

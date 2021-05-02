@@ -1,21 +1,25 @@
 import jwtDecode from "jwt-decode";
 
-export class Auth {
+export class AccessToken {
   accessToken: string;
 
   constructor() {
     this.accessToken = "";
   }
 
-  setAccessToken(token: string) {
+  set(token: string) {
     this.accessToken = token;
   }
 
-  getAccessToken() {
+  get() {
     return this.accessToken;
   }
 
-  isValidAccessToken() {
+  clear() {
+    this.accessToken = "";
+  }
+
+  isValid() {
     try {
       const token = jwtDecode<{ email: string; iat: number; exp: number }>(
         this.accessToken

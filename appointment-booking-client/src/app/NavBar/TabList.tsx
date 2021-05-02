@@ -4,7 +4,7 @@ import { useQueryClient } from "react-query";
 import { customerService } from "../../api";
 import { Flex } from "../../components";
 import { useGetUser } from "../../context/User";
-import { auth } from "../../pages/_app";
+import { accessToken } from "../../pages/_app";
 import { Tab } from "./Tab";
 
 export const TabList: React.FC = () => {
@@ -29,7 +29,7 @@ export const TabList: React.FC = () => {
             <button
               onClick={async () => {
                 await customerService.logout();
-                auth.setAccessToken("");
+                accessToken.clear();
                 client.resetQueries();
                 router.push("/");
               }}

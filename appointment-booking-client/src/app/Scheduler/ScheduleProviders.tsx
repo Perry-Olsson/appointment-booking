@@ -4,9 +4,7 @@ import { StaticStateProvider } from "./context";
 import { getProcedureListFromProviders } from "./utils";
 import { FormProvider } from "./context";
 
-// const queryClient = new QueryClient();
-
-const ScheduleProviders: React.FC<ProviderProps> = ({ children }) => {
+export const ScheduleProviders: React.FC<ProviderProps> = ({ children }) => {
   const { serviceHours } = useFetchServiceHours();
   const { providers } = useFetchProviders();
 
@@ -20,14 +18,6 @@ const ScheduleProviders: React.FC<ProviderProps> = ({ children }) => {
     >
       <FormProvider>{children}</FormProvider>
     </StaticStateProvider>
-  );
-};
-
-export const QueryClientWrapper: React.FC<ProviderProps> = ({ children }) => {
-  return (
-    // <QueryClientProvider client={queryClient}>
-    <ScheduleProviders>{children}</ScheduleProviders>
-    // </QueryClientProvider>
   );
 };
 

@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import { User } from "../context/User";
-import { auth } from "../pages/_app";
+import { accessToken } from "../pages/_app";
 import { Appointment, RawAppointment, RawProvider, ServiceDay } from "../types";
 import { AppointmentParser } from "./utils";
 
@@ -89,7 +89,7 @@ export class CustomerService extends ClientInjection {
   public async refreshToken() {
     const response = await this.instance.post("/customers/refreshToken");
 
-    if (response.accessToken) auth.setAccessToken(response.accessToken);
+    if (response.accessToken) accessToken.set(response.accessToken);
     return response;
   }
 }

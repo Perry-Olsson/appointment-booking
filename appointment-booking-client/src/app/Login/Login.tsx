@@ -13,7 +13,7 @@ import {
   Seperator,
   Submit,
 } from "../../components";
-import { auth } from "../../pages/_app";
+import { accessToken } from "../../pages/_app";
 import { LoginFormValues } from "./types";
 
 export const Login: FC = () => {
@@ -32,7 +32,7 @@ export const Login: FC = () => {
     const response = await customerService.login(data);
 
     if (response.accessToken) {
-      auth.setAccessToken(response.accessToken);
+      accessToken.set(response.accessToken);
       reset();
       await client.invalidateQueries("user");
       router.push("/schedule");
