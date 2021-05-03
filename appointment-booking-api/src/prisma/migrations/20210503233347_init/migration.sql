@@ -20,6 +20,7 @@ CREATE TABLE "customers" (
     "id" SERIAL NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "token_version" INTEGER NOT NULL DEFAULT 0,
     "first_name" VARCHAR(50) NOT NULL,
     "last_name" VARCHAR(50) NOT NULL,
     "type" "Type" NOT NULL,
@@ -79,6 +80,7 @@ CREATE TABLE "service_hours" (
 CREATE TABLE "test" (
     "id" SERIAL NOT NULL,
     "text" TEXT NOT NULL,
+    "date" DATE NOT NULL,
     "time" TIME NOT NULL,
 
     PRIMARY KEY ("id")
