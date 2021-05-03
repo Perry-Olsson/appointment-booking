@@ -5,7 +5,10 @@ export type NewAppointment = Omit<
   "id" | "createdAt" | "updatedAt"
 >;
 
-export type NewCustomer = Omit<Customer, "id" | "createdAt" | "updatedAt">;
+export type NewCustomer = Omit<
+  Customer,
+  "id" | "createdAt" | "updatedAt" | "tokenVersion"
+>;
 
 export interface Time {
   year?: number;

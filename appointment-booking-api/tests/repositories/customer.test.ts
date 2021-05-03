@@ -22,6 +22,7 @@ describe("Customer Creation", () => {
     const createdCustomer = await customer.create(initializeCustomer);
     expect(createdCustomer).toHaveProperty("id");
     expect(createdCustomer.email).toBe(testUser.email);
+    console.log(createdCustomer);
 
     await prisma.customer.delete({
       where: { id: createdCustomer.id },
@@ -77,5 +78,13 @@ describe("miscellaneous", () => {
     expect(_customer.email).toBe(customers[0].email);
     expect(_customer.password).toBeUndefined();
     expect(customerPassword.password).toHaveLength(60);
+  });
+
+  test.only("Customer records have a token version column", async () => {
+    const customer = await prisma.customer.findFirst({
+      where: { type: "USER" },
+    });
+
+    expect(customer).toHaveProperty("tokenVersion");
   });
 });
