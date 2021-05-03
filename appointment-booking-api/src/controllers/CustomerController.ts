@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { EmailError, NotAuthenticatedError } from "../utils";
+import { EmailError, NotAuthenticatedError, UserNotFoundError } from "../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import { CustomerDAO } from "./types";
@@ -79,24 +79,23 @@ export class CustomerController {
 
       const decodedToken = auth.decodeRefreshToken(refreshToken);
 
-      const user = this.dataAccess.findOne({
+      const user = await this.dataAccess.findOne({
         where: { email: decodedToken.email },
       });
 
       //todo | create error
       if (!user)
-        res.status(404).json({
-          error: "User not found",
-          message: "No user found to match token",
-        });
+        throw new UserNotFoundError(
+          "We could not find a user associated with your credentials. Try logging in again",
+          404
+        );
 
       const accessToken = auth.createAccessToken(decodedToken.email);
 
       res.json({ accessToken });
     } catch (err) {
-      if (err.name === "JsonWebTokenError")
-        res.status(403).json({ error: err.name, message: err.message });
-      else next(err);
+      if (err.name === "JsonWebTokenError") err.status = 403;
+      next(err);
     }
   }
 

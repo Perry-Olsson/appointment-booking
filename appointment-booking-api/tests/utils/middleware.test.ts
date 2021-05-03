@@ -2,6 +2,7 @@ import request from "supertest";
 import { app } from "../../src/app";
 import { prisma } from "../../src/prisma";
 import { EmailError, LoginError, TimestampError } from "../../src/utils";
+import { auth } from "../../src/utils/auth";
 import { testUser } from "../constants";
 import {
   createDefaultTime,
@@ -128,5 +129,29 @@ describe("Error handler middleware", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.error).toBe("Not authenticated");
+  });
+
+  test("Provides json web token error", async () => {
+    const response = await api
+      .post("/api/customers/refreshToken")
+      .set("Cookie", "renewal_center_refreshJwt=jfkldsajfpwijfoalsjfks");
+
+    expect(response.status).toBe(403);
+    expect(response.body).toMatchObject({ error: "JsonWebTokenError" });
+  });
+
+  test("Provides user not found error", async () => {
+    const refreshTokenForNonExistentUser = auth.createRefreshToken(
+      "invalid@example.com"
+    );
+    const response = await api
+      .post("/api/customers/refreshToken")
+      .set(
+        "Cookie",
+        `renewal_center_refreshJwt=${refreshTokenForNonExistentUser}`
+      );
+
+    expect(response.status).toBe(404);
+    expect(response.body).toMatchObject({ error: "User not found" });
   });
 });

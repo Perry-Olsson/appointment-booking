@@ -48,12 +48,15 @@ const errorResponses: ErrorResponseObject = {
     error: "Token not found",
     message,
   }),
+  JsonWebTokenError: (message: string) => ({
+    error: "JsonWebTokenError",
+    message,
+  }),
+  userNotFound: (message: string) => ({
+    error: "User not found",
+    message,
+  }),
 };
-
-// const getErrorResponse = (error: string, message: string) => ({
-//   error,
-//   message,
-// });
 
 interface ErrorResponseObject {
   [key: string]: (message: string) => ErrorResponse;

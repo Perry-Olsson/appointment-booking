@@ -72,19 +72,19 @@ export class NotAuthenticatedError extends ExpectedError {
   }
 }
 
-export class TokenNotFoundError extends ExpectedError {
-  constructor(status: number) {
-    super("Token has not been found please login again", status);
-
-    this.name = "tokenNotFound";
-  }
-}
-
 //not implemented in error handler yet
 export class AccessRevokedError extends ExpectedError {
   constructor(status: number) {
     super("Access to use this service has been revoked", status);
 
     this.name = "accessRevoked";
+  }
+}
+
+export class UserNotFoundError extends ExpectedError {
+  constructor(message: string, status: number) {
+    super(message, status);
+
+    this.name = "userNotFound";
   }
 }
