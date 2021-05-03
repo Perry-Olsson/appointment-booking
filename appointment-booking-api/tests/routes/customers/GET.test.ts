@@ -11,15 +11,15 @@ beforeAll(async () => {
 
 afterAll(() => prisma.$disconnect());
 
-describe("user profile", () => {
-  test("profile is not returned without a valid token", async () => {
-    const response = await api.get("/api/customers/profile");
+describe("/user", () => {
+  test("user is not returned without a valid token", async () => {
+    const response = await api.get("/api/customers/user");
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(200);
     expect(response.text).toBe("Unauthorized");
   });
 
-  test("profile is returned with valid token", async () => {
+  test("user is returned with valid token", async () => {
     const {
       body: { accessToken },
     } = await api
@@ -27,7 +27,7 @@ describe("user profile", () => {
       .send({ email: customers[0].email, password: customers[0].password });
 
     const response = await api
-      .get("/api/customers/profile")
+      .get("/api/customers/user")
       .set({ Authorization: `bearer ${accessToken}` });
 
     expect(response.status).toBe(200);

@@ -1,4 +1,4 @@
-import { cors } from "./utils/middleware";
+import { myCors } from "./utils/middleware";
 import express from "express";
 import passport from "passport";
 import {
@@ -17,7 +17,7 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors());
+app.use(myCors());
 app.use(express.json());
 app.use(cookieParser());
 passport.use(jwtStrategy);
