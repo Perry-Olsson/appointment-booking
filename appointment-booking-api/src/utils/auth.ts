@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
-import { AccessRevokedError, TokenNotFoundError } from ".";
 import config from "../config";
-import { refreshTokens } from "./refreshTokens";
 
 class Auth {
   public createAccessToken(email: string) {
@@ -25,12 +23,6 @@ class Auth {
     ) as DecodedToken;
 
     return decodedToken;
-  }
-
-  public checkRefreshToken(token: string): void {
-    if (!refreshTokens[token]) throw new TokenNotFoundError(403);
-
-    if (refreshTokens[token] === "banned") throw new AccessRevokedError(403);
   }
 }
 

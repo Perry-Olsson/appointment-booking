@@ -46,7 +46,7 @@ describe("Customer creation", () => {
 });
 
 describe("Cusotmer login", () => {
-  test("/api/customers/login returns access token to valid user", async () => {
+  test("/api/customers/login returns access token to valid user and sets refreshToken cookie", async () => {
     const { email, password } = {
       email: "john@example.com",
       password: "johnsPassword",
@@ -62,6 +62,16 @@ describe("Cusotmer login", () => {
     const refreshToken = extractRefreshToken(response.get("Set-Cookie"));
     if (!refreshToken) throw Error("bad regex");
     expect(refreshToken).toBe(auth.createRefreshToken(email));
+  });
+
+  test("/api/customers/logout successfully sets refreshToken cookie to empty string", async () => {
+    const response = await api
+      .post("/api/customers/logout")
+      .set("Cookie", `renewal_center_refreshJwt=djfklsfsladfjasklfdjasklj`);
+
+    const cookie = response.get("Set-Cookie");
+    const refreshToken = cookie[0].match(/([^=]+)=(; )/); //matches empty string cookie
+    expect(refreshToken).not.toBe(null);
   });
 });
 

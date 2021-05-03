@@ -4,7 +4,6 @@ import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import { CustomerDAO } from "./types";
 import { auth } from "../utils/auth";
-import { refreshTokens } from "../utils/refreshTokens";
 import passport from "passport";
 import { cookieOptions } from "../constants";
 
@@ -53,7 +52,6 @@ export class CustomerController {
 
       const accessToken = auth.createAccessToken(user.email);
       const refreshToken = auth.createRefreshToken(user.email);
-      refreshTokens[refreshToken] = true;
 
       res
         .cookie("renewal_center_refreshJwt", refreshToken, cookieOptions)
@@ -70,7 +68,6 @@ export class CustomerController {
         .status(204)
         .send();
     } catch (err) {
-      console.log("------ ----- ---", err);
       next(err);
     }
   }
@@ -79,8 +76,6 @@ export class CustomerController {
     try {
       const refreshToken = req.cookies["renewal_center_refreshJwt"];
       if (!refreshToken) throw new NotAuthenticatedError(200);
-
-      // auth.checkRefreshToken(refreshToken);
 
       const decodedToken = auth.decodeRefreshToken(refreshToken);
 
