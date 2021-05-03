@@ -15,3 +15,8 @@ export const testGuest = {
   firstName: "Bob",
   lastName: "Dull",
 };
+
+export const johnsCredentials = {
+  email: "john@example.com",
+  password: "johnsPassword",
+};

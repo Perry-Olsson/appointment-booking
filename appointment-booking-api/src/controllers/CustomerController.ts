@@ -1,11 +1,17 @@
 import { NextFunction, Request, Response } from "express";
-import { EmailError, NotAuthenticatedError, UserNotFoundError } from "../utils";
+import {
+  EmailError,
+  NotAuthenticatedError,
+  TokenInvalidatedError,
+  UserNotFoundError,
+} from "../utils";
 import validator from "email-validator";
 import bcrypt from "bcryptjs";
 import { CustomerDAO } from "./types";
 import { auth } from "../utils/auth";
 import passport from "passport";
 import { cookieOptions, refreshTokenKeyValue } from "../constants";
+import { refreshTokenCustomerSelect } from "../repositories/constants";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
@@ -81,14 +87,17 @@ export class CustomerController {
 
       const user = await this.dataAccess.findOne({
         where: { email: decodedToken.email },
+        select: refreshTokenCustomerSelect,
       });
 
-      //todo | create error
       if (!user)
         throw new UserNotFoundError(
           "We could not find a user associated with your credentials. Try logging in again",
           404
         );
+
+      if (user.tokenVersion !== decodedToken.tokenVersion)
+        throw new TokenInvalidatedError();
 
       const accessToken = auth.createAccessToken(decodedToken.email);
 

@@ -23,7 +23,7 @@ class Auth {
     const decodedToken = jwt.verify(
       token,
       config.refreshTokenSecret
-    ) as DecodedToken;
+    ) as DecodedRefreshToken;
 
     return decodedToken;
   }

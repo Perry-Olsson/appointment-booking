@@ -81,6 +81,14 @@ export class AccessRevokedError extends ExpectedError {
   }
 }
 
+export class TokenInvalidatedError extends ExpectedError {
+  constructor() {
+    super("Your session has been invalidated. Try logging in again", 403);
+
+    this.name = "tokenInvalidated";
+  }
+}
+
 export class UserNotFoundError extends ExpectedError {
   constructor(message: string, status: number) {
     super(message, status);

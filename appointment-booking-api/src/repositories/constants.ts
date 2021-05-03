@@ -15,3 +15,8 @@ export const defaultCustomerSelect = {
   firstName: true,
   lastName: true,
 };
+
+export const refreshTokenCustomerSelect = {
+  ...defaultCustomerSelect,
+  tokenVersion: true,
+};

@@ -2,9 +2,10 @@ import { app } from "../../../src/app";
 import request from "supertest";
 import { prisma } from "../../../src/prisma";
 import { extractRefreshToken, initializeTestData } from "../../helpers";
-import { testGuest, testUser } from "../../constants";
+import { johnsCredentials, testGuest, testUser } from "../../constants";
 import { auth } from "../../../src/utils/auth";
 import { refreshTokenKeyValue } from "../../../src/constants";
+import { logJohnIn } from "../../helpers";
 
 const api = request(app);
 
@@ -78,19 +79,7 @@ describe("Cusotmer login", () => {
 
 describe("Refresh token route", () => {
   test("User with valid refresh token can get access token", async () => {
-    const { email, password } = {
-      email: "john@example.com",
-      password: "johnsPassword",
-    };
-    const loginResponse = await api
-      .post("/api/customers/login")
-      .send({ email, password });
-
-    expect(loginResponse.status).toBe(200);
-
-    const cookie = loginResponse.get("Set-Cookie");
-    const parsedCookie = cookie[0].match(/([^;]+)=([^;]+); /); //extract cookie key and value
-    if (!parsedCookie) throw Error("Bad regex");
+    const parsedCookie = await logJohnIn();
 
     const refreshResponse = await api
       .post("/api/customers/refreshToken")
@@ -98,7 +87,7 @@ describe("Refresh token route", () => {
 
     expect(refreshResponse.status).toBe(200);
     expect(refreshResponse.body.accessToken).toBe(
-      auth.createAccessToken(email)
+      auth.createAccessToken(johnsCredentials.email)
     );
   });
 });

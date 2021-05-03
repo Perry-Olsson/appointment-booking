@@ -56,6 +56,10 @@ const errorResponses: ErrorResponseObject = {
     error: "User not found",
     message,
   }),
+  tokenInvalidated: (message: string) => ({
+    error: "Token invalidated",
+    message,
+  }),
 };
 
 interface ErrorResponseObject {

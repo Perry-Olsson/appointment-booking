@@ -3,11 +3,12 @@ import { app } from "../../src/app";
 import { prisma } from "../../src/prisma";
 import { EmailError, LoginError, TimestampError } from "../../src/utils";
 import { auth } from "../../src/utils/auth";
-import { testUser } from "../constants";
+import { johnsCredentials, testUser } from "../constants";
 import {
   createDefaultTime,
   createTestAppointment,
   initializeTestData,
+  logJohnIn,
 } from "../helpers";
 import { refreshTokenKeyValue } from "../../src/constants";
 
@@ -143,7 +144,8 @@ describe("Error handler middleware", () => {
 
   test("Provides user not found error", async () => {
     const refreshTokenForNonExistentUser = auth.createRefreshToken(
-      "invalid@example.com"
+      "invalid@example.com",
+      0
     );
     const response = await api
       .post("/api/customers/refreshToken")
@@ -155,4 +157,24 @@ describe("Error handler middleware", () => {
     expect(response.status).toBe(404);
     expect(response.body).toMatchObject({ error: "User not found" });
   });
+
+  test("User with invalid token version can't get access token", async () => {
+    const parsedCookie = await logJohnIn();
+
+    await incrementTokenVersion();
+
+    const refreshResponse = await api
+      .post("/api/customers/refreshToken")
+      .set("Cookie", `${parsedCookie[1]}=${parsedCookie[2]}`);
+
+    expect(refreshResponse.status).toBe(403);
+    expect(refreshResponse.body).toMatchObject({ error: "Token invalidated" });
+  });
 });
+
+const incrementTokenVersion = async () => {
+  await prisma.customer.update({
+    where: { email: johnsCredentials.email },
+    data: { tokenVersion: { increment: 1 } },
+  });
+};
