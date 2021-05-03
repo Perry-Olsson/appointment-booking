@@ -15,7 +15,7 @@ export const Logout: React.FC<{ Component: React.FC<any> }> = ({
       handleClick={async () => {
         await customerService.logout();
         accessToken.clear();
-        client.resetQueries();
+        client.clear();
         router.push("/");
       }}
     />
