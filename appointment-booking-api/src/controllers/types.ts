@@ -10,7 +10,7 @@ import {
   ExposedAppointment,
   TimeBoundry,
 } from "../repositories/appointment/types";
-import { DefaultCustomer } from "../repositories/customer/types";
+import { DefaultCustomer, LoginCustomer } from "../repositories/customer/types";
 import { NewAppointment } from "../types";
 
 export interface AppointmentDAO {
@@ -22,7 +22,7 @@ export interface AppointmentDAO {
 
 export interface CustomerDAO {
   create(req: any): Promise<DefaultCustomer>;
-  login(req: any): Promise<DefaultCustomer>;
+  login(req: any): Promise<LoginCustomer>;
   findOne(arg: Prisma.CustomerFindUniqueArgs): Promise<Customer | null>;
 }
 

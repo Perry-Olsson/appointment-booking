@@ -16,6 +16,7 @@ export interface DefaultCustomer {
 
 export interface LoginCustomer extends DefaultCustomer {
   password?: string | null;
+  tokenVersion: number;
 }
 
 export interface CustomerResponse {

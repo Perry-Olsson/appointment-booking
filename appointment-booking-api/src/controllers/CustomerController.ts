@@ -51,7 +51,10 @@ export class CustomerController {
       const user = await this.dataAccess.login(req.body);
 
       const accessToken = auth.createAccessToken(user.email);
-      const refreshToken = auth.createRefreshToken(user.email);
+      const refreshToken = auth.createRefreshToken(
+        user.email,
+        user.tokenVersion
+      );
 
       res
         .cookie(refreshTokenKeyValue, refreshToken, cookieOptions)

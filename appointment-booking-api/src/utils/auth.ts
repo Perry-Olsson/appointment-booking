@@ -15,8 +15,8 @@ class Auth {
     return decodedToken as DecodedAccessToken;
   }
 
-  public createRefreshToken(email: string) {
-    return jwt.sign({ email }, config.refreshTokenSecret);
+  public createRefreshToken(email: string, tokenVersion: number) {
+    return jwt.sign({ email, tokenVersion }, config.refreshTokenSecret);
   }
 
   public decodeRefreshToken(token: string) {
@@ -36,6 +36,10 @@ export interface DecodedToken {
 
 export interface DecodedAccessToken extends DecodedToken {
   exp: number;
+}
+
+export interface DecodedRefreshToken extends DecodedToken {
+  tokenVersion: number;
 }
 
 export const auth = new Auth();

@@ -13,10 +13,11 @@ test("create token function returns a valid token", async () => {
 });
 
 test("create refreshToken returns valid refresh token", async () => {
-  const token = auth.createRefreshToken(testUser.email);
+  const token = auth.createRefreshToken(testUser.email, 0);
 
   const decodedToken = auth.decodeRefreshToken(token);
 
   expect(decodedToken.email).toBe(testUser.email);
+  expect(decodedToken).toHaveProperty("tokenVersion");
   expect(typeof token).toBe("string");
 });

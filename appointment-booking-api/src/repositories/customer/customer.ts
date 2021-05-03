@@ -1,12 +1,13 @@
 import { LoginError } from "../../utils";
 import bcrypt from "bcryptjs";
 import { Prisma } from ".prisma/client";
-import { DefaultCustomer, LoginCustomer } from "./types";
+import { LoginCustomer } from "./types";
 import { prisma } from "../../prisma";
 import { defaultCustomerSelect } from "../constants";
+import { CustomerDAO } from "../../controllers/types";
 
-export class CustomerDataAccess {
-  public async create(reqBody: any): Promise<DefaultCustomer> {
+export class CustomerDataAccess implements CustomerDAO {
+  public async create(reqBody: any) {
     const createdCustomer = await prisma.customer.create({
       data: reqBody,
       select: this.createSelectStatement,
@@ -15,10 +16,10 @@ export class CustomerDataAccess {
     return createdCustomer;
   }
 
-  public async login({ email, password }: any): Promise<DefaultCustomer> {
+  public async login({ email, password }: any) {
     const customer: LoginCustomer | null = await prisma.customer.findUnique({
       where: { email },
-      select: this.loginSelectStatement,
+      select: { ...this.loginSelectStatement, tokenVersion: true },
     });
 
     const user = await this._isUser(customer, password);

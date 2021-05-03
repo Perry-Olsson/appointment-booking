@@ -62,7 +62,7 @@ describe("Cusotmer login", () => {
     expect(response.body.accessToken).toBe(auth.createAccessToken(email));
     const refreshToken = extractRefreshToken(response.get("Set-Cookie"));
     if (!refreshToken) throw Error("bad regex");
-    expect(refreshToken).toBe(auth.createRefreshToken(email));
+    expect(refreshToken).toBe(auth.createRefreshToken(email, 0));
   });
 
   test("/api/customers/logout successfully sets refreshToken cookie to empty string", async () => {
