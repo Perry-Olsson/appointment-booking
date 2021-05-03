@@ -1,15 +1,18 @@
 import jwt from "jsonwebtoken";
 import config from "../config";
+import { accessTokenExp } from "../constants";
 
 class Auth {
   public createAccessToken(email: string) {
-    return jwt.sign({ email }, config.accessTokenSecret, { expiresIn: "10s" });
+    return jwt.sign({ email }, config.accessTokenSecret, {
+      expiresIn: accessTokenExp,
+    });
   }
 
   public decodeAccessToken(token: string) {
     const decodedToken = jwt.verify(token, config.accessTokenSecret);
 
-    return decodedToken as DecodedToken;
+    return decodedToken as DecodedAccessToken;
   }
 
   public createRefreshToken(email: string) {
@@ -29,6 +32,10 @@ class Auth {
 export interface DecodedToken {
   email: string;
   iat: number;
+}
+
+export interface DecodedAccessToken extends DecodedToken {
+  exp: number;
 }
 
 export const auth = new Auth();

@@ -23,3 +23,5 @@ export const cookieOptions: CookieOptions = {
   sameSite: "none",
   secure: true,
 };
+
+export const accessTokenExp = 10 * SECOND;
