@@ -25,3 +25,5 @@ export const cookieOptions: CookieOptions = {
 };
 
 export const accessTokenExp = 10 * SECOND;
+
+export const refreshTokenKeyValue = "renewal_center_refreshJwt";

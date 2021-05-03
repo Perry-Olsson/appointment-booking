@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { CustomerDAO } from "./types";
 import { auth } from "../utils/auth";
 import passport from "passport";
-import { cookieOptions } from "../constants";
+import { cookieOptions, refreshTokenKeyValue } from "../constants";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
@@ -54,7 +54,7 @@ export class CustomerController {
       const refreshToken = auth.createRefreshToken(user.email);
 
       res
-        .cookie("renewal_center_refreshJwt", refreshToken, cookieOptions)
+        .cookie(refreshTokenKeyValue, refreshToken, cookieOptions)
         .json({ accessToken });
     } catch (err) {
       next(err);
@@ -63,10 +63,7 @@ export class CustomerController {
 
   async logout(_req: Request, res: Response, next: NextFunction) {
     try {
-      res
-        .cookie("renewal_center_refreshJwt", "", cookieOptions)
-        .status(204)
-        .send();
+      res.cookie(refreshTokenKeyValue, "", cookieOptions).status(204).send();
     } catch (err) {
       next(err);
     }
@@ -74,7 +71,7 @@ export class CustomerController {
 
   async refreshToken(req: Request, res: Response, next: NextFunction) {
     try {
-      const refreshToken = req.cookies["renewal_center_refreshJwt"];
+      const refreshToken = req.cookies[refreshTokenKeyValue];
       if (!refreshToken) throw new NotAuthenticatedError(200);
 
       const decodedToken = auth.decodeRefreshToken(refreshToken);

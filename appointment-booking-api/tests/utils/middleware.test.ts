@@ -9,6 +9,7 @@ import {
   createTestAppointment,
   initializeTestData,
 } from "../helpers";
+import { refreshTokenKeyValue } from "../../src/constants";
 
 const api = request(app);
 
@@ -134,7 +135,7 @@ describe("Error handler middleware", () => {
   test("Provides json web token error", async () => {
     const response = await api
       .post("/api/customers/refreshToken")
-      .set("Cookie", "renewal_center_refreshJwt=jfkldsajfpwijfoalsjfks");
+      .set("Cookie", `${refreshTokenKeyValue}=jfkldsajfpwijfoalsjfks`);
 
     expect(response.status).toBe(403);
     expect(response.body).toMatchObject({ error: "JsonWebTokenError" });
@@ -148,7 +149,7 @@ describe("Error handler middleware", () => {
       .post("/api/customers/refreshToken")
       .set(
         "Cookie",
-        `renewal_center_refreshJwt=${refreshTokenForNonExistentUser}`
+        `${refreshTokenKeyValue}=${refreshTokenForNonExistentUser}`
       );
 
     expect(response.status).toBe(404);

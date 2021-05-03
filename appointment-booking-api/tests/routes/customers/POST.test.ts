@@ -4,6 +4,7 @@ import { prisma } from "../../../src/prisma";
 import { extractRefreshToken, initializeTestData } from "../../helpers";
 import { testGuest, testUser } from "../../constants";
 import { auth } from "../../../src/utils/auth";
+import { refreshTokenKeyValue } from "../../../src/constants";
 
 const api = request(app);
 
@@ -67,7 +68,7 @@ describe("Cusotmer login", () => {
   test("/api/customers/logout successfully sets refreshToken cookie to empty string", async () => {
     const response = await api
       .post("/api/customers/logout")
-      .set("Cookie", `renewal_center_refreshJwt=djfklsfsladfjasklfdjasklj`);
+      .set("Cookie", `${refreshTokenKeyValue}=djfklsfsladfjasklfdjasklj`);
 
     const cookie = response.get("Set-Cookie");
     const refreshToken = cookie[0].match(/([^=]+)=(; )/); //matches empty string cookie
