@@ -169,6 +169,8 @@ describe("Error handler middleware", () => {
 
     expect(refreshResponse.status).toBe(403);
     expect(refreshResponse.body).toMatchObject({ error: "Token invalidated" });
+
+    await decrementTokenVersion();
   });
 });
 
@@ -176,5 +178,12 @@ const incrementTokenVersion = async () => {
   await prisma.customer.update({
     where: { email: johnsCredentials.email },
     data: { tokenVersion: { increment: 1 } },
+  });
+};
+
+const decrementTokenVersion = async () => {
+  await prisma.customer.update({
+    where: { email: johnsCredentials.email },
+    data: { tokenVersion: { decrement: 1 } },
   });
 };

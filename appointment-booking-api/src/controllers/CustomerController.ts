@@ -96,8 +96,10 @@ export class CustomerController {
           404
         );
 
-      if (user.tokenVersion !== decodedToken.tokenVersion)
+      if (user.tokenVersion !== decodedToken.tokenVersion) {
+        console.log(user.tokenVersion);
         throw new TokenInvalidatedError();
+      }
 
       const accessToken = auth.createAccessToken(decodedToken.email);
 
