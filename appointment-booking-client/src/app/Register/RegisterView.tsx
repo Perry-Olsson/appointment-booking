@@ -1,3 +1,4 @@
+import { validate } from "email-validator";
 import React, { BaseSyntheticEvent, FC } from "react";
 import {
   Control,
@@ -26,7 +27,6 @@ export const RegisterView: FC<RegisterViewProps> = ({
   control,
   fieldErrors,
 }) => {
-  console.log(fieldErrors.phoneNumber);
   return (
     <Container>
       <Header>Register</Header>
@@ -43,7 +43,7 @@ export const RegisterView: FC<RegisterViewProps> = ({
 
         <Label>
           Last name
-          <Input {...register("lastName", { required: "hello" })} />
+          <Input {...register("lastName", { required: true })} />
           {fieldErrors.lastName && (
             <ErrorText>This field is required</ErrorText>
           )}
@@ -68,6 +68,41 @@ export const RegisterView: FC<RegisterViewProps> = ({
           />
           {fieldErrors.phoneNumber && (
             <ErrorText>{fieldErrors.phoneNumber.message}</ErrorText>
+          )}
+        </Label>
+
+        <Seperator />
+
+        <Label>
+          Email
+          <Input
+            {...register("email", {
+              required: "This field is required",
+              validate: value =>
+                validate(value) || "This is not a valid email address",
+            })}
+          />
+          {fieldErrors.email && (
+            <ErrorText>{fieldErrors.email.message}</ErrorText>
+          )}
+        </Label>
+
+        <Seperator />
+
+        <Label>
+          Password
+          <Input
+            {...register("password", {
+              required: "This field is required",
+              minLength: {
+                value: 6,
+                message: "Your password must be atleast 6 characters long",
+              },
+            })}
+            type="password"
+          />
+          {fieldErrors.password && (
+            <ErrorText>{fieldErrors.password.message}</ErrorText>
           )}
         </Label>
 

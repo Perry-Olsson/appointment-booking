@@ -6,6 +6,8 @@ export interface RegisterFormValues {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  email: string;
+  password: string;
 }
 
 export const Register: FC = () => {
