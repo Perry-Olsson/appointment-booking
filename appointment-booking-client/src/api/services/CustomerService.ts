@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { RegisterFormValues } from "../../app/Register";
 import { accessToken } from "../../pages/_app";
 import { User } from "../../types";
 import { ClientInjector } from "../ClientInjector";
@@ -6,6 +7,15 @@ import { ClientInjector } from "../ClientInjector";
 export class CustomerService extends ClientInjector {
   constructor(httpClient: AxiosInstance) {
     super(httpClient);
+  }
+
+  public async register(input: RegisterFormValues) {
+    const response = await this.instance.post("/customers", {
+      ...input,
+      type: "USER",
+    });
+
+    return response;
   }
 
   public async login(credentials: Credentials) {

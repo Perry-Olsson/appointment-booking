@@ -9,7 +9,6 @@ export const UserProvider: FC = ({ children }) => {
   const { data } = useQuery("user", async () => await customerService.user(), {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    refetchInterval: Infinity,
   });
 
   let user: User | null | "loading";
