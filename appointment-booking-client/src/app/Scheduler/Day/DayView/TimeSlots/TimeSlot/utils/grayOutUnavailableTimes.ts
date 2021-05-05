@@ -1,5 +1,26 @@
-import { Provider } from "../../../../../../../types";
+import { Provider, ServiceDay } from "../../../../../../../types";
 import { to4DigitTimeNumber } from "../../../../../utils";
+import { isInService } from "../../../../../utils/isInService";
+
+interface IsGrayedOutArgs {
+  provider: Provider | undefined;
+  timeSlot: Date;
+  serviceHours: ServiceDay;
+}
+
+export const isGrayedOut = ({
+  provider,
+  timeSlot,
+  serviceHours,
+}: IsGrayedOutArgs) => {
+  if (provider) {
+    if (grayOutUnavailableTime(timeSlot, provider)) return true;
+    return false;
+  } else {
+    if (isInService(timeSlot, serviceHours)) return false;
+    return true;
+  }
+};
 
 export const grayOutUnavailableTime = (
   timeSlot: Date,

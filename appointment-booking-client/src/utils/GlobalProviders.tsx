@@ -29,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: Arial, Helvetica, sans-serif;
   }
 
+/* REACT BURGER MENU */
   /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
@@ -90,4 +91,12 @@ Note: Beware of modifying this element as it can break the animations - you shou
   background: rgba(0, 0, 0, 0.3);
 }
 
+/* REACT PHONE NUMBER INPUT*/
+.PhoneInputInput {
+  border: solid 1px ${theme.colors.lightGray};
+  border-radius: 4px;
+  height: ${theme.form.height};  
+  font-size: ${theme.font.sm_med};
+  padding: 5px;
+}
 `;

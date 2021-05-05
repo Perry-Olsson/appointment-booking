@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "email-validator": "^2.0.4",
     "jotai": "^0.15.2",
     "jwt-decode": "^3.1.2",
     "next": "latest",
@@ -20,6 +21,7 @@
     "react-hook-form": "^7.0.1",
     "react-icons": "^4.2.0",
     "react-is": "^16.8.0",
+    "react-phone-number-input": "^3.1.21",
     "react-query": "^3.12.0",
     "styled-components": "^5.0.0"
   },
@@ -27,6 +29,7 @@
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.1",
     "@types/react-burger-menu": "^2.8.0",
+    "@types/react-phone-number-input": "^3.0.6",
     "@types/react-query": "^1.1.2",
     "@types/styled-components": "^5.1.7",
     "babel-plugin-styled-components": "^1.8.0",

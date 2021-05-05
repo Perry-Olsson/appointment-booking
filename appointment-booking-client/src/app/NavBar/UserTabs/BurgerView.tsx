@@ -18,7 +18,10 @@ export const BurgerView: React.FC<BurgerViewProps> = ({}) => {
           <LoggedUser>logged in as {user.firstName}</LoggedUser>
         </>
       ) : (
-        <BurgerTab href="/login">Login</BurgerTab>
+        <>
+          <BurgerTab href="/login">Login</BurgerTab>
+          <BurgerTab href="/register">Register</BurgerTab>
+        </>
       )}
     </>
   );

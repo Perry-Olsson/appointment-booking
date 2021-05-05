@@ -1,16 +1,6 @@
 import styled from "styled-components";
-import {
-  Appointment,
-  Procedure,
-  Provider,
-  ServiceDay,
-} from "../../../../../../types";
-import { isInService } from "../../../../utils/isInService";
-import {
-  appointmentFitsSlot,
-  getSelectedAppointment,
-  grayOutUnavailableTime,
-} from "./utils";
+import { Appointment, ServiceDay } from "../../../../../../types";
+import { isGrayedOut, selectedAppointmentFits } from "./utils";
 import { useFormApi } from "../../../../context";
 import { UseFormSetValue } from "react-hook-form";
 import { FormValues } from "../../../../AppointmentForm/types";
@@ -20,6 +10,7 @@ import {
   useWatchTime,
 } from "../../../../hooks";
 import { ColorInSlot } from "./ColorInSlot";
+import { theme } from "../../../../../../components";
 
 export const TimeSlot: React.FC<TimeSlotProps> = ({
   timeSlot,
@@ -31,22 +22,28 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
   const time = useWatchTime();
   const { setValue } = useFormApi();
   const isOnHour = timeSlot.getMinutes() === 0;
+  const appointmentFits = selectedAppointmentFits({
+    procedure,
+    provider,
+    time,
+    timeSlot,
+    appointment,
+  });
 
   return (
     <Container
       isOnHour={isOnHour}
-      timeSlot={timeSlot}
-      serviceHours={serviceHours}
-      provider={provider}
-      onClick={() =>
-        handleClick({
-          provider,
-          procedure,
-          timeSlot,
-          time,
-          setValue,
-          appointment,
-        })
+      isGrayedOut={isGrayedOut({ provider, timeSlot, serviceHours })}
+      appointmentFits={appointmentFits}
+      onClick={
+        appointmentFits !== false
+          ? () =>
+              handleClick({
+                appointmentFits,
+                timeSlot,
+                setValue,
+              })
+          : undefined
       }
     >
       <ColorInSlot
@@ -61,43 +58,18 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
 };
 
 const handleClick = ({
-  provider,
-  procedure,
   timeSlot,
-  time,
+  appointmentFits,
   setValue,
-  appointment,
 }: HandleClickArgs) => {
-  if (provider && procedure) {
-    const selectedAppointment = getSelectedAppointment(time, procedure);
-    if (selectedAppointment?.start === timeSlot) {
-      setValue("time", "");
-      return;
-    }
-
-    const appointmentEnd = new Date(timeSlot);
-    appointmentEnd.setMinutes(timeSlot.getMinutes() + procedure.duration);
-
-    if (appointment) {
-      if (appointmentEnd > appointment.timestamp && timeSlot < appointment.end)
-        return;
-    }
-
-    const schedule = provider.schedule[timeSlot.getDayString()];
-
-    if (appointmentFitsSlot(schedule, timeSlot, appointmentEnd)) {
-      setValue("time", timeSlot.toJSON());
-    }
-  }
+  if (appointmentFits === undefined) setValue("time", "");
+  else setValue("time", timeSlot.toJSON());
 };
 
 interface HandleClickArgs {
-  provider: Provider | undefined;
-  procedure: Procedure | undefined;
+  appointmentFits: boolean | undefined;
   timeSlot: Date;
   setValue: UseFormSetValue<FormValues>;
-  time: Date | undefined;
-  appointment: Appointment | undefined;
 }
 
 const Container = styled.div<ContainerProps>`
@@ -106,23 +78,16 @@ const Container = styled.div<ContainerProps>`
     isOnHour ? theme.colors.gray : theme.colors.lightGray};
   width: 100%;
   height: 1.7rem;
-  background-color: ${({ theme, timeSlot, serviceHours, provider }) => {
-    if (provider) {
-      if (grayOutUnavailableTime(timeSlot, provider))
-        return theme.colors.lightGray;
-      return null;
-    } else {
-      if (isInService(timeSlot, serviceHours)) return null;
-      return theme.colors.lightGray;
-    }
-  }};
+  background-color: ${({ isGrayedOut }) =>
+    isGrayedOut ? theme.colors.lightGray : null};
+  cursor: ${({ appointmentFits }) =>
+    appointmentFits !== false ? "pointer" : null};
 `;
 
 interface ContainerProps {
   isOnHour: boolean;
-  timeSlot: Date;
-  serviceHours: ServiceDay;
-  provider: Provider | undefined;
+  isGrayedOut: boolean;
+  appointmentFits: boolean | undefined;
 }
 
 interface TimeSlotProps {
