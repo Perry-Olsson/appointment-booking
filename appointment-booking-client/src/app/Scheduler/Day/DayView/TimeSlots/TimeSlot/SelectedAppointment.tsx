@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { ONE_MINUTE } from "../../../../../../constants";
 import { Procedure, Provider } from "../../../../../../types";
+import { isStartOfAppointment, isEndOfAppointment } from "./utils";
 
 interface SelectedAppointmentProps {
   timeSlot: Date;
@@ -16,12 +16,25 @@ export const SelectedAppointment: React.FC<SelectedAppointmentProps> = ({
   selectedAppointment,
   timeSlot,
 }) => {
-  if (provider && procedure && selectedAppointment)
+  if (provider && procedure && selectedAppointment) {
+    const isFirstSlot = isStartOfAppointment(
+      timeSlot.valueOf(),
+      selectedAppointment.start.valueOf()
+    );
     return (
-      <Container timeSlot={timeSlot} selectedAppointment={selectedAppointment}>
+      <Container
+        isFirstSlot={isFirstSlot}
+        isLastSlot={isEndOfAppointment(
+          timeSlot.valueOf(),
+          selectedAppointment.end.valueOf()
+        )}
+        timeSlot={timeSlot}
+        selectedAppointment={selectedAppointment}
+      >
         {children}
       </Container>
     );
+  }
   return <>{children}</>;
 };
 
@@ -33,31 +46,19 @@ export const Container = styled.div<ContainerProps>`
       ? theme.colors.primaryLightFaded
       : null;
   }};
-  border-top-left-radius: ${({ theme, timeSlot, selectedAppointment }) =>
-    isFirstTimeSlot(timeSlot, selectedAppointment.start)
-      ? theme.dayView.appointmentBlockRadius
-      : null};
-  border-top-right-radius: ${({ theme, timeSlot, selectedAppointment }) =>
-    isFirstTimeSlot(timeSlot, selectedAppointment.start)
-      ? theme.dayView.appointmentBlockRadius
-      : null};
-  border-bottom-left-radius: ${({ theme, timeSlot, selectedAppointment }) =>
-    isLastTimeSlot(timeSlot, selectedAppointment.end)
-      ? theme.dayView.appointmentBlockRadius
-      : null};
-  border-bottom-right-radius: ${({ theme, timeSlot, selectedAppointment }) =>
-    isLastTimeSlot(timeSlot, selectedAppointment.end)
-      ? theme.dayView.appointmentBlockRadius
-      : null};
+  border-top-left-radius: ${({ theme, isFirstSlot }) =>
+    isFirstSlot ? theme.dayView.appointmentBlockRadius : null};
+  border-top-right-radius: ${({ theme, isFirstSlot }) =>
+    isFirstSlot ? theme.dayView.appointmentBlockRadius : null};
+  border-bottom-left-radius: ${({ theme, isLastSlot }) =>
+    isLastSlot ? theme.dayView.appointmentBlockRadius : null};
+  border-bottom-right-radius: ${({ theme, isLastSlot }) =>
+    isLastSlot ? theme.dayView.appointmentBlockRadius : null};
 `;
 
-const isFirstTimeSlot = (timeSlot: Date, start: Date) =>
-  timeSlot.valueOf() === start.valueOf() ? true : false;
-
-const isLastTimeSlot = (timeSlot: Date, end: Date) =>
-  timeSlot.valueOf() === end.valueOf() - ONE_MINUTE * 15 ? true : false;
-
 interface ContainerProps {
+  isFirstSlot: boolean;
+  isLastSlot: boolean;
   timeSlot: Date;
   selectedAppointment: { start: Date; end: Date };
 }

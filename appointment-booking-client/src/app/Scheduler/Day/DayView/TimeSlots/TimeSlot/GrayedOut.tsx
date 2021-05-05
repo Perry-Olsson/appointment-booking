@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { QUARTER_HOUR } from "../../../../../../constants";
+import { isStartOfAppointment, isEndOfAppointment } from "./utils";
 
 interface GrayedOutProps {
   timeSlotValue: number;
@@ -12,8 +12,8 @@ export const GrayedOut: FC<GrayedOutProps> = props => {
   return (
     <Container
       slotIsTaken={slotIsTaken(props)}
-      isStart={isStartOfAppointment(props)}
-      isEnd={isEndOfAppointment(props)}
+      isStart={isStartOfAppointment(props.timeSlotValue, props.timestampValue)}
+      isEnd={isEndOfAppointment(props.timeSlotValue, props.endValue)}
     >
       {props.children}
     </Container>
@@ -45,11 +45,3 @@ const slotIsTaken = ({
   endValue,
 }: GrayedOutProps) =>
   timeSlotValue >= timestampValue && timeSlotValue < endValue ? true : false;
-
-const isStartOfAppointment = ({
-  timeSlotValue,
-  timestampValue,
-}: GrayedOutProps) => (timeSlotValue === timestampValue ? true : false);
-
-const isEndOfAppointment = ({ timeSlotValue, endValue }: GrayedOutProps) =>
-  endValue && timeSlotValue === endValue - QUARTER_HOUR ? true : false;
