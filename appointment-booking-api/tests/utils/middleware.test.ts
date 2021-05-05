@@ -170,6 +170,33 @@ describe("Error handler middleware", () => {
     expect(refreshResponse.status).toBe(403);
     expect(refreshResponse.body).toMatchObject({ error: "Token invalidated" });
   });
+
+  test("Registration with an in use email already associated with a user returns correct error", async () => {
+    const response = await api.post("/api/customers").send({
+      firstName: "John",
+      lastName: "Doe",
+      type: "USER",
+      phoneNumber: "44444444444",
+      email: "john@example.com",
+      password: "password",
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({ error: "Email in use" });
+  });
+
+  /* implement after email confirmation */
+  // test.only("Registration with an email associated with a guest succeeds and updates database record", async () => {
+  //   const createdGuest = await prisma.customer.create({
+  //     data: testGuest as any,
+  //   });
+
+  //   const response = api.post("/api/customers").send({
+
+  //   })
+
+  //   await prisma.customer.delete({ where: { id: createdGuest.id } });
+  // });
 });
 
 const incrementTokenVersion = async () => {

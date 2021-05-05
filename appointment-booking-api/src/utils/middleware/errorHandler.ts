@@ -60,6 +60,10 @@ const errorResponses: ErrorResponseObject = {
     error: "Token invalidated",
     message,
   }),
+  emailInUse: (message: string) => ({
+    error: "Email in use",
+    message,
+  }),
 };
 
 interface ErrorResponseObject {

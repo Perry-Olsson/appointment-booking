@@ -1,4 +1,4 @@
-import { LoginError } from "../../utils";
+import { EmailInUseError, LoginError } from "../../utils";
 import bcrypt from "bcryptjs";
 import { Prisma } from ".prisma/client";
 import { LoginCustomer } from "./types";
@@ -8,6 +8,14 @@ import { CustomerDAO } from "../../controllers/types";
 
 export class CustomerDataAccess implements CustomerDAO {
   public async create(reqBody: any) {
+    const customerWithSameEmail = await prisma.customer.findUnique({
+      where: { email: reqBody.email },
+    });
+
+    if (customerWithSameEmail) {
+      if (customerWithSameEmail.type === "USER") throw new EmailInUseError();
+    }
+
     const createdCustomer = await prisma.customer.create({
       data: reqBody,
       select: this.createSelectStatement,

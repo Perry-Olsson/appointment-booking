@@ -96,3 +96,11 @@ export class UserNotFoundError extends ExpectedError {
     this.name = "userNotFound";
   }
 }
+
+export class EmailInUseError extends ExpectedError {
+  constructor() {
+    super("An account is already associated with this email address", 200);
+
+    this.name = "emailInUse";
+  }
+}
