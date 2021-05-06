@@ -5,8 +5,9 @@ import { DuplicateError } from "../../utils";
 import { Appointment } from "@prisma/client";
 import { exposedAppointmentFields } from "../constants";
 import { to4DigitTimeNumber } from "../utils";
+import { AppointmentDAO } from "../../controllers/types";
 
-export class AppointmentDataAccess {
+export class AppointmentDataAccess implements AppointmentDAO {
   public async create(newAppointment: NewAppointment): Promise<Appointment> {
     return await prisma.appointment.create({ data: newAppointment });
   }

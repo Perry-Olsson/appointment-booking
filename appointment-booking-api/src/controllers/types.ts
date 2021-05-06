@@ -18,6 +18,7 @@ export interface AppointmentDAO {
   getUniqueAppointment(date: Date): Promise<ExposedAppointment | null>;
   create(appointment: NewAppointment): Promise<Appointment>;
   isDuplicate(appointment: NewAppointment): Promise<void>;
+  isConflicting(appointment: NewAppointment): Promise<void>;
 }
 
 export interface CustomerDAO {

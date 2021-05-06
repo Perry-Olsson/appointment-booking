@@ -51,6 +51,8 @@ export class AppointmentController extends TimestampValidator {
 
       await this.dataAccess.isDuplicate(newAppointment);
 
+      await this.dataAccess.isConflicting(newAppointment);
+
       const createdAppointment = await this.dataAccess.create(newAppointment);
 
       res.json(createdAppointment);

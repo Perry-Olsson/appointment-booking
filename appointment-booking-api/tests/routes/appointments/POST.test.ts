@@ -37,4 +37,14 @@ describe("POST request", () => {
 
     expect(response.status).toBe(500);
   });
+
+  test("/api/appointments fails if appointment is conflicting with a providers schedule", async () => {
+    const { data } = await createTestAppointment({ defaultProvider: true });
+    data.timestamp.setHours(12);
+    data.end.setHours(13);
+
+    const response = await api.post("/api/appointments").send(data);
+
+    expect(response.status).not.toBe(200);
+  });
 });
