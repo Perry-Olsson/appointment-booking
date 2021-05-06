@@ -2,6 +2,7 @@ import { ONE_DAY } from "../../src/constants";
 import { prisma } from "../../src/prisma";
 import { AppointmentDataAccess } from "../../src/repositories/appointment";
 import { createTestAppointment, initializeTestData } from "../helpers";
+import { createConflictingAppointments } from "./helpers/createConflictingAppointments";
 
 const appointment = new AppointmentDataAccess();
 
@@ -26,6 +27,20 @@ describe("Appointments Repository", () => {
       const duplicate = await appointment.isDuplicate({ ...data, providerId });
       expect(duplicate).toBe(undefined);
     });
+  });
+
+  test("Throws error if appointment conflicts with providers schedule", async () => {
+    const {
+      before,
+      lunchHour,
+      after,
+      nonConflicting,
+    } = createConflictingAppointments();
+
+    await expect(appointment.isConflicting(before)).rejects.toThrow();
+    await expect(appointment.isConflicting(lunchHour)).rejects.toThrow();
+    await expect(appointment.isConflicting(after)).rejects.toThrow();
+    expect(await appointment.isConflicting(nonConflicting)).toBe(undefined);
   });
 
   test("get appointments function returns correct appointments from given parameter", async () => {

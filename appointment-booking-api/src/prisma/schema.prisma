@@ -54,7 +54,7 @@ model Provider {
 
 model Schedule {
   id         Int      @id @default(autoincrement())
-  providerId String   @map("provider_id") @db.VarChar(100)
+  providerId String   @unique @map("provider_id") @db.VarChar(100)
   provider   Provider @relation(fields: [providerId], references: [email])
   Sunday     String[] @map("sunday") @db.Char(6)
   Monday     String[] @map("monday") @db.Char(6)

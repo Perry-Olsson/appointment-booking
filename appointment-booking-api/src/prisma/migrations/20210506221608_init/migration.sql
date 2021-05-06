@@ -102,7 +102,7 @@ CREATE UNIQUE INDEX "appointments.end_unique" ON "appointments"("end");
 CREATE UNIQUE INDEX "customers.email_unique" ON "customers"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "schedules_provider_id_unique" ON "schedules"("provider_id");
+CREATE UNIQUE INDEX "schedules.provider_id_unique" ON "schedules"("provider_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_ProcedureToProvider_AB_unique" ON "_ProcedureToProvider"("A", "B");

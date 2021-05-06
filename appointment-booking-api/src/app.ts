@@ -14,6 +14,7 @@ import { errorHandler } from "./utils/middleware";
 import { requestLogger } from "./utils/middleware";
 import { jwtStrategy } from "./utils/middleware/JwtStrategy";
 import cookieParser from "cookie-parser";
+import "./utils/date.extensions";
 
 const app = express();
 
