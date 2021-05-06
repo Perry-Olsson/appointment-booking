@@ -1,7 +1,7 @@
 import { prisma } from "../../prisma";
 import { ExposedAppointment, TimeBoundry } from "./types";
 import { NewAppointment } from "../../types";
-import { DuplicateError } from "../../utils";
+import { AppointmentConflictsError, DuplicateError } from "../../utils";
 import { Appointment } from "@prisma/client";
 import { exposedAppointmentFields } from "../constants";
 import { to4DigitTimeNumber } from "../utils";
@@ -21,10 +21,8 @@ export class AppointmentDataAccess implements AppointmentDAO {
 
     const day = schedule[timestamp.getDayString()];
 
-    if (day.length === 0) throw new Error("conflicts");
-
-    if (this._appointmentConflicts(day, timestamp, end))
-      throw new Error("conflicts");
+    if (day.length === 0 || this._appointmentConflicts(day, timestamp, end))
+      throw new AppointmentConflictsError();
   }
 
   private _appointmentConflicts(

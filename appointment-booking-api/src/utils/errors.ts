@@ -104,3 +104,14 @@ export class EmailInUseError extends ExpectedError {
     this.name = "emailInUse";
   }
 }
+
+export class AppointmentConflictsError extends ExpectedError {
+  constructor() {
+    super(
+      "This appointment conflicts with the selected providers schedule",
+      400
+    );
+
+    this.name = "appointmentConflicts";
+  }
+}

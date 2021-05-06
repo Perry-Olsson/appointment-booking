@@ -64,6 +64,10 @@ const errorResponses: ErrorResponseObject = {
     error: "Email in use",
     message,
   }),
+  appointmentConflicts: (message: string) => ({
+    error: "Provider unavailable",
+    message,
+  }),
 };
 
 interface ErrorResponseObject {
