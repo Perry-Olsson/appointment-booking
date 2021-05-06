@@ -98,46 +98,4 @@ describe("GET request", () => {
       await prisma.appointment.delete({ where: { id: appointment.id } });
     });
   });
-
-  describe("Request to /api/appointments/:timestamp", () => {
-    test("Returns correct appointment", async () => {
-      const { appointment } = await createTestAppointment({
-        pushToDb: true,
-      });
-      if (!appointment) throw new PushToDbError();
-      const response = await api.get(
-        `/api/appointments/${appointment?.timestamp.toJSON()}`
-      );
-
-      const appointmentFromApi = parseRawAppointment(response.body);
-
-      expect(response.status).toBe(200);
-      expect(appointmentFromApi.customerId).toBeUndefined();
-      expect(appointment).toMatchObject(appointmentFromApi);
-
-      await prisma.appointment.delete({ where: { id: appointment.id } });
-    });
-
-    test("Invalid timestamp returns correct error", async () => {
-      const response = await api.get("/api/appointments/invalid");
-
-      const invalidTimestamp = "2021-02-21T00:54:12:988f";
-      const almostValidResponse = await api.get(
-        `/api/appointments/${invalidTimestamp}`
-      );
-
-      expect(response.status).toBe(400);
-      expect(response.body).toEqual({
-        error: "Invalid timestamp",
-        message:
-          "timestamp invalid is invalid. Timestamp must be in json format",
-      });
-
-      expect(almostValidResponse.status).toBe(400);
-      expect(almostValidResponse.body).toEqual({
-        error: "Invalid timestamp",
-        message: `timestamp ${invalidTimestamp} is invalid. Timestamp must be in json format`,
-      });
-    });
-  });
 });

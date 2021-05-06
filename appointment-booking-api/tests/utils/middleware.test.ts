@@ -1,7 +1,7 @@
 import request from "supertest";
 import { app } from "../../src/app";
 import { prisma } from "../../src/prisma";
-import { EmailError, LoginError, TimestampError } from "../../src/utils";
+import { EmailError, LoginError } from "../../src/utils";
 import { auth } from "../../src/utils/auth";
 import { johnsCredentials, testUser } from "../constants";
 import {
@@ -93,16 +93,6 @@ describe("Error handler middleware", () => {
     });
 
     await prisma.appointment.delete({ where: { id: validResponse.body.id } });
-  });
-
-  test("Provides Invalid timestamp response", async () => {
-    const invalidTimestamp = "dsaifor90234";
-    const response = await api.get(`/api/appointments/${invalidTimestamp}`);
-
-    expect(response.status).toBe(400);
-
-    const error = new TimestampError(invalidTimestamp);
-    expect(response.body.message).toEqual(error.message);
   });
 
   test("Provides invalid login response", async () => {
