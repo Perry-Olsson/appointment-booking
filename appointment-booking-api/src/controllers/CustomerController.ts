@@ -97,7 +97,6 @@ export class CustomerController {
         );
 
       if (user.tokenVersion !== decodedToken.tokenVersion) {
-        console.log(user.tokenVersion);
         throw new TokenInvalidatedError();
       }
 

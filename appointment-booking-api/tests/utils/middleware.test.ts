@@ -27,6 +27,7 @@ describe("Error handler middleware", () => {
     const { data, appointment } = await createTestAppointment({
       time: { start: defaultStart, finish: defaultFinish },
       pushToDb: true,
+      defaultProvider: true,
     });
 
     const { data: offsetAppointment } = await createTestAppointment({
@@ -34,6 +35,7 @@ describe("Error handler middleware", () => {
         start: { ...defaultStart, hour: defaultStart.hour - 1 },
         finish: { ...defaultFinish, minute: defaultFinish.minute - 30 },
       },
+      defaultProvider: true,
     });
 
     const response = await api.post("/api/appointments").send(data);

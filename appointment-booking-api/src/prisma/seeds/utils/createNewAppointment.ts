@@ -2,17 +2,13 @@ import { Prisma } from ".prisma/client";
 import { HOUR } from "../../../constants";
 import { NewAppointment } from "../../../types";
 
-export const createNewAppointment = (
-  timestamp: Date,
-  end: Date,
-  customerId: string = "test@example.com",
-  procedureId: string = "Botox",
-  providerId: string = "john@provider.com"
-): NewAppointment => {
-  if (Math.random() > 0.5) {
-    procedureId = "Facial";
-    providerId = "jane@provider.com";
-  }
+export const createNewAppointment = ({
+  timestamp,
+  end,
+  customerId = "test@example.com",
+  procedureId,
+  providerId,
+}: CreateNewAppointmentArg): NewAppointment => {
   return {
     timestamp,
     end,
@@ -34,3 +30,11 @@ export const createNewCustomerAppointment = (
     provider: { connect: { email: "john@provider.com" } },
   };
 };
+
+export interface CreateNewAppointmentArg {
+  timestamp: Date;
+  end: Date;
+  customerId?: string;
+  procedureId: string;
+  providerId: string;
+}

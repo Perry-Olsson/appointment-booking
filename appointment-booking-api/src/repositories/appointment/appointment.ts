@@ -6,9 +6,13 @@ import { Appointment } from "@prisma/client";
 import { exposedAppointmentFields } from "../constants";
 
 export class AppointmentDataAccess {
-  public async isDuplicate({ timestamp, end }: NewAppointment): Promise<void> {
+  public async isDuplicate({
+    timestamp,
+    end,
+    providerId,
+  }: NewAppointment): Promise<void> {
     const duplicateAppointment = await prisma.appointment.findMany(
-      this._getIsDuplicateFilter(timestamp, end)
+      this._getIsDuplicateFilter(timestamp, end, providerId)
     );
 
     if (duplicateAppointment.length)
@@ -59,35 +63,44 @@ export class AppointmentDataAccess {
     return appointments;
   }
 
-  private _getIsDuplicateFilter(timestamp: Date, end: Date) {
+  private _getIsDuplicateFilter(
+    timestamp: Date,
+    end: Date,
+    providerId: string
+  ) {
     return {
       where: {
-        OR: [
+        AND: [
+          { providerId },
           {
-            AND: [
+            OR: [
               {
-                timestamp: {
-                  lte: timestamp,
-                },
+                AND: [
+                  {
+                    timestamp: {
+                      lte: timestamp,
+                    },
+                  },
+                  {
+                    end: {
+                      gt: timestamp,
+                    },
+                  },
+                ],
               },
               {
-                end: {
-                  gt: timestamp,
-                },
-              },
-            ],
-          },
-          {
-            AND: [
-              {
-                timestamp: {
-                  lt: end,
-                },
-              },
-              {
-                end: {
-                  gt: end,
-                },
+                AND: [
+                  {
+                    timestamp: {
+                      lt: end,
+                    },
+                  },
+                  {
+                    end: {
+                      gt: end,
+                    },
+                  },
+                ],
               },
             ],
           },

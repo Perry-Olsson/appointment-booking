@@ -2,6 +2,7 @@ import { HALF_HOUR, HOUR, ONE_DAY } from "../../constants";
 import { prisma } from "../../prisma";
 import { NewAppointment, NewCustomer } from "../../types";
 import { createNewAppointment, getRandomNumber, timestamper } from "./utils";
+import { randomizeAppointmentType } from "./utils";
 
 export async function seedAppointments(appointments: NewAppointment[]) {
   await prisma.customer.create({ data: testUser });
@@ -21,13 +22,14 @@ export const createAppointments = (
 
   for (let i = 0; i < daysWithAppointments; i++) {
     timestamper.getNextTimestamp(ONE_DAY, 3);
-    timestamper.setTimeValue(new Date(timestamper.timeValue))
+    timestamper.setTimeValue(new Date(timestamper.timeValue));
     for (let i = 0; i < appointmentsPerDay; i++) {
       appointmentSeeds.push(
-        createNewAppointment(
-          new Date(timestamper.timeValue),
-          new Date(timestamper.timeValue + HALF_HOUR * getRandomNumber(2))
-        )
+        createNewAppointment({
+          ...randomizeAppointmentType(),
+          timestamp: new Date(timestamper.timeValue),
+          end: new Date(timestamper.timeValue + HALF_HOUR * getRandomNumber(2)),
+        })
       );
       timestamper.getNextTimestamp(HOUR, 2);
     }

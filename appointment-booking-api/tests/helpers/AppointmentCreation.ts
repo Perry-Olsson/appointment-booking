@@ -1,15 +1,24 @@
 import { Appointment } from "@prisma/client";
 import { ONE_MONTH } from "../../src/constants";
 import { prisma } from "../../src/prisma";
-import { createNewAppointment } from "../../src/prisma/seeds/utils";
+import {
+  createNewAppointment,
+  randomizeAppointmentType,
+} from "../../src/prisma/seeds/utils";
 import { NewAppointment, Time } from "../../src/types";
 
 export const createTestAppointment = async ({
   time = {},
   pushToDb = false,
+  defaultProvider,
 }: TestAppointmentOptions = {}): Promise<TestAppointment> => {
   const { timestamp, end } = createAppointmentTimestamps(time);
-  const data = createNewAppointment(timestamp, end);
+
+  const data = createNewAppointment({
+    ...randomizeAppointmentType(defaultProvider),
+    timestamp,
+    end,
+  });
 
   const appointment = pushToDb
     ? await prisma.appointment.create({
@@ -71,6 +80,7 @@ interface TestAppointment {
 interface TestAppointmentOptions {
   time?: TestAppointmentTime;
   pushToDb?: boolean;
+  defaultProvider?: boolean;
 }
 
 interface TestAppointmentTime {

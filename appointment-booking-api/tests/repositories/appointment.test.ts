@@ -16,11 +16,15 @@ describe("Appointments Repository", () => {
     test("throws Duplicate error if appointment already exists", async () => {
       const { data } = await createTestAppointment({ pushToDb: true });
 
-      try {
-        await appointment.isDuplicate(data);
-      } catch (e) {
-        expect(e.message).toBe("timeslot has been taken");
-      }
+      await expect(appointment.isDuplicate(data)).rejects.toThrow();
+
+      const providerId =
+        data.providerId === "john@provider.com"
+          ? "jane@provider.com"
+          : "john@provider.com";
+
+      const duplicate = await appointment.isDuplicate({ ...data, providerId });
+      expect(duplicate).toBe(undefined);
     });
   });
 
