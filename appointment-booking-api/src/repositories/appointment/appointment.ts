@@ -60,18 +60,10 @@ export class AppointmentDataAccess implements AppointmentDAO {
     const duplicateAppointment = await prisma.appointment.findMany(
       this._getIsDuplicateFilter(timestamp, end, providerId)
     );
+    console.log(duplicateAppointment);
 
     if (duplicateAppointment.length)
       throw new DuplicateError("Appointment", "timeslot has been taken");
-  }
-
-  public async getUniqueAppointment(
-    timestamp: Date
-  ): Promise<ExposedAppointment | null> {
-    return await prisma.appointment.findUnique({
-      where: { timestamp },
-      select: exposedAppointmentFields,
-    });
   }
 
   public async getAppointments({
@@ -110,6 +102,8 @@ export class AppointmentDataAccess implements AppointmentDAO {
     end: Date,
     providerId: string
   ) {
+    console.log(timestamp);
+    console.log(end);
     return {
       where: {
         AND: [
@@ -120,12 +114,12 @@ export class AppointmentDataAccess implements AppointmentDAO {
                 AND: [
                   {
                     timestamp: {
-                      lte: timestamp,
+                      gt: timestamp,
                     },
                   },
                   {
-                    end: {
-                      gt: timestamp,
+                    timestamp: {
+                      lt: end,
                     },
                   },
                 ],
@@ -134,12 +128,12 @@ export class AppointmentDataAccess implements AppointmentDAO {
                 AND: [
                   {
                     timestamp: {
-                      lt: end,
+                      lt: timestamp,
                     },
                   },
                   {
                     end: {
-                      gt: end,
+                      gt: timestamp,
                     },
                   },
                 ],

@@ -32,19 +32,6 @@ export class AppointmentController extends TimestampValidator {
     return { hasQueryString: true, start, end };
   }
 
-  async getOneAppointment(req: Request, res: Response, next: NextFunction) {
-    try {
-      const validTimestamp = this.validateJSONTimestamp(req.params.timestamp);
-      const _appointment = await this.dataAccess.getUniqueAppointment(
-        validTimestamp
-      );
-
-      res.json(_appointment);
-    } catch (err) {
-      next(err);
-    }
-  }
-
   async createAppointment(req: Request, res: Response, next: NextFunction) {
     try {
       const newAppointment = this.initialize(req.body);
