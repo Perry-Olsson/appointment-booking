@@ -1,8 +1,12 @@
 import { Appointment, Customer } from "@prisma/client";
 
-export type NewAppointment = Omit<
+export interface NewAppointment extends _NewAppointment {
+  comments?: string;
+}
+
+type _NewAppointment = Omit<
   Appointment,
-  "id" | "createdAt" | "updatedAt"
+  "id" | "createdAt" | "updatedAt" | "comments"
 >;
 
 export type NewCustomer = Omit<

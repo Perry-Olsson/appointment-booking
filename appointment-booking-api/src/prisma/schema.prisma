@@ -13,6 +13,7 @@ model Appointment {
   updatedAt   DateTime  @default(now()) @map("updated_at")
   timestamp   DateTime  @db.Timestamptz(6)
   end         DateTime  @db.Timestamptz(6)
+  comments    String?   
   procedureId String    @map("procedure_id") @db.VarChar(100)
   procedure   Procedure @relation(fields: [procedureId], references: [name])
   providerId  String    @map("provider_id") @db.VarChar(100)
