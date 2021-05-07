@@ -23,6 +23,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   const client = useQueryClient();
   const {
     formState: { errors },
+    setValue,
     register,
     handleSubmit,
   } = useFormApi();
@@ -37,6 +38,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
 
     const response = await appointmentService.createAppointment(appointment);
     console.log(response);
+    setValue("timestamp", "");
     client.invalidateQueries("/providers");
   };
 
