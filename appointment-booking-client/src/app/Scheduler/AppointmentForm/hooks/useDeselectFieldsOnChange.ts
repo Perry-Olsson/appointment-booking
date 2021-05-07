@@ -5,11 +5,11 @@ import { useFormApi } from "../../context";
 export const useDeselectFieldsOnChange = () => {
   const { setValue, watch } = useFormApi();
   const { providers } = useStaticState();
-  const provider = watch("provider");
-  const procedure = watch("procedure");
+  const provider = watch("providerId");
+  const procedure = watch("procedureId");
 
   useEffect(() => {
-    setValue("time", "");
+    setValue("timestamp", "");
   }, [provider, procedure]);
 
   useEffect(() => {
@@ -19,6 +19,6 @@ export const useDeselectFieldsOnChange = () => {
         .find(p => p.email === provider)
         ?.procedures.find(p => p.name === procedure)
     )
-      setValue("provider", "");
+      setValue("providerId", "");
   }, [procedure]);
 };

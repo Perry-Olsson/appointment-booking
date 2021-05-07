@@ -4,6 +4,6 @@ export const useDeselectTime = () => {
   const { setValue } = useFormApi();
 
   return () => {
-    setValue("time", "");
+    setValue("timestamp", "");
   };
 };

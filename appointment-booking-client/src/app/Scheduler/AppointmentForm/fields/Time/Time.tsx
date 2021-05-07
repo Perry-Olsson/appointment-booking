@@ -19,7 +19,7 @@ export const Time: React.FC<TimeProps> = ({ timeSlots, register, errors }) => {
   return (
     <Label>
       Time:
-      <Select {...register("time", { required: true })} defaultValue="">
+      <Select {...register("timestamp", { required: true })} defaultValue="">
         <DefaultOption />
         <AvailableTimes
           timeSlots={timeSlots}
@@ -27,7 +27,7 @@ export const Time: React.FC<TimeProps> = ({ timeSlots, register, errors }) => {
           appointments={appointments}
         />
       </Select>
-      {errors.time && <ErrorText>This field is required</ErrorText>}
+      {errors.timestamp && <ErrorText>This field is required</ErrorText>}
     </Label>
   );
 };

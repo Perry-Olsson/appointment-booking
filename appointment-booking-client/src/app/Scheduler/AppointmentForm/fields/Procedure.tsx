@@ -13,7 +13,7 @@ export const Procedure: React.FC<FieldProps> = ({ register, errors }) => {
   return (
     <Label>
       I'm making an appointment for:
-      <Select {...register("procedure", { required: true })} defaultValue="">
+      <Select {...register("procedureId", { required: true })} defaultValue="">
         <DefaultOption />
         {procedures.map(procedure => (
           <option key={procedure.name} value={procedure.name}>
@@ -21,7 +21,7 @@ export const Procedure: React.FC<FieldProps> = ({ register, errors }) => {
           </option>
         ))}
       </Select>
-      {errors.procedure && <ErrorText>This field is required</ErrorText>}
+      {errors.procedureId && <ErrorText>This field is required</ErrorText>}
     </Label>
   );
 };

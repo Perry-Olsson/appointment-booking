@@ -4,7 +4,7 @@ import { useFormApi } from "../context";
 export const useWatchProvider = () => {
   const { providers } = useStaticState();
   const { watch } = useFormApi();
-  const provider = watch("provider");
+  const provider = watch("providerId");
 
   return providers.find(p => p.email === provider);
 };
@@ -12,14 +12,14 @@ export const useWatchProvider = () => {
 export const useWatchProcedure = () => {
   const { procedures } = useStaticState();
   const { watch } = useFormApi();
-  const procedure = watch("procedure");
+  const procedure = watch("procedureId");
 
   return procedures.find(p => p.name === procedure);
 };
 
 export const useWatchTime = () => {
   const { watch } = useFormApi();
-  const time = watch("time");
+  const time = watch("timestamp");
 
   return time !== "" ? new Date(time) : undefined;
 };

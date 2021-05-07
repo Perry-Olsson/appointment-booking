@@ -5,8 +5,8 @@ export interface FieldProps {
   errors: DeepMap<FormValues, FieldError>;
 }
 export interface FormValues {
-  procedure: string;
-  provider: string;
+  procedureId: string;
+  providerId: string;
   comments: string;
-  time: string;
+  timestamp: string;
 }

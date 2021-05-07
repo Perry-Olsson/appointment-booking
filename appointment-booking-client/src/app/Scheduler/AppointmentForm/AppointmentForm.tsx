@@ -5,21 +5,40 @@ import { device, Flex, Form, Seperator, Submit } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
-import { useFormApi } from "../context";
+import { useFormApi, useStaticState } from "../context";
 import { useDeselectFieldsOnChange } from "./hooks";
+import { FormValues } from "./types";
+import { useGetUser } from "../../../context";
+import { concatUser } from "./utils";
+import { appointmentService } from "../../../api";
+import { useQueryClient } from "react-query";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
   className,
 }) => {
   const [show] = useAtom(showAppointmentsFormAtom);
+  const { procedures } = useStaticState();
+  const user = useGetUser();
+  const client = useQueryClient();
   const {
     formState: { errors },
     register,
     handleSubmit,
   } = useFormApi();
-  const onSubmit = (data: any) => console.log(data);
   useDeselectFieldsOnChange();
+
+  const onSubmit = async (data: FormValues) => {
+    const appointment = concatUser(data, procedures, user);
+    if (!appointment) {
+      alert("oops something went wrong");
+      return;
+    }
+
+    const response = await appointmentService.createAppointment(appointment);
+    console.log(response);
+    client.invalidateQueries("/providers");
+  };
 
   if (!show) return null;
 

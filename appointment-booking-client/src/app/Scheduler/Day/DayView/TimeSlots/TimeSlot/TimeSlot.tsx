@@ -62,8 +62,8 @@ const handleClick = ({
   appointmentFits,
   setValue,
 }: HandleClickArgs) => {
-  if (appointmentFits === undefined) setValue("time", "");
-  else setValue("time", timeSlot.toJSON());
+  if (appointmentFits === undefined) setValue("timestamp", "");
+  else setValue("timestamp", timeSlot.toJSON());
 };
 
 interface HandleClickArgs {

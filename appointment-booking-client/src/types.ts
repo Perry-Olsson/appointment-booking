@@ -4,6 +4,7 @@ export interface Appointment {
   updatedAt: string;
   timestamp: Date;
   end: Date;
+  comments?: string;
 }
 
 export interface RawAppointment {
@@ -12,6 +13,15 @@ export interface RawAppointment {
   updatedAt: string;
   timestamp: string;
   end: string;
+}
+
+export interface NewAppointment {
+  end: string;
+  customerId: string;
+  procedureId: string;
+  providerId: string;
+  comments: string;
+  timestamp: string;
 }
 
 export interface OrganizedAppointments {

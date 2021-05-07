@@ -16,7 +16,7 @@ export const Provider: React.FC<FieldProps> = ({ register, errors }) => {
   return (
     <Label>
       With:
-      <Select {...register("provider", { required: true })} defaultValue="">
+      <Select {...register("providerId", { required: true })} defaultValue="">
         <DefaultOption />
         {providers.map(provider => {
           const fullName = `${provider.firstName} ${provider.lastName}`;
@@ -33,7 +33,7 @@ export const Provider: React.FC<FieldProps> = ({ register, errors }) => {
           return null;
         })}
       </Select>
-      {errors.provider && <ErrorText>This field is required</ErrorText>}
+      {errors.providerId && <ErrorText>This field is required</ErrorText>}
     </Label>
   );
 };
