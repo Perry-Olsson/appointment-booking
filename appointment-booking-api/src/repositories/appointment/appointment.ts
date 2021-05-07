@@ -38,7 +38,7 @@ export class AppointmentDataAccess implements AppointmentDAO {
       if (i === 0) {
         if (start < time) return true;
       } else if (i === day.length - 1) {
-        if (finish >= time) {
+        if (finish > time) {
           return true;
         }
       } else if (i % 2 !== 0) {
