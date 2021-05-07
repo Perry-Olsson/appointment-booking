@@ -8,6 +8,7 @@ CREATE TABLE "appointments" (
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "timestamp" TIMESTAMPTZ(6) NOT NULL,
     "end" TIMESTAMPTZ(6) NOT NULL,
+    "comments" TEXT,
     "procedure_id" VARCHAR(100) NOT NULL,
     "provider_id" VARCHAR(100) NOT NULL,
     "customer_id" VARCHAR(100) NOT NULL,
@@ -91,12 +92,6 @@ CREATE TABLE "_ProcedureToProvider" (
     "A" VARCHAR(100) NOT NULL,
     "B" VARCHAR(100) NOT NULL
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "appointments.timestamp_unique" ON "appointments"("timestamp");
-
--- CreateIndex
-CREATE UNIQUE INDEX "appointments.end_unique" ON "appointments"("end");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "customers.email_unique" ON "customers"("email");
