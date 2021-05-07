@@ -58,6 +58,7 @@ const TextContainer = styled.div`
 `;
 
 const TimeString = styled.div`
+  padding-left: 4px;
   width: 60px;
 `;
 
