@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import { AppointmentController } from "../controllers";
 import { AppointmentDataAccess } from "../repositories";
 
@@ -12,8 +13,10 @@ router.get("/", (req, res, next) =>
   appointmentController.getAppointments(req, res, next)
 );
 
-router.post("/", (req, res, next) =>
-  appointmentController.createAppointment(req, res, next)
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => appointmentController.createAppointment(req, res, next)
 );
 
 export { router as appointmentRouter };

@@ -7,6 +7,7 @@ import { johnsCredentials, testUser } from "../constants";
 import {
   createDefaultTime,
   createTestAppointment,
+  getValidAuthHeader,
   initializeTestData,
   logJohnIn,
 } from "../helpers";
@@ -38,10 +39,14 @@ describe("Error handler middleware", () => {
       defaultProvider: true,
     });
 
-    const response = await api.post("/api/appointments").send(data);
+    const response = await api
+      .post("/api/appointments")
+      .send(data)
+      .set(getValidAuthHeader());
     const offsetResponse = await api
       .post("/api/appointments")
-      .send(offsetAppointment);
+      .send(offsetAppointment)
+      .set(getValidAuthHeader());
 
     expect(response.status).toBe(400);
     expect(offsetResponse.status).toBe(400);
@@ -71,13 +76,18 @@ describe("Error handler middleware", () => {
       time: { start: { minute: 30 }, finish: { minute: 35 } },
     });
 
-    const validResponse = await api.post("/api/appointments").send(valid);
+    const validResponse = await api
+      .post("/api/appointments")
+      .send(valid)
+      .set(getValidAuthHeader());
     const invalidStartResponse = await api
       .post("/api/appointments")
-      .send(invalidStart);
+      .send(invalidStart)
+      .set(getValidAuthHeader());
     const invalidFinishResponse = await api
       .post("/api/appointments")
-      .send(invalidFinish);
+      .send(invalidFinish)
+      .set(getValidAuthHeader());
 
     expect(validResponse.status).toBe(200);
     expect(invalidStartResponse.status).toBe(400);
@@ -184,7 +194,10 @@ describe("Error handler middleware", () => {
     data.timestamp.setHours(12);
     data.end.setHours(13);
 
-    const response = await api.post("/api/appointments").send(data);
+    const response = await api
+      .post("/api/appointments")
+      .send(data)
+      .set(getValidAuthHeader());
 
     expect(response.status).toBe(400);
     expect(response.body).toMatchObject({ error: "Provider unavailable" });

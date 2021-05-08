@@ -5,3 +5,4 @@ export * from "./initializeTestData";
 export * from "./Errors";
 export * from "./extractRefreshToken";
 export * from "./logJohnIn";
+export * from "./authHelpers";

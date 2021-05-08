@@ -24,6 +24,6 @@ export const cookieOptions: CookieOptions = {
   secure: true,
 };
 
-export const accessTokenExp = 10 * SECOND;
+export const accessTokenExp = 10;
 
 export const refreshTokenKeyValue = "renewal_center_refreshJwt";
