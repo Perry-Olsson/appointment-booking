@@ -24,6 +24,12 @@ export interface NewAppointment {
   timestamp: string;
 }
 
+export interface UserAppointment extends Appointment {
+  customerId: string;
+  providerId: string;
+  procedureId: string;
+}
+
 export interface OrganizedAppointments {
   [index: number]: DayIndex;
 }
@@ -82,4 +88,5 @@ export interface User {
   type: "USER";
   firstName: string;
   lastName: string;
+  appointments: UserAppointment[];
 }
