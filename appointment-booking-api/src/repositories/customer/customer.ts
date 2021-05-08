@@ -1,7 +1,7 @@
 import { EmailInUseError, LoginError } from "../../utils";
 import bcrypt from "bcryptjs";
 import { Prisma } from ".prisma/client";
-import { LoginCustomer } from "./types";
+import { DefaultCustomer, LoginCustomer } from "./types";
 import { prisma } from "../../prisma";
 import { defaultCustomerSelect } from "../constants";
 import { CustomerDAO } from "../../controllers/types";
@@ -51,6 +51,12 @@ export class CustomerDataAccess implements CustomerDAO {
     if (!args.select) args.select = defaultCustomerSelect;
 
     return await prisma.customer.findUnique(args);
+  }
+
+  public async getAppointments(customer: DefaultCustomer) {
+    return await prisma.appointment.findMany({
+      where: { customerId: customer.email },
+    });
   }
 
   public createSelectStatement = defaultCustomerSelect;

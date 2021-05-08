@@ -111,9 +111,11 @@ export class CustomerController {
 
   async getUser(req: Request, res: Response, next: NextFunction) {
     try {
-      passport.authenticate("jwt", { session: false }, (err, user) => {
+      passport.authenticate("jwt", { session: false }, async (err, user) => {
         if (err) return next(err);
         if (!user) return res.status(200).send("Unauthorized");
+
+        user.appointments = await this.dataAccess.getAppointments(user);
         return res.json(user);
       })(req, res, next);
     } catch (err) {

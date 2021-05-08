@@ -1,4 +1,4 @@
-import { Type } from "@prisma/client";
+import { Appointment, Type } from "@prisma/client";
 
 export interface Credentials {
   email: string;
@@ -17,6 +17,10 @@ export interface DefaultCustomer {
 export interface LoginCustomer extends DefaultCustomer {
   password?: string | null;
   tokenVersion: number;
+}
+
+export interface User extends DefaultCustomer {
+  appointments: Appointment[];
 }
 
 export interface CustomerResponse {
