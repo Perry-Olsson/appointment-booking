@@ -38,7 +38,6 @@ export class CustomerService extends ClientInjector {
 
   public async refreshToken() {
     const response = await this.instance.post("/customers/refreshToken");
-    console.log("response from refresh token endpoint: ", response);
 
     if (response.accessToken) accessToken.set(response.accessToken);
     return response;
