@@ -45,7 +45,7 @@ export const Register: FC = () => {
       if (loginResponse.accessToken) {
         accessToken.set(loginResponse.accessToken);
         reset();
-        client.setQueryData("user", { ...response });
+        client.setQueryData("user", response);
         await router.push("/schedule");
       }
     }
