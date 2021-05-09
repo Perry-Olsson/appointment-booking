@@ -67,6 +67,19 @@ describe("Cusotmer login", () => {
     expect(refreshToken).toBe(auth.createRefreshToken(email, 0));
   });
 
+  test("/api/customer/login email field is case insensitive", async () => {
+    const { email, password } = {
+      email: "JohN@example.com",
+      password: "johnsPassword",
+    };
+    const response = await api
+      .post("/api/customers/login")
+      .send({ email, password });
+
+    expect(response.status).toBe(200);
+    expect(response.body.accessToken).toBeDefined();
+  });
+
   test("/api/customers/logout successfully sets refreshToken cookie to empty string", async () => {
     const response = await api
       .post("/api/customers/logout")

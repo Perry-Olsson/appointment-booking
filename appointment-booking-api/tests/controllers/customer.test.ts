@@ -30,6 +30,15 @@ describe("Customer creation", () => {
     expect(validCustomer).toBeDefined();
   });
 
+  test("initialize function calls toLowerCase on emails", async () => {
+    const initializeCustomer = await customerController.initialize({
+      ...testUser,
+      email: "Test@Example.com",
+    });
+
+    expect(initializeCustomer.email).toBe("test@example.com");
+  });
+
   test("Initialize function hashes user password and deletes guest password field", async () => {
     const user = await customerController.initialize({ ...testUser });
     const guest = await customerController.initialize({ ...testGuest });

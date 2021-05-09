@@ -12,6 +12,8 @@ import { auth } from "../utils/auth";
 import passport from "passport";
 import { cookieOptions, refreshTokenKeyValue } from "../constants";
 import { refreshTokenCustomerSelect } from "../repositories/constants";
+import { reqParser } from "./utils/ReqParser";
+// import { reqParser } from "./utils/ReqParser";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
@@ -31,10 +33,11 @@ export class CustomerController {
   }
 
   public async initialize(reqBody: any): Promise<any> {
-    if (!this._validateEmail(reqBody.email))
-      throw new EmailError(reqBody.email);
+    const formattedBody = reqParser.format(reqBody);
+    if (!this._validateEmail(formattedBody.email))
+      throw new EmailError(formattedBody.email);
 
-    const initializedCustomer = await this._handlePassword(reqBody);
+    const initializedCustomer = await this._handlePassword(formattedBody);
 
     return initializedCustomer;
   }
@@ -54,7 +57,8 @@ export class CustomerController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.dataAccess.login(req.body);
+      const formattedBody = reqParser.format(req.body);
+      const user = await this.dataAccess.login(formattedBody);
 
       const accessToken = auth.createAccessToken(user.email);
       const refreshToken = auth.createRefreshToken(
