@@ -32,9 +32,11 @@ const _handleResponse = ({ data }: AxiosResponse) => data;
 const _handleError = (error: any) => Promise.reject(error);
 
 const _handleAuth = async (config: AxiosRequestConfig) => {
+  console.log(config);
   if (_isAuthenticating(config)) return config;
 
   if (accessToken.get() && accessToken.isValid()) {
+    console.log("valid access token hit");
     config.headers["authorization"] = `Bearer ${accessToken.get()}`;
     return config;
   }
