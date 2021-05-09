@@ -16,7 +16,7 @@ beforeAll(async () => {
 afterAll(() => prisma.$disconnect());
 
 describe("Customer creation", () => {
-  test.only("/api/customers creates a new user", async () => {
+  test("/api/customers creates a new user", async () => {
     const { status, body } = await api.post("/api/customers").send(testUser);
     const createdUser = await prisma.customer.findUnique({
       where: { email: testUser.email },
