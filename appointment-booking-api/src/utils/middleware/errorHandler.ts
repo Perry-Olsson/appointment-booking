@@ -12,6 +12,9 @@ export const errorHandler: ErrorRequestHandler = (
   if (config.logError)
     logger.error("--------------\n", error.message, "\n--------------");
 
+  //debugging prod
+  console.log(error);
+
   if (!errorResponses[error.name]) return next(error);
 
   return res

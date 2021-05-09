@@ -48,7 +48,6 @@ export class AppointmentDataAccess implements AppointmentDAO {
         }
       }
     }
-
     return false;
   }
 
