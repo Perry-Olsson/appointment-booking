@@ -37,9 +37,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     }
 
     await appointmentService.createAppointment(appointment);
+    await client.refetchQueries("user");
+    await client.refetchQueries("/providers");
     setValue("timestamp", "");
-    client.invalidateQueries("/providers");
-    client.invalidateQueries("user");
   };
 
   if (!show) return null;
