@@ -16,7 +16,7 @@ beforeAll(async () => {
 afterAll(() => prisma.$disconnect());
 
 describe("Customer creation", () => {
-  test("/api/customers creates a new user", async () => {
+  test.only("/api/customers creates a new user", async () => {
     const { status, body } = await api.post("/api/customers").send(testUser);
     const createdUser = await prisma.customer.findUnique({
       where: { email: testUser.email },
@@ -27,6 +27,7 @@ describe("Customer creation", () => {
     expect(status).toBe(200);
     expect(body.password).toBeUndefined();
     expect(createdUser).toMatchObject(body);
+    expect(body).toHaveProperty("appointments");
 
     await prisma.customer.delete({ where: { email: createdUser.email } });
   });

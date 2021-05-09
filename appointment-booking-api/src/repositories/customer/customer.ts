@@ -59,7 +59,10 @@ export class CustomerDataAccess implements CustomerDAO {
     });
   }
 
-  public createSelectStatement = defaultCustomerSelect;
+  public createSelectStatement = {
+    ...defaultCustomerSelect,
+    appointments: true,
+  };
 
   public loginSelectStatement = { ...defaultCustomerSelect, password: true };
 }
