@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { isStartOfAppointment, isEndOfAppointment } from "./utils";
 
 interface GrayedOutProps {
+  isUsersAppointment: boolean;
   timeSlotValue: number;
   timestampValue: number;
   endValue: number;
@@ -11,6 +12,7 @@ interface GrayedOutProps {
 export const GrayedOut: FC<GrayedOutProps> = props => {
   return (
     <Container
+      isUsersAppointment={props.isUsersAppointment}
       slotIsTaken={slotIsTaken(props)}
       isStart={isStartOfAppointment(props.timeSlotValue, props.timestampValue)}
       isEnd={isEndOfAppointment(props.timeSlotValue, props.endValue)}
@@ -22,7 +24,13 @@ export const GrayedOut: FC<GrayedOutProps> = props => {
 
 export const Container = styled.div<ContainerProps>`
   height: 100%;
-  background-color: ${({ slotIsTaken }) => (slotIsTaken ? "gray" : null)};
+  background-color: ${({ isUsersAppointment, slotIsTaken }) => {
+    if (slotIsTaken) {
+      if (isUsersAppointment) return "#dcddbf";
+      return "gray";
+    }
+    return null;
+  }};
   border-top-left-radius: ${({ theme, isStart }) =>
     isStart ? theme.dayView.appointmentBlockRadius : null};
   border-top-right-radius: ${({ theme, isStart }) =>
@@ -34,6 +42,7 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 interface ContainerProps {
+  isUsersAppointment: boolean;
   slotIsTaken: boolean;
   isStart: boolean;
   isEnd: boolean;
