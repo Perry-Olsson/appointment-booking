@@ -29,7 +29,8 @@
     "db:seed": "ts-node ./src/prisma/seeds/seed.ts",
     "db:test": "ts-node ./src/prisma/prismaTest.ts",
     "db:alter-schema-dev": "psql appointments -f ./src/prisma/schema/*",
-    "db:reset": "psql $DATABASE_URL -f ./src/prisma/resetDb.sql"
+    "db:reset": "psql $DATABASE_URL -f ./src/prisma/resetDb.sql",
+    "wait": "ts-node wait.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
