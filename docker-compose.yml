@@ -1,0 +1,8 @@
+version: "3"
+services:
+  nextjs:
+    build: ./appointment-booking-client
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
