@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "compose": "docker compose up -d --build && cd ./appointment-booking-api && npm run wait && npm run migrate:deploy"
+  }
+}
