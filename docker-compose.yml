@@ -2,14 +2,17 @@ version: "3"
 services:
   nextjs:
     build: ./appointment-booking-client
+    image: gcr.io/appointment-booking-313600/client:v1
   nginx:
     build: ./nginx
+    image: gcr.io/appointment-booking-313600/nginx:v1
     depends_on:
       - api
     ports:
       - 80:80
   api:
     build: ./appointment-booking-api
+    image: gcr.io/appointment-booking-313600/api:v1
     depends_on:
       - db
     ports:
