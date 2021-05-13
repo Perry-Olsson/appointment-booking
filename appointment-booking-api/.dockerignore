@@ -6,4 +6,3 @@ Dockerfile
 .jest.config.js
 yarn.lock
 yarn-error.log
-.env

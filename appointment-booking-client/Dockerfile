@@ -1,19 +1,31 @@
-FROM node:alpine
+FROM node:alpine AS deps
 
+RUN apk add --no-cache libc6-compat
 WORKDIR /usr/app
+COPY package*.json ./
+RUN npm install
 
+FROM node:alpine AS builder
+WORKDIR /usr/app
+COPY . .
+COPY --from=deps /usr/app/node_modules ./node_modules
+RUN npm run build && npm install --production
+
+FROM node:alpine
+WORKDIR /usr/app
+ENV NODE_ENV production
 RUN npm install --global pm2
 
-COPY ./package*.json ./
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
 
-RUN npm install 
+COPY --from=builder /usr/app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /usr/app/.next ./.next
+COPY --from=builder /usr/app/node_modules ./node_modules
+COPY --from=builder /usr/app/package.json ./package.json
 
-COPY . .
-
-RUN npm run build
+USER nextjs
 
 EXPOSE 3000
-
-USER node
 
 CMD ["pm2-runtime", "npm", "--", "start"]
