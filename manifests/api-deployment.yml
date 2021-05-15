@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appointment-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: appointment-api
+  template:
+    metadata:
+      labels:
+        app: appointment-api
+    spec:
+      containers:
+        - name: appointment-api
+          imagePullPolicy: Always
+          image: dockterperry/appointment-api:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appointment-api-service
+spec:
+  selector:
+    app: appointment-api
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001

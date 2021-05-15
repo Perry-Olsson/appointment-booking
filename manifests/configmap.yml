@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: appointments-configmap
+data:
+  api_address: http://localhost/api
+  

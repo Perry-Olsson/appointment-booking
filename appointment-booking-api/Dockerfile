@@ -1,5 +1,5 @@
 # stage 1
-FROM node as builder
+FROM node:alpine as builder
 WORKDIR /usr/app
 COPY ./package*.json ./
 RUN npm install
@@ -7,7 +7,7 @@ COPY . .
 RUN npm run generate
 RUN npm run tsc
 
-FROM node
+FROM node:alpine
 
 WORKDIR /usr/app
 COPY ./package*.json ./
