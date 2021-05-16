@@ -11,6 +11,7 @@ services:
     build: ./nginx
     image: dockterperry/appointment-nginx:v1
     depends_on:
+      - appointment-client
       - appointment-api
     ports:
       - 80:80
