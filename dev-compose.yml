@@ -16,7 +16,7 @@ services:
     volumes:
       - ./appointment-booking-client:/usr/app
   appointment-api:
-    build: 
+    build:
       context: ./appointment-booking-api
       target: development
     image: dockterperry/appointment-api:v1
@@ -29,5 +29,4 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: appointments
     volumes:
-      - ./appointment-booking-api/pgdata:/var/lib/postgresql/data
-
+      - ./pgdata:/var/lib/postgresql/data
