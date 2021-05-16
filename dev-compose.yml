@@ -1,12 +1,5 @@
 version: "3"
 services:
-  appointment-client:
-    build:
-      context: ./appointment-booking-client
-      target: development
-    image: dockterperry/appointment-client:v1
-    volumes:
-      - ./appointment-booking-client:/usr/app
   nginx:
     build: ./nginx
     image: dockterperry/appointment-nginx:v1
@@ -15,6 +8,13 @@ services:
       - appointment-api
     ports:
       - 80:80
+  appointment-client:
+    build:
+      context: ./appointment-booking-client
+      target: development
+    image: dockterperry/appointment-client:v1
+    volumes:
+      - ./appointment-booking-client:/usr/app
   appointment-api:
     build: 
       context: ./appointment-booking-api
@@ -22,8 +22,6 @@ services:
     image: dockterperry/appointment-api:v1
     volumes:
       - ./appointment-booking-api:/usr/app
-    ports:
-      - 3001:3001
   db:
     image: postgres
     environment:
@@ -32,6 +30,4 @@ services:
       POSTGRES_DB: appointments
     volumes:
       - ./appointment-booking-api/pgdata:/var/lib/postgresql/data
-    ports:
-      - 8000:5432
 
