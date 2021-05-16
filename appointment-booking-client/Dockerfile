@@ -32,6 +32,4 @@ COPY --from=builder /usr/app/package.json ./package.json
 
 USER nextjs
 
-EXPOSE 3000
-
 CMD ["pm2-runtime", "npm", "--", "start"]

@@ -13,5 +13,3 @@ services:
   appointment-api:
     build: ./appointment-booking-api
     image: dockterperry/appointment-api:v1
-    ports:
-      - 3001:3001

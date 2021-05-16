@@ -24,6 +24,4 @@ RUN npx prisma generate
 
 ENV NODE_ENV production
 
-EXPOSE 3001
-
 CMD npm start
