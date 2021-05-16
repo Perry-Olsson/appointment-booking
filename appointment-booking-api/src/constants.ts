@@ -20,7 +20,6 @@ export const timeStringRegExp = /^\d{2}:\d{2}$/;
 
 export const cookieOptions: CookieOptions = {
   httpOnly: true,
-  sameSite: "none",
   secure: true,
 };
 

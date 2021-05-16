@@ -1,21 +1,27 @@
 # stage 1
-FROM node:alpine as builder
+FROM node:alpine as development
 WORKDIR /usr/app
 COPY ./package*.json ./
 RUN npm install
 COPY . .
-RUN npm run generate
+RUN npx prisma generate
 RUN npm run tsc
+
+ENV NODE_ENV development
+
+CMD npm run dev:js
 
 FROM node:alpine
 
 WORKDIR /usr/app
 COPY ./package*.json ./
 RUN npm install --production
-COPY --from=builder /usr/app/dist ./dist
+COPY --from=development /usr/app/dist ./dist
 COPY ./src/prisma ./src/prisma
 COPY ./.env .
 RUN npx prisma generate
+
+ENV NODE_ENV production
 
 EXPOSE 3001
 

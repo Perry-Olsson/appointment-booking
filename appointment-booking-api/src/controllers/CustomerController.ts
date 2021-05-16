@@ -84,19 +84,19 @@ export class CustomerController {
 
   async refreshToken(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log("Cookies: ", req.cookies);
+      // console.log("Cookies: ", req.cookies);
       const refreshToken = req.cookies[refreshTokenKeyValue];
-      console.log("\n", "refreshToken: ", refreshToken);
+      // console.log("\n", "refreshToken: ", refreshToken);
       if (!refreshToken) throw new NotAuthenticatedError(200);
 
       const decodedToken = auth.decodeRefreshToken(refreshToken);
-      console.log("\n", "decodedToken: ", decodedToken);
+      // console.log("\n", "decodedToken: ", decodedToken);
       const user = await this.dataAccess.findOne({
         where: { email: decodedToken.email },
         select: refreshTokenCustomerSelect,
       });
 
-      console.log("\n", "user: ", user);
+      // console.log("\n", "user: ", user);
 
       if (!user)
         throw new UserNotFoundError(
@@ -109,8 +109,6 @@ export class CustomerController {
       }
 
       const accessToken = auth.createAccessToken(decodedToken.email);
-
-      console.log("\n", "accessToken:", accessToken);
 
       res.json({ accessToken });
     } catch (err) {
