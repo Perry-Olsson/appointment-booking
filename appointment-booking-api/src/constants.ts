@@ -21,7 +21,6 @@ export const timeStringRegExp = /^\d{2}:\d{2}$/;
 
 export const cookieOptions = (): CookieOptions => ({
   httpOnly: true,
-  secure: true,
   expires: (() => {
     const now = new Date();
     now.setFullYear(now.getFullYear() + 1);
