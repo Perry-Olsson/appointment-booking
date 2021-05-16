@@ -8,6 +8,7 @@ RUN npx prisma generate
 RUN npm run tsc
 
 ENV NODE_ENV development
+ENV DATABASE_URL postgres://postgres:secret@db/appointments
 
 CMD npm run dev:js
 
