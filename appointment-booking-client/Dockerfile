@@ -1,14 +1,20 @@
-FROM node:alpine AS deps
+FROM node:alpine AS development
 
 RUN apk add --no-cache libc6-compat
 WORKDIR /usr/app
 COPY package*.json ./
 RUN npm install
 
+COPY . .
+
+ENV NODE_ENV development
+
+CMD ["npm", "run", "dev:client"]
+
 FROM node:alpine AS builder
 WORKDIR /usr/app
 COPY . .
-COPY --from=deps /usr/app/node_modules ./node_modules
+COPY --from=development /usr/app/node_modules ./node_modules
 RUN npm run build && npm install --production
 
 FROM node:alpine
