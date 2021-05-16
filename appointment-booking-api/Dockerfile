@@ -10,6 +10,8 @@ RUN npm run tsc
 ENV NODE_ENV development
 ENV DATABASE_URL postgres://postgres:secret@db/appointments
 
+EXPOSE 3001
+
 CMD npm run dev:js
 
 FROM node:alpine
@@ -23,5 +25,7 @@ COPY ./.env .
 RUN npx prisma generate
 
 ENV NODE_ENV production
+
+EXPOSE 3001
 
 CMD npm start

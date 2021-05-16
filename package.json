@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "compose": "docker compose up -d --build && cd ./appointment-booking-api && npm run wait && npm run migrate:deploy"
+    "compose": "docker compose up -d --build && cd ./appointment-booking-api && npm run wait && npm run migrate:deploy",
+    "push:images": "docker push dockterperry/appointment-api:v1 && docker push dockterperry/appointment-client:v1, && docker push dockterperry/appointment-nginx:v1"
   }
 }

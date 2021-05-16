@@ -67,7 +67,7 @@ export class CustomerController {
       );
 
       res
-        .cookie(refreshTokenKeyValue, refreshToken, cookieOptions)
+        .cookie(refreshTokenKeyValue, refreshToken, cookieOptions())
         .json({ accessToken });
     } catch (err) {
       next(err);
@@ -76,7 +76,7 @@ export class CustomerController {
 
   async logout(_req: Request, res: Response, next: NextFunction) {
     try {
-      res.cookie(refreshTokenKeyValue, "", cookieOptions).status(204).send();
+      res.cookie(refreshTokenKeyValue, "", cookieOptions()).status(204).send();
     } catch (err) {
       next(err);
     }
@@ -84,19 +84,14 @@ export class CustomerController {
 
   async refreshToken(req: Request, res: Response, next: NextFunction) {
     try {
-      // console.log("Cookies: ", req.cookies);
       const refreshToken = req.cookies[refreshTokenKeyValue];
-      // console.log("\n", "refreshToken: ", refreshToken);
       if (!refreshToken) throw new NotAuthenticatedError(200);
 
       const decodedToken = auth.decodeRefreshToken(refreshToken);
-      // console.log("\n", "decodedToken: ", decodedToken);
       const user = await this.dataAccess.findOne({
         where: { email: decodedToken.email },
         select: refreshTokenCustomerSelect,
       });
-
-      // console.log("\n", "user: ", user);
 
       if (!user)
         throw new UserNotFoundError(

@@ -1,15 +1,34 @@
 version: "3"
 services:
-  appointment-client:
-    build: ./appointment-booking-client
-    image: dockterperry/appointment-client:v1
   nginx:
     build: ./nginx
     image: dockterperry/appointment-nginx:v1
     depends_on:
       - appointment-api
+      - appointment-client
     ports:
       - 80:80
+    networks:
+      main:
+        aliases:
+          - nginx
+  appointment-client:
+    build: ./appointment-booking-client
+    image: dockterperry/appointment-client:v1
+    ports:
+      - 3000:3000
+    networks:
+      main:
+        aliases:
+          - appointment-client
   appointment-api:
     build: ./appointment-booking-api
     image: dockterperry/appointment-api:v1
+    ports:
+      - 3001:3001
+    networks:
+      main:
+        aliases:
+          - appointment-api
+networks:
+  main:

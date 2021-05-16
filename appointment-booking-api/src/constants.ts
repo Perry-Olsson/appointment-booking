@@ -7,6 +7,7 @@ export const HALF_HOUR = QUARTER_HOUR * 2;
 export const HOUR = HALF_HOUR * 2;
 export const ONE_DAY = 1000 * 60 * 60 * 24;
 export const ONE_MONTH = 30 * ONE_DAY;
+export const ONE_YEAR = ONE_MONTH * 12;
 
 export const exposedFields = {
   id: true,
@@ -18,10 +19,15 @@ export const exposedFields = {
 
 export const timeStringRegExp = /^\d{2}:\d{2}$/;
 
-export const cookieOptions: CookieOptions = {
+export const cookieOptions = (): CookieOptions => ({
   httpOnly: true,
   secure: true,
-};
+  expires: (() => {
+    const now = new Date();
+    now.setFullYear(now.getFullYear() + 1);
+    return now;
+  })(),
+});
 
 export const accessTokenExp = 10;
 

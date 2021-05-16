@@ -9,6 +9,8 @@ COPY . .
 
 ENV NODE_ENV development
 
+EXPOSE 3000
+
 CMD ["npm", "run", "dev:client"]
 
 FROM node:alpine AS builder
@@ -31,5 +33,7 @@ COPY --from=builder /usr/app/node_modules ./node_modules
 COPY --from=builder /usr/app/package.json ./package.json
 
 USER nextjs
+
+EXPOSE 3000
 
 CMD ["pm2-runtime", "npm", "--", "start"]
