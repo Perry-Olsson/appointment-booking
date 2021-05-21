@@ -14,9 +14,12 @@ spec:
     spec:
       containers:
         - name: appointment-api
-          imagePullPolicy: Always
-          image: dockterperry/appointment-api:v1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
+          image: kube-api
+          # resources:
+          #   limits:
+          #     memory: 500M
+          #     cpu: "0.5"
           ports:
             - containerPort: 3001
 ---

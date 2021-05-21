@@ -3,16 +3,23 @@ kind: Ingress
 metadata:
   name: myingress
   labels:
-      name: myingress
+    name: myingress
 spec:
   rules:
-  - host: myapp.com
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: appointment-client-service
-            port: 
-              number: 3000
+    - host: myapp.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: appointment-client-service
+                port:
+                  number: 3000
+          - pathType: Prefix
+            path: "/api"
+            backend:
+              service:
+                name: appointment-api-service
+                port:
+                  number: 3001

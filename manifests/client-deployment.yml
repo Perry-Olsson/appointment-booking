@@ -14,8 +14,12 @@ spec:
     spec:
       containers:
         - name: appointment-client
-          imagePullPolicy: Always
-          image: dockterperry/appointment-client:v1
+          imagePullPolicy: Never
+          image: kube-client
+          # resources:
+          #   limits:
+          #     memory: 500M
+          #     cpu: 0.5M
           ports:
             - containerPort: 3000
 ---

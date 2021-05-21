@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  nginx:
+    build: ./nginx
+    image: kube-nginx
+    depends_on:
+      - appointment-api
+      - appointment-client
+    ports:
+      - 80:80
+    networks:
+      main:
+        aliases:
+          - nginx
+  appointment-client:
+    build: ./appointment-booking-client
+    image: kube-client
+    ports:
+      - 3000:3000
+    environment:
+      - NEXT_PUBLIC_API_URI=http://myapp.com/api
+    networks:
+      main:
+        aliases:
+          - appointment-client
+  appointment-api:
+    build: ./appointment-booking-api
+    image: kube-api
+    ports:
+      - 3001:3001
+    networks:
+      main:
+        aliases:
+          - appointment-api
+networks:
+  main:
