@@ -1,7 +1,14 @@
 import { useAtom } from "jotai";
 import React from "react";
 import { showAppointmentsFormAtom } from "../atoms";
-import { device, Flex, Form, Seperator, Submit } from "../../../components";
+import {
+  device,
+  Flex,
+  Form,
+  Seperator,
+  Submit,
+  theme,
+} from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
@@ -12,12 +19,13 @@ import { useGetUser } from "../../../context";
 import { concatUser } from "./utils";
 import { appointmentService } from "../../../api";
 import { useQueryClient } from "react-query";
+import { VscChromeClose } from "react-icons/vsc";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
   className,
 }) => {
-  const [show] = useAtom(showAppointmentsFormAtom);
+  const [show, setShow] = useAtom(showAppointmentsFormAtom);
   const { procedures } = useStaticState();
   const user = useGetUser();
   const client = useQueryClient();
@@ -46,6 +54,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
 
   return (
     <Container className={className}>
+      <ExitButton onClick={() => setShow(false)} size="22px" />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Procedure register={register} errors={errors} />
 
@@ -67,6 +76,15 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     </Container>
   );
 };
+
+const ExitButton = styled(VscChromeClose)`
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  @media (min-width: ${device.desktop.pixels}) {
+    top: ${`${theme.dayView.headerOffset + 5}px`};
+  }
+`;
 
 const Container = styled(Flex)`
   align-items: flex-start;
