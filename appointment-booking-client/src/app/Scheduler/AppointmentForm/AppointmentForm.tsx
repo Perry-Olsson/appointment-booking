@@ -1,6 +1,4 @@
-import { useAtom } from "jotai";
-import React, { useState } from "react";
-import { showAppointmentsFormAtom } from "../atoms";
+import React from "react";
 import {
   Button,
   device,
@@ -13,46 +11,24 @@ import {
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
-import { useFormApi, useStaticState } from "../context";
-import { useDeselectFieldsOnChange } from "./hooks";
-import { FormValues } from "./types";
-import { useGetUser } from "../../../context";
-import { concatUser } from "./utils";
-import { appointmentService } from "../../../api";
-import { useQueryClient } from "react-query";
+import { useAppointmentFormState } from "./hooks";
 import { ConfirmModal } from "./ConfirmModal";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
   className,
 }) => {
-  const [show, setShow] = useAtom(showAppointmentsFormAtom);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const { procedures } = useStaticState();
-  const user = useGetUser();
-  const client = useQueryClient();
   const {
-    formState: { errors },
-    setValue,
-    register,
+    openModal,
+    closeModal,
+    errors,
     handleSubmit,
-  } = useFormApi();
-  useDeselectFieldsOnChange();
-
-  const onSubmit = async (data: FormValues) => {
-    const appointment = concatUser(data, procedures, user);
-    if (!appointment) {
-      alert("oops something went wrong");
-      return;
-    }
-
-    await appointmentService.createAppointment(appointment);
-    await client.refetchQueries("user");
-    await client.refetchQueries("/providers");
-    setValue("timestamp", "");
-  };
-
-  const closeModal = () => setIsOpen(false);
+    modalIsOpen,
+    onSubmit,
+    register,
+    show,
+    setShow,
+  } = useAppointmentFormState();
 
   if (!show) return null;
 
@@ -79,7 +55,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
           text="Confirm"
           onClick={e => {
             e.preventDefault();
-            setIsOpen(true);
+            openModal();
           }}
         />
 
