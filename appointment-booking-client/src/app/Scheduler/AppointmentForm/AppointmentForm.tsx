@@ -19,6 +19,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   className,
 }) => {
   const {
+    isValidating,
     openModal,
     closeModal,
     errors,
@@ -28,6 +29,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     register,
     show,
     setShow,
+    getValues,
+    trigger,
+    isValid,
   } = useAppointmentFormState();
 
   if (!show) return null;
@@ -55,15 +59,19 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
           text="Confirm"
           onClick={e => {
             e.preventDefault();
-            openModal();
+            trigger();
+            if (isValid) openModal();
           }}
         />
 
-        <ConfirmModal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          closeModal={closeModal}
-        />
+        {modalIsOpen ? (
+          <ConfirmModal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            closeModal={closeModal}
+            formValues={getValues()}
+          />
+        ) : null}
 
         <Seperator />
       </Form>

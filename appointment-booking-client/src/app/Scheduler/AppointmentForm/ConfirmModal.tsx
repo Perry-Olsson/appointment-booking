@@ -2,9 +2,11 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { device, ExitButton } from "../../../components";
 import Modal from "react-modal";
+import { FormValues } from "./types";
 
 interface Props extends ReactModal.Props {
   closeModal: () => void;
+  formValues: FormValues;
 }
 
 Modal.setAppElement("#__next");
@@ -20,19 +22,18 @@ Modal.defaultStyles = {
   },
 };
 
-export const ConfirmModal: FC<Props> = ({ closeModal, ...props }) => {
+export const ConfirmModal: FC<Props> = ({
+  closeModal,
+  formValues,
+  ...props
+}) => {
   return (
     <Container {...props}>
       <ExitButton size="30px" onClick={closeModal} />
-      <h2>Hello</h2>
-      <div>I am a modal</div>
-      <form>
-        <input />
-        <button>tab navigation</button>
-        <button>stays</button>
-        <button>inside</button>
-        <button>the modal</button>
-      </form>
+      <h2>Your Appointment</h2>
+      <div>Procedure: {formValues.procedureId}</div>
+      <div>Provider: {formValues.providerId}</div>
+      <div>Time: {formValues.timestamp}</div>
     </Container>
   );
 };
@@ -47,7 +48,10 @@ const Container = styled(Modal)`
   overflow: auto;
   border-radius: 4px;
   outline: none;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   @media (min-width: ${device.desktop.pixels}) {
     top: 20%;
     right: 20%;

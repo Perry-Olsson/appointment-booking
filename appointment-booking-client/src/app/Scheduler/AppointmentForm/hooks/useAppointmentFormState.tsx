@@ -16,10 +16,12 @@ export const useAppointmentFormState = () => {
   const user = useGetUser();
   const client = useQueryClient();
   const {
-    formState: { errors },
+    formState: { errors, isValid, isValidating },
+    getValues,
     setValue,
     register,
     handleSubmit,
+    trigger,
   } = useFormApi();
   useDeselectFieldsOnChange();
 
@@ -47,7 +49,11 @@ export const useAppointmentFormState = () => {
     modalIsOpen,
     setShow,
     onSubmit,
+    getValues,
     openModal,
     closeModal,
+    trigger,
+    isValid,
+    isValidating,
   };
 };
