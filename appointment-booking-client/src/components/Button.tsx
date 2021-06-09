@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { theme } from "./theme";
 
@@ -7,6 +8,7 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   negative,
   hexColor = theme.colors.primaryLight,
+  ...props
 }) => {
   return (
     <BaseButton
@@ -14,6 +16,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={className}
       color={hexColor}
       negative={negative || false}
+      {...props}
     >
       {text}
     </BaseButton>
@@ -40,9 +43,8 @@ const BaseButton = styled.button<{ color: string; negative: boolean }>`
   }
 `;
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   handleClick?: () => void;
-  type?: string;
   text: string;
   className?: string;
   hexColor?: string;

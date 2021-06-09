@@ -1,12 +1,13 @@
 import { useAtom } from "jotai";
-import React from "react";
+import React, { useState } from "react";
 import { showAppointmentsFormAtom } from "../atoms";
 import {
+  Button,
   device,
+  ExitButton,
   Flex,
   Form,
   Seperator,
-  Submit,
   theme,
 } from "../../../components";
 import styled from "styled-components";
@@ -19,13 +20,14 @@ import { useGetUser } from "../../../context";
 import { concatUser } from "./utils";
 import { appointmentService } from "../../../api";
 import { useQueryClient } from "react-query";
-import { VscChromeClose } from "react-icons/vsc";
+import { ConfirmModal } from "./ConfirmModal";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
   className,
 }) => {
   const [show, setShow] = useAtom(showAppointmentsFormAtom);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const { procedures } = useStaticState();
   const user = useGetUser();
   const client = useQueryClient();
@@ -50,11 +52,13 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     setValue("timestamp", "");
   };
 
+  const closeModal = () => setIsOpen(false);
+
   if (!show) return null;
 
   return (
     <Container className={className}>
-      <ExitButton onClick={() => setShow(false)} size="22px" />
+      <HideFormButton onClick={() => setShow(false)} size="22px" />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Procedure register={register} errors={errors} />
 
@@ -70,19 +74,35 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
 
         <Comments register={register} errors={errors} />
 
-        <Submit type="submit" text="Submit" />
+        <ConfirmButton
+          type="button"
+          text="Confirm"
+          onClick={e => {
+            e.preventDefault();
+            setIsOpen(true);
+          }}
+        />
+
+        <ConfirmModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          closeModal={closeModal}
+        />
+
         <Seperator />
       </Form>
     </Container>
   );
 };
 
-const ExitButton = styled(VscChromeClose)`
-  position: absolute;
-  right: 5px;
-  top: 5px;
+const ConfirmButton = styled(Button)`
+  padding: 10px 30px;
+  margin: 20px auto;
+`;
+
+const HideFormButton = styled(ExitButton)`
   @media (min-width: ${device.desktop.pixels}) {
-    top: ${`${theme.dayView.headerOffset + 5}px`};
+    top: ${`${theme.dayView.headerOffset + 8}px`};
   }
 `;
 

@@ -7,3 +7,4 @@ export * from "./device";
 export * from "./Arrows";
 export * from "./Button";
 export * from "./styledFormTags";
+export * from "./ExitButton";
