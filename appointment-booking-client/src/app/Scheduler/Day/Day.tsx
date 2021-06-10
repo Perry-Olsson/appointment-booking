@@ -15,6 +15,9 @@ const Day = () => {
 
   if (!user) router.push("/login");
 
+  if (!dayState.serviceHours.length)
+    return <div>Missing critical business operational data</div>;
+
   if (!dayState.serviceHours.length || !user || user === "loading")
     return <div>loading...</div>;
 

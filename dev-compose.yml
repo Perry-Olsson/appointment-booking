@@ -7,18 +7,32 @@ services:
       - appointment-api
     ports:
       - 80:80
+    networks:
+      main:
+        aliases:
+          - nginx
   appointment-client:
     build:
       context: ./appointment-booking-client
       target: development
     volumes:
       - ./appointment-booking-client:/usr/app
+    networks:
+      main:
+        aliases:
+          - appointment-client
   appointment-api:
     build:
       context: ./appointment-booking-api
       target: development
     volumes:
       - ./appointment-booking-api:/usr/app
+    ports:
+      - 3001:3001
+    networks:
+      main:
+        aliases:
+          - appointment-api
   db:
     image: postgres
     environment:
@@ -27,3 +41,9 @@ services:
       POSTGRES_DB: appointments
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+    networks:
+      main:
+        aliases:
+          - db
+networks:
+  main:

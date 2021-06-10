@@ -13,13 +13,14 @@ import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
 import { useAppointmentFormState } from "./hooks";
 import { ConfirmModal } from "./ConfirmModal";
+import { useForm } from "react-hook-form";
+import { FormValues } from "./types";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
   className,
 }) => {
   const {
-    isValidating,
     openModal,
     closeModal,
     errors,
@@ -31,7 +32,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     setShow,
     getValues,
     trigger,
-    isValid,
   } = useAppointmentFormState();
 
   if (!show) return null;
@@ -57,9 +57,13 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
         <ConfirmButton
           type="button"
           text="Confirm"
-          onClick={e => {
+          onClick={async e => {
             e.preventDefault();
-            trigger();
+            const isValid = await trigger([
+              "procedureId",
+              "providerId",
+              "timestamp",
+            ]);
             if (isValid) openModal();
           }}
         />
