@@ -13,8 +13,6 @@ import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
 import { useAppointmentFormState } from "./hooks";
 import { ConfirmModal } from "./ConfirmModal";
-import { useForm } from "react-hook-form";
-import { FormValues } from "./types";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
