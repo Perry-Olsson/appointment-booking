@@ -6,7 +6,7 @@ export const useWatchProvider = () => {
   const { watch } = useFormApi();
   const provider = watch("providerId");
 
-  return providers.find(p => p.email === provider);
+  return providers.data.find(p => p.email === provider);
 };
 
 export const useWatchProcedure = () => {

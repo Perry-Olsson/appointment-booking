@@ -9,7 +9,11 @@ export const CreateAppointment: React.FC<CreateAppointmentProps> = ({
 }) => {
   const day = useDay();
   const { serviceHours } = useStaticState();
-  if (day && serviceHours.length && serviceHours[day.getDay()].isClosed)
+  if (
+    day &&
+    serviceHours.data.length &&
+    serviceHours.data[day.getDay()].isClosed
+  )
     return null;
 
   return (

@@ -15,10 +15,10 @@ const Day = () => {
 
   if (!user) router.push("/login");
 
-  if (!dayState.serviceHours.length)
+  if (!dayState.serviceHours.loading && !dayState.serviceHours.data.length)
     return <div>Missing critical business operational data</div>;
 
-  if (!dayState.serviceHours.length || !user || user === "loading")
+  if (!dayState.serviceHours.data.length || !user || user === "loading")
     return <div>loading...</div>;
 
   if (!dayState.day.isValidDate()) return <div>invalid url. Rerouting...</div>;

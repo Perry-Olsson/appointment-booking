@@ -14,7 +14,7 @@ export const Time: React.FC<TimeProps> = ({ timeSlots, register, errors }) => {
   const { serviceHours } = useStaticState();
   const appointments = useAppointments();
 
-  if (!serviceHours.length) return null;
+  if (!serviceHours.data.length) return null;
 
   return (
     <Label>
@@ -23,7 +23,7 @@ export const Time: React.FC<TimeProps> = ({ timeSlots, register, errors }) => {
         <DefaultOption />
         <AvailableTimes
           timeSlots={timeSlots}
-          serviceHours={serviceHours[timeSlots[0].getDay()]}
+          serviceHours={serviceHours.data[timeSlots[0].getDay()]}
           appointments={appointments}
         />
       </Select>

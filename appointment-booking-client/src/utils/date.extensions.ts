@@ -1,4 +1,4 @@
-import { ServiceDay } from "../types";
+import { ServiceHoursState } from "../app/Scheduler/hooks";
 
 export {};
 
@@ -16,8 +16,8 @@ declare global {
     getMonthCardString(): string;
     getNextDay(): Date;
     getPreviousDay(): Date;
-    getNextMonth(serviceHours?: ServiceDay[]): Date;
-    getPreviousMonth(serviceHours?: ServiceDay[]): Date;
+    getNextMonth(serviceHours?: ServiceHoursState): Date;
+    getPreviousMonth(serviceHours?: ServiceHoursState): Date;
     get4DigitTimeNumber(): number;
   }
 }
@@ -78,7 +78,7 @@ Date.prototype.getNextMonth = function (serviceHours) {
   const timestamp = new Date(this.getFullYear(), this.getMonth() + 1, 1);
   if (serviceHours) {
     let counter = 0;
-    while (serviceHours[timestamp.getDay()].isClosed && counter < 7) {
+    while (serviceHours.data[timestamp.getDay()].isClosed && counter < 7) {
       timestamp.setDate(timestamp.getDate() + 1);
       counter++;
     }
@@ -92,7 +92,7 @@ Date.prototype.getPreviousMonth = function (serviceHours) {
   const timestamp = new Date(this.getFullYear(), month, date);
   if (serviceHours) {
     let counter = 0;
-    while (serviceHours[timestamp.getDay()].isClosed && counter < 7) {
+    while (serviceHours.data[timestamp.getDay()].isClosed && counter < 7) {
       timestamp.setDate(timestamp.getDate() + 1);
       counter++;
     }

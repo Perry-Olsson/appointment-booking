@@ -18,7 +18,7 @@ export const Provider: React.FC<FieldProps> = ({ register, errors }) => {
       With:
       <Select {...register("providerId", { required: true })} defaultValue="">
         <DefaultOption />
-        {providers.map(provider => {
+        {providers.data.map(provider => {
           const fullName = `${provider.firstName} ${provider.lastName}`;
 
           if (

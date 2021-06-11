@@ -3,9 +3,10 @@ import React, { memo } from "react";
 import styled from "styled-components";
 import { Flex } from "../../../../components";
 import { device } from "../../../../components/device";
-import { Appointment, ServiceDay } from "../../../../types";
+import { Appointment } from "../../../../types";
 import { AppointmentForm } from "../../AppointmentForm";
 import { dimensionsAtom } from "../../atoms";
+import { ServiceHoursState } from "../../hooks";
 import { AppointmentProvider } from "../context";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -26,7 +27,7 @@ export const DayView: React.FC<DayViewProps> = memo(
             {isDesktop ? <MonthCard day={day} /> : null}
             <TimeSlotList
               timeSlots={timeSlots}
-              serviceHours={serviceHours[day.getDay()]}
+              serviceHours={serviceHours.data[day.getDay()]}
             />
             <AppointmentForm timeSlots={timeSlots} />
           </Grid>
@@ -69,5 +70,5 @@ export interface DayViewProps {
   day: Date;
   appointments: Appointment[];
   timeSlots: Date[];
-  serviceHours: ServiceDay[];
+  serviceHours: ServiceHoursState;
 }

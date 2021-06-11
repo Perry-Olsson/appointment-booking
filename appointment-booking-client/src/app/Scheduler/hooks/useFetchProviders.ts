@@ -1,7 +1,8 @@
 import { useQuery } from "react-query";
 import { providerService } from "../../../api";
+import { Provider } from "../../../types";
 
-export const useFetchProviders = () => {
+export const useFetchProviders = (): ProviderState => {
   const { data, isLoading, error } = useQuery(
     "/providers",
     async () => providerService.fetchProviders(),
@@ -13,8 +14,14 @@ export const useFetchProviders = () => {
   );
 
   return {
-    providers: data || [],
-    providerLoading: isLoading,
-    providerError: error,
+    data: data || [],
+    loading: isLoading,
+    error: error,
   };
 };
+
+export interface ProviderState {
+  data: Provider[];
+  loading: boolean;
+  error: unknown;
+}

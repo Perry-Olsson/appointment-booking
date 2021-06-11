@@ -18,7 +18,7 @@ export const DayViewLink: React.FC<DayViewLinkProps> = ({ day }) => {
   const dayHasPassed = day.valueOf() < today.valueOf();
   const disabled =
     dayHasPassed ||
-    (serviceHours.length && serviceHours[day.getDay()].isClosed);
+    (serviceHours.data.length && serviceHours.data[day.getDay()].isClosed);
 
   return (
     <Link

@@ -15,7 +15,7 @@ export const useDeselectFieldsOnChange = () => {
   useEffect(() => {
     if (
       procedure &&
-      !providers
+      !providers.data
         .find(p => p.email === provider)
         ?.procedures.find(p => p.name === procedure)
     )

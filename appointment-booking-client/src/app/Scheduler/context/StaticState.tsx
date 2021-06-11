@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
-import { Procedure, Provider, ServiceDay } from "../../../types";
+import { Procedure } from "../../../types";
+import { ProviderState, ServiceHoursState } from "../hooks";
 
 const StaticDayState = createContext<StaticState | undefined>(undefined);
 
@@ -21,7 +22,7 @@ export const useStaticState = () => {
 };
 
 interface StaticState {
-  serviceHours: ServiceDay[];
-  providers: Provider[];
+  serviceHours: ServiceHoursState;
+  providers: ProviderState;
   procedures: Procedure[];
 }

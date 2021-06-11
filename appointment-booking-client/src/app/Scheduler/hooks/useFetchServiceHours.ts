@@ -1,7 +1,8 @@
 import { useQuery } from "react-query";
 import { serviceHourService } from "../../../api";
+import { ServiceDay } from "../../../types";
 
-export const useFetchServiceHours = () => {
+export const useFetchServiceHours = (): ServiceHoursState => {
   const { data, isLoading, error } = useQuery(
     "serviceHours",
     async () => serviceHourService.fetchServiceHours(),
@@ -9,8 +10,14 @@ export const useFetchServiceHours = () => {
   );
 
   return {
-    serviceHours: data || [],
-    serviceHoursLoading: isLoading,
-    serviceHoursError: error,
+    data: data || [],
+    loading: isLoading,
+    error: error,
   };
 };
+
+export interface ServiceHoursState {
+  data: ServiceDay[];
+  loading: boolean;
+  error: unknown;
+}
