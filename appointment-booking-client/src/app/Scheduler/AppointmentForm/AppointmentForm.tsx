@@ -72,6 +72,8 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
             onRequestClose={closeModal}
             closeModal={closeModal}
             formValues={getValues()}
+            handleSubmit={handleSubmit(onSubmit)}
+            closeForm={() => setShow(false)}
           />
         ) : null}
 

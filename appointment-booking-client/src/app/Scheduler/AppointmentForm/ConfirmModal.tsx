@@ -1,12 +1,14 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { device, ExitButton } from "../../../components";
+import { device, ExitButton, Submit } from "../../../components";
 import Modal from "react-modal";
 import { FormValues } from "./types";
 
 interface Props extends ReactModal.Props {
   closeModal: () => void;
   formValues: FormValues;
+  handleSubmit: () => Promise<void>;
+  closeForm: () => void;
 }
 
 Modal.setAppElement("#__next");
@@ -25,6 +27,8 @@ Modal.defaultStyles = {
 export const ConfirmModal: FC<Props> = ({
   closeModal,
   formValues,
+  handleSubmit,
+  closeForm,
   ...props
 }) => {
   return (
@@ -34,6 +38,15 @@ export const ConfirmModal: FC<Props> = ({
       <div>Procedure: {formValues.procedureId}</div>
       <div>Provider: {formValues.providerId}</div>
       <div>Time: {formValues.timestamp}</div>
+      <Submit
+        type="submit"
+        text="Submit"
+        handleClick={async () => {
+          await handleSubmit();
+          closeModal();
+          closeForm();
+        }}
+      />
     </Container>
   );
 };
