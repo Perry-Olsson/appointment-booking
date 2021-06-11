@@ -45,7 +45,7 @@ export const TextArea = styled.textarea`
   margin-top: 3px;
 `;
 
-export const Submit = styled(Button)`
+export const FormButton = styled(Button)`
   padding: 10px 30px;
   margin: 20px auto;
 `;

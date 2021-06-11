@@ -13,6 +13,7 @@ import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
 import { useAppointmentFormState } from "./hooks";
 import { ConfirmModal } from "./ConfirmModal";
+import { useWatchProcedure, useWatchProvider } from "../hooks";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -31,6 +32,8 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     getValues,
     trigger,
   } = useAppointmentFormState();
+  const provider = useWatchProvider();
+  const procedure = useWatchProcedure();
 
   if (!show) return null;
 
@@ -71,7 +74,10 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
             closeModal={closeModal}
-            formValues={getValues()}
+            time={getValues("timestamp")}
+            provider={provider!}
+            procedure={procedure!}
+            comments={getValues("comments")}
             handleSubmit={handleSubmit(onSubmit)}
             closeForm={() => setShow(false)}
           />

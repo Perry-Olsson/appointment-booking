@@ -11,7 +11,7 @@ export const DateString: React.FC = () => {
   return <Container>{getDateString(day, width)}</Container>;
 };
 
-const getDateString = (day: Date, screenWidth: number) => {
+export const getDateString = (day: Date, screenWidth: number) => {
   return device.isDesktop(screenWidth)
     ? day.getDesktopDateString()
     : day.getMobileDateString();

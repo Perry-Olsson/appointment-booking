@@ -12,7 +12,7 @@ import {
   Input,
   ErrorText,
   Seperator,
-  Submit,
+  FormButton,
   Flex,
 } from "../../components";
 import { LoginFormValues } from "./types";
@@ -48,7 +48,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
           )}
         </Label>
 
-        <Submit type="submit" text="Log in" />
+        <FormButton type="submit" text="Log in" />
       </Form>
     </Container>
   );

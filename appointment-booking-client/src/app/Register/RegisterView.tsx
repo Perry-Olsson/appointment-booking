@@ -17,7 +17,7 @@ import {
   Input,
   Label,
   Seperator,
-  Submit,
+  FormButton,
 } from "../../components";
 import { RegisterFormValues } from "./Register";
 
@@ -106,7 +106,7 @@ export const RegisterView: FC<RegisterViewProps> = ({
           )}
         </Label>
 
-        <Submit type="submit" text="Register" />
+        <FormButton type="submit" text="Register" />
       </Form>
     </Container>
   );
