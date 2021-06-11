@@ -12,9 +12,9 @@ export const DateString: React.FC = () => {
 };
 
 const getDateString = (day: Date, screenWidth: number) => {
-  return device.isTabletOrSmaller(screenWidth)
-    ? day.getMobileDateString()
-    : day.getDesktopDateString();
+  return device.isDesktop(screenWidth)
+    ? day.getDesktopDateString()
+    : day.getMobileDateString();
 };
 
 const Container = styled.h3`

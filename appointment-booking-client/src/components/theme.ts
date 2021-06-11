@@ -11,8 +11,8 @@ export const theme: DefaultTheme = {
     headerHeight: "65px",
     headerOffsetPixels: "125px",
     headerOffset: 125, // navBar height + dayView header height
-    footerHeight: "60px",
-    footerOffset: 60,
+    footerHeight: "90px",
+    footerOffset: 90,
     appointmentBlockRadius: "9px",
     appointmentBlockColor: "#909090",
   },
