@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Appointment, ServiceDay } from "../../../../../../types";
-import { isGrayedOut, selectedAppointmentFits } from "./utils";
+import { isAvailableTime, selectedAppointmentFits } from "./utils";
 import { useFormApi } from "../../../../context";
 import { UseFormSetValue } from "react-hook-form";
 import { FormValues } from "../../../../AppointmentForm/types";
@@ -33,7 +33,7 @@ export const TimeSlot: React.FC<TimeSlotProps> = ({
   return (
     <Container
       isOnHour={isOnHour}
-      isGrayedOut={isGrayedOut({ provider, timeSlot, serviceHours })}
+      isAvailableTime={isAvailableTime({ provider, timeSlot, serviceHours })}
       appointmentFits={appointmentFits}
       onClick={
         appointmentFits !== false
@@ -78,15 +78,15 @@ const Container = styled.div<ContainerProps>`
     isOnHour ? theme.colors.gray : theme.colors.lightGray};
   width: 100%;
   height: 1.7rem;
-  background-color: ${({ isGrayedOut }) =>
-    isGrayedOut ? theme.colors.lightGray : null};
+  background-color: ${({ isAvailableTime }) =>
+    !isAvailableTime ? theme.colors.lightGray : null};
   cursor: ${({ appointmentFits }) =>
     appointmentFits !== false ? "pointer" : null};
 `;
 
 interface ContainerProps {
   isOnHour: boolean;
-  isGrayedOut: boolean;
+  isAvailableTime: boolean;
   appointmentFits: boolean | undefined;
 }
 

@@ -1,11 +1,12 @@
 import React, { FC } from "react";
-import { device, ExitButton, Flex, FormButton } from "../../../components";
+import { device, ExitButton, FormButton } from "../../../components";
 import Modal from "react-modal";
-import { Procedure, Provider } from "../../../types";
+import { NewAppointment, Procedure, Provider } from "../../../types";
 import styled from "styled-components";
-import { getDateString } from "../Day/DayView/components";
+import { UseMutationResult } from "react-query";
+import { ModalContent } from "./ModalContent";
 
-interface Props extends ReactModal.Props {
+export interface ConfirmModalProps extends ReactModal.Props {
   closeModal: () => void;
   time: string;
   provider: Provider;
@@ -13,6 +14,7 @@ interface Props extends ReactModal.Props {
   comments: string;
   handleSubmit: () => Promise<void>;
   closeForm: () => void;
+  createAppointment: UseMutationResult<any, unknown, NewAppointment, unknown>;
 }
 
 Modal.setAppElement("#__next");
@@ -28,64 +30,11 @@ Modal.defaultStyles = {
   },
 };
 
-export const ConfirmModal: FC<Props> = ({
-  closeModal,
-  procedure,
-  time,
-  handleSubmit,
-  provider,
-  comments,
-  closeForm,
-  ...props
-}) => {
+export const ConfirmModal: FC<ConfirmModalProps> = props => {
   return (
     <Container {...props}>
-      <ExitButton size="30px" onClick={closeModal} />
-      <Header>Your Appointment</Header>
-      <AppointmentInfoItem title="Procedure">
-        {procedure.name}
-      </AppointmentInfoItem>
-      <AppointmentInfoItem title="Provider">
-        {provider.firstName} {provider.lastName}
-      </AppointmentInfoItem>
-      <AppointmentInfoItem title="Time">
-        {(() => {
-          const date = new Date(time);
-          const end = new Date(time);
-          end.setMinutes(end.getMinutes() + procedure.duration);
-
-          return (
-            <>
-              <h4 style={{ marginBottom: "5px" }}>
-                <b>{`${date.getDayString()}, ${getDateString(date, 0)}`}</b>
-              </h4>
-              <p>
-                Start: <b>{date.getTimeString()}</b>
-              </p>
-              <p>
-                End: <b>{end.getTimeString()}</b>
-              </p>
-            </>
-          );
-        })()}
-      </AppointmentInfoItem>
-      {comments !== "" ? (
-        <AppointmentInfoItem title="Comments" comments>
-          {comments}
-        </AppointmentInfoItem>
-      ) : null}
-      <Flex>
-        <Cancel text="cancel" negative handleClick={() => closeModal()} />
-        <FormButton
-          type="submit"
-          text="Submit"
-          handleClick={async () => {
-            await handleSubmit();
-            closeModal();
-            closeForm();
-          }}
-        />
-      </Flex>
+      <ExitButton size="30px" onClick={props.closeModal} />
+      <ModalContent {...props} />
     </Container>
   );
 };
@@ -98,10 +47,6 @@ export const Cancel = styled(FormButton)`
     background-color: #ff7e7e;
     color: white;
   }
-`;
-
-const Header = styled.h2`
-  margin: 35px;
 `;
 
 const Container = styled(Modal)`
@@ -121,43 +66,12 @@ const Container = styled(Modal)`
   justify-content: flex-start;
   align-items: center;
   @media (min-width: ${device.desktop.pixels}) {
-    top: 13%;
+    top: 18%;
     right: 20%;
-    bottom: 13%;
+    bottom: 18%;
     left: 20%;
+    justify-content: center;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
   }
-`;
-
-const AppointmentInfoItem: FC<{
-  title: string;
-  className?: string;
-  comments?: boolean;
-}> = ({ title, children, comments, className }) => {
-  const Container = styled.div`
-    width: 75%;
-    margin: 10px;
-  `;
-  return (
-    <Container className={className}>
-      <h3 style={{ marginBottom: "5px" }}>
-        <b>{title}</b>
-      </h3>
-      {comments ? (
-        <StyledInfoItem>{children}</StyledInfoItem>
-      ) : (
-        <div>{children}</div>
-      )}
-    </Container>
-  );
-};
-
-const StyledInfoItem = styled.div`
-  border: solid 1px #cccccc;
-  border-radius: 4px;
-  padding: 8px;
-  max-height: 100px;
-  overflow-x: hidden;
-  overflow-y: scroll;
 `;

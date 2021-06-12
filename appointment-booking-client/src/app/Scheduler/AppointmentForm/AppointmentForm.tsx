@@ -31,6 +31,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     setShow,
     getValues,
     trigger,
+    createAppointment,
   } = useAppointmentFormState();
   const provider = useWatchProvider();
   const procedure = useWatchProcedure();
@@ -80,6 +81,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
             comments={getValues("comments")}
             handleSubmit={handleSubmit(onSubmit)}
             closeForm={() => setShow(false)}
+            createAppointment={createAppointment}
           />
         ) : null}
 

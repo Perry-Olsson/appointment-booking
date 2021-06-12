@@ -8,21 +8,21 @@ interface IsGrayedOutArgs {
   serviceHours: ServiceDay;
 }
 
-export const isGrayedOut = ({
+export const isAvailableTime = ({
   provider,
   timeSlot,
   serviceHours,
 }: IsGrayedOutArgs) => {
   if (provider) {
-    if (grayOutUnavailableTime(timeSlot, provider)) return true;
-    return false;
-  } else {
-    if (isInService(timeSlot, serviceHours)) return false;
+    if (isUnavailableTime(timeSlot, provider)) return false;
     return true;
+  } else {
+    if (isInService(timeSlot, serviceHours)) return true;
+    return false;
   }
 };
 
-export const grayOutUnavailableTime = (
+export const isUnavailableTime = (
   timeSlot: Date,
   provider: Provider
 ): boolean => {

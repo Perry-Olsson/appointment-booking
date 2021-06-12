@@ -1,9 +1,11 @@
 import { useAtom } from "jotai";
 import { useState } from "react";
+import { useMutation } from "react-query";
 import { useQueryClient } from "react-query";
 import { useDeselectFieldsOnChange } from ".";
 import { appointmentService } from "../../../../api";
 import { useGetUser } from "../../../../context";
+import { NewAppointment } from "../../../../types";
 import { showAppointmentsFormAtom } from "../../atoms";
 import { useStaticState, useFormApi } from "../../context";
 import { FormValues } from "../types";
@@ -24,6 +26,17 @@ export const useAppointmentFormState = () => {
     trigger,
   } = useFormApi();
   useDeselectFieldsOnChange();
+  const createAppointment = useMutation(
+    (appointment: NewAppointment) =>
+      appointmentService.createAppointment(appointment),
+    {
+      onSuccess: async () => {
+        await client.refetchQueries("user");
+        await client.refetchQueries("/providers");
+        setValue("timestamp", "");
+      },
+    }
+  );
 
   const onSubmit = async (data: FormValues) => {
     const appointment = concatUser(data, procedures, user);
@@ -32,14 +45,14 @@ export const useAppointmentFormState = () => {
       return;
     }
 
-    await appointmentService.createAppointment(appointment);
-    await client.refetchQueries("user");
-    await client.refetchQueries("/providers");
-    setValue("timestamp", "");
+    createAppointment.mutate(appointment);
   };
 
   const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => {
+    createAppointment.reset();
+    setIsOpen(false);
+  };
 
   return {
     show,
@@ -55,5 +68,6 @@ export const useAppointmentFormState = () => {
     trigger,
     isValid,
     isValidating,
+    createAppointment,
   };
 };

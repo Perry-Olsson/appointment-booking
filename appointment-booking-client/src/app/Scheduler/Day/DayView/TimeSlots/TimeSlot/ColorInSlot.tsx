@@ -24,17 +24,17 @@ export const ColorInSlot: React.FC<ColorInSlotProps> = ({
 
   return (
     <Margin>
-      <SelectedAppointment
-        timeSlot={timeSlot}
-        selectedAppointment={selectedAppointment}
-        provider={provider}
-        procedure={procedure}
+      <GrayedOut
+        isUsersAppointment={userAppointment ? true : false}
+        timeSlotValue={timeSlot.valueOf()}
+        timestampValue={appointment ? appointment.timestamp.valueOf() : 0}
+        endValue={appointment ? appointment.end.valueOf() : 0}
       >
-        <GrayedOut
-          isUsersAppointment={userAppointment ? true : false}
-          timeSlotValue={timeSlot.valueOf()}
-          timestampValue={appointment ? appointment.timestamp.valueOf() : 0}
-          endValue={appointment ? appointment.end.valueOf() : 0}
+        <SelectedAppointment
+          timeSlot={timeSlot}
+          selectedAppointment={selectedAppointment}
+          provider={provider}
+          procedure={procedure}
         >
           <TextContainer>
             {isOnHour ? (
@@ -64,8 +64,8 @@ export const ColorInSlot: React.FC<ColorInSlotProps> = ({
               </AppointmentText>
             ) : null}
           </TextContainer>
-        </GrayedOut>
-      </SelectedAppointment>
+        </SelectedAppointment>
+      </GrayedOut>
     </Margin>
   );
 };
