@@ -20,9 +20,9 @@ export const useAppointmentFormState = () => {
   const {
     formState: { errors, isValid, isValidating },
     getValues,
-    setValue,
     register,
     handleSubmit,
+    reset,
     trigger,
   } = useFormApi();
   useDeselectFieldsOnChange();
@@ -33,7 +33,7 @@ export const useAppointmentFormState = () => {
       onSuccess: async () => {
         await client.refetchQueries("user");
         await client.refetchQueries("/providers");
-        setValue("timestamp", "");
+        reset();
       },
     }
   );
@@ -49,9 +49,10 @@ export const useAppointmentFormState = () => {
   };
 
   const openModal = () => setIsOpen(true);
-  const closeModal = () => {
+  const closeModal = (closeForm?: boolean) => {
     createAppointment.reset();
     setIsOpen(false);
+    if (closeForm) setShow(false);
   };
 
   return {

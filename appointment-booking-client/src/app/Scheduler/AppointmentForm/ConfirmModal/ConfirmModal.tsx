@@ -1,13 +1,13 @@
 import React, { FC } from "react";
-import { device, ExitButton, FormButton } from "../../../components";
+import { device, FormButton } from "../../../../components";
 import Modal from "react-modal";
-import { NewAppointment, Procedure, Provider } from "../../../types";
+import { NewAppointment, Procedure, Provider } from "../../../../types";
 import styled from "styled-components";
 import { UseMutationResult } from "react-query";
 import { ModalContent } from "./ModalContent";
 
 export interface ConfirmModalProps extends ReactModal.Props {
-  closeModal: () => void;
+  closeModal: (closeModal?: boolean) => void;
   time: string;
   provider: Provider;
   procedure: Procedure;
@@ -33,7 +33,6 @@ Modal.defaultStyles = {
 export const ConfirmModal: FC<ConfirmModalProps> = props => {
   return (
     <Container {...props}>
-      <ExitButton size="30px" onClick={props.closeModal} />
       <ModalContent {...props} />
     </Container>
   );
