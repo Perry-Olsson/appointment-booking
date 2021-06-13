@@ -73,7 +73,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
         {modalIsOpen ? (
           <ConfirmModal
             isOpen={modalIsOpen}
-            onRequestClose={closeModal}
+            onRequestClose={() => closeModal()}
             closeModal={closeModal}
             time={getValues("timestamp")}
             provider={provider!}

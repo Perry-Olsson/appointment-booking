@@ -27,8 +27,6 @@ services:
       target: development
     volumes:
       - ./appointment-booking-api:/usr/app
-    ports:
-      - 3001:3001
     networks:
       main:
         aliases:

@@ -1,14 +1,22 @@
 # stage 1
-FROM node:14 as development
+FROM node:14 as base
 WORKDIR /usr/app
 COPY ./package*.json ./
 RUN npm install
 COPY . .
 RUN npx prisma generate
 RUN npm run tsc
-
-ENV NODE_ENV development
 ENV DATABASE_URL postgres://postgres:secret@db/appointments
+
+FROM base as test
+
+ENV NODE_ENV test
+EXPOSE 3001
+
+CMD /bin/bash
+
+FROM base as development
+ENV NODE_ENV development
 
 EXPOSE 3001
 
