@@ -9,6 +9,7 @@ const main = async () => {
       console.log("connected");
       retries = 0;
     } catch (err) {
+      console.log(err);
       await new Promise(resolve => {
         setTimeout(() => {
           resolve(true);

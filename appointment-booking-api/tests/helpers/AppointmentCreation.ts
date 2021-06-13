@@ -67,7 +67,7 @@ export const createDefaultTime = (): Required<Time> => {
     year: fiveMonthsFromNow.getFullYear(),
     month: fiveMonthsFromNow.getMonth(),
     day: 15,
-    hour: 10,
+    hour: 17,
     minute: 30,
   };
 };

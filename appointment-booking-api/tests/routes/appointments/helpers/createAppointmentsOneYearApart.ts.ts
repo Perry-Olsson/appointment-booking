@@ -3,25 +3,29 @@ import { ONE_MONTH } from "../../../../src/constants";
 import { prisma } from "../../../../src/prisma";
 import { createNewAppointment } from "../../../../src/prisma/seeds/utils";
 
-export const createAppointmentsOneYearApart = async (): Promise<AppointmentsInfo> => {
-  const elevenMonthsFromNow = Date.now() + 11 * ONE_MONTH;
-  const lastMonth = Date.now() - ONE_MONTH;
-  const { id: id1, timestamp } = await createAppointment(elevenMonthsFromNow, {
-    hour: 12,
-    minute: 0,
-  });
-  const { id: id2 } = await createAppointment(lastMonth, {
-    hour: 12,
-    minute: 0,
-  });
+export const createAppointmentsOneYearApart =
+  async (): Promise<AppointmentsInfo> => {
+    const elevenMonthsFromNow = Date.now() + 11 * ONE_MONTH;
+    const lastMonth = Date.now() - ONE_MONTH;
+    const { id: id1, timestamp } = await createAppointment(
+      elevenMonthsFromNow,
+      {
+        hour: 12,
+        minute: 0,
+      }
+    );
+    const { id: id2 } = await createAppointment(lastMonth, {
+      hour: 12,
+      minute: 0,
+    });
 
-  return {
-    id1,
-    id2,
-    year: timestamp.getFullYear(),
-    month: timestamp.getMonth(),
+    return {
+      id1,
+      id2,
+      year: timestamp.getFullYear(),
+      month: timestamp.getMonth(),
+    };
   };
-};
 
 export const deleteAppointmentsOneYearApart = async ({
   id1,
@@ -44,7 +48,12 @@ export const createAppointment = async (
   end.setHours(end.getHours() + 1);
 
   return await prisma.appointment.create({
-    data: createNewAppointment(timestamp, end),
+    data: createNewAppointment({
+      timestamp,
+      end,
+      procedureId: "Botox",
+      providerId: "john@provider.com",
+    }),
   });
 };
 

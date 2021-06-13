@@ -30,12 +30,8 @@ describe("Appointments Repository", () => {
   });
 
   test("Throws error if appointment conflicts with providers schedule", async () => {
-    const {
-      before,
-      lunchHour,
-      after,
-      nonConflicting,
-    } = createConflictingAppointments();
+    const { before, lunchHour, after, nonConflicting } =
+      createConflictingAppointments();
 
     await expect(appointment.isConflicting(before)).rejects.toThrow();
     await expect(appointment.isConflicting(lunchHour)).rejects.toThrow();

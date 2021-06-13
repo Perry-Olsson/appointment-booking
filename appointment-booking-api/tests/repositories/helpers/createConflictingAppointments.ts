@@ -5,47 +5,30 @@ export const createConflictingAppointments = () => {
   const providerSchedule = schedules[0];
   const time = createDefaultTime();
   const timestamp = new Date(
-    time.year,
-    time.month,
-    time.day,
-    time.hour,
-    time.minute
-  );
-  while (timestamp.getDay() !== 1) timestamp.setDate(timestamp.getDate() + 1);
-  timestamp.setHours(
-    Number(
-      providerSchedule.Monday[1].substr(
-        0,
-        providerSchedule.Monday[1].indexOf(":")
-      )
-    )
+    Date.UTC(time.year, time.month, time.day, time.hour, time.minute)
   );
 
-  timestamp.setMinutes(
-    Number(
-      providerSchedule.Monday[1].substr(
-        providerSchedule.Monday[1].indexOf(":") + 1
-      )
-    )
-  );
-  const stamp1 = timestamp;
-  const end1 = stamp1;
-  end1.setMinutes(end1.getMinutes() + 30);
+  while (timestamp.getDay() !== 1) timestamp.setDate(timestamp.getDate() + 1); //set day to monday
+
+  const stamp1 = new Date(timestamp);
+  stamp1.setUTCHours(19);
+  const end1 = new Date(stamp1);
+  end1.setUTCMinutes(end1.getMinutes() + 30);
 
   const stamp2 = new Date(timestamp);
-  stamp2.setHours(8);
+  stamp2.setUTCHours(15);
   const end2 = new Date(timestamp);
-  end2.setHours(9);
+  end2.setUTCHours(16);
 
   const stamp3 = new Date(timestamp);
-  stamp3.setHours(17);
+  stamp3.setUTCHours(24);
   const end3 = new Date(timestamp);
-  end3.setHours(18);
+  end3.setUTCHours(25);
 
   const stamp4 = new Date(timestamp);
-  stamp4.setHours(10);
+  stamp4.setUTCHours(17);
   const end4 = new Date(timestamp);
-  end4.setHours(11);
+  end4.setUTCHours(18);
 
   const appointment = {
     providerId: providerSchedule.providerId,

@@ -16,6 +16,7 @@
     "dev:jsSlowInternet": "NODE_ENV=development SLOW_INTERNET=true nodemon dist/index.js",
     "dev:docker": "docker-compose -f ../dev-compose.yml up",
     "jest": "NODE_ENV=test jest",
+    "test:shell": "docker-compose -f ../docker-compose.test.yml run test-appointment-api",
     "test": "NODE_ENV=test jest -o --runInBand",
     "test:all": "NODE_ENV=test jest --runInBand",
     "lint": "eslint ./src/**/*.ts",

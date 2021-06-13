@@ -8,7 +8,9 @@ declare global {
 }
 
 Date.prototype.get4DigitTimeNumber = function () {
-  return (this.getUTCHours() - 7) * 100 + this.getMinutes();
+  const utcHours = this.getUTCHours();
+  if (utcHours < 7) return (24 - 7 + utcHours) * 100 + this.getMinutes();
+  return (utcHours - 7) * 100 + this.getMinutes();
 };
 
 Date.prototype.getDayString = function () {
