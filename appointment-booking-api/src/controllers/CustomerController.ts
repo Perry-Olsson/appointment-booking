@@ -13,7 +13,6 @@ import passport from "passport";
 import { cookieOptions, refreshTokenKeyValue } from "../constants";
 import { refreshTokenCustomerSelect } from "../repositories/constants";
 import { reqParser } from "./utils/ReqParser";
-// import { reqParser } from "./utils/ReqParser";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
