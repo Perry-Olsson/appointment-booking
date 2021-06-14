@@ -6,23 +6,24 @@ import { Logout } from "./Logout";
 
 export const BurgerView: React.FC<BurgerViewProps> = ({}) => {
   const user = useGetUser();
+
+  if (user && user !== "loading")
+    return (
+      <>
+        <BurgerTab href="/dashboard">Dashboard</BurgerTab>
+        <Logout
+          Component={({ handleClick }) => (
+            <BurgerButton handleClick={handleClick}>Logout</BurgerButton>
+          )}
+        />
+        <LoggedUser>logged in as {user.firstName}</LoggedUser>
+      </>
+    );
+
   return (
     <>
-      {user && user !== "loading" ? (
-        <>
-          <Logout
-            Component={({ handleClick }) => (
-              <BurgerButton handleClick={handleClick}>Logout</BurgerButton>
-            )}
-          />
-          <LoggedUser>logged in as {user.firstName}</LoggedUser>
-        </>
-      ) : (
-        <>
-          <BurgerTab href="/login">Login</BurgerTab>
-          <BurgerTab href="/register">Register</BurgerTab>
-        </>
-      )}
+      <BurgerTab href="/login">Login</BurgerTab>
+      <BurgerTab href="/register">Register</BurgerTab>
     </>
   );
 };

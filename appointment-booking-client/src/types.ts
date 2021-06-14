@@ -25,9 +25,8 @@ export interface NewAppointment {
 }
 
 export interface UserAppointment extends Appointment {
-  customerId: string;
-  providerId: string;
-  procedureId: string;
+  provider: Provider;
+  procedure: Procedure;
 }
 
 export interface OrganizedAppointments {

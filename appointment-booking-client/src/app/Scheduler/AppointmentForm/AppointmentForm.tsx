@@ -14,6 +14,7 @@ import { Comments, Provider, Time } from "./fields";
 import { useAppointmentFormState } from "./hooks";
 import { ConfirmModal } from "./ConfirmModal";
 import { useWatchProcedure, useWatchProvider } from "../hooks";
+import { useRouter } from "next/router";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -35,6 +36,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   } = useAppointmentFormState();
   const provider = useWatchProvider();
   const procedure = useWatchProcedure();
+  const router = useRouter();
 
   if (!show) return null;
 

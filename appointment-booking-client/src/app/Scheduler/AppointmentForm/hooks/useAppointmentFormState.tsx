@@ -1,4 +1,5 @@
 import { useAtom } from "jotai";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { useQueryClient } from "react-query";
@@ -26,6 +27,7 @@ export const useAppointmentFormState = () => {
     trigger,
   } = useFormApi();
   useDeselectFieldsOnChange();
+  const router = useRouter();
   const createAppointment = useMutation(
     (appointment: NewAppointment) =>
       appointmentService.createAppointment(appointment),
@@ -49,10 +51,13 @@ export const useAppointmentFormState = () => {
   };
 
   const openModal = () => setIsOpen(true);
-  const closeModal = (closeForm?: boolean) => {
+  const closeModal = () => {
     createAppointment.reset();
+    if (createAppointment.isSuccess) {
+      setIsOpen(false);
+      return router.push("/dashboard");
+    }
     setIsOpen(false);
-    if (closeForm) setShow(false);
   };
 
   return {

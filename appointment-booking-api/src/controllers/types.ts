@@ -24,7 +24,7 @@ export interface CustomerDAO {
   create(req: any): Promise<DefaultCustomer>;
   login(req: any): Promise<LoginCustomer>;
   findOne(arg: Prisma.CustomerFindUniqueArgs): Promise<Customer | null>;
-  getAppointments(user: DefaultCustomer): Promise<Appointment[]>;
+  getAppointments(user: DefaultCustomer): Promise<UserAppointment[]>;
 }
 
 export interface ProcedureDAO {
@@ -37,4 +37,15 @@ export interface ProviderDAO {
 
 export interface ServiceHoursDAO {
   getServiceHours(): Promise<ServiceHours[]>;
+}
+
+interface UserAppointment {
+  procedure: Procedure;
+  provider: Provider;
+  id: number;
+  timestamp: Date;
+  end: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  comments: string | null;
 }
