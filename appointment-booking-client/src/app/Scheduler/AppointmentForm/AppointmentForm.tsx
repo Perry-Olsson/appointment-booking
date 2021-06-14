@@ -36,7 +36,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   } = useAppointmentFormState();
   const provider = useWatchProvider();
   const procedure = useWatchProcedure();
-  const router = useRouter();
 
   if (!show) return null;
 
