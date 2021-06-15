@@ -13,10 +13,15 @@ export const AppointmentCard: FC<Props> = ({ appointment }) => {
   return (
     <Container>
       <AppointmentInfoItem title="Procedure">
-        {appointment.procedure.name}
+        {appointment.procedure.name}{" "}
+        {/* tooltip of procedure description and link to full page desription */}
       </AppointmentInfoItem>
       <AppointmentInfoItem title="Provider">
-        {appointment.provider.firstName}
+        <b>
+          {appointment.provider.firstName} {appointment.provider.lastName}{" "}
+          {/* tooltip of provider bio and link to bio page*/}
+        </b>
+        {/* image of provider */}
       </AppointmentInfoItem>
       <AppointmentInfoItem title="Time">
         <AppointmentTime

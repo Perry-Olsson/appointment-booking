@@ -8,9 +8,9 @@ export const AppointmentInfoItem: FC<{
 }> = ({ title, children, comments, className }) => {
   return (
     <Container className={className}>
-      <h3 style={{ marginBottom: "5px" }}>
+      <h2 style={{ marginBottom: "5px" }}>
         <b>{title}</b>
-      </h3>
+      </h2>
       {comments ? (
         <StyledInfoItem>{children}</StyledInfoItem>
       ) : (
