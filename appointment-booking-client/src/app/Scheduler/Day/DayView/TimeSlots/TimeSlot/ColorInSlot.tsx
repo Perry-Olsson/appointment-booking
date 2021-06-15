@@ -59,7 +59,7 @@ export const ColorInSlot: React.FC<ColorInSlotProps> = ({
               appointment.timestamp.valueOf()
             ) ? (
               <AppointmentText isOnHour={isOnHour}>
-                Your {userAppointment.procedureId} with {provider.firstName}{" "}
+                Your {userAppointment.procedure.name} with {provider.firstName}{" "}
                 {provider.lastName}
               </AppointmentText>
             ) : null}
