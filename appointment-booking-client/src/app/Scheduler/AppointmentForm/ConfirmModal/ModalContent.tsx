@@ -64,6 +64,6 @@ export const ModalContent: FC<ConfirmModalProps> = ({
   );
 };
 
-const Header = styled.h2`
+const Header = styled.h1`
   margin: 35px;
 `;
