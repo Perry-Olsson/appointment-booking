@@ -22,6 +22,13 @@ EXPOSE 3001
 
 CMD npm run dev:js
 
+FROM node:alpine as db-manager
+WORKDIR /usr/app
+COPY --from=base /usr/app .
+COPY --from=base /usr/app/node_modules ./node_modules
+CMD /bin/sh
+
+
 FROM node:alpine
 
 WORKDIR /usr/app
