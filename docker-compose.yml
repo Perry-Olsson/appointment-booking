@@ -11,6 +11,7 @@ services:
       - 443:443
     volumes:
       - /etc/ssl:/etc/ssl
+      - /etc/letsencrypt/live/appointment-booking-example.com:/etc/letsencrypt/live/appointment-booking-example.com
     networks:
       main:
         aliases:
