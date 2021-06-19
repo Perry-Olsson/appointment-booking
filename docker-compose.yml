@@ -8,6 +8,9 @@ services:
       - appointment-client
     ports:
       - 80:80
+      - 443:443
+    volumes:
+      - /etc/ssl:/etc/ssl
     networks:
       main:
         aliases:

@@ -7,6 +7,8 @@ services:
       - appointment-api
     ports:
       - 80:80
+    volumes:
+      - /etc/ssl:/etc/ssl
     networks:
       main:
         aliases:
