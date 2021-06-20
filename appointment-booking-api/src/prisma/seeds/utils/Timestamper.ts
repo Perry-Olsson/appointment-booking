@@ -1,10 +1,12 @@
-import { getRandomNumber } from "./getRandomNumber";
-
 export class Timestamper {
-  public timeValue: number;
+  public date: Date;
 
   constructor(date: Date = new Date()) {
-    this.timeValue = this.createInitialAppointment(date);
+    const utcDate = date.getUTCDate();
+    if (date.getUTCDay() === 0) date.setUTCDate(utcDate + 1);
+    else if (date.getUTCDay() !== 1)
+      date.setUTCDate(utcDate + 7 - date.getUTCDay());
+    this.date = this.createInitialAppointment(date);
   }
 
   private createInitialAppointment(date: Date) {
@@ -17,21 +19,22 @@ export class Timestamper {
       date.getHours()
     );
 
-    return initialAppointmentTimestamp.valueOf();
+    return initialAppointmentTimestamp;
   }
 
-  getNextTimestamp(timeValue: number, rngUpperbound = 1) {
-    const newTimestamp = new Date(
-      this.timeValue + timeValue * getRandomNumber(rngUpperbound)
-    );
+  getNextTimestamp(numberOfDays: number) {
+    const newTimestamp = new Date(this.date);
+    if (newTimestamp.getUTCDay() === 5)
+      newTimestamp.setUTCDate(newTimestamp.getUTCDate() + 3);
+    else newTimestamp.setUTCDate(newTimestamp.getUTCDate() + numberOfDays);
 
-    this.timeValue = newTimestamp.valueOf();
+    this.date = newTimestamp;
 
     return newTimestamp;
   }
 
   setTimeValue(date: Date) {
-    this.timeValue = this.createInitialAppointment(date);
+    this.date = this.createInitialAppointment(date);
   }
 }
 

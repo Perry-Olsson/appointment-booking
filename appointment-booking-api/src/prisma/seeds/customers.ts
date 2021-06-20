@@ -2,12 +2,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../prisma";
 import customers from "./json/customers.json";
 import { Prisma } from ".prisma/client";
-import {
-  createNewCustomerAppointment,
-  getRandomNumberV2,
-  timestamper,
-} from "./utils";
-import { ONE_DAY } from "../../constants";
+import { createNewCustomerAppointment, timestamper } from "./utils";
 
 export const seedCustomers = async (includeAppointments = true) => {
   for (let i = 0; i < customers.length; i++) {
@@ -17,8 +12,8 @@ export const seedCustomers = async (includeAppointments = true) => {
       newCustomer.password = await bcrypt.hash(newCustomer.password!, 8);
 
     if (includeAppointments) {
-      const timestamp = timestamper.getNextTimestamp(ONE_DAY, 3);
-      timestamp.setUTCHours(getRandomNumberV2(16, 23));
+      const timestamp = timestamper.getNextTimestamp(i === 0 ? 0 : 1);
+      timestamp.setUTCHours(17);
       newCustomer.appointments = {
         create: createNewCustomerAppointment(timestamp),
       };

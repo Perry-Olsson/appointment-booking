@@ -1,4 +1,3 @@
-export * from "./appointments";
 export * from "./customers";
 export * from "./procedures";
 export * from "./providers";
