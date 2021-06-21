@@ -20,7 +20,7 @@ ENV NODE_ENV development
 
 EXPOSE 3001
 
-CMD npm run dev:js
+CMD ["npm", "run", "dev:js"]
 
 FROM node:alpine as db-manager
 WORKDIR /usr/app
