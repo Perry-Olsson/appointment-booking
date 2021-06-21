@@ -5,7 +5,7 @@ import { NewAppointment } from "../../../types";
 export const createNewAppointment = ({
   timestamp,
   end,
-  customerId = "test@example.com",
+  customerId = "john@example.com",
   procedureId,
   providerId,
 }: CreateNewAppointmentArg): NewAppointment => {

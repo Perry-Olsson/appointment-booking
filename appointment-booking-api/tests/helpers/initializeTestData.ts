@@ -1,6 +1,4 @@
 import {
-  createAppointments,
-  seedAppointments,
   seedCustomers,
   seedProcedures,
   seedProviders,
@@ -16,5 +14,4 @@ export async function initializeTestData() {
   await seedSchedules();
   await seedServiceHours();
   await seedCustomers();
-  await seedAppointments(createAppointments(5, 2));
 }
