@@ -13,7 +13,7 @@ FROM base as test
 ENV NODE_ENV test
 EXPOSE 3001
 
-CMD /bin/bash
+CMD ["/bin/bash"]
 
 FROM base as development
 ENV NODE_ENV development
@@ -26,7 +26,7 @@ FROM node:alpine as db-manager
 WORKDIR /usr/app
 COPY --from=base /usr/app .
 COPY --from=base /usr/app/node_modules ./node_modules
-CMD /bin/sh
+CMD ["/bin/sh"]
 
 
 FROM node:alpine
@@ -43,4 +43,4 @@ ENV NODE_ENV production
 
 EXPOSE 3001
 
-CMD npm start
+CMD ["npm", "start"]
