@@ -25,6 +25,23 @@ model Appointment {
   @@map("appointments")
 }
 
+model PastAppointment {
+  id          Int       @id 
+  createdAt   DateTime  @map("created_at")
+  updatedAt   DateTime  @map("updated_at")
+  timestamp   DateTime  @db.Timestamptz(6)
+  end         DateTime  @db.Timestamptz(6)
+  comments    String?
+  procedureId String    @map("procedure_id") @db.VarChar(100)
+  procedure   Procedure @relation(fields: [procedureId], references: [name])
+  providerId  String    @map("provider_id") @db.VarChar(100)
+  provider    Provider  @relation(fields: [providerId], references: [email])
+  customerId  String    @map("customer_id") @db.VarChar(100)
+  customer    Customer  @relation(fields: [customerId], references: [email])
+
+  @@map("past_appointments")
+}
+
 model Customer {
   id           Int           @id @default(autoincrement())
   createdAt    DateTime      @default(now()) @map("created_at")
@@ -37,6 +54,7 @@ model Customer {
   phoneNumber  String        @map("phone_number") @db.VarChar(25)
   password     String?       @db.VarChar(60)
   appointments Appointment[]
+  pastAppointments PastAppointment[] 
 
   @@map("customers")
 }
@@ -50,6 +68,7 @@ model Provider {
   schedule     Schedule?
   procedures   Procedure[]
   appointments Appointment[]
+  pastAppointments PastAppointment[]
 
   @@map("providers")
 }
@@ -75,6 +94,7 @@ model Procedure {
   description String?
   providers   Provider[]
   Appointment Appointment[]
+  PastAppointment PastAppointment[]
 
   @@map("procedures")
 }
