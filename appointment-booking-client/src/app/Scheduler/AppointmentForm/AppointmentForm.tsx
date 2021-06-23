@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Button,
   device,
   ExitButton,
-  Flex,
   Form,
   Seperator,
   theme,
@@ -14,6 +13,8 @@ import { Comments, Provider, Time } from "./fields";
 import { useAppointmentFormState } from "./hooks";
 import { ConfirmModal } from "./ConfirmModal";
 import { useWatchProcedure, useWatchProvider } from "../hooks";
+import { useAtom } from "jotai";
+import { dimensionsAtom } from "../atoms";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -35,12 +36,39 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   } = useAppointmentFormState();
   const provider = useWatchProvider();
   const procedure = useWatchProcedure();
+  const [dimensions] = useAtom(dimensionsAtom);
+  const ref = useRef<HTMLDivElement>(null);
 
-  if (!show) return null;
+  useEffect(() => {
+    if (show) {
+      ref!.current!.style.paddingTop = "30px";
+      ref!.current!.style.bottom = theme.dayView.footerHeight;
+      console.log("hello");
+    }
+  }, [show]);
 
+  const isSmallDevice = device.isTabletOrSmaller(dimensions.width);
   return (
-    <Container className={className}>
-      <HideFormButton onClick={() => setShow(false)} size="22px" />
+    <Container
+      ref={ref}
+      id="appointment-form"
+      show={show}
+      className={className}
+    >
+      <HideFormButton
+        onClick={() => {
+          if (isSmallDevice) {
+            ref!.current!.style.paddingTop = "0px";
+            ref!.current!.style.bottom = window.screen.height + "px";
+            setTimeout(() => {
+              setShow(false);
+            }, 500);
+          } else {
+            setShow(false);
+          }
+        }}
+        size="30px"
+      />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Procedure register={register} errors={errors} />
 
@@ -75,6 +103,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
             isOpen={modalIsOpen}
             onRequestClose={() => closeModal()}
             closeModal={closeModal}
+            isSmallDevice={isSmallDevice}
             time={getValues("timestamp")}
             provider={provider!}
             procedure={procedure!}
@@ -101,29 +130,23 @@ const HideFormButton = styled(ExitButton)`
     top: ${`${theme.dayView.headerOffset + 8}px`};
   }
 `;
-
-const Container = styled(Flex)`
+const Container = styled.div<{ show: boolean }>`
+  display: ${({ show }) => (show ? "flex" : "none")};
+  justify-content: center;
   align-items: flex-start;
-`;
-
-export const ResponsiveAppointmentForm = styled(AppointmentForm)`
   @media (max-width: ${device.desktop.pixels}) {
     position: absolute;
-    top: ${({ theme }) => theme.dayView.headerOffsetPixels};
+    top: 0;
+    bottom: ${() => window.screen.height + 2 + "px"};
     right: 0;
     left: 0;
-    z-index: 2;
+    z-index: 4;
     background-color: white;
-    height: ${({ theme }) =>
-      `${
-        window.innerHeight -
-        theme.dayView.headerOffset -
-        theme.dayView.footerOffset
-      }px`};
-    border: solid 2px gray;
-    border-radius: 3px;
-    padding-top: 20px;
+    border: 1px solid #777777;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 15px;
     overflow-y: scroll;
+    transition: bottom 0.4s, padding-top 0.4s;
   }
 `;
 
@@ -132,4 +155,4 @@ export interface AppointmentFormProps {
   className?: string;
 }
 
-export { ResponsiveAppointmentForm as AppointmentForm };
+export { AppointmentForm };

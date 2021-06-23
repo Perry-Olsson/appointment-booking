@@ -15,6 +15,7 @@ export interface ConfirmModalProps extends ReactModal.Props {
   handleSubmit: () => Promise<void>;
   closeForm: () => void;
   createAppointment: UseMutationResult<any, unknown, NewAppointment, unknown>;
+  isSmallDevice: boolean;
 }
 
 Modal.setAppElement("#__next");
@@ -25,14 +26,22 @@ Modal.defaultStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(255, 255, 255, 0.75)",
-    zIndex: 3,
+    zIndex: 5,
   },
 };
 
 export const ConfirmModal: FC<ConfirmModalProps> = props => {
   return (
-    <Container {...props}>
+    <Container
+      id="confirm-modal"
+      onAfterOpen={modal => {
+        if (modal) {
+          if (props.isSmallDevice) modal.contentEl.style.top = "0px";
+          modal.contentEl.style.opacity = "1";
+        }
+      }}
+      {...props}
+    >
       <ModalContent {...props} />
     </Container>
   );
@@ -50,7 +59,7 @@ export const Cancel = styled(FormButton)`
 
 const Container = styled(Modal)`
   position: absolute;
-  top: ${({ theme }) => theme.navBar.height};
+  top: ${() => window.screen.height + "px"};
   left: 0;
   bottom: 0;
   right: 0;
@@ -64,11 +73,14 @@ const Container = styled(Modal)`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  transition: top 0.5s;
   @media (min-width: ${device.desktop.pixels}) {
     top: 18%;
     right: 20%;
     bottom: 18%;
     left: 20%;
+    opacity: 0;
+    transition: opacity 0.5s;
     justify-content: center;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;

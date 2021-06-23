@@ -5,6 +5,7 @@ import { useMutation } from "react-query";
 import { useQueryClient } from "react-query";
 import { useDeselectFieldsOnChange } from ".";
 import { appointmentService } from "../../../../api";
+import { device } from "../../../../components";
 import { useGetUser } from "../../../../context";
 import { NewAppointment } from "../../../../types";
 import { showAppointmentsFormAtom } from "../../atoms";
@@ -57,7 +58,10 @@ export const useAppointmentFormState = () => {
       setIsOpen(false);
       return router.push("/dashboard");
     }
-    setIsOpen(false);
+    hideConfirmModal();
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 500);
   };
 
   return {
@@ -76,4 +80,13 @@ export const useAppointmentFormState = () => {
     isValidating,
     createAppointment,
   };
+};
+
+const hideConfirmModal = () => {
+  const ele = document.getElementById("confirm-modal");
+  if (ele) {
+    if (device.isTabletOrSmaller(window.screen.height))
+      ele.style.top = window.screen.height + "px";
+    else ele.style.opacity = "0";
+  }
 };
