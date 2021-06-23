@@ -43,7 +43,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     if (show) {
       ref!.current!.style.paddingTop = "30px";
       ref!.current!.style.bottom = theme.dayView.footerHeight;
-      console.log("hello");
     }
   }, [show]);
 

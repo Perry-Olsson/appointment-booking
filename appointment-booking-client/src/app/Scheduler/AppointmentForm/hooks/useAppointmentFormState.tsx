@@ -85,7 +85,7 @@ export const useAppointmentFormState = () => {
 const hideConfirmModal = () => {
   const ele = document.getElementById("confirm-modal");
   if (ele) {
-    if (device.isTabletOrSmaller(window.screen.height))
+    if (device.isTabletOrSmaller(window.screen.width)) 
       ele.style.top = window.screen.height + "px";
     else ele.style.opacity = "0";
   }
