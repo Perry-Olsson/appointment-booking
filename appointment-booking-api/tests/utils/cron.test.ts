@@ -1,6 +1,7 @@
 import { prisma } from "../../src/prisma";
 import { createTestAppointment, initializeTestData } from "../helpers";
 import { transferPastAppointments } from "../../src/utils";
+import { ONE_DAY } from "../../src/constants";
 
 beforeAll(async () => {
   await initializeTestData();
@@ -10,25 +11,34 @@ afterAll(() => prisma.$disconnect());
 
 describe("Cron jobs", () => {
   test("Past appointments are transfered from main appointment table to past appointment table at midnight", async () => {
-    //add past appointment to db
     const pastAppointmentTimestamp = new Date();
     pastAppointmentTimestamp.setUTCDate(
       pastAppointmentTimestamp.getUTCDate() - 2
     );
 
-    const pastAppointment = await createTestAppointment({
+    await createTestAppointment({
       time: pastAppointmentTimestamp,
+      pushToDb: true,
+    });
+
+    const anotherPastAppointment = new Date(pastAppointmentTimestamp);
+    anotherPastAppointment.setUTCDate(anotherPastAppointment.getUTCDate() - 1);
+
+    await createTestAppointment({
+      time: anotherPastAppointment,
       pushToDb: true,
     });
 
     await transferPastAppointments();
 
-    const pastAppointmentMainTable = await prisma.appointment.findUnique({
-      where: { id: pastAppointment.appointment!.id },
+    const pastAppointmentsMainTable = await prisma.appointment.findMany({
+      where: { timestamp: { lt: new Date() } },
     });
-    const pastAppointmentsFromPastTable =
-      await prisma.pastAppointments.findMany();
+    const pastAppointmentsFromPastTable = await prisma.pastAppointment.findMany(
+      { where: { timestamp: { lt: new Date(Date.now() - ONE_DAY) } } }
+    );
 
-    expect(pastAppointmentMainTable).toBe(null);
+    expect(pastAppointmentsMainTable).toHaveLength(0);
+    expect(pastAppointmentsFromPastTable).toHaveLength(2);
   });
 });
