@@ -13,8 +13,6 @@ services:
       - /docker-volumes/etc/letsencrypt/live/appointment-booking-example.com/fullchain.pem:/etc/letsencrypt/live/appointment-booking-example.com/fullchain.pem
       - /docker-volumes/etc/letsencrypt/live/appointment-booking-example.com/privkey.pem:/etc/letsencrypt/live/appointment-booking-example.com/privkey.pem
       - /etc/ssl:/etc/ssl
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/ssl:/home/etc
     networks:
       main:
         aliases:
