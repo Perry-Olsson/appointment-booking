@@ -7,6 +7,6 @@ import { MobileTabletNav } from "./MobileTabletNav";
 export const Navigation: FC = () => {
   const [dimensions] = useAtom(dimensionsAtom);
 
-  if (device.isTabletOrSmaller(dimensions.width)) return <MobileTabletNav />;
+  if (!device.isDesktop(dimensions.width)) return <MobileTabletNav />;
   return null;
 };

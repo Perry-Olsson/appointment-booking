@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { Flex } from "../../components";
+import { device, Flex } from "../../components";
 import { UserAppointment } from "../../types";
 import { AppointmentInfoItem } from "../Scheduler/AppointmentForm/ConfirmModal/AppointmentInfoItem";
 import { AppointmentTime } from "../../components";
@@ -37,7 +37,7 @@ const Container = styled(Flex)`
   border: solid 1px gray;
   border-radius: 4px;
   width: 95%;
-  max-width: 1000px;
+  max-width: ${device.tablet.pixels};
   margin: 10px;
   padding: 20px;
   flex-direction: column;
