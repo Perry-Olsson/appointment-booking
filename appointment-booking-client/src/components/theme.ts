@@ -1,6 +1,12 @@
 import { DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
+  dashboard: {
+    navBar: {
+      height: 60,
+      heightPx: "60px",
+    },
+  },
   navBar: {
     height: "60px",
   },
@@ -54,6 +60,12 @@ export const theme: DefaultTheme = {
 
 declare module "styled-components" {
   export interface DefaultTheme {
+    dashboard: {
+      navBar: {
+        height: number;
+        heightPx: string;
+      };
+    };
     navBar: {
       height: string;
     };

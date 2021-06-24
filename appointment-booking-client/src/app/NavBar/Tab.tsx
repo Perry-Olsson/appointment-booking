@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import { useIsOpen } from "./Burger";
+import { useIsOpen } from "../../components";
 
 interface TabProps {
   children: React.ReactText;

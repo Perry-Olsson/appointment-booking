@@ -9,3 +9,4 @@ export * from "./Button";
 export * from "./styledFormTags";
 export * from "./ExitButton";
 export * from "./AppointmentTime";
+export * from "./BurgerMenu";

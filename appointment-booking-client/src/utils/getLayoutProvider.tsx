@@ -7,6 +7,7 @@ export const getLayoutProvider = (displayName: string | undefined) => {
     case "day":
       return (page: any) => <ScheduleProviders>{page}</ScheduleProviders>;
     case "dashboard":
+    case "pastAppointments":
       return (page: any) => <DashboardProviders>{page}</DashboardProviders>;
     default:
       return (page: any) => page;

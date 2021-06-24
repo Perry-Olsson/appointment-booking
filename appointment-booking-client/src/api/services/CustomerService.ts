@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { RegisterFormValues } from "../../app/Register";
 import { accessToken } from "../../pages/_app";
-import { User } from "../../types";
+import { User, UserAppointment } from "../../types";
 import { ClientInjector } from "../ClientInjector";
 
 export class CustomerService extends ClientInjector {
@@ -40,6 +40,13 @@ export class CustomerService extends ClientInjector {
     const response = await this.instance.post("/customers/refreshToken");
 
     if (response.accessToken) accessToken.set(response.accessToken);
+    return response;
+  }
+
+  public async pastAppointments() {
+    const response = await this.instance.get<
+      UserAppointment[] | "Unauthorized"
+    >("/customers/pastAppointments");
     return response;
   }
 }

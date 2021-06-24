@@ -88,4 +88,5 @@ export interface User {
   firstName: string;
   lastName: string;
   appointments: UserAppointment[];
+  pastAppointments: UserAppointment[];
 }
