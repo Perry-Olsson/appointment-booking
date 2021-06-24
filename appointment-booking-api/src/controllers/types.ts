@@ -1,6 +1,7 @@
 import {
   Appointment,
   Customer,
+  PastAppointment,
   Prisma,
   Procedure,
   Provider,
@@ -37,6 +38,12 @@ export interface ProviderDAO {
 
 export interface ServiceHoursDAO {
   getServiceHours(): Promise<ServiceHours[]>;
+}
+
+export interface PastAppointmentDAO {
+  getPastAppointments(
+    queryConditions?: Prisma.PastAppointmentFindManyArgs
+  ): Promise<PastAppointment[]>;
 }
 
 interface UserAppointment {

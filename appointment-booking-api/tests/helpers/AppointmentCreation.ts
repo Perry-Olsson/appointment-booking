@@ -91,7 +91,7 @@ export const createTwoPastAppointments = async () => {
     pastAppointmentTimestamp.getUTCDate() - 2
   );
 
-  await createTestAppointment({
+  const pastAppointmentOne = await createTestAppointment({
     time: pastAppointmentTimestamp,
     pushToDb: true,
   });
@@ -99,10 +99,12 @@ export const createTwoPastAppointments = async () => {
   const anotherPastAppointment = new Date(pastAppointmentTimestamp);
   anotherPastAppointment.setUTCDate(anotherPastAppointment.getUTCDate() - 1);
 
-  await createTestAppointment({
+  const pastAppointmentTwo = await createTestAppointment({
     time: anotherPastAppointment,
     pushToDb: true,
   });
+
+  return { pastAppointmentOne, pastAppointmentTwo };
 };
 
 interface TestAppointment {
