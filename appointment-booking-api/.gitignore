@@ -13,3 +13,5 @@ prismaTest.ts
 dist/
 
 .VSCodeCounter
+
+coverage/

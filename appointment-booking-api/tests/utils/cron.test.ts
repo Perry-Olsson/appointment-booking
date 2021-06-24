@@ -1,5 +1,5 @@
 import { prisma } from "../../src/prisma";
-import { createTestAppointment, initializeTestData } from "../helpers";
+import { createTwoPastAppointments, initializeTestData } from "../helpers";
 import { transferPastAppointments } from "../../src/utils";
 import { ONE_DAY } from "../../src/constants";
 
@@ -11,23 +11,7 @@ afterAll(() => prisma.$disconnect());
 
 describe("Cron jobs", () => {
   test("Past appointments are transfered from main appointment table to past appointment table at midnight", async () => {
-    const pastAppointmentTimestamp = new Date();
-    pastAppointmentTimestamp.setUTCDate(
-      pastAppointmentTimestamp.getUTCDate() - 2
-    );
-
-    await createTestAppointment({
-      time: pastAppointmentTimestamp,
-      pushToDb: true,
-    });
-
-    const anotherPastAppointment = new Date(pastAppointmentTimestamp);
-    anotherPastAppointment.setUTCDate(anotherPastAppointment.getUTCDate() - 1);
-
-    await createTestAppointment({
-      time: anotherPastAppointment,
-      pushToDb: true,
-    });
+    await createTwoPastAppointments();
 
     await transferPastAppointments();
 

@@ -85,6 +85,26 @@ export const createDefaultTime = (): Required<Time> => {
   };
 };
 
+export const createTwoPastAppointments = async () => {
+  const pastAppointmentTimestamp = new Date();
+  pastAppointmentTimestamp.setUTCDate(
+    pastAppointmentTimestamp.getUTCDate() - 2
+  );
+
+  await createTestAppointment({
+    time: pastAppointmentTimestamp,
+    pushToDb: true,
+  });
+
+  const anotherPastAppointment = new Date(pastAppointmentTimestamp);
+  anotherPastAppointment.setUTCDate(anotherPastAppointment.getUTCDate() - 1);
+
+  await createTestAppointment({
+    time: anotherPastAppointment,
+    pushToDb: true,
+  });
+};
+
 interface TestAppointment {
   data: NewAppointment;
   appointment: Appointment | null;
