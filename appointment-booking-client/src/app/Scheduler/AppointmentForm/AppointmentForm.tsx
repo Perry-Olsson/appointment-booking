@@ -46,7 +46,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     }
   }, [show]);
 
-  const isSmallDevice = device.isTabletOrSmaller(dimensions.width);
+  const isSmallDevice = !device.isDesktop(dimensions.width);
   return (
     <Container
       ref={ref}
