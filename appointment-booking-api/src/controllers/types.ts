@@ -26,7 +26,7 @@ export interface CustomerDAO {
   login(req: any): Promise<LoginCustomer>;
   findOne(arg: Prisma.CustomerFindUniqueArgs): Promise<Customer | null>;
   getAppointments(user: DefaultCustomer): Promise<UserAppointment[]>;
-  getPastAppointments(user: DefaultCustomer): Promise<PastAppointment[]>;
+  getPastAppointments(user: DefaultCustomer): Promise<UserAppointment[]>;
 }
 
 export interface ProcedureDAO {

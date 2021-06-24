@@ -64,6 +64,8 @@ export class CustomerDataAccess implements CustomerDAO {
   public async getPastAppointments(user: DefaultCustomer) {
     const pastAppointments = await prisma.pastAppointment.findMany({
       where: { customerId: user.email },
+      select: this.appointmentSelectStatement,
+      orderBy: { timestamp: "desc" },
     });
     return pastAppointments;
   }
