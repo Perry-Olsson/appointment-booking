@@ -6,6 +6,7 @@ import {
 } from ".";
 import { prisma } from "../prisma";
 import { seedCustomers } from "./customers";
+import { seedPastAppointments } from "./pastAppointments";
 import { clearDb } from "./utils";
 
 async function main() {
@@ -15,6 +16,7 @@ async function main() {
   await seedSchedules();
   await seedServiceHours();
   await seedCustomers();
+  await seedPastAppointments();
 }
 
 main().finally(() => prisma.$disconnect());
