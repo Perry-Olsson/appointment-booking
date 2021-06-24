@@ -1,9 +1,11 @@
 import { CustomerDataAccess } from "../../src/repositories/customer";
-import { testGuest, testUser } from "../constants";
+import { johnsCredentials, testGuest, testUser } from "../constants";
 import { prisma } from "../../src/prisma";
-import { initializeTestData } from "../helpers";
+import { createTwoPastAppointments, initializeTestData } from "../helpers";
 import customers from "../../src/prisma/seeds/json/customers.json";
 import { CustomerController } from "../../src/controllers";
+import { defaultCustomerSelect } from "../../src/repositories/constants";
+import { transferPastAppointments } from "../../src/utils";
 
 const customer = new CustomerDataAccess();
 const customerController = new CustomerController(customer);
@@ -85,5 +87,24 @@ describe("miscellaneous", () => {
     });
 
     expect(customer).toHaveProperty("tokenVersion");
+  });
+  test("Can fetch customers past appointments", async () => {
+    const john = await prisma.customer.findUnique({
+      where: { email: johnsCredentials.email },
+      select: defaultCustomerSelect,
+    });
+    if (!john) throw Error("John should be seeded into test db");
+
+    expect(john.email).toBe(johnsCredentials.email);
+
+    const pastAppointments = await createTwoPastAppointments();
+    await transferPastAppointments();
+
+    const pastAppointmentsFromDb = await customer.getPastAppointments(john);
+    expect(pastAppointmentsFromDb[0]).toEqual(
+      pastAppointments.find(
+        a => a.appointment!.id === pastAppointmentsFromDb[0].id
+      )?.appointment!
+    );
   });
 });

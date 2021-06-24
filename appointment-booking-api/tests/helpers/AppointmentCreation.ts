@@ -11,12 +11,14 @@ import { HOUR } from "../../src/constants";
 export const createTestAppointment = async ({
   time = { start: {} },
   pushToDb = false,
+  customerId = "john@example.com",
   defaultProvider,
 }: TestAppointmentOptions = {}): Promise<TestAppointment> => {
   const { timestamp, end } = createAppointmentTimestamps(time);
 
   const data = createNewAppointment({
     ...randomizeAppointmentType(defaultProvider),
+    customerId,
     timestamp,
     end,
   });
@@ -102,9 +104,10 @@ export const createTwoPastAppointments = async () => {
   const pastAppointmentTwo = await createTestAppointment({
     time: anotherPastAppointment,
     pushToDb: true,
+    customerId: "angela.newman@example.com",
   });
 
-  return { pastAppointmentOne, pastAppointmentTwo };
+  return [pastAppointmentOne, pastAppointmentTwo];
 };
 
 interface TestAppointment {
@@ -116,6 +119,7 @@ interface TestAppointmentOptions {
   time?: TestAppointmentTime | Date;
   pushToDb?: boolean;
   defaultProvider?: boolean;
+  customerId?: string;
 }
 
 interface TestAppointmentTime {

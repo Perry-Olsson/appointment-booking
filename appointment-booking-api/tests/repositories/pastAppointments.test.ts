@@ -23,7 +23,7 @@ describe("Past appointment repository", () => {
     );
     expect(
       pastAppointmentsFromDb.some(
-        v => v.id === pastAppointments.pastAppointmentOne.appointment!.id
+        v => v.id === pastAppointments[0].appointment!.id
       )
     ).toBe(true);
   });

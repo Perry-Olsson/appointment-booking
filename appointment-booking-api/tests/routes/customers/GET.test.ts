@@ -1,8 +1,10 @@
 import supertest from "supertest";
 import { app } from "../../../src/app";
 import { prisma } from "../../../src/prisma";
-import { initializeTestData } from "../../helpers";
+import { createTwoPastAppointments, initializeTestData } from "../../helpers";
 import customers from "../../../src/prisma/seeds/json/customers.json";
+import { transferPastAppointments } from "../../../src/utils";
+import { PastAppointment } from "@prisma/client";
 const api = supertest(app);
 
 beforeAll(async () => {
@@ -32,5 +34,29 @@ describe("/user", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.email).toBe(customers[0].email);
+  });
+});
+
+describe("/pastAppointments", () => {
+  test("Can retrieve customers past appointment from api endpoint", async () => {
+    await createTwoPastAppointments();
+    await transferPastAppointments();
+
+    const {
+      body: { accessToken },
+    } = await api
+      .post("/api/customers/login")
+      .send({ email: customers[0].email, password: customers[0].password });
+
+    const response = await api
+      .get("/api/customers/pastAppointments")
+      .set({ Authorization: `bearer ${accessToken}` });
+
+    expect(response.body.length).toBeGreaterThan(0);
+    expect(
+      response.body.filter(
+        (a: PastAppointment) => a.customerId !== "john@example.com"
+      )
+    ).toHaveLength(0);
   });
 });

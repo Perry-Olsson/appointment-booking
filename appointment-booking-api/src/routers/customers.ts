@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import { CustomerController } from "../controllers";
 import { CustomerDataAccess } from "../repositories";
 
@@ -24,6 +25,12 @@ router.post("/refreshToken", (req, res, next) =>
 
 router.post("/logout", (req, res, next) =>
   customerController.logout(req, res, next)
+);
+
+router.get(
+  "/pastAppointments",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => customerController.getPastAppointments(req, res, next)
 );
 
 export { router as customerRouter };

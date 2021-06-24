@@ -13,6 +13,7 @@ import passport from "passport";
 import { cookieOptions, refreshTokenKeyValue } from "../constants";
 import { refreshTokenCustomerSelect } from "../repositories/constants";
 import { reqParser } from "./utils/ReqParser";
+import { DefaultCustomer } from "src/repositories/customer/types";
 
 export class CustomerController {
   private dataAccess: CustomerDAO;
@@ -122,6 +123,17 @@ export class CustomerController {
       })(req, res, next);
     } catch (err) {
       next(err);
+    }
+  }
+
+  async getPastAppointments(req: Request, res: Response, next: NextFunction) {
+    try {
+      const pastAppointments = await this.dataAccess.getPastAppointments(
+        req.user as DefaultCustomer
+      );
+      return res.json(pastAppointments);
+    } catch (err) {
+      return next(err);
     }
   }
 }
