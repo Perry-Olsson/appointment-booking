@@ -11,14 +11,22 @@ export const NavBar: React.FC = () => {
 
   return (
     <Container>
-      {width > device.tablet.width ? <TabList /> : <Burger />}
+      <InnerContainer width={width}>
+        {width > device.tablet.width ? <TabList /> : <Burger />}
+      </InnerContainer>
     </Container>
   );
 };
 
-const Container = styled.div`
-  display: flex;
+//doesn't display tabs until device width is known
+const InnerContainer = styled.div<{ width: number }>`
+  display: ${({ width }) => (width === 0 ? "none" : "flex")};
   justify-content: space-between;
+  width: 100%;
+  height: 100%;
+`;
+
+const Container = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
