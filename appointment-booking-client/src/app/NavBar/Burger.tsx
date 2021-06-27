@@ -19,7 +19,7 @@ export const Burger: React.FC = () => {
       </BurgerMenu>
       {user && user !== "loading" ? (
         <span style={{ margin: "auto 1rem" }}>
-          logged in as {user.firstName}
+          Logged in as {user.firstName}
         </span>
       ) : null}
     </>

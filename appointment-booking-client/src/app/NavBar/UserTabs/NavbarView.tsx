@@ -12,7 +12,7 @@ export const NavbarView: React.FC = ({}) => {
   if (user && user !== "loading")
     return (
       <Container>
-        <span style={{ margin: "10px" }}>logged in as {user.firstName}</span>
+        <span style={{ margin: "10px" }}>Logged in as {user.firstName}</span>
         <Link href="/dashboard">
           <LinkButton style={{ margin: "10px" }} text="Dashboard" negative />
         </Link>

@@ -37,7 +37,7 @@ const Container = styled(Flex)`
   border: solid 1px gray;
   border-radius: 4px;
   width: 95%;
-  max-width: ${device.tablet.pixels};
+  max-width: ${device.desktop.pixels};
   margin: 10px;
   padding: 20px;
   flex-direction: column;

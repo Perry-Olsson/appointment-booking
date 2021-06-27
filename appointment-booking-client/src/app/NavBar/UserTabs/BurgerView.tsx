@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { useGetUser } from "../../../context";
 import { BurgerButton, BurgerTab } from "../Tab";
 import { Logout } from "./Logout";
@@ -16,7 +15,6 @@ export const BurgerView: React.FC<BurgerViewProps> = ({}) => {
             <BurgerButton handleClick={handleClick}>Logout</BurgerButton>
           )}
         />
-        <LoggedUser>logged in as {user.firstName}</LoggedUser>
       </>
     );
 
@@ -27,11 +25,5 @@ export const BurgerView: React.FC<BurgerViewProps> = ({}) => {
     </>
   );
 };
-
-const LoggedUser = styled.div`
-  position: absolute;
-  bottom: 0;
-  margin: 5px;
-`;
 
 interface BurgerViewProps {}
