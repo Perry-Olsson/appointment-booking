@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { FC, useRef } from "react";
-import styled, { withTheme } from "styled-components";
+import styled from "styled-components";
 import Link from "next/link";
 import { device } from "../../../components";
 
@@ -88,7 +88,12 @@ const Icon = styled.div<{ isSelected?: boolean }>`
     border-bottom: solid 1px #cccccc;
     background-color: ${({ theme, isSelected }) =>
       isSelected ? theme.colors.primaryLightFaded : "white"};
-    transition: background-color 0.3s;
+    transition: background-color 0.1s;
+    @media (hover: hover) {
+      :hover {
+        background-color: ${({ theme }) => theme.colors.primaryLightFaded};
+      }
+    }
   }
 `;
 
