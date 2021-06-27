@@ -6,13 +6,22 @@ import { useIsOpen } from "../../components";
 interface TabProps {
   children: React.ReactText;
   href: string;
+  onClick: () => void;
   isFirst?: boolean;
+  isSelected: boolean;
 }
 
-export const Tab: React.FC<TabProps> = ({ children, href }) => {
+export const Tab: React.FC<TabProps> = ({
+  onClick,
+  children,
+  href,
+  isSelected,
+}) => {
   return (
     <Link href={href}>
-      <StyledAnchor>{children}</StyledAnchor>
+      <StyledAnchor onClick={onClick} isSelected={isSelected}>
+        {children}
+      </StyledAnchor>
     </Link>
   );
 };
@@ -53,10 +62,30 @@ export const BurgerButton: React.FC<{
   );
 };
 
-const StyledAnchor = styled.a`
-  margin: 0 1rem;
+const StyledAnchor = styled.a<{ isSelected: boolean }>`
   font-size: ${({ theme }) => theme.font.med};
   cursor: pointer;
+  color: ${({ isSelected }) => (isSelected ? "#333333" : "white")};
+  transition: color 0.1s;
+  transition: background-color 0.1s;
+  position: relative;
+  z-index: 6;
+  width: 155px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  height: 95%;
+  margin-top: 3px;
+  margin-right: 1px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  @media (hover: hover) {
+    :hover {
+      color: #333333;
+      background-color: white;
+    }
+  }
 `;
 
 const BurgerAnchor = styled.a`
