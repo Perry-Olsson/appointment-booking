@@ -6,9 +6,9 @@ import { useIsOpen } from "../../components";
 interface TabProps {
   children: React.ReactText;
   href: string;
-  onClick: () => void;
+  onClick?: () => void;
   isFirst?: boolean;
-  isSelected: boolean;
+  isSelected?: boolean;
 }
 
 export const Tab: React.FC<TabProps> = ({
@@ -62,7 +62,7 @@ export const BurgerButton: React.FC<{
   );
 };
 
-const StyledAnchor = styled.a<{ isSelected: boolean }>`
+const StyledAnchor = styled.a<{ isSelected: boolean | undefined }>`
   font-size: ${({ theme }) => theme.font.med};
   cursor: pointer;
   color: ${({ isSelected }) => (isSelected ? "#333333" : "white")};
