@@ -6,6 +6,8 @@ export const device = {
   tablet: {
     width: 770,
     pixels: "770px",
+    largeWidth: 870,
+    largePixels: "870px",
   },
   desktop: {
     width: 1025,
