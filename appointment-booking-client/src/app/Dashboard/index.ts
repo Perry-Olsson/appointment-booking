@@ -1,3 +1,3 @@
 export * from "./Dashboard";
-export * from "./DashboardProviders";
+export * from "./DashboardContainer";
 export * from "./PastAppointments";

@@ -1,5 +1,5 @@
 import { ScheduleProviders } from "../app/Scheduler/ScheduleProviders";
-import { DashboardProviders } from "../app/Dashboard";
+import { DashboardContainer } from "../app/Dashboard";
 
 export const getLayoutProvider = (displayName: string | undefined) => {
   switch (displayName) {
@@ -8,7 +8,7 @@ export const getLayoutProvider = (displayName: string | undefined) => {
       return (page: any) => <ScheduleProviders>{page}</ScheduleProviders>;
     case "dashboard":
     case "pastAppointments":
-      return (page: any) => <DashboardProviders>{page}</DashboardProviders>;
+      return (page: any) => <DashboardContainer>{page}</DashboardContainer>;
     default:
       return (page: any) => page;
   }

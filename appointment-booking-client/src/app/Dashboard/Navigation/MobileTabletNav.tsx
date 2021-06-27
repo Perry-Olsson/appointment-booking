@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import React, { FC, useRef } from "react";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
 import Link from "next/link";
+import { device } from "../../../components";
 
 export const MobileTabletNav: FC = () => {
   const { route } = useRouter();
@@ -42,6 +43,9 @@ const LocationDisplay = styled.div<{ route: string }>`
   z-index: 6;
   transition: margin-left 0.2s;
   border-top: ${({ theme }) => `solid 3px ${theme.colors.primary}`};
+  @media (min-width: ${device.desktop.pixels}) {
+    display: none;
+  }
 `;
 
 const getMargin = (route: string) => {
@@ -59,6 +63,15 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   background-color: white;
+  @media (min-width: ${device.desktop.pixels}) {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    border-right: solid 1px #cccccc;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+  }
 `;
 
 const Icon = styled.div<{ isSelected?: boolean }>`
@@ -68,6 +81,15 @@ const Icon = styled.div<{ isSelected?: boolean }>`
   justify-content: center;
   align-items: center;
   border-top: solid 1px #cccccc;
+  cursor: pointer;
+  @media (min-width: ${device.desktop.pixels}) {
+    height: 60px;
+    border-top: none;
+    border-bottom: solid 1px #cccccc;
+    background-color: ${({ theme, isSelected }) =>
+      isSelected ? theme.colors.primaryLightFaded : "white"};
+    transition: background-color 0.3s;
+  }
 `;
 
 const NumberOfTabs = 2;

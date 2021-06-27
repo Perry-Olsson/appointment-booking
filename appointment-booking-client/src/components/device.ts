@@ -10,6 +10,8 @@ export const device = {
   desktop: {
     width: 1025,
     pixels: "1025px",
+    largeWidth: 1300,
+    largePixels: "1300px",
   },
   isMobile: function (width: number) {
     return width <= this.mobile.width;
