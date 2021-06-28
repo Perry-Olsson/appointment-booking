@@ -22,7 +22,7 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   @media (min-width: ${device.desktop.pixels}) {
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr;
     position: absolute;
     top: ${({ theme }) => theme.navBar.height};
     right: 0;

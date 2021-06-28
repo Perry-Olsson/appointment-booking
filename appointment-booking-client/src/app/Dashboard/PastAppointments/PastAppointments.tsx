@@ -1,9 +1,8 @@
 import { FC } from "react";
 import { useQuery } from "react-query";
-import styled from "styled-components";
 import { customerService } from "../../../api";
-import { Flex } from "../../../components";
 import { AppointmentCard } from "../AppointmentCard";
+import { AppointmentListContainer } from "../components";
 
 export const PastAppointments: FC = () => {
   const { data, isLoading } = useQuery(
@@ -20,18 +19,11 @@ export const PastAppointments: FC = () => {
   if (data === "Unauthorized") return <div>You should be on this page</div>;
 
   return (
-    <Container>
+    <AppointmentListContainer>
       <h1>Past Appointments</h1>
       {data.map(a => {
         return <AppointmentCard key={a.id} appointment={a} />;
       })}
-    </Container>
+    </AppointmentListContainer>
   );
 };
-
-const Container = styled(Flex)`
-  justify-content: flex-start;
-  margin-top: 20px;
-  padding-bottom: 60px;
-  flex-direction: column;
-`;
