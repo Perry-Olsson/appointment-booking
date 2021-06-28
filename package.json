@@ -1,7 +1,0 @@
-{
-  "scripts": {
-    "dev": "docker-compose -f dev-compose.yml up -d && docker exec -it renewal-center_appointment-api_1 npm run migrate:reset && docker exec -it renewal-center_appointment-api_1 npm run db:seed",
-    "compose": "docker compose up -d --build && cd ./appointment-booking-api && npm run wait && npm run migrate:deploy",
-    "push:images": "docker push dockterperry/appointment-api:v1 && docker push dockterperry/appointment-client:v1, && docker push dockterperry/appointment-nginx:v1"
-  }
-}
