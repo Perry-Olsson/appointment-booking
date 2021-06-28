@@ -3,7 +3,7 @@ import { prisma } from "../../prisma";
 export const transferPastAppointments = async () => {
   try {
     const now = new Date();
-    const pastAppointmentCondition = { timestamp: { lt: now } };
+    const pastAppointmentCondition = { end: { lt: now } };
 
     const pastAppointments = await prisma.appointment.findMany({
       where: pastAppointmentCondition,

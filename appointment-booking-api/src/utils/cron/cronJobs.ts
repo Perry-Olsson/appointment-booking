@@ -4,7 +4,7 @@ import chalk from "chalk";
 
 export function cronJobs() {
   cron.schedule(
-    "59 23 * * *",
+    "/15 * * * *",
     async () => {
       const date = new Date();
       console.log(chalk.green("Running transfer past appointments"));
