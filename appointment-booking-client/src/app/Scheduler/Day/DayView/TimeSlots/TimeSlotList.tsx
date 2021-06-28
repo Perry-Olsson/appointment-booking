@@ -15,6 +15,7 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = ({
   let i = 0;
   return (
     <Container>
+      <NowMarker now={new Date()} />
       {timeSlots.map(slot => {
         if (
           i < appointments.length - 1 &&
@@ -35,6 +36,14 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = ({
     </Container>
   );
 };
+
+const NowMarker = styled.div<{ now: Date }>`
+  position: relative;
+  top: ${({ now }) =>
+    `${1.7 * now.getHours() * 4 + 1.7 * (now.getMinutes() / 60)}rem`};
+  border-top: solid;
+  height: 0px;
+`;
 
 const Container = styled.div`
   width: 100%;
