@@ -1,5 +1,3 @@
-import { CookieOptions } from "express";
-
 export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
 export const QUARTER_HOUR = MINUTE * 15;
@@ -18,15 +16,6 @@ export const exposedFields = {
 };
 
 export const timeStringRegExp = /^\d{2}:\d{2}$/;
-
-export const cookieOptions = (): CookieOptions => ({
-  httpOnly: true,
-  expires: (() => {
-    const now = new Date();
-    now.setFullYear(now.getFullYear() + 1);
-    return now;
-  })(),
-});
 
 export const accessTokenExp = 10;
 

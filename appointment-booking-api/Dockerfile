@@ -24,8 +24,15 @@ CMD ["npm", "run", "dev:js"]
 
 FROM node:alpine as db-manager
 WORKDIR /usr/app
-COPY --from=base /usr/app .
-COPY --from=base /usr/app/node_modules ./node_modules
+COPY ./db-manager.package.json ./package.json
+COPY ./src/prisma ./src/prisma
+COPY ./src/constants.ts ./src
+COPY ./src/types.ts ./src
+COPY ./tsconfig.json .
+COPY ./.env .
+COPY ./src/utils/cron/transferPastAppointments.ts ./src/utils/cron/transferPastAppointments.ts
+RUN npm install
+RUN npx prisma generate
 CMD ["/bin/sh"]
 
 

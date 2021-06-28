@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../prisma";
 import customers from "./json/customers.json";
-import { Prisma } from ".prisma/client";
+import { Prisma } from "@prisma/client";
 import { createNewCustomerAppointment, timestamper } from "./utils";
 
 export const seedCustomers = async (includeAppointments = true) => {

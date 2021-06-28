@@ -10,7 +10,8 @@ import bcrypt from "bcryptjs";
 import { CustomerDAO } from "./types";
 import { auth } from "../utils/auth";
 import passport from "passport";
-import { cookieOptions, refreshTokenKeyValue } from "../constants";
+import { refreshTokenKeyValue } from "../constants";
+import config from "../config";
 import { refreshTokenCustomerSelect } from "../repositories/constants";
 import { reqParser } from "./utils/ReqParser";
 import { DefaultCustomer } from "src/repositories/customer/types";
@@ -67,7 +68,7 @@ export class CustomerController {
       );
 
       res
-        .cookie(refreshTokenKeyValue, refreshToken, cookieOptions())
+        .cookie(refreshTokenKeyValue, refreshToken, config.cookieOptions())
         .json({ accessToken });
     } catch (err) {
       next(err);
@@ -76,7 +77,10 @@ export class CustomerController {
 
   async logout(_req: Request, res: Response, next: NextFunction) {
     try {
-      res.cookie(refreshTokenKeyValue, "", cookieOptions()).status(204).send();
+      res
+        .cookie(refreshTokenKeyValue, "", config.cookieOptions())
+        .status(204)
+        .send();
     } catch (err) {
       next(err);
     }

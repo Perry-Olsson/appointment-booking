@@ -1,5 +1,5 @@
-import { transferPastAppointments } from "../../../src/utils";
-import { HALF_HOUR, ONE_DAY } from "../../../src/constants";
+import { transferPastAppointments } from "../../../src/utils/cron/transferPastAppointments";
+import { HALF_HOUR, ONE_DAY } from "../../constants";
 import { prisma } from "../prisma";
 import { createNewAppointment } from "./utils";
 
