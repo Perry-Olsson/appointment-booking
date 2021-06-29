@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { device } from "../../../../../components/device";
 import { ServiceDay } from "../../../../../types";
@@ -9,13 +10,28 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = ({
   serviceHours,
 }) => {
   const appointments = useAppointments();
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    setInterval(() => {
+      const newNow = new Date();
+      if (
+        newNow.getMinutes() > now.getMinutes() ||
+        (now.getMinutes() === 59 && newNow.getMinutes() === 0)
+      ) {
+        setNow(newNow);
+      }
+    }, 1000);
+  });
 
   if (serviceHours.isClosed) return <div>Sorry we're closed</div>;
 
   let i = 0;
   return (
     <Container>
-      <NowMarker now={new Date()} />
+      <NowMarker now={now}>
+        <NowTimeString now={now}>{now.getTimeString()}</NowTimeString>
+      </NowMarker>
       {timeSlots.map(slot => {
         if (
           i < appointments.length - 1 &&
@@ -43,6 +59,21 @@ const NowMarker = styled.div<{ now: Date }>`
     `${1.7 * now.getHours() * 4 + 1.7 * (now.getMinutes() / 60)}rem`};
   border-top: solid;
   height: 0px;
+  color: ${({ theme }) => theme.colors.primary};
+`;
+
+const NowTimeString = styled.div<{ now: Date }>`
+  position: absolute;
+  color: black;
+  right: 5px;
+  bottom: 10px;
+  background-color: #eeeeee;
+  width: 70px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 `;
 
 const Container = styled.div`
