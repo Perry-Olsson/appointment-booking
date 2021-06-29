@@ -19,6 +19,7 @@ declare global {
     getNextMonth(serviceHours?: ServiceHoursState): Date;
     getPreviousMonth(serviceHours?: ServiceHoursState): Date;
     get4DigitTimeNumber(): number;
+    isToday(): boolean;
   }
 }
 
@@ -39,7 +40,7 @@ Date.prototype.getTimeString = function () {
   const minutes = this.getMinutes();
   const suffix = this.getHours() < 11 ? "AM" : "PM";
   return `${hours === 0 ? 12 : hours}:${
-    minutes === 0 ? "00" : minutes
+    minutes < 10 ? `0${minutes}` : minutes
   } ${suffix}`;
 };
 
@@ -102,6 +103,15 @@ Date.prototype.getPreviousMonth = function (serviceHours) {
 
 Date.prototype.get4DigitTimeNumber = function () {
   return this.getHours() * 100 + this.getMinutes();
+};
+
+Date.prototype.isToday = function () {
+  const now = new Date();
+  return (
+    now.getFullYear() === this.getFullYear() &&
+    now.getMonth() === this.getMonth() &&
+    now.getDate() === this.getDate()
+  );
 };
 
 Date.prototype.monthStrings = [

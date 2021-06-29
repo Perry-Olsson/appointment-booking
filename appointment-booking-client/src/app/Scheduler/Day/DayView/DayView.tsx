@@ -28,6 +28,7 @@ export const DayView: React.FC<DayViewProps> = memo(
             <TimeSlotList
               timeSlots={timeSlots}
               serviceHours={serviceHours.data[day.getDay()]}
+              day={day}
             />
             <AppointmentForm timeSlots={timeSlots} />
           </Grid>
