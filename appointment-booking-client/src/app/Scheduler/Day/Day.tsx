@@ -5,6 +5,7 @@ import { useSetOverflow } from "./hooks/useSetOverflow";
 import { DayProvider } from "./context/DayProvider";
 import { useGetUser } from "../../../context";
 import { useRouter } from "next/router";
+import { LoadingIcon } from "../../../components";
 
 const Day = () => {
   const dayState = useDayState();
@@ -19,7 +20,7 @@ const Day = () => {
     return <div>Missing critical business operational data</div>;
 
   if (!dayState.serviceHours.data.length || !user || user === "loading")
-    return <div>loading...</div>;
+    return <LoadingIcon />;
 
   if (!dayState.day.isValidDate()) return <div>invalid url. Rerouting...</div>;
 
