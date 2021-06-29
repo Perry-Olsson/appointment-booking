@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { customerService } from "../../../api";
 import { AppointmentCard } from "../AppointmentCard";
 import { AppointmentListContainer } from "../components";
+import { LoadingIcon } from "../../../components";
 
 export const PastAppointments: FC = () => {
   const { data, isLoading } = useQuery(
@@ -14,7 +15,7 @@ export const PastAppointments: FC = () => {
     }
   );
 
-  if (!data || isLoading) return <div>loading...</div>;
+  if (!data || isLoading) return <LoadingIcon />;
 
   if (data === "Unauthorized") return <div>You should be on this page</div>;
 

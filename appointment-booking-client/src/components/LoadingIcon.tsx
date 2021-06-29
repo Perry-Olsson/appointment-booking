@@ -1,12 +1,25 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { Flex } from "./Flex";
-import ReactLoading from "react-loading";
+import ReactLoading, { LoadingProps } from "react-loading";
 
-export const LoadingIcon: FC = () => {
+export const LoadingIcon: FC<LoadingProps> = ({
+  className,
+  type = "bars",
+  color = "#2222222",
+  height = "50px",
+  width = "50px",
+  ...props
+}) => {
   return (
-    <LoadingContainer>
-      <ReactLoading type="bars" color="#2222222" height="50px" width="50px" />
+    <LoadingContainer className={className}>
+      <ReactLoading
+        type={type}
+        color={color}
+        height={height}
+        width={width}
+        {...props}
+      />
     </LoadingContainer>
   );
 };

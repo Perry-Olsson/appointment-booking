@@ -1,5 +1,6 @@
 import { createContext, FC, useContext } from "react";
 import { User } from "../types";
+import { LoadingIcon } from "../components";
 
 const UserContext = createContext<User | undefined>(undefined);
 
@@ -9,7 +10,7 @@ export const AwaitUserProvider: FC<{ user: User | "loading" | null }> = ({
 }) => {
   if (user && user !== "loading")
     return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
-  return <div>loading...</div>;
+  return <LoadingIcon />;
 };
 
 export const useAwaitUser = () => {
