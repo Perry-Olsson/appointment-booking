@@ -22,7 +22,7 @@ export const MobileTabletNav: FC = () => {
         <Icon
           onClick={() =>
             (locationDisplayRef.current!.style.marginLeft = `${
-              window.screen.width / NumberOfTabs
+              window.innerWidth / NumberOfTabs
             }px`)
           }
           isSelected={route === "/dashboard/pastAppointments"}
@@ -39,7 +39,7 @@ const LocationDisplay = styled.div<{ route: string }>`
   position: absolute;
   top: 0;
   margin-left: ${({ route }) => getMargin(route)};
-  width: ${() => `${window.screen.width / NumberOfTabs}px`};
+  width: ${() => `${window.innerWidth / NumberOfTabs}px`};
   z-index: 6;
   transition: margin-left 0.2s;
   border-top: ${({ theme }) => `solid 3px ${theme.colors.primary}`};
@@ -50,7 +50,7 @@ const LocationDisplay = styled.div<{ route: string }>`
 
 const getMargin = (route: string) => {
   if (route === "/dashboard") return "0";
-  else return `${window.screen.width / NumberOfTabs}px`;
+  else return `${window.innerWidth / NumberOfTabs}px`;
 };
 
 const Container = styled.div`

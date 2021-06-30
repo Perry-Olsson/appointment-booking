@@ -58,7 +58,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
         onClick={() => {
           if (isSmallDevice) {
             ref!.current!.style.paddingTop = "0px";
-            ref!.current!.style.bottom = window.screen.height + "px";
+            ref!.current!.style.bottom = window.innerHeight + "px";
             setTimeout(() => {
               setShow(false);
             }, 500);
@@ -136,7 +136,7 @@ const Container = styled.div<{ show: boolean }>`
   @media (max-width: ${device.desktop.pixels}) {
     position: absolute;
     top: 0;
-    bottom: ${() => window.screen.height + 2 + "px"};
+    bottom: ${() => window.innerHeight + 2 + "px"};
     right: 0;
     left: 0;
     z-index: 4;
