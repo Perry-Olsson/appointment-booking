@@ -9,6 +9,7 @@ export const theme: DefaultTheme = {
   },
   navBar: {
     height: "60px",
+    rawHeight: 60,
   },
   scheduler: {
     headerHeight: "30px",
@@ -68,6 +69,7 @@ declare module "styled-components" {
     };
     navBar: {
       height: string;
+      rawHeight: number;
     };
     scheduler: {
       headerHeight: string;
