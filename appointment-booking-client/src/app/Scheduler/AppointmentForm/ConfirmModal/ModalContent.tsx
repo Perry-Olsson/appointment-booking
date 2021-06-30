@@ -31,8 +31,9 @@ export const ModalContent: FC<ConfirmModalProps> = ({
     return (
       <SuccessContainer>
         <ExitButton size="30px" onClick={() => closeModal()} />
-        <div>Success!!</div>
+        <h1>Your appointment has been booked!</h1>
         <SuccessMark />
+        <h3 style={{ margin: "10px" }}>You can close out of this</h3>
         <Cancel text="Close" negative handleClick={() => closeModal()} />
       </SuccessContainer>
     );
