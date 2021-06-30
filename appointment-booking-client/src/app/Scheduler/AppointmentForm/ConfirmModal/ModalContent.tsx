@@ -22,10 +22,10 @@ export const ModalContent: FC<ConfirmModalProps> = ({
 }) => {
   if (createAppointment.isLoading)
     return (
-      <div>
+      <LoadingContainer>
         <ExitButton size="30px" onClick={() => closeModal()} />
         <LoadingIcon />
-      </div>
+      </LoadingContainer>
     );
   if (createAppointment.isSuccess)
     return (
@@ -71,6 +71,12 @@ export const ModalContent: FC<ConfirmModalProps> = ({
 
 const SuccessContainer = styled(Flex)`
   flex-direction: column;
+  margin: auto;
+  text-align: center;
+`;
+
+const LoadingContainer = styled(Flex)`
+  margin: auto;
 `;
 
 const Header = styled.h1`

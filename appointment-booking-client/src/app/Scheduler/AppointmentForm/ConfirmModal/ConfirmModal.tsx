@@ -59,7 +59,7 @@ export const Cancel = styled(FormButton)`
 
 const Container = styled(Modal)`
   position: absolute;
-  top: ${() => window.screen.height + "px"};
+  top: ${() => `${window.screen.height}px`};
   left: 0;
   bottom: 0;
   right: 0;
