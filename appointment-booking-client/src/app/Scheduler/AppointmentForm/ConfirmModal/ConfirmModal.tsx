@@ -7,7 +7,7 @@ import { UseMutationResult } from "react-query";
 import { ModalContent } from "./ModalContent";
 
 export interface ConfirmModalProps extends ReactModal.Props {
-  closeModal: (closeModal?: boolean) => void;
+  closeModal: () => void;
   time: string;
   provider: Provider;
   procedure: Procedure;
@@ -80,7 +80,7 @@ const Container = styled(Modal)`
     bottom: 18%;
     left: 20%;
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.2s;
     justify-content: center;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;

@@ -2,11 +2,12 @@ import { FC } from "react";
 import styled from "styled-components";
 import { Flex } from "./Flex";
 import ReactLoading, { LoadingProps } from "react-loading";
+import { theme } from "./theme";
 
 export const LoadingIcon: FC<LoadingProps> = ({
   className,
   type = "bars",
-  color = "#2222222",
+  color = theme.colors.primary,
   height = "50px",
   width = "50px",
   ...props

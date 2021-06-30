@@ -5,6 +5,8 @@ import {
   ExitButton,
   Flex,
   FormButton,
+  LoadingIcon,
+  SuccessMark,
 } from "../../../../components";
 import { AppointmentInfoItem } from "./AppointmentInfoItem";
 import { Cancel, ConfirmModalProps } from ".";
@@ -22,15 +24,17 @@ export const ModalContent: FC<ConfirmModalProps> = ({
     return (
       <div>
         <ExitButton size="30px" onClick={() => closeModal()} />
-        <p>loading...</p>
+        <LoadingIcon />
       </div>
     );
   if (createAppointment.isSuccess)
     return (
-      <div>
-        <ExitButton size="30px" onClick={() => closeModal(true)} />
-        <p>Success!!</p>
-      </div>
+      <SuccessContainer>
+        <ExitButton size="30px" onClick={() => closeModal()} />
+        <div>Success!!</div>
+        <SuccessMark />
+        <Cancel text="Close" negative handleClick={() => closeModal()} />
+      </SuccessContainer>
     );
   return (
     <>
@@ -63,6 +67,10 @@ export const ModalContent: FC<ConfirmModalProps> = ({
     </>
   );
 };
+
+const SuccessContainer = styled(Flex)`
+  flex-direction: column;
+`;
 
 const Header = styled.h1`
   margin: 35px;
