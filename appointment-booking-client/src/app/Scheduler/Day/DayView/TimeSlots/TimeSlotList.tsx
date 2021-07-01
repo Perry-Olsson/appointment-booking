@@ -91,7 +91,7 @@ const Container = styled.div<{ isToday: boolean }>`
   bottom: ${({ isToday }) => (isToday ? "2px" : 0)};
   @media (max-width: ${device.desktop.pixels}) {
     grid-column: 1 / 4;
-    max-width: ${device.tablet.pixels};
+    max-width: ${device.desktop.pixels};
     margin: auto;
     position: fixed;
     bottom: ${({ theme }) => theme.dayView.footerHeight};
