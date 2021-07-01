@@ -9,7 +9,9 @@ export class CustomerService extends ClientInjector {
     super(httpClient);
   }
 
-  public async register(input: RegisterFormValues) {
+  public async register(
+    input: Omit<RegisterFormValues, "passwordConfirmation">
+  ) {
     const response = await this.instance.post("/customers", {
       ...input,
       type: "USER",

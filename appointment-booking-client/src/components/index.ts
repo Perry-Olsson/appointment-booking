@@ -12,3 +12,4 @@ export * from "./AppointmentTime";
 export * from "./BurgerMenu";
 export * from "./LoadingIcon";
 export * from "./SuccessMark";
+export * from "./ErrorNotification";

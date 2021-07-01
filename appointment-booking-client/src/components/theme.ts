@@ -48,6 +48,8 @@ export const theme: DefaultTheme = {
     gray: "#454545",
     lightGray: "#45454555",
     shadeGray: "#90909020",
+    error: "##ff1919",
+    errorBackground: "#ffcfcf",
   },
   form: {
     height: "50px",
@@ -108,6 +110,8 @@ declare module "styled-components" {
       gray: string;
       lightGray: string;
       shadeGray: string;
+      error: string;
+      errorBackground: string;
     };
     form: {
       height: string;

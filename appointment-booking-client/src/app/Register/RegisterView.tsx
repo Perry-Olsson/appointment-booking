@@ -5,6 +5,7 @@ import {
   Controller,
   DeepMap,
   FieldError,
+  UseFormGetValues,
   UseFormRegister,
 } from "react-hook-form";
 import PhoneInput, { isPossiblePhoneNumber } from "react-phone-number-input";
@@ -18,6 +19,8 @@ import {
   Label,
   Seperator,
   FormButton,
+  ErrorObject,
+  ErrorNotification,
 } from "../../components";
 import { RegisterFormValues } from "./Register";
 
@@ -26,10 +29,16 @@ export const RegisterView: FC<RegisterViewProps> = ({
   register,
   control,
   fieldErrors,
+  getValues,
+  error,
 }) => {
+  console.log(error);
   return (
     <Container>
       <Header>Register</Header>
+      {error ? (
+        <ErrorNotification error={error.error} message={error.message} />
+      ) : null}
       <Form onSubmit={handleSubmit}>
         <Label>
           First name
@@ -106,6 +115,31 @@ export const RegisterView: FC<RegisterViewProps> = ({
           )}
         </Label>
 
+        <Seperator />
+
+        <Label>
+          Password confirmation
+          <Input
+            {...register("passwordConfirmation", {
+              required: "This field is required",
+              minLength: {
+                value: 6,
+                message: "Your password must be atleast 6 characters long",
+              },
+              validate: {
+                matches: passwordConfirmation =>
+                  passwordConfirmation === getValues().password
+                    ? true
+                    : "Passwords do not match",
+              },
+            })}
+            type="password"
+          />
+          {fieldErrors.passwordConfirmation && (
+            <ErrorText>{fieldErrors.passwordConfirmation.message}</ErrorText>
+          )}
+        </Label>
+
         <FormButton type="submit" text="Register" />
       </Form>
     </Container>
@@ -127,4 +161,6 @@ interface RegisterViewProps {
   fieldErrors: DeepMap<RegisterFormValues, FieldError>;
   register: UseFormRegister<RegisterFormValues>;
   control: Control<RegisterFormValues>;
+  getValues: UseFormGetValues<RegisterFormValues>;
+  error: ErrorObject | null;
 }
