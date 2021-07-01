@@ -1,5 +1,5 @@
 # stage 1
-FROM node:14 as base
+FROM node as base
 WORKDIR /usr/app
 COPY ./package*.json ./
 RUN npm install
