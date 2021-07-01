@@ -74,8 +74,13 @@ export const SuccessMark: FC<Props> = ({ size = 300 }) => {
 const CirclePath = styled.path`
   stroke-dasharray: 628;
   stroke-dashoffset: 628;
-  /* transition: stroke-dashoffset 0.8s; */
+  -webkit-animation: dash 0.8s linear forwards;
   animation: dash 0.8s linear forwards;
+  @-webkit-keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
   @keyframes dash {
     to {
       stroke-dashoffset: 0;
@@ -86,9 +91,13 @@ const CirclePath = styled.path`
 const CheckPath = styled.path`
   stroke-dasharray: 170;
   stroke-dashoffset: 170;
-  /* transition: stroke-dashoffset 0.8s; */
-  animation: dash 0.8s linear forwards;
-  animation-delay: 0.9s;
+  -webkit-animation: dash 0.8s linear 0.9s forwards;
+  animation: dash 0.8s linear 0.9s forwards;
+  @-webkit-keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
   @keyframes dash {
     to {
       stroke-dashoffset: 0;
