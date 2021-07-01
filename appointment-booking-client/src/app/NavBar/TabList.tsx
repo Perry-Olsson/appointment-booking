@@ -9,37 +9,25 @@ export const TabList: React.FC = () => {
   const { route } = useRouter();
   const locationDisplayRef = useRef<HTMLDivElement>(null);
 
-  const firstPath = firstPathMatcher(route);
+  const mainRoute = getMainRoute(route);
+  const locationDisplayMargin = getMargin(mainRoute);
+  if (locationDisplayRef.current)
+    locationDisplayRef.current.style.marginLeft = locationDisplayMargin;
   return (
     <>
       <NonUserTabsContainer>
         <LocationDisplay
+          id="locationDisplay"
           ref={locationDisplayRef}
-          margin={getMargin(firstPath)}
+          margin={locationDisplayMargin}
         />
-        <Tab
-          isSelected={route === "/"}
-          href="/"
-          onClick={() => (locationDisplayRef.current!.style.marginLeft = "2px")}
-        >
+        <Tab isSelected={route === "/"} href="/">
           Home
         </Tab>
-        <Tab
-          isSelected={route === "/about"}
-          href="/about"
-          onClick={() =>
-            (locationDisplayRef.current!.style.marginLeft = "158px")
-          }
-        >
+        <Tab isSelected={route === "/about"} href="/about">
           About
         </Tab>
-        <Tab
-          isSelected={firstPath === "/schedule"}
-          href="/schedule"
-          onClick={() =>
-            (locationDisplayRef.current!.style.marginLeft = "314px")
-          }
-        >
+        <Tab isSelected={mainRoute === "/schedule"} href="/schedule">
           Book Online
         </Tab>
       </NonUserTabsContainer>
@@ -63,7 +51,7 @@ const getMargin = (route: string) => {
   }
 };
 
-const firstPathMatcher = (route: string) => {
+const getMainRoute = (route: string) => {
   let pastFirstSlash = false;
   for (let i = 0; i < route.length; i++) {
     if (route[i] === "/") {

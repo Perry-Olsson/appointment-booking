@@ -16,7 +16,7 @@ export const Logout: React.FC<{ Component: React.FC<any> }> = ({
         await customerService.logout();
         accessToken.clear();
         client.clear();
-        router.push("/");
+        await router.push("/");
       }}
     />
   );
