@@ -40,5 +40,4 @@ const Container = styled(Flex)`
   max-width: ${device.desktop.pixels};
   margin: 10px;
   padding: 20px;
-  flex-direction: column;
 `;

@@ -17,5 +17,4 @@ export const Month: React.FC<MonthProps> = ({ days }) => {
 const Container = styled(Flex)`
   width: 100%;
   margin: 1rem;
-  flex-direction: column;
 `;

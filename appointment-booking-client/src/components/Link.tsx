@@ -28,6 +28,6 @@ interface LinkProps {
   href: string;
   children: React.ReactNode;
   disable?: boolean;
-  restProps?: React.HTMLAttributes<any>;
+  restProps?: React.HTMLAttributes<HTMLDivElement>;
   onClick?: () => void;
 }

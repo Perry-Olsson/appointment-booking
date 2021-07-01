@@ -85,8 +85,10 @@ const LocationDisplay = styled.div<{ margin: string }>`
 `;
 
 const UserTabsContainer = styled(Flex)`
+  flex-direction: row;
   margin-right: 5px;
 `;
 const NonUserTabsContainer = styled(Flex)`
+  flex-direction: row;
   margin-left: 5px;
 `;

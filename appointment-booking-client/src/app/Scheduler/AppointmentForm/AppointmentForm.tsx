@@ -3,7 +3,6 @@ import {
   Button,
   device,
   ExitButton,
-  Flex,
   Form,
   Seperator,
   theme,
@@ -13,6 +12,7 @@ import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
 import { useAppointmentFormState } from "./hooks";
 import { Cancel, ConfirmModal } from "./ConfirmModal";
+import { ButtonContainer } from "./components";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -162,10 +162,6 @@ const Container = styled.div<{ show: boolean }>`
     overflow-y: scroll;
     transition: bottom 0.4s, padding-top 0.4s;
   }
-`;
-
-const ButtonContainer = styled(Flex)`
-  margin-top: 1rem;
 `;
 
 export interface AppointmentFormProps {

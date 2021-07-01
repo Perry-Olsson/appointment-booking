@@ -54,9 +54,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
   );
 };
 
-const Container = styled(Flex)`
-  flex-direction: column;
-`;
+const Container = styled(Flex)``;
 
 const Header = styled.h2`
   margin: 1rem;

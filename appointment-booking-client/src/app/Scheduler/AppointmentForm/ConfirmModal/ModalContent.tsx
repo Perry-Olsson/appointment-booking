@@ -10,6 +10,7 @@ import {
 } from "../../../../components";
 import { AppointmentInfoItem } from "./AppointmentInfoItem";
 import { Cancel, ConfirmModalProps } from ".";
+import { ButtonContainer } from "../components";
 
 export const ModalContent: FC<ConfirmModalProps> = ({
   closeModal,
@@ -55,7 +56,7 @@ export const ModalContent: FC<ConfirmModalProps> = ({
           {comments}
         </AppointmentInfoItem>
       ) : null}
-      <Flex>
+      <ButtonContainer>
         <Cancel text="cancel" negative handleClick={() => closeModal()} />
         <FormButton
           type="submit"
@@ -64,13 +65,12 @@ export const ModalContent: FC<ConfirmModalProps> = ({
             await handleSubmit();
           }}
         />
-      </Flex>
+      </ButtonContainer>
     </>
   );
 };
 
 const SuccessContainer = styled(Flex)`
-  flex-direction: column;
   margin: auto;
   text-align: center;
 `;

@@ -4,6 +4,7 @@ import { useGetUser } from "../../context";
 import { Header } from "./Header";
 import { MonthList } from "./MonthList";
 import { LoadingIcon } from "../../components";
+import styled from "styled-components";
 
 export default function Scheduler() {
   const user = useGetUser();
@@ -14,9 +15,13 @@ export default function Scheduler() {
   if (!user || user === "loading") return <LoadingIcon />;
 
   return (
-    <Flex>
+    <Container>
       <Header />
       <MonthList />
-    </Flex>
+    </Container>
   );
 }
+
+const Container = styled(Flex)`
+  flex-direction: row;
+`;

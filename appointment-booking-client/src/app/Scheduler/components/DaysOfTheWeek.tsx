@@ -15,4 +15,6 @@ export const DaysOfTheWeek: React.FC = () => {
   );
 };
 
-const Cell = styled(Flex)``;
+const Cell = styled(Flex)`
+  flex-direction: row;
+`;

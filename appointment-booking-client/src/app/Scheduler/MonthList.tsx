@@ -19,7 +19,6 @@ export const MonthList: React.FC = memo(() => {
 
 const Container = styled(Flex)`
   flex: 1;
-  flex-direction: column;
   position: relative;
   top: ${({ theme }) => theme.scheduler.headerHeight};
 `;
