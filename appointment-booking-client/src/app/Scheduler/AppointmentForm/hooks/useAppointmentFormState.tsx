@@ -8,17 +8,26 @@ import { appointmentService } from "../../../../api";
 import { device } from "../../../../components";
 import { useGetUser } from "../../../../context";
 import { NewAppointment } from "../../../../types";
-import { showAppointmentsFormAtom } from "../../atoms";
+import { dimensionsAtom, showAppointmentsFormAtom } from "../../atoms";
 import { useStaticState, useFormApi } from "../../context";
+import { useWatchProcedure, useWatchProvider } from "../../hooks";
 import { FormValues } from "../types";
 import { concatUser } from "../utils";
 
 export const useAppointmentFormState = () => {
   const [show, setShow] = useAtom(showAppointmentsFormAtom);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const { procedures } = useStaticState();
+
+  const [dimensions] = useAtom(dimensionsAtom);
+
   const user = useGetUser();
+  const { procedures } = useStaticState();
+
   const client = useQueryClient();
+  const router = useRouter();
+
+  const provider = useWatchProvider();
+  const procedure = useWatchProcedure();
   const {
     formState: { errors, isValid, isValidating },
     getValues,
@@ -27,8 +36,7 @@ export const useAppointmentFormState = () => {
     reset,
     trigger,
   } = useFormApi();
-  useDeselectFieldsOnChange();
-  const router = useRouter();
+
   const createAppointment = useMutation(
     (appointment: NewAppointment) =>
       appointmentService.createAppointment(appointment),
@@ -64,6 +72,8 @@ export const useAppointmentFormState = () => {
     }, 500);
   };
 
+  useDeselectFieldsOnChange();
+
   return {
     show,
     register,
@@ -79,6 +89,9 @@ export const useAppointmentFormState = () => {
     isValid,
     isValidating,
     createAppointment,
+    provider,
+    procedure,
+    isSmallDevice: !device.isDesktop(dimensions.width),
   };
 };
 

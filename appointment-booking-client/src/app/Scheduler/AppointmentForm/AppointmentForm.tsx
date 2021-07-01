@@ -3,6 +3,7 @@ import {
   Button,
   device,
   ExitButton,
+  Flex,
   Form,
   Seperator,
   theme,
@@ -11,10 +12,7 @@ import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
 import { useAppointmentFormState } from "./hooks";
-import { ConfirmModal } from "./ConfirmModal";
-import { useWatchProcedure, useWatchProvider } from "../hooks";
-import { useAtom } from "jotai";
-import { dimensionsAtom } from "../atoms";
+import { Cancel, ConfirmModal } from "./ConfirmModal";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -33,39 +31,30 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     getValues,
     trigger,
     createAppointment,
+    provider,
+    procedure,
+    isSmallDevice,
   } = useAppointmentFormState();
-  const provider = useWatchProvider();
-  const procedure = useWatchProcedure();
-  const [dimensions] = useAtom(dimensionsAtom);
-  const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (show) {
-      ref!.current!.style.paddingTop = "30px";
-      ref!.current!.style.bottom = theme.dayView.footerHeight;
+      containerRef.current!.style.paddingTop = "30px";
+      containerRef.current!.style.bottom = theme.dayView.footerHeight;
     }
   }, [show]);
 
-  const isSmallDevice = !device.isDesktop(dimensions.width);
   return (
     <Container
-      ref={ref}
+      ref={containerRef}
       id="appointment-form"
       show={show}
       className={className}
     >
       <HideFormButton
-        onClick={() => {
-          if (isSmallDevice) {
-            ref!.current!.style.paddingTop = "0px";
-            ref!.current!.style.bottom = window.innerHeight + "px";
-            setTimeout(() => {
-              setShow(false);
-            }, 500);
-          } else {
-            setShow(false);
-          }
-        }}
+        onClick={() =>
+          closeAppointmentForm(isSmallDevice, containerRef, setShow)
+        }
         size="30px"
       />
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -83,19 +72,30 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
 
         <Comments register={register} errors={errors} />
 
-        <ConfirmButton
-          type="button"
-          text="Confirm"
-          onClick={async e => {
-            e.preventDefault();
-            const isValid = await trigger([
-              "procedureId",
-              "providerId",
-              "timestamp",
-            ]);
-            if (isValid) openModal();
-          }}
-        />
+        <ButtonContainer>
+          <Cancel
+            text="cancel"
+            negative
+            onClick={e => {
+              e.preventDefault();
+              closeAppointmentForm(isSmallDevice, containerRef, setShow);
+            }}
+          />
+
+          <ConfirmButton
+            type="button"
+            text="Confirm"
+            onClick={async e => {
+              e.preventDefault();
+              const isValid = await trigger([
+                "procedureId",
+                "providerId",
+                "timestamp",
+              ]);
+              if (isValid) openModal();
+            }}
+          />
+        </ButtonContainer>
 
         {modalIsOpen ? (
           <ConfirmModal
@@ -119,9 +119,24 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   );
 };
 
+const closeAppointmentForm = (
+  isSmallDevice: boolean,
+  containerRef: React.RefObject<HTMLDivElement>,
+  setShow: (update: React.SetStateAction<boolean>) => void | Promise<void>
+) => {
+  if (isSmallDevice) {
+    containerRef!.current!.style.paddingTop = "0px";
+    containerRef!.current!.style.bottom = window.innerHeight + "px";
+    setTimeout(() => {
+      setShow(false);
+    }, 500);
+  } else {
+    setShow(false);
+  }
+};
+
 const ConfirmButton = styled(Button)`
   padding: 10px 30px;
-  margin: 20px auto;
 `;
 
 const HideFormButton = styled(ExitButton)`
@@ -147,6 +162,10 @@ const Container = styled.div<{ show: boolean }>`
     overflow-y: scroll;
     transition: bottom 0.4s, padding-top 0.4s;
   }
+`;
+
+const ButtonContainer = styled(Flex)`
+  margin-top: 1rem;
 `;
 
 export interface AppointmentFormProps {
