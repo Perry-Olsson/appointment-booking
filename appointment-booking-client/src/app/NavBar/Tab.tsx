@@ -73,7 +73,6 @@ const StyledAnchor = styled.a<{ isSelected: boolean | undefined }>`
   width: 155px;
   display: flex;
   justify-content: center;
-  height: 100%;
   align-items: center;
   height: 95%;
   margin-top: 3px;

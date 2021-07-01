@@ -34,8 +34,12 @@ export const NavbarView: React.FC = ({}) => {
 
   return (
     <>
-      <Tab href="/login">Log in</Tab>
-      <Tab href="/register">Register</Tab>
+      <Tab isSelected={route === "/login"} href="/login">
+        Log in
+      </Tab>
+      <Tab isSelected={route === "/register"} href="/register">
+        Register
+      </Tab>
     </>
   );
 };

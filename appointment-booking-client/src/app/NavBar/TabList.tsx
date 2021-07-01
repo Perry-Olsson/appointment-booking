@@ -10,7 +10,7 @@ export const TabList: React.FC = () => {
   const locationDisplayRef = useRef<HTMLDivElement>(null);
 
   const mainRoute = getMainRoute(route);
-  const locationDisplayMargin = getMargin(mainRoute);
+  const locationDisplayMargin = getLocationDisplayMargin(mainRoute);
   if (locationDisplayRef.current)
     locationDisplayRef.current.style.marginLeft = locationDisplayMargin;
   return (
@@ -31,14 +31,18 @@ export const TabList: React.FC = () => {
           Book Online
         </Tab>
       </NonUserTabsContainer>
-      <Flex>
+      <UserTabsContainer>
         <UserTabs />
-      </Flex>
+      </UserTabsContainer>
     </>
   );
 };
 
-const getMargin = (route: string) => {
+/*
+ *  these numbers don't quite match up with the margins and widths
+ *  I've set on the Nav tabs and I'm not quite sure why yet.
+ */
+const getLocationDisplayMargin = (route: string) => {
   switch (route) {
     case "/":
       return "2px";
@@ -46,6 +50,10 @@ const getMargin = (route: string) => {
       return "158px";
     case "/schedule":
       return "314px";
+    case "/login":
+      return `${window.innerWidth - 320}px`;
+    case "/register":
+      return `${window.innerWidth - 164}px`;
     default:
       return "0px";
   }
@@ -76,6 +84,9 @@ const LocationDisplay = styled.div<{ margin: string }>`
   display: ${({ margin }) => (margin === "0px" ? "none" : "block")};
 `;
 
+const UserTabsContainer = styled(Flex)`
+  margin-right: 5px;
+`;
 const NonUserTabsContainer = styled(Flex)`
   margin-left: 5px;
 `;
