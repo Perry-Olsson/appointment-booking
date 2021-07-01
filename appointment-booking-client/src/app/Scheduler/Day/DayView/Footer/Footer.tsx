@@ -30,6 +30,8 @@ const Container = styled(Flex)`
   background-color: ${({ theme }) => theme.colors.shadeGray};
   flex-direction: column;
   justify-content: flex-start;
+  position: fixed;
+  bottom: 0;
 `;
 
 const StyledNavigator = styled(Navigator)`

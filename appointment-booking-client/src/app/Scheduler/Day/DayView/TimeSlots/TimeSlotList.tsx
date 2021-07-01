@@ -93,6 +93,10 @@ const Container = styled.div<{ isToday: boolean }>`
     grid-column: 1 / 4;
     max-width: ${device.tablet.pixels};
     margin: auto;
+    position: fixed;
+    bottom: ${({ theme }) => theme.dayView.footerHeight};
+    top: ${({ theme }) => `${theme.dayView.headerOffset}px`};
+    height: auto;
   }
 `;
 
