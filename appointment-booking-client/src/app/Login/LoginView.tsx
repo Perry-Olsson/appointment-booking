@@ -14,6 +14,9 @@ import {
   Seperator,
   FormButton,
   Flex,
+  ErrorObject,
+  ErrorNotification,
+  device,
 } from "../../components";
 import { LoginFormValues } from "./types";
 
@@ -25,9 +28,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
   register,
 }) => {
   return (
-    <Container>
-      <Header>Login</Header>
-      {error ? <StyledErrorText>{error}</StyledErrorText> : null}
+    <LoginFormContainer>
+      <LoginFormHeader>Login to your account</LoginFormHeader>
+      {error ? (
+        <ErrorNotification error={error.error} message={error.message} />
+      ) : null}
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Label>
           Email
@@ -50,23 +55,29 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
         <FormButton type="submit" text="Log in" />
       </Form>
-    </Container>
+    </LoginFormContainer>
   );
 };
 
-const Container = styled(Flex)``;
-
-const Header = styled.h2`
-  margin: 1rem;
+export const LoginFormContainer = styled(Flex)`
+  @media (min-width: ${device.desktop.pixels}) {
+    border: solid 1px ${({ theme }) => theme.colors.primaryLight};
+  }
+  border-radius: 20px;
+  max-width: 700px;
+  margin: auto;
+  padding: 30px 0;
 `;
 
-const StyledErrorText = styled(ErrorText)`
-  margin: 1rem;
+export const LoginFormHeader = styled.h1`
+  margin-bottom: 2rem;
+  color: ${({ theme }) => theme.colors.primaryLight};
 `;
+
 interface LoginViewProps {
   onSubmit: (data: LoginFormValues) => Promise<void>;
   handleSubmit: UseFormHandleSubmit<LoginFormValues>;
   fieldErrors: DeepMap<LoginFormValues, FieldError>;
   register: UseFormRegister<LoginFormValues>;
-  error: string | null;
+  error: ErrorObject | null;
 }

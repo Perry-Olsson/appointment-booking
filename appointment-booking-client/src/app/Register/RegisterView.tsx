@@ -10,9 +10,7 @@ import {
 } from "react-hook-form";
 import PhoneInput, { isPossiblePhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import styled from "styled-components";
 import {
-  Flex,
   ErrorText,
   Form,
   Input,
@@ -22,6 +20,7 @@ import {
   ErrorObject,
   ErrorNotification,
 } from "../../components";
+import { LoginFormContainer, LoginFormHeader } from "../Login/LoginView";
 import { RegisterFormValues } from "./Register";
 
 export const RegisterView: FC<RegisterViewProps> = ({
@@ -32,10 +31,9 @@ export const RegisterView: FC<RegisterViewProps> = ({
   getValues,
   error,
 }) => {
-  console.log(error);
   return (
-    <Container>
-      <Header>Register</Header>
+    <LoginFormContainer>
+      <LoginFormHeader>Register</LoginFormHeader>
       {error ? (
         <ErrorNotification error={error.error} message={error.message} />
       ) : null}
@@ -142,15 +140,9 @@ export const RegisterView: FC<RegisterViewProps> = ({
 
         <FormButton type="submit" text="Register" />
       </Form>
-    </Container>
+    </LoginFormContainer>
   );
 };
-
-const Container = styled(Flex)``;
-
-const Header = styled.h2`
-  margin: 1rem;
-`;
 
 interface RegisterViewProps {
   handleSubmit: (

@@ -48,8 +48,8 @@ export const theme: DefaultTheme = {
     gray: "#454545",
     lightGray: "#45454555",
     shadeGray: "#90909020",
-    error: "##ff1919",
-    errorBackground: "#ffcfcf",
+    error: "#ff4444",
+    errorBackground: "#f7d7d7",
   },
   form: {
     height: "50px",
