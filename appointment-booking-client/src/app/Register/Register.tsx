@@ -8,6 +8,7 @@ import { accessToken } from "../../pages/_app";
 import { RegisterView } from "./RegisterView";
 import { LoadingIcon } from "../../components";
 import { ErrorObject } from "../../components";
+import { Logo } from "../../components";
 import styled from "styled-components";
 
 export interface RegisterFormValues {
@@ -63,7 +64,7 @@ export const Register: FC = () => {
 
   return (
     <>
-      <Logo />
+      <StyledLogo size="150px" />
       <RegisterView
         handleSubmit={handleSubmit(onSubmit)}
         register={register}
@@ -76,10 +77,6 @@ export const Register: FC = () => {
   );
 };
 
-const Logo = styled.div`
-  height: 50px;
-`;
-
 const prunePasswordConfirmation = (
   data: RegisterFormValues
 ): Omit<RegisterFormValues, "passwordConfirmation"> => ({
@@ -89,3 +86,8 @@ const prunePasswordConfirmation = (
   phoneNumber: data.phoneNumber,
   password: data.password,
 });
+
+const StyledLogo = styled(Logo)`
+  padding: 3px;
+  align-items: flex-start;
+`;

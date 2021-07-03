@@ -14,3 +14,4 @@ export * from "./LoadingIcon";
 export * from "./SuccessMark";
 export * from "./ErrorNotification";
 export * from "./FormFooter";
+export * from "./Logo";

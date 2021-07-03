@@ -72,15 +72,15 @@ export const LoginView: React.FC<LoginViewProps> = ({
 export const LoginFormContainer = styled(Flex)`
   @media (min-width: ${device.desktop.pixels}) {
     border: solid 1px ${({ theme }) => theme.colors.primaryLight};
-    margin: auto;
     padding-bottom: 0;
+    padding-top: 30px;
     position: static;
   }
   border-radius: 20px;
   max-width: 700px;
   padding-bottom: 60px;
-  padding-top: 30px;
   width: 100vw;
+  margin: auto;
 `;
 
 export const FormInnerContainer = styled(Flex)`

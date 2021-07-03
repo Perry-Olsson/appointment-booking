@@ -2,9 +2,8 @@ import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import styled from "styled-components";
 import { customerService } from "../../api";
-import { ErrorObject } from "../../components";
+import { ErrorObject, LoadingIcon, Logo } from "../../components";
 import { useGetUser } from "../../context";
 import { accessToken } from "../../pages/_app";
 import { LoginView } from "./LoginView";
@@ -24,10 +23,10 @@ export const Login: FC = () => {
   const [error, setError] = useState<ErrorObject | null>(null);
 
   if (user) {
-    if (user === "loading") return <div>loading...</div>;
+    if (user === "loading") return <LoadingIcon />;
 
     router.push("/");
-    return <div>loading...</div>;
+    return <LoadingIcon />;
   }
 
   const onSubmit = async (data: LoginFormValues) => {
@@ -57,7 +56,3 @@ export const Login: FC = () => {
     </>
   );
 };
-
-const Logo = styled.div`
-  height: 200px;
-`;
