@@ -29,11 +29,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: Arial, Helvetica, sans-serif;
   }
   
-
-  #__next {
-    height: 100vh;
-  }
-
 /* REACT BURGER MENU */
   /* Position and sizing of burger button */
 .bm-burger-button {
