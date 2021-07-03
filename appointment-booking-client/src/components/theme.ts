@@ -54,6 +54,7 @@ export const theme: DefaultTheme = {
   form: {
     height: "50px",
     fieldMaxWidth: "500px",
+    footerHeight: "60px",
   },
   icons: {
     small: "1rem",
@@ -116,6 +117,7 @@ declare module "styled-components" {
     form: {
       height: string;
       fieldMaxWidth: string;
+      footerHeight: string;
     };
     icons: {
       small: string;
