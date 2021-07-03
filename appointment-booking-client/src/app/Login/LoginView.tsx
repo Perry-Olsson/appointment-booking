@@ -76,12 +76,13 @@ export const LoginFormContainer = styled(Flex)`
     position: static;
     box-shadow: 5px 5px 5px 3px ${({ theme }) => theme.colors.lightGray};
     border: solid 1px ${({ theme }) => theme.colors.shadeGray};
+    margin: 100px auto 20px auto;
   }
-  border-radius: 20px;
-  max-width: 700px;
-  padding-bottom: 60px;
   width: 100vw;
-  margin: 100px auto 20px auto;
+  max-width: 700px;
+  margin-top: 20px;
+  padding-bottom: 80px;
+  border-radius: 20px;
 `;
 
 export const FormInnerContainer = styled(Flex)`

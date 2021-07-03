@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import styled from "styled-components";
 import { customerService } from "../../api";
-import { ErrorObject, LoadingIcon, Logo } from "../../components";
+import { ErrorObject, LoadingIcon } from "../../components";
 import { useGetUser } from "../../context";
 import { accessToken } from "../../pages/_app";
 import { LoginView } from "./LoginView";
@@ -57,4 +57,6 @@ export const Login: FC = () => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-top: 100px;
+`;

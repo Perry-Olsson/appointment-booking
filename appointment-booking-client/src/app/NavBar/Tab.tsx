@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import { useIsOpen } from "../../components";
+import { theme, useIsOpen } from "../../components";
 
 interface TabProps {
   href: string;
@@ -32,7 +32,11 @@ export const BurgerTab: React.FC<TabProps> = ({ children, href, isFirst }) => {
     <Link href={href}>
       <BurgerItemContainer
         className="menu-item"
-        style={isFirst ? { borderTop: "solid 1px" } : undefined}
+        style={
+          isFirst
+            ? { borderTop: `solid 2px ${theme.colors.textSecondary}` }
+            : undefined
+        }
         onClick={() => setIsOpen(false)}
       >
         <BurgerAnchor>{children}</BurgerAnchor>
@@ -50,7 +54,11 @@ export const BurgerButton: React.FC<{
   return (
     <BurgerItemContainer
       className="menu-item"
-      style={isFirst ? { borderTop: "solid 1px" } : undefined}
+      style={
+        isFirst
+          ? { borderTop: `solid 2px ${theme.colors.textSecondary}` }
+          : undefined
+      }
       onClick={() => {
         setIsOpen(false);
         handleClick();
@@ -86,13 +94,14 @@ const StyledAnchor = styled.a<{ isSelected: boolean | undefined }>`
 
 const BurgerAnchor = styled.a`
   font-size: ${({ theme }) => theme.font.med_lg};
+  color: ${({ theme }) => theme.colors.textSecondary};
   cursor: pointer;
 `;
 
 const BurgerItemContainer = styled.div`
-  border-bottom: solid 1px;
-  padding: 0.5rem 0;
+  border-bottom: solid 2px ${({ theme }) => theme.colors.textSecondary};
+  padding: 0.5rem 0.3rem;
   &:active {
-    background: #575b6b;
+    background: ${({ theme }) => theme.colors.secondaryLight};
   }
 `;

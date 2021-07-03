@@ -38,18 +38,17 @@ const GlobalStyle = createGlobalStyle`
   position: fixed;
   width: 30px;
   height: 25px;
-  left: 19px;
-  top: 19px;
+  right: 19px;
+  top: 26px;
 }
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: #dadada;
+  background: ${theme.colors.secondary};
 }
 
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
-  background: #a90000;
 }
 
 /* Position and sizing of clickable cross button */
@@ -60,7 +59,9 @@ const GlobalStyle = createGlobalStyle`
 
 /* Color/shape of close button cross */
 .bm-cross {
-  background: #bdc3c7;
+  margin-top: 3px;
+
+  background: ${theme.colors.textSecondary};
 }
 
 /*
@@ -74,7 +75,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: ${theme.colors.primary};
   font-size: 1.15em;
 }
 
@@ -91,7 +92,10 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Styling of overlay */
 .bm-overlay {
-  background: rgba(0, 0, 0, 0.3);
+  background-color: #dddddd;
+  position: fixed;
+  left: 0;
+  right: 0;
 }
 
 /* REACT PHONE NUMBER INPUT*/

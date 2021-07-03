@@ -48,6 +48,9 @@ export const TextArea = styled.textarea`
 export const FormButton = styled(Button)`
   padding: 10px 30px;
   margin: 20px auto;
+  width: 80%;
+  max-width: 300px;
+  font-weight: bold;
 `;
 
 export const Label = styled.label`

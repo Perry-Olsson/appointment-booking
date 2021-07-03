@@ -2,13 +2,14 @@ import React from "react";
 import { useGetUser } from "../../context";
 import { BurgerTab } from "./Tab";
 import { UserTabs } from "./UserTabs";
-import { BurgerMenu } from "../../components";
+import { BurgerMenu, Logo } from "../../components";
 
 export const Burger: React.FC = () => {
   const user = useGetUser();
 
   return (
     <>
+      <Logo isMobile />
       <BurgerMenu>
         <BurgerTab href="/" isFirst={true}>
           Home

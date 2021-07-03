@@ -5,7 +5,11 @@ export const BurgerMenu: React.FC = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Menu isOpen={isOpen} onStateChange={state => setIsOpen(state.isOpen)}>
+    <Menu
+      isOpen={isOpen}
+      onStateChange={state => setIsOpen(state.isOpen)}
+      right
+    >
       <SetOpenProvider value={setIsOpen}>{children}</SetOpenProvider>
     </Menu>
   );
