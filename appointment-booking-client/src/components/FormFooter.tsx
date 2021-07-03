@@ -19,4 +19,5 @@ const Container = styled(Flex)`
   width: 100%;
   background: white;
   flex-direction: row;
+  font-size: ${({ theme }) => theme.font.sm_med};
 `;

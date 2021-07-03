@@ -71,10 +71,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
 export const LoginFormContainer = styled(Flex)`
   @media (min-width: ${device.desktop.pixels}) {
-    border: solid 1px ${({ theme }) => theme.colors.primaryLight};
     padding-bottom: 0;
     padding-top: 30px;
     position: static;
+    box-shadow: 5px 5px 5px 3px ${({ theme }) => theme.colors.lightGray};
+    border: solid 1px ${({ theme }) => theme.colors.shadeGray};
   }
   border-radius: 20px;
   max-width: 700px;
@@ -88,13 +89,13 @@ export const FormInnerContainer = styled(Flex)`
 `;
 
 export const FormFooterLink = styled.a`
-  margin: 0 5px;
+  margin: 0 10px;
+  font-weight: bold;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const LoginFormHeader = styled.h1`
   margin-bottom: 2rem;
-  color: ${({ theme }) => theme.colors.primaryLight};
 `;
 
 interface LoginViewProps {

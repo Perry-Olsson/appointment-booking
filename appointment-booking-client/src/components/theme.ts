@@ -32,7 +32,7 @@ export const theme: DefaultTheme = {
   },
   font: {
     sm: "1rem",
-    sm_med: "1.25rem",
+    sm_med: "1.20rem",
     med: "1.5rem",
     med_lg: "1.75rem",
     lg: "2rem",
@@ -43,6 +43,7 @@ export const theme: DefaultTheme = {
     primaryLightFaded: "#71d466bb",
     primaryFaded: "#5eab5560",
     primaryMisted: "#deffe0",
+    secondary: "#b3b97d",
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
     gray: "#454545",
@@ -106,6 +107,7 @@ declare module "styled-components" {
       primaryLightFaded: string;
       primaryFaded: string;
       primaryMisted: string;
+      secondary: string;
       textPrimary: string;
       textSecondary: string;
       gray: string;

@@ -59,6 +59,10 @@ export const Label = styled.label`
   font-weight: bold;
 `;
 
+export const AuthLabel = styled(Label)`
+  color: white;
+`;
+
 export const ErrorText = styled.span`
   font-weight: normal;
   color: red;

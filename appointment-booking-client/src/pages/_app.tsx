@@ -14,8 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <GlobalProviders>
       <NavBar />
-      <NavBarOffset />
-      {getLayout(<Component {...pageProps}></Component>)}
+      <NavBarOffset>
+        {getLayout(<Component {...pageProps}></Component>)}
+      </NavBarOffset>
     </GlobalProviders>
   );
 }

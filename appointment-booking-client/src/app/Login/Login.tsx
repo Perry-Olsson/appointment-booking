@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
+import styled from "styled-components";
 import { customerService } from "../../api";
 import { ErrorObject, LoadingIcon, Logo } from "../../components";
 import { useGetUser } from "../../context";
@@ -44,7 +45,7 @@ export const Login: FC = () => {
   };
 
   return (
-    <>
+    <Container>
       <Logo />
       <LoginView
         onSubmit={onSubmit}
@@ -53,6 +54,8 @@ export const Login: FC = () => {
         fieldErrors={errors}
         error={error}
       />
-    </>
+    </Container>
   );
 };
+
+const Container = styled.div``;
