@@ -8,8 +8,6 @@ import { accessToken } from "../../pages/_app";
 import { RegisterView } from "./RegisterView";
 import { LoadingIcon } from "../../components";
 import { ErrorObject } from "../../components";
-import { Logo } from "../../components";
-import styled from "styled-components";
 
 export interface RegisterFormValues {
   firstName: string;
@@ -64,7 +62,6 @@ export const Register: FC = () => {
 
   return (
     <>
-      <StyledLogo size="150px" />
       <RegisterView
         handleSubmit={handleSubmit(onSubmit)}
         register={register}
@@ -86,8 +83,3 @@ const prunePasswordConfirmation = (
   phoneNumber: data.phoneNumber,
   password: data.password,
 });
-
-const StyledLogo = styled(Logo)`
-  padding: 3px;
-  align-items: flex-start;
-`;

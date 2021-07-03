@@ -4,13 +4,7 @@ import { theme } from "./theme";
 
 export const LinkButton = React.forwardRef<HTMLAnchorElement, AnchorProps>(
   (
-    {
-      text,
-      className,
-      negative,
-      hexColor = theme.colors.primaryLight,
-      ...props
-    },
+    { text, className, negative, hexColor = theme.colors.primary, ...props },
     ref
   ) => {
     return (
@@ -54,7 +48,7 @@ export const Button: React.FC<ButtonProps> = ({
   text,
   className,
   negative,
-  hexColor = theme.colors.primaryLight,
+  hexColor = theme.colors.primary,
   ...props
 }) => {
   return (

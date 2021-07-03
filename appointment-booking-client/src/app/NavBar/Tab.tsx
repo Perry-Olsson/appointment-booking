@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useIsOpen } from "../../components";
 
 interface TabProps {
-  children: React.ReactText;
   href: string;
   onClick?: () => void;
   isFirst?: boolean;
@@ -65,7 +64,6 @@ export const BurgerButton: React.FC<{
 const StyledAnchor = styled.a<{ isSelected: boolean | undefined }>`
   font-size: ${({ theme }) => theme.font.med};
   cursor: pointer;
-  color: ${({ isSelected }) => (isSelected ? "#333333" : "white")};
   transition: color 0.1s;
   transition: background-color 0.1s;
   position: relative;
@@ -81,8 +79,7 @@ const StyledAnchor = styled.a<{ isSelected: boolean | undefined }>`
   border-top-right-radius: 10px;
   @media (hover: hover) {
     :hover {
-      color: #333333;
-      background-color: white;
+      color: ${({ theme }) => theme.colors.primaryLight};
     }
   }
 `;

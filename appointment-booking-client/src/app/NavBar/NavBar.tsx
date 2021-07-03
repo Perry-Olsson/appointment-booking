@@ -33,5 +33,6 @@ const Container = styled.div`
   z-index: 3;
   height: ${({ theme }) => theme.navBar.height};
   color: ${({ theme }) => theme.colors.textSecondary};
-  background-color: ${({ theme }) => theme.colors.primary};
+  border-bottom: solid 1px ${({ theme }) => theme.colors.primary};
+  background-color: white;
 `;

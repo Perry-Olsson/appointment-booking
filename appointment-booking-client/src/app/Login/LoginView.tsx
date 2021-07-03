@@ -81,7 +81,7 @@ export const LoginFormContainer = styled(Flex)`
   max-width: 700px;
   padding-bottom: 60px;
   width: 100vw;
-  margin: auto;
+  margin: 100px auto 20px auto;
 `;
 
 export const FormInnerContainer = styled(Flex)`
@@ -91,7 +91,7 @@ export const FormInnerContainer = styled(Flex)`
 export const FormFooterLink = styled.a`
   margin: 0 10px;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 export const LoginFormHeader = styled.h1`

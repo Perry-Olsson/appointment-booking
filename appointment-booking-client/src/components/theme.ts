@@ -8,8 +8,8 @@ export const theme: DefaultTheme = {
     },
   },
   navBar: {
-    height: "60px",
-    rawHeight: 60,
+    height: "80px",
+    rawHeight: 80,
   },
   scheduler: {
     headerHeight: "30px",
@@ -38,12 +38,17 @@ export const theme: DefaultTheme = {
     lg: "2rem",
   },
   colors: {
-    primary: "#5eab55",
-    primaryLight: "#71d466",
-    primaryLightFaded: "#71d466bb",
-    primaryFaded: "#5eab5560",
-    primaryMisted: "#deffe0",
+    // primary: "#5eab55", orig green
+    // primary: "#b3b97d",
+    primary: "#8b9153",
+    // primaryLight: "#71d466",
+    primaryFaded: "#8b915360",
+    primaryLight: "#b3b97d",
+    // primaryLightFaded: "#71d466bb",
+    primaryLightFaded: "#b3b97dbb",
+    primaryMisted: "#f6f7dc",
     secondary: "#b3b97d",
+    secondaryLight: "#f6f7dc",
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
     gray: "#454545",
@@ -55,7 +60,7 @@ export const theme: DefaultTheme = {
   form: {
     height: "50px",
     fieldMaxWidth: "500px",
-    footerHeight: "60px",
+    footerHeight: "75px",
   },
   icons: {
     small: "1rem",
@@ -108,6 +113,7 @@ declare module "styled-components" {
       primaryFaded: string;
       primaryMisted: string;
       secondary: string;
+      secondaryLight: string;
       textPrimary: string;
       textSecondary: string;
       gray: string;

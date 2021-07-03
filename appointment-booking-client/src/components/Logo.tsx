@@ -1,20 +1,13 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { Flex } from ".";
 
 interface Props {
   size?: string;
   className?: string;
 }
 
-export const Logo: FC<Props> = ({ size = "200px", ...restProps }) => {
-  return (
-    <Container {...restProps}>
-      <img src="/logo.png" alt="logo" width={size} />
-    </Container>
-  );
+export const Logo: FC<Props> = ({ size = "145px" }) => {
+  return <StyledImg src="/logo.png" alt="logo" width={size} />;
 };
 
-const Container = styled(Flex)`
-  padding: 50px 0;
-`;
+const StyledImg = styled.img``;

@@ -22,11 +22,11 @@ export const NavbarView: React.FC = ({}) => {
       <Container>
         <span style={{ margin: "10px" }}>Logged in as {user.firstName}</span>
         <Link href="/dashboard">
-          <LinkButton style={{ margin: "10px" }} text="Dashboard" negative />
+          <LinkButton style={{ margin: "10px" }} text="Dashboard" />
         </Link>
         <Logout
           Component={({ handleClick }) => (
-            <Button handleClick={handleClick} text="Logout" negative />
+            <Button handleClick={handleClick} text="Logout" />
           )}
         />
       </Container>

@@ -46,7 +46,6 @@ export const Login: FC = () => {
 
   return (
     <Container>
-      <Logo />
       <LoginView
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}

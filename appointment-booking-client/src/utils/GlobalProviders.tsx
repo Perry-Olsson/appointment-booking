@@ -27,7 +27,10 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
+    color: #464646;
+    font-family: 'Montserrat', sans-serif;
   }
+
   
 /* REACT BURGER MENU */
   /* Position and sizing of burger button */

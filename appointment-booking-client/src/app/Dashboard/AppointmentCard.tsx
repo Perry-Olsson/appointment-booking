@@ -17,10 +17,8 @@ export const AppointmentCard: FC<Props> = ({ appointment }) => {
         {/* tooltip of procedure description and link to full page desription */}
       </AppointmentInfoItem>
       <AppointmentInfoItem title="Provider">
-        <b>
-          {appointment.provider.firstName} {appointment.provider.lastName}{" "}
-          {/* tooltip of provider bio and link to bio page*/}
-        </b>
+        {appointment.provider.firstName} {appointment.provider.lastName}{" "}
+        {/* tooltip of provider bio and link to bio page*/}
         {/* image of provider */}
       </AppointmentInfoItem>
       <AppointmentInfoItem title="Time">
@@ -34,8 +32,8 @@ export const AppointmentCard: FC<Props> = ({ appointment }) => {
 };
 
 const Container = styled(Flex)`
-  border: solid 1px gray;
-  border-radius: 4px;
+  border: solid 2px ${({ theme }) => theme.colors.primaryLight};
+  border-radius: 10px;
   width: 95%;
   max-width: ${device.desktop.pixels};
   margin: 10px;

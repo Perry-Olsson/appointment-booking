@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { Flex } from "../../components";
+import { Flex, Logo } from "../../components";
 import { Tab } from "./Tab";
 import { UserTabs } from "./UserTabs";
 
@@ -22,7 +22,7 @@ export const TabList: React.FC = () => {
           margin={locationDisplayMargin}
         />
         <Tab isSelected={route === "/"} href="/">
-          Home
+          <Logo />
         </Tab>
         <Tab isSelected={route === "/about"} href="/about">
           About
@@ -79,7 +79,7 @@ const LocationDisplay = styled.div<{ margin: string }>`
   left: 3px;
   margin-left: ${({ margin }) => margin};
   transition: margin-left 0.3s;
-  background-color: white;
+  border-bottom: solid 4px ${({ theme }) => theme.colors.primary};
   width: 155px;
   display: ${({ margin }) => (margin === "0px" ? "none" : "block")};
 `;

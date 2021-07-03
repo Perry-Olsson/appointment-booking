@@ -12,7 +12,7 @@ const Container = styled(Flex)`
     position: static;
     background: none;
   }
-  border-top: solid 1px ${({ theme }) => theme.colors.primaryLight};
+  border-top: solid 1px ${({ theme }) => theme.colors.secondary};
   position: fixed;
   bottom: 0;
   height: ${({ theme }) => theme.form.footerHeight};
