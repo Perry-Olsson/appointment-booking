@@ -51,9 +51,9 @@ const getLocationDisplayMargin = (route: string) => {
     case "/schedule":
       return "314px";
     case "/login":
-      return `${window.innerWidth - 320}px`;
+      return `calc(100% - 320px)`;
     case "/register":
-      return `${window.innerWidth - 164}px`;
+      return `calc(100% - 164px)`;
     default:
       return "0px";
   }
