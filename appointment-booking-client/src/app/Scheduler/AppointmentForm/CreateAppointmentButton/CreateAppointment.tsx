@@ -17,11 +17,7 @@ export const CreateAppointment: React.FC<CreateAppointmentProps> = ({
     return null;
 
   return (
-    <Button
-      handleClick={handleClick}
-      text="Schedule Appointment"
-      className={className}
-    />
+    <Button handleClick={handleClick} text="Book Now" className={className} />
   );
 };
 

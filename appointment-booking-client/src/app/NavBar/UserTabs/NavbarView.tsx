@@ -13,9 +13,7 @@ export const NavbarView: React.FC = ({}) => {
   const { route } = useRouter();
 
   if (user === "loading") {
-    return route === "/" || route === "/about" ? (
-      <StyledLoadingIcon color="white" />
-    ) : null;
+    return route === "/" || route === "/about" ? <StyledLoadingIcon /> : null;
   }
 
   if (user)
@@ -51,5 +49,6 @@ const Container = styled(Flex)`
 `;
 
 const StyledLoadingIcon = styled(LoadingIcon)`
+  position: static;
   margin-right: 6rem;
 `;

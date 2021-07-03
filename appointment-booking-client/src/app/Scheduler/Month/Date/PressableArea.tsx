@@ -47,7 +47,7 @@ const Container = styled.a<ContainerProps>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: ${({ disabled }) => (disabled ? "rgba(0, 0, 0, 0.3)" : null)};
+  color: ${({ disabled }) => (disabled ? "lightgray" : null)};
   @media (min-width: ${({ isMonthCard }) =>
       isMonthCard ? "100000px" : device.tablet.pixels}) {
     height: 100%;
@@ -77,6 +77,7 @@ const Container = styled.a<ContainerProps>`
 const DateValue = styled.b<{ isMonthCard: boolean }>`
   font-size: ${({ theme, isMonthCard }) =>
     isMonthCard ? theme.font.sm : theme.font.sm_med};
+  color: inherit;
   @media (max-width: ${({ isMonthCard }) =>
       isMonthCard ? "100000px" : device.tablet.pixels}) {
     position: relative;

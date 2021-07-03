@@ -18,6 +18,10 @@ export const Input = styled.input`
   padding: 5px;
   font-size: ${({ theme }) => theme.font.sm_med};
   margin-top: 3px;
+  &:focus,
+  active {
+    outline-color: ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 export const Select = styled.select`

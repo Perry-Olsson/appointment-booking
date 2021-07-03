@@ -100,7 +100,10 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* REACT PHONE NUMBER INPUT*/
 .PhoneInputInput {
-  border: solid 1px ${theme.colors.lightGray};
+  border: solid 1px ${theme.colors.primary};
+  &:focus {
+    outline-color: ${theme.colors.primary}
+  }
   border-radius: 4px;
   height: ${theme.form.height};  
   font-size: ${theme.font.sm_med};
