@@ -49,10 +49,10 @@ export const ConfirmModal: FC<ConfirmModalProps> = props => {
 
 export const Cancel = styled(FormButton)`
   margin: 10px;
-  border: solid 2px #ff7e7e;
-  color: #ff7e7e;
+  border: solid 2px;
+  color: ${({ theme }) => theme.colors.secondaryLight};
   &:hover {
-    background-color: #ff7e7e;
+    background-color: ${({ theme }) => theme.colors.secondaryLight};
     color: white;
   }
 `;

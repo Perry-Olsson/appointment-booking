@@ -12,7 +12,7 @@ export const Input = styled.input`
   display: flex;
   border: solid 1px;
   border-radius: 4px;
-  border-color: ${({ theme }) => theme.colors.lightGray};
+  border-color: ${({ theme }) => theme.colors.primary};
   height: ${({ theme }) => theme.form.height};
   width: 100%;
   padding: 5px;
@@ -48,9 +48,12 @@ export const TextArea = styled.textarea`
 export const FormButton = styled(Button)`
   padding: 10px 30px;
   margin: 20px auto;
+  font-weight: bold;
+`;
+
+export const AuthFormButton = styled(FormButton)`
   width: 80%;
   max-width: 300px;
-  font-weight: bold;
 `;
 
 export const Label = styled.label`

@@ -2,8 +2,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
-import { Button, LinkButton, LoadingIcon } from "../../../components";
+import { Button, Flex, LinkButton, LoadingIcon } from "../../../components";
 import { useGetUser } from "../../../context";
+import { ProfileIcon } from "../Burger";
 import { Tab } from "../Tab";
 import { Logout } from "./Logout";
 
@@ -20,7 +21,7 @@ export const NavbarView: React.FC = ({}) => {
   if (user)
     return (
       <Container>
-        <span style={{ margin: "10px" }}>Logged in as {user.firstName}</span>
+        <ProfileIcon>{user.firstName[0]}</ProfileIcon>
         <Link href="/dashboard">
           <LinkButton style={{ margin: "10px" }} text="Dashboard" />
         </Link>
@@ -44,7 +45,8 @@ export const NavbarView: React.FC = ({}) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled(Flex)`
+  flex-direction: row;
   margin: 0 1rem;
 `;
 

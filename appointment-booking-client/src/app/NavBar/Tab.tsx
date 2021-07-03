@@ -92,16 +92,19 @@ const StyledAnchor = styled.a<{ isSelected: boolean | undefined }>`
   }
 `;
 
-const BurgerAnchor = styled.a`
-  font-size: ${({ theme }) => theme.font.med_lg};
-  color: ${({ theme }) => theme.colors.textSecondary};
-  cursor: pointer;
-`;
-
 const BurgerItemContainer = styled.div`
   border-bottom: solid 2px ${({ theme }) => theme.colors.textSecondary};
   padding: 0.5rem 0.3rem;
   &:active {
-    background: ${({ theme }) => theme.colors.secondaryLight};
+    background: ${({ theme }) => theme.colors.textSecondary};
+  }
+`;
+
+const BurgerAnchor = styled.a`
+  font-size: ${({ theme }) => theme.font.med_lg};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  cursor: pointer;
+  ${BurgerItemContainer}:active & {
+    color: ${({ theme }) => theme.colors.primary}!important;
   }
 `;

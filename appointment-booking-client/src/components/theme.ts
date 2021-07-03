@@ -48,7 +48,7 @@ export const theme: DefaultTheme = {
     primaryLightFaded: "#b3b97dbb",
     primaryMisted: "#f6f7dc",
     secondary: "rgba(98, 33, 1, 1)",
-    secondaryLight: "rgba(98, 33, 1, 0.7)",
+    secondaryLight: "rgba(98, 33, 1, 0.85)",
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
     gray: "#454545",
