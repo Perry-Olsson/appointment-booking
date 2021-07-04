@@ -1,18 +1,16 @@
 import React, { useEffect, useRef } from "react";
-import {
-  Button,
-  device,
-  ExitButton,
-  Form,
-  Seperator,
-  theme,
-} from "../../../components";
+import { device, Form, Seperator, theme } from "../../../components";
 import styled from "styled-components";
 import { Procedure } from "./fields/Procedure";
 import { Comments, Provider, Time } from "./fields";
 import { useAppointmentFormState } from "./hooks";
-import { Cancel, ConfirmModal } from "./ConfirmModal";
-import { ButtonContainer } from "./components";
+import { ConfirmModal } from "./ConfirmModal";
+import {
+  ButtonContainer,
+  Cancel,
+  ConfirmButton,
+  HideFormButton,
+} from "./components";
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({
   timeSlots,
@@ -135,15 +133,6 @@ const closeAppointmentForm = (
   }
 };
 
-const ConfirmButton = styled(Button)`
-  padding: 10px 30px;
-`;
-
-const HideFormButton = styled(ExitButton)`
-  @media (min-width: ${device.desktop.pixels}) {
-    top: ${`${theme.dayView.headerOffset + 8}px`};
-  }
-`;
 const Container = styled.div<{ show: boolean }>`
   display: ${({ show }) => (show ? "flex" : "none")};
   justify-content: center;

@@ -9,8 +9,8 @@ import {
   SuccessMark,
 } from "../../../../components";
 import { AppointmentInfoItem } from "./AppointmentInfoItem";
-import { Cancel, ConfirmModalProps } from ".";
-import { ButtonContainer } from "../components";
+import { ConfirmModalProps } from ".";
+import { Cancel, ButtonContainer, ConfirmButton } from "../components";
 
 export const ModalContent: FC<ConfirmModalProps> = ({
   closeModal,
@@ -58,7 +58,7 @@ export const ModalContent: FC<ConfirmModalProps> = ({
       ) : null}
       <ButtonContainer>
         <Cancel text="cancel" negative handleClick={() => closeModal()} />
-        <FormButton
+        <ConfirmButton
           type="submit"
           text="Submit"
           handleClick={async () => {

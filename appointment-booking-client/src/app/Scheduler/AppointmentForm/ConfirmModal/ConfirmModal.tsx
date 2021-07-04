@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { device, FormButton } from "../../../../components";
+import { device } from "../../../../components";
 import Modal from "react-modal";
 import { NewAppointment, Procedure, Provider } from "../../../../types";
 import styled from "styled-components";
@@ -46,16 +46,6 @@ export const ConfirmModal: FC<ConfirmModalProps> = props => {
     </Container>
   );
 };
-
-export const Cancel = styled(FormButton)`
-  margin: 10px;
-  border: solid 2px;
-  color: ${({ theme }) => theme.colors.secondaryLight};
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.secondaryLight};
-    color: white;
-  }
-`;
 
 const Container = styled(Modal)`
   position: absolute;
