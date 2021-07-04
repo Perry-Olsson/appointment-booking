@@ -15,3 +15,4 @@ export * from "./SuccessMark";
 export * from "./ErrorNotification";
 export * from "./FormFooter";
 export * from "./Logo";
+export * from "./ProfileIcon";

@@ -2,9 +2,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
-import { Button, Flex, LinkButton, LoadingIcon } from "../../../components";
+import {
+  Button,
+  Flex,
+  LinkButton,
+  LoadingIcon,
+  ProfileIcon,
+} from "../../../components";
 import { useGetUser } from "../../../context";
-import { ProfileIcon } from "../Burger";
 import { Tab } from "../Tab";
 import { Logout } from "./Logout";
 

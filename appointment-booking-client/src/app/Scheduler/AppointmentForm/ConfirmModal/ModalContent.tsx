@@ -4,7 +4,6 @@ import {
   AppointmentTime,
   ExitButton,
   Flex,
-  FormButton,
   LoadingIcon,
   SuccessMark,
 } from "../../../../components";
