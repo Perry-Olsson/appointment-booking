@@ -9,28 +9,28 @@ export const SuccessMark: FC<Props> = ({ size = 300 }) => {
   return (
     <Container>
       <svg
-        id="check"
         version="1.1"
-        viewBox="0 0 640 640"
+        preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 300 300"
         width={size}
         height={size}
       >
         <CirclePath
-          d="M220 320C220 264.81 264.81 220 320 220C375.19 220 420 264.81 420 320C420 375.19 375.19 420 320 420C264.81 420 220 375.19 220 320Z"
+          d="M50 150C50 94.81 94.81 50 150 50C205.19 50 250 94.81 250 150C250 205.19 205.19 250 150 250C94.81 250 50 205.19 50 150Z"
           opacity="1"
           fillOpacity="0"
           stroke="#24ff00"
-          strokeWidth="11"
+          strokeWidth="10"
           strokeOpacity="1"
-        ></CirclePath>
+        />
         <CheckPath
-          d="M267 323.25C288.91 345.47 302.61 359.36 308.09 364.91C308.49 365.32 309.16 365.27 309.5 364.82C309.06 365.39 329.78 337.79 371.65 282"
+          d="M97.67 149.66C119.59 171.88 133.29 185.76 138.76 191.32C139.16 191.72 139.83 191.68 140.18 191.22C139.74 191.8 160.46 164.19 202.33 108.4"
           opacity="1"
           fillOpacity="0"
           stroke="#24ff00"
           strokeWidth="11"
           strokeOpacity="1"
-        ></CheckPath>
+        />
       </svg>
     </Container>
   );
@@ -45,8 +45,8 @@ const Container = styled.div`
 `;
 
 const CirclePath = styled.path`
-  stroke-dasharray: 628;
-  stroke-dashoffset: 628;
+  stroke-dasharray: 640;
+  stroke-dashoffset: 640;
   animation: dash 0.8s linear forwards;
   @keyframes dash {
     to {
