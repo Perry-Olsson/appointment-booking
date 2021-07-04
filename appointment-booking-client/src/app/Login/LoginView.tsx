@@ -92,7 +92,7 @@ export const FormInnerContainer = styled(Flex)`
 export const FormFooterLink = styled.a`
   margin: 0 10px;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.secondaryLight};
   cursor: pointer;
   @media (hover: hover) {
     &:hover {

@@ -38,17 +38,14 @@ export const theme: DefaultTheme = {
     lg: "2rem",
   },
   colors: {
-    // primary: "#5eab55", orig green
-    // primary: "#b3b97d",
     primary: "#8b9153",
-    // primaryLight: "#71d466",
     primaryFaded: "#8b915360",
     primaryLight: "#b3b97d",
-    // primaryLightFaded: "#71d466bb",
     primaryLightFaded: "#b3b97dbb",
     primaryMisted: "#f6f7dc",
-    secondary: "rgba(98, 33, 1, 1)",
-    secondaryLight: "rgba(98, 33, 1, 0.85)",
+    secondary: "#622101",
+    secondaryLight: "#a85127",
+    secondaryFaded: "#622101aa",
     textPrimary: "#2e2e2e",
     textSecondary: "#ffffff",
     gray: "#454545",
@@ -114,6 +111,7 @@ declare module "styled-components" {
       primaryMisted: string;
       secondary: string;
       secondaryLight: string;
+      secondaryFaded: string;
       textPrimary: string;
       textSecondary: string;
       gray: string;
