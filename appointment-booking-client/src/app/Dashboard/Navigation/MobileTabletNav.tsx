@@ -43,7 +43,7 @@ const LocationDisplay = styled.div<{ route: string }>`
   z-index: 6;
   transition: margin-left 0.2s;
   border-top: ${({ theme }) => `solid 3px ${theme.colors.primary}`};
-  @media (min-width: ${device.desktop.pixels}) {
+  @media (min-width: ${device.desktop.largePixels}) {
     display: none;
   }
 `;
@@ -63,11 +63,13 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   background-color: white;
-  @media (min-width: ${device.desktop.pixels}) {
-    position: static;
+  @media (min-width: ${device.desktop.largePixels}) {
     display: flex;
+    right: 0;
+    top: ${({ theme }) => theme.navBar.height};
+    left: auto;
     flex-direction: column;
-    border-right: solid 1px #cccccc;
+    border-left: solid 1px #cccccc;
     width: 100%;
     max-width: 300px;
     height: 100%;
@@ -82,7 +84,7 @@ const Icon = styled.div<{ isSelected?: boolean }>`
   align-items: center;
   border-top: solid 1px #cccccc;
   cursor: pointer;
-  @media (min-width: ${device.desktop.pixels}) {
+  @media (min-width: ${device.desktop.largePixels}) {
     height: 60px;
     border-top: none;
     border-bottom: solid 1px #cccccc;

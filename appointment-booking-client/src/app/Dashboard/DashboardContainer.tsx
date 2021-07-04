@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { device } from "../../components";
 import { useGetUser } from "../../context";
 import { AwaitUserProvider } from "../../context/AwaitUser";
-import { Navigation } from "./Navigation";
+import { MobileTabletNav } from "./Navigation";
 
 export const DashboardContainer: FC = ({ children }) => {
   const user = useGetUser();
@@ -11,8 +11,9 @@ export const DashboardContainer: FC = ({ children }) => {
   return (
     <AwaitUserProvider user={user}>
       <Container>
-        <Navigation />
+        <div></div>
         {children}
+        <MobileTabletNav />
       </Container>
     </AwaitUserProvider>
   );
@@ -21,8 +22,8 @@ export const DashboardContainer: FC = ({ children }) => {
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  @media (min-width: ${device.desktop.pixels}) {
-    grid-template-columns: 1fr 3fr 1fr;
+  @media (min-width: ${device.desktop.largePixels}) {
+    grid-template-columns: 4fr 8fr 4fr;
     height: ${({ theme }) =>
       window.innerHeight - theme.navBar.rawHeight + "px"};
   }
