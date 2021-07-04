@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Flex } from "../../../../../components";
 import { device } from "../../../../../components/device";
 import { ServiceDay } from "../../../../../types";
 import { useAppointments } from "../../context";
 import { TimeSlot } from "./TimeSlot";
+import { BusinessClosed } from "./components";
 
 export const TimeSlotList: React.FC<TimeSlotsProps> = ({
   timeSlots,
@@ -29,7 +31,12 @@ export const TimeSlotList: React.FC<TimeSlotsProps> = ({
     }
   });
 
-  if (serviceHours.isClosed) return <div>Sorry we're closed</div>;
+  if (serviceHours.isClosed)
+    return (
+      <BusinessClosedContainer>
+        <BusinessClosed />
+      </BusinessClosedContainer>
+    );
 
   let i = 0;
   return (
@@ -98,6 +105,10 @@ const Container = styled.div<{ isToday: boolean }>`
     top: ${({ theme }) => `${theme.dayView.headerOffset}px`};
     height: auto;
   }
+`;
+
+const BusinessClosedContainer = styled(Flex)`
+  grid-column: 1/4;
 `;
 
 export interface TimeSlotsProps {
