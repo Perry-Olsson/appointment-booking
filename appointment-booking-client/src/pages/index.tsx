@@ -1,5 +1,3 @@
-import { SuccessMark } from "../components";
-
 export default function home() {
   return (
     <>
@@ -8,7 +6,6 @@ export default function home() {
       >
         Home
       </h1>
-      <SuccessMark />
     </>
   );
 }
