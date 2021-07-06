@@ -101,10 +101,10 @@ describe("miscellaneous", () => {
     await transferPastAppointments();
 
     const pastAppointmentsFromDb = await customer.getPastAppointments(john);
-    expect(pastAppointmentsFromDb[0]).toEqual(
+    expect(pastAppointmentsFromDb[0].id).toEqual(
       pastAppointments.find(
         a => a.appointment!.id === pastAppointmentsFromDb[0].id
-      )?.appointment!
+      )?.appointment!.id
     );
   });
 });

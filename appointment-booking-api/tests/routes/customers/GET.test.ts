@@ -4,7 +4,6 @@ import { prisma } from "../../../src/prisma";
 import { createTwoPastAppointments, initializeTestData } from "../../helpers";
 import customers from "../../../src/prisma/seeds/json/customers.json";
 import { transferPastAppointments } from "../../../src/utils";
-import { PastAppointment } from "@prisma/client";
 const api = supertest(app);
 
 beforeAll(async () => {
@@ -53,10 +52,7 @@ describe("/pastAppointments", () => {
       .set({ Authorization: `bearer ${accessToken}` });
 
     expect(response.body.length).toBeGreaterThan(0);
-    expect(
-      response.body.filter(
-        (a: PastAppointment) => a.customerId !== "john@example.com"
-      )
-    ).toHaveLength(0);
+    expect(response.body[0]).toHaveProperty("provider");
+    expect(response.body[0]).toHaveProperty("procedure");
   });
 });
