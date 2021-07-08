@@ -12,7 +12,7 @@ export const NavBar: React.FC = () => {
   return (
     <Container>
       <InnerContainer width={width}>
-        {width > device.tablet.largeWidth ? <TabList /> : <Burger />}
+        {width >= device.desktop.width ? <TabList /> : <Burger />}
       </InnerContainer>
     </Container>
   );

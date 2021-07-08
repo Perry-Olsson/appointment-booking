@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import React, { memo } from "react";
 import styled from "styled-components";
-import { Flex } from "../../../../components";
+import { Flex, StyledTimezoneMessage } from "../../../../components";
 import { device } from "../../../../components/device";
 import { Appointment } from "../../../../types";
 import { AppointmentForm } from "../../AppointmentForm";
@@ -17,7 +17,7 @@ import { appointmentsAreEqual } from "./TimeSlots/utils/appointmentsAreEqual";
 export const DayView: React.FC<DayViewProps> = memo(
   ({ day, serviceHours, timeSlots, appointments }) => {
     const [{ width }] = useAtom(dimensionsAtom);
-    const isDesktop = device.isDesktop(width);
+    const isDesktop = device.isLargeDesktop(width);
 
     return (
       <AppointmentProvider value={appointments}>
@@ -34,6 +34,7 @@ export const DayView: React.FC<DayViewProps> = memo(
           </Grid>
           {!isDesktop ? <Footer /> : null}
         </Container>
+        <StyledTimezoneMessage />
       </AppointmentProvider>
     );
   },
@@ -53,11 +54,11 @@ const Grid = styled.div`
   width: 100%;
   height: ${({ theme }) =>
     `${window.innerHeight - theme.dayView.headerOffset}px`};
-  @media (min-width: ${device.desktop.pixels}) {
+  @media (min-width: ${device.desktop.largePixels}) {
     border-top: solid 1px #90909090;
     padding-top: 20px;
   }
-  @media (max-width: ${device.desktop.pixels}) {
+  @media (max-width: ${device.desktop.largePixels}) {
     height: ${({ theme }) =>
       `${
         window.innerHeight -

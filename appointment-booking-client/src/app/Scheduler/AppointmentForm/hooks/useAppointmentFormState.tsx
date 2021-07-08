@@ -7,7 +7,7 @@ import { useDeselectFieldsOnChange } from ".";
 import { appointmentService } from "../../../../api";
 import { device } from "../../../../components";
 import { useGetUser } from "../../../../context";
-import { NewAppointment } from "../../../../types";
+import { NewAppointment, Procedure } from "../../../../types";
 import { dimensionsAtom, showAppointmentsFormAtom } from "../../atoms";
 import { useStaticState, useFormApi } from "../../context";
 import { useWatchProcedure, useWatchProvider } from "../../hooks";
@@ -50,7 +50,10 @@ export const useAppointmentFormState = () => {
   );
 
   const onSubmit = async (data: FormValues) => {
-    const appointment = concatUser(data, procedures, user);
+    const appointment = concatUser(
+      convertToPacificTimestamp(data, procedures),
+      user
+    );
     if (!appointment) {
       alert("oops something went wrong");
       return;
@@ -102,4 +105,27 @@ const hideConfirmModal = () => {
       ele.style.top = window.innerHeight + "px";
     else ele.style.opacity = "0";
   }
+};
+
+export interface ConvertedFormValues extends FormValues {
+  end: string;
+}
+
+const convertToPacificTimestamp = (
+  data: FormValues,
+  procedures: Procedure[]
+): ConvertedFormValues => {
+  const timestamp = new Date(data.timestamp);
+  const end = new Date(data.timestamp);
+  end.setTimeToAppointmentEnd(
+    procedures!.find(p => p.name === data.procedureId)!
+  );
+  timestamp.convertToPacificTimestamp();
+  end.convertToPacificTimestamp();
+
+  return {
+    ...data,
+    timestamp: timestamp.toJSON(),
+    end: end.toJSON(),
+  };
 };

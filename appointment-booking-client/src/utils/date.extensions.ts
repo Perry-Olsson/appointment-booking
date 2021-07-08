@@ -1,4 +1,6 @@
 import { ServiceHoursState } from "../app/Scheduler/hooks";
+import { TZ_OFFSET_HOURS } from "../constants";
+import { Procedure } from "../types";
 
 export {};
 
@@ -20,6 +22,9 @@ declare global {
     getPreviousMonth(serviceHours?: ServiceHoursState): Date;
     get4DigitTimeNumber(): number;
     isToday(): boolean;
+    setTimeToAppointmentEnd(procedure: Procedure): void;
+    convertToPacificTimestamp(): void;
+    convertToLocalTimestamp(): void;
   }
 }
 
@@ -111,6 +116,22 @@ Date.prototype.isToday = function () {
     now.getFullYear() === this.getFullYear() &&
     now.getMonth() === this.getMonth() &&
     now.getDate() === this.getDate()
+  );
+};
+
+Date.prototype.setTimeToAppointmentEnd = function (procedure) {
+  this.setMinutes(this.getMinutes() + procedure.duration);
+};
+
+Date.prototype.convertToPacificTimestamp = function () {
+  this.setHours(
+    this.getHours() + (TZ_OFFSET_HOURS - this.getTimezoneOffset() / 60)
+  );
+};
+
+Date.prototype.convertToLocalTimestamp = function () {
+  this.setHours(
+    this.getHours() - (TZ_OFFSET_HOURS - this.getTimezoneOffset() / 60)
   );
 };
 
