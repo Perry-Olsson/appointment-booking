@@ -8,6 +8,7 @@ import { accessToken } from "../../pages/_app";
 import { RegisterView } from "./RegisterView";
 import { LoadingIcon } from "../../components";
 import { ErrorObject } from "../../components";
+import styled from "styled-components";
 
 export interface RegisterFormValues {
   firstName: string;
@@ -61,7 +62,7 @@ export const Register: FC = () => {
   };
 
   return (
-    <>
+    <Container>
       <RegisterView
         handleSubmit={handleSubmit(onSubmit)}
         register={register}
@@ -70,7 +71,7 @@ export const Register: FC = () => {
         getValues={getValues}
         error={error}
       />
-    </>
+    </Container>
   );
 };
 
@@ -83,3 +84,8 @@ const prunePasswordConfirmation = (
   phoneNumber: data.phoneNumber,
   password: data.password,
 });
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`;
