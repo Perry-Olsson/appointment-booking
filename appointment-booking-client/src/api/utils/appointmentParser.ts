@@ -1,4 +1,4 @@
-import { TZ_OFFSET, ONE_MINUTE } from "../../constants";
+import { TZ_OFFSET_TIME_VALUE, ONE_MINUTE } from "../../constants";
 import {
   RawAppointment,
   OrganizedAppointments,
@@ -38,7 +38,7 @@ export class AppointmentParser {
     const localTimestamp = new Date(timestamp);
     return new Date(
       localTimestamp.valueOf() -
-        (TZ_OFFSET - localTimestamp.getTimezoneOffset() * ONE_MINUTE)
+        (TZ_OFFSET_TIME_VALUE - localTimestamp.getTimezoneOffset() * ONE_MINUTE)
     );
   }
 }

@@ -1,19 +1,18 @@
-import { NewAppointment, Procedure, User } from "../../../../types";
-import { FormValues } from "../types";
+import { NewAppointment, User } from "../../../../types";
+import { ConvertedFormValues } from "../hooks";
 
 export const concatUser = (
-  data: FormValues,
-  procedures: Procedure[] | undefined,
+  data: ConvertedFormValues,
   user: User | "loading" | null
 ): NewAppointment | undefined => {
-  const end = new Date(data.timestamp);
-  end.setMinutes(
-    end.getMinutes() +
-      procedures!.find(p => p.name === data.procedureId)!.duration
-  );
+  // const end = new Date(data.timestamp);
+  // end.setMinutes(
+  //   end.getMinutes() +
+  //     procedures!.find(p => p.name === data.procedureId)!.duration
+  // );
 
   if (user === "loading") {
     return;
   }
-  return { ...data, end: end.toJSON(), customerId: user!.email };
+  return { ...data, customerId: user!.email };
 };

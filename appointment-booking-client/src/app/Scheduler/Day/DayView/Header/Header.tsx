@@ -29,7 +29,7 @@ const Container = styled.div`
   grid-template-columns: 1fr 2fr 1fr;
   width: 100%;
   height: ${({ theme }) => theme.dayView.headerHeight};
-  @media (max-width: ${device.desktop.pixels}) {
+  @media (max-width: ${device.desktop.largePixels}) {
     position: fixed;
     top: ${({ theme }) => theme.navBar.height};
   }

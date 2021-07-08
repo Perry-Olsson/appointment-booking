@@ -10,6 +10,8 @@ export const AppointmentTime: FC<{
   const end = new Date(start);
   end.setMinutes(end.getMinutes() + procedure.duration);
 
+  start.convertToLocalTimestamp();
+  end.convertToLocalTimestamp();
   return (
     <>
       <h4 style={{ marginBottom: "5px" }}>

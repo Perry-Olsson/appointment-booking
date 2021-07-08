@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { device } from "../../components";
+import { device, StyledTimezoneMessage } from "../../components";
 import { useGetUser } from "../../context";
 import { AwaitUserProvider } from "../../context/AwaitUser";
 import { MobileTabletNav } from "./Navigation";
@@ -15,6 +15,7 @@ export const DashboardContainer: FC = ({ children }) => {
         {children}
         <MobileTabletNav />
       </Container>
+      <StyledTimezoneMessage />
     </AwaitUserProvider>
   );
 };

@@ -82,7 +82,7 @@ const NowTimeString = styled.div`
   right: 5px;
   bottom: 10px;
   background-color: #eeeeee;
-  width: 70px;
+  width: 85px;
   height: 30px;
   display: flex;
   justify-content: center;
@@ -96,9 +96,9 @@ const Container = styled.div<{ isToday: boolean }>`
   overflow-y: auto;
   position: relative;
   bottom: ${({ isToday }) => (isToday ? "2px" : 0)};
-  @media (max-width: ${device.desktop.pixels}) {
+  @media (max-width: ${device.desktop.largePixels}) {
     grid-column: 1 / 4;
-    max-width: ${device.desktop.pixels};
+    max-width: ${device.desktop.largePixels};
     margin: auto;
     position: fixed;
     bottom: ${({ theme }) => theme.dayView.footerHeight};

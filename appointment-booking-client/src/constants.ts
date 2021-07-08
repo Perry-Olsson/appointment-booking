@@ -33,4 +33,6 @@ export const ONE_DAY = ONE_HOUR * 24;
 
 export const ONE_YEAR = ONE_DAY * 365;
 
-export const TZ_OFFSET = ONE_MINUTE * 420;
+export const TZ_OFFSET_TIME_VALUE = ONE_MINUTE * 420;
+
+export const TZ_OFFSET_HOURS = 420 / 60;

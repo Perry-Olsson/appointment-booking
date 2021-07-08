@@ -56,7 +56,7 @@ const getMargin = (route: string) => {
 const Container = styled.div`
   position: fixed;
   width: 100%;
-  height: 60px;
+  height: ${({ theme }) => theme.dayView.footerHeight};
   bottom: 0;
   left: 0;
   right: 0;
