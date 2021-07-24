@@ -24,6 +24,7 @@ export const Cancel = styled(Button)`
   &:hover {
     background-color: ${({ theme }) => theme.colors.secondaryLight};
     color: white;
+    border-color: ${({ theme }) => theme.colors.secondaryLight};
   }
 `;
 

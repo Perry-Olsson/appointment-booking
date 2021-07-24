@@ -8,7 +8,7 @@ export const Home: FC = () => {
       <Container>
         <TextContainer>
           <Header>INNOVATIVE HEALTH AND BEAUTY SERVICES</Header>
-          <StyledButton text="Get a Personal Consultation" />
+          <StyledButton href="#" text="Get a Personal Consultation" />
         </TextContainer>
       </Container>
     </section>
@@ -34,5 +34,5 @@ const Header = styled.h1`
 `;
 
 const StyledButton = styled(LinkButton)`
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 2rem !important;
 `;

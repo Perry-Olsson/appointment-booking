@@ -7,8 +7,10 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, AnchorProps>(
     { text, className, negative, hexColor = theme.colors.primary, ...props },
     ref
   ) => {
+    console.log(className);
     return (
-      <BaseAnchor
+      <BaseButton
+        as="a"
         ref={ref}
         className={className}
         color={hexColor}
@@ -16,30 +18,29 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, AnchorProps>(
         {...props}
       >
         {text}
-      </BaseAnchor>
+      </BaseButton>
     );
   }
 );
 
-const BaseAnchor = styled.a<{ color: string; negative: boolean }>`
-  @media (hover: hover) {
-    &:hover {
-      border: solid 2px ${({ color }) => `${color}00`};
-      background-color: ${({ theme, color, negative }) =>
-        negative ? theme.colors.primaryMisted : `${color}bb`};
-    }
-  }
-  width: fit-content;
-  height: fit-content;
+const BaseButton = styled.button<{ color: string; negative: boolean }>`
   padding: 10px;
+  color: ${({ color, negative }) => (negative ? color : "white")};
   background-color: ${({ color, negative }) => (negative ? "white" : color)};
   border: solid 2px ${({ color }) => color};
   border-radius: 5px;
-  color: ${({ color, negative }) => (negative ? color : "white")};
   font-size: ${({ theme }) => theme.font.sm};
   cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
   &:focus {
     outline: none;
+  }
+  @media (hover: hover) {
+    &:hover {
+      color: ${({ theme }) => theme.colors.textPrimary};
+      background-color: ${({ theme }) => theme.colors.primaryMisted};
+    }
   }
 `;
 
@@ -63,28 +64,6 @@ export const Button: React.FC<ButtonProps> = ({
     </BaseButton>
   );
 };
-
-const BaseButton = styled.button<{ color: string; negative: boolean }>`
-  @media (hover: hover) {
-    &:hover {
-      border: solid 2px ${({ color }) => `${color}00`};
-      background-color: ${({ theme, color, negative }) =>
-        negative ? theme.colors.primaryMisted : `${color}bb`};
-    }
-  }
-  width: fit-content;
-  height: fit-content;
-  padding: 10px;
-  background-color: ${({ color, negative }) => (negative ? "white" : color)};
-  border: solid 2px ${({ color }) => color};
-  border-radius: 5px;
-  color: ${({ color, negative }) => (negative ? color : "white")};
-  font-size: ${({ theme }) => theme.font.sm};
-  cursor: pointer;
-  &:focus {
-    outline: none;
-  }
-`;
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   handleClick?: () => void;
