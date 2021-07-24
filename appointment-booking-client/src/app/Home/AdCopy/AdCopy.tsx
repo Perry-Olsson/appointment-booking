@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { Flex, Flex2, LinkButton } from "../../../components";
+import { device, Flex, Flex2, LinkButton } from "../../../components";
 
 export const AdCopy: FC = () => {
   return (
@@ -62,11 +62,18 @@ const SectionLayout: FC<SectionProps> = ({
 
 const Container = styled(Flex)`
   padding-top: 7rem;
+  @media (max-width: ${device.tablet.pixels}) {
+    position: relative;
+    top: 30vh;
+  }
 `;
 
 const Section = styled(Flex2)`
   margin-bottom: 5rem;
   width: 60rem;
+  @media (max-width: ${device.desktop.pixels}) {
+    width: 90%;
+  }
 `;
 
 const Header = styled.h2`
@@ -81,7 +88,7 @@ const ContentContainer = styled(Flex)`
 `;
 
 const Img = styled.img`
-  width: 28rem;
+  width: 48%;
 `;
 
 const TextContainer = styled(Flex2)<{ alignRight?: boolean }>`
