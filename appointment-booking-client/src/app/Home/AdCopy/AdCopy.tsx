@@ -1,6 +1,8 @@
+import { useAtom } from "jotai";
 import { FC } from "react";
 import styled from "styled-components";
 import { device, Flex, Flex2, LinkButton } from "../../../components";
+import { dimensionsAtom } from "../../Scheduler/atoms";
 
 export const AdCopy: FC = () => {
   return (
@@ -43,18 +45,20 @@ const SectionLayout: FC<SectionProps> = ({
   buttonHref,
   alignRight,
 }) => {
+  const [{ width }] = useAtom(dimensionsAtom);
+  const isTabletOrSmaller = device.isTabletOrSmaller(width);
   return (
     <Section as="section">
       <Header>{header}</Header>
       <ContentContainer>
-        {alignRight ? <Img src={imgSrc} /> : null}
+        {alignRight || isTabletOrSmaller ? <Img src={imgSrc} /> : null}
         <Flex>
           <TextContainer alignRight={alignRight}>
             <p>{description}</p>
             <Button href={buttonHref} text="Learn More" />
           </TextContainer>
         </Flex>
-        {alignRight ? null : <Img src={imgSrc} />}
+        {alignRight || isTabletOrSmaller ? null : <Img src={imgSrc} />}
       </ContentContainer>
     </Section>
   );
@@ -80,21 +84,36 @@ const Header = styled.h2`
   color: ${({ theme }) => theme.colors.secondary};
   font-weight: normal;
   margin: 2rem;
+  @media (max-width: ${device.tablet.pixels}) {
+    text-align: center;
+  }
 `;
 
 const ContentContainer = styled(Flex)`
   flex-direction: row;
   align-items: flex-start;
+  @media (max-width: ${device.tablet.pixels}) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Img = styled.img`
   width: 48%;
+  @media (max-width: ${device.tablet.pixels}) {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
 `;
 
 const TextContainer = styled(Flex2)<{ alignRight?: boolean }>`
   width: 85%;
   align-items: ${({ alignRight }) => (alignRight ? "flex-end" : "flex-start")};
   text-align: ${({ alignRight }) => (alignRight ? "end" : "start")};
+  @media (max-width: ${device.tablet.pixels}) {
+    align-items: center;
+    margin-top: 1.5rem;
+  }
 `;
 
 const Button = styled(LinkButton)`
