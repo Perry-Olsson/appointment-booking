@@ -16,6 +16,12 @@ export class TimestampValidator {
     const minutes = timestamp.getMinutes() + end.getMinutes();
     const valueOf = timestamp.valueOf() + end.valueOf();
 
+    if (timestamp.valueOf() <= new Date().valueOf()) {
+      throw new TimeError(
+        "The timeslot you are trying to book has already passed."
+      );
+    }
+
     //checks if timestamps end on quarter hours and seconds and milliseconds are zeroed out
     if (minutes % 15 !== 0 || valueOf % 60000 !== 0) {
       throw new TimeError();
