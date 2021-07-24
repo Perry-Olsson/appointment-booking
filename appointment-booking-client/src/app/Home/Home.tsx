@@ -16,14 +16,14 @@ export const Home: FC = () => {
 };
 
 const Container = styled(Flex)`
-  background-image: url("/temp-home-page-bg.jpg");
+  background-image: url("/home-page-bg.png");
   background-size: cover;
   height: 600px;
 `;
 
 const TextContainer = styled(Flex)`
   width: 30rem;
-  margin-left: 30rem;
+  margin-left: 35rem;
 `;
 
 const Header = styled.h1`
