@@ -25,7 +25,7 @@ describe("Appointment creation", () => {
     expect(isNaN(data.timestamp.getDate())).toBe(false);
   });
 
-  test.only("Initialize throws InvalidTime error", async () => {
+  test("Initialize throws InvalidTime error", async () => {
     const { data: timestampWithInvalidMinutes } = await createTestAppointment();
     const { data: timestampWithNonZeroSeconds } = await createTestAppointment();
     const now = new Date();
