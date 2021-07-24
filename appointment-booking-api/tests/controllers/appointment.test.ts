@@ -2,6 +2,7 @@ import { prisma } from "../../src/prisma";
 import { createTestAppointment, initializeTestData } from "../helpers";
 import { AppointmentController } from "../../src/controllers";
 import { AppointmentDataAccess } from "../../src/repositories";
+import { TimeError } from "../../src/utils";
 
 const appointmentController = new AppointmentController(
   new AppointmentDataAccess()
@@ -24,17 +25,41 @@ describe("Appointment creation", () => {
     expect(isNaN(data.timestamp.getDate())).toBe(false);
   });
 
-  test("Initialize throws InvalidTime error", async () => {
+  test.only("Initialize throws InvalidTime error", async () => {
     const { data: timestampWithInvalidMinutes } = await createTestAppointment();
     const { data: timestampWithNonZeroSeconds } = await createTestAppointment();
+    const now = new Date();
+    const { data: timestampInPast } = await createTestAppointment({
+      time: new Date(now.getFullYear(), now.getMonth(), now.getUTCHours()),
+    });
+    timestampWithInvalidMinutes.timestamp.setMinutes(4);
     timestampWithNonZeroSeconds.timestamp.setSeconds(5);
 
-    const initialize = jest.fn(appointmentController.initialize);
+    const initialize = jest.fn((appointment: any) =>
+      appointmentController.initialize(appointment)
+    );
 
-    expect(() => initialize(timestampWithInvalidMinutes)).toThrow();
-    expect(() => initialize(timestampWithNonZeroSeconds)).toThrow();
+    expect(() =>
+      initialize(timestampsToJSON(timestampWithInvalidMinutes))
+    ).toThrow(TimeError);
+    expect(() =>
+      initialize(timestampsToJSON(timestampWithNonZeroSeconds))
+    ).toThrowError(TimeError);
+    expect(() => initialize(timestampsToJSON(timestampInPast))).toThrow(
+      TimeError
+    );
   });
 });
+
+function timestampsToJSON(obj: any) {
+  const newObj: any = {};
+  for (let field in obj) {
+    if (obj[field] instanceof Date) {
+      newObj[field] = obj[field].toJSON();
+    } else newObj[field] = obj[field];
+  }
+  return newObj;
+}
 
 describe("Query string is validated correctly", () => {
   test("validate field returns correct fields", () => {
