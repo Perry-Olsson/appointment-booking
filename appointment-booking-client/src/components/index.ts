@@ -17,3 +17,4 @@ export * from "./FormFooter";
 export * from "./Logo";
 export * from "./ProfileIcon";
 export * from "./TimezoneMessage";
+export * from "./ErrorIcon";

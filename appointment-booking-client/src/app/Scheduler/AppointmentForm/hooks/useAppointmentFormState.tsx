@@ -64,14 +64,15 @@ export const useAppointmentFormState = () => {
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => {
-    createAppointment.reset();
-    if (createAppointment.isSuccess) {
+    if (createAppointment.data && !createAppointment.data.error) {
+      createAppointment.reset();
       setIsOpen(false);
       return router.push("/dashboard");
     }
     hideConfirmModal();
     setTimeout(() => {
       setIsOpen(false);
+      createAppointment.reset();
     }, 500);
   };
 

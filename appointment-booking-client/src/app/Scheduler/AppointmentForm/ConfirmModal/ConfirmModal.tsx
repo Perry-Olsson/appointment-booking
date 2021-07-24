@@ -32,7 +32,7 @@ Modal.defaultStyles = {
 
 export const ConfirmModal: FC<ConfirmModalProps> = props => {
   return (
-    <Container
+    <StyledModal
       id="confirm-modal"
       onAfterOpen={modal => {
         if (modal) {
@@ -43,11 +43,11 @@ export const ConfirmModal: FC<ConfirmModalProps> = props => {
       {...props}
     >
       <ModalContent {...props} />
-    </Container>
+    </StyledModal>
   );
 };
 
-const Container = styled(Modal)`
+const StyledModal = styled(Modal)`
   position: absolute;
   top: ${() => `${window.innerHeight}px`};
   left: 0;

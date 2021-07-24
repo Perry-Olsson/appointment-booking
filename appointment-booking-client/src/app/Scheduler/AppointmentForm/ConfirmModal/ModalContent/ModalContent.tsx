@@ -2,14 +2,15 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import {
   AppointmentTime,
+  ErrorIcon,
   ExitButton,
-  Flex,
   LoadingIcon,
-  SuccessMark,
-} from "../../../../components";
-import { AppointmentInfoItem } from "./AppointmentInfoItem";
-import { ConfirmModalProps } from ".";
-import { Cancel, ButtonContainer, ConfirmButton } from "../components";
+} from "../../../../../components";
+import { AppointmentInfoItem } from "../AppointmentInfoItem";
+import { ConfirmModalProps } from "..";
+import { Cancel, ButtonContainer, ConfirmButton } from "../../components";
+import { Success } from "./Success";
+import { ContentContainer } from "./components";
 
 export const ModalContent: FC<ConfirmModalProps> = ({
   closeModal,
@@ -22,21 +23,34 @@ export const ModalContent: FC<ConfirmModalProps> = ({
 }) => {
   if (createAppointment.isLoading)
     return (
-      <LoadingContainer>
-        <ExitButton size="30px" onClick={() => closeModal()} />
+      <ContentContainer closeModal={closeModal}>
         <LoadingIcon />
-      </LoadingContainer>
+      </ContentContainer>
     );
-  if (createAppointment.isSuccess)
+  if (createAppointment.data && createAppointment.isSuccess) {
+    if (createAppointment.data.error)
+      return (
+        <ContentContainer closeModal={closeModal}>
+          <ErrorIcon />
+          <Header>{createAppointment.data.error}</Header>
+          <p>{createAppointment.data.message}</p>
+        </ContentContainer>
+      );
+    else
+      return (
+        <ContentContainer closeModal={closeModal} showCancelButton>
+          <Success />
+        </ContentContainer>
+      );
+  }
+  if (createAppointment.isError) {
     return (
-      <SuccessContainer>
-        <ExitButton size="30px" onClick={() => closeModal()} />
-        <h1>Your appointment has been booked!</h1>
-        <SuccessMark />
-        <h3 style={{ margin: "10px" }}>You can close out of this</h3>
-        <Cancel text="Close" negative handleClick={() => closeModal()} />
-      </SuccessContainer>
+      <ContentContainer closeModal={closeModal}>
+        <ErrorIcon />
+        <p>Apologies, something went wrong</p>
+      </ContentContainer>
     );
+  }
   return (
     <>
       <ExitButton size="30px" onClick={() => closeModal()} />
@@ -68,15 +82,6 @@ export const ModalContent: FC<ConfirmModalProps> = ({
     </>
   );
 };
-
-const SuccessContainer = styled(Flex)`
-  margin: auto;
-  text-align: center;
-`;
-
-const LoadingContainer = styled(Flex)`
-  margin: auto;
-`;
 
 const Header = styled.h1`
   margin: 35px;
