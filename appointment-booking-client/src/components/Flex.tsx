@@ -13,3 +13,10 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Flex2 = styled.div<React.HTMLAttributes<HTMLDivElement>>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

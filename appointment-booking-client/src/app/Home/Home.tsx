@@ -1,8 +1,18 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { Flex, LinkButton } from "../../components";
+import { AdCopy } from "./AdCopy";
 
 export const Home: FC = () => {
+  return (
+    <>
+      <Intro />
+      <AdCopy />
+    </>
+  );
+};
+
+const Intro: FC = () => {
   return (
     <section>
       <Container>
@@ -18,7 +28,7 @@ export const Home: FC = () => {
 const Container = styled(Flex)`
   background-image: url("/home-page-bg.png");
   background-size: cover;
-  height: 600px;
+  height: 75vh;
 `;
 
 const TextContainer = styled(Flex)`
