@@ -24,9 +24,6 @@ export const TabList: React.FC = () => {
         <Tab isSelected={route === "/"} href="/">
           <Logo />
         </Tab>
-        <Tab isSelected={route === "/about"} href="/about">
-          About
-        </Tab>
         <Tab isSelected={mainRoute === "/schedule"} href="/schedule">
           Book Online
         </Tab>
@@ -46,10 +43,8 @@ const getLocationDisplayMargin = (route: string) => {
   switch (route) {
     case "/":
       return "2px";
-    case "/about":
-      return "158px";
     case "/schedule":
-      return "314px";
+      return "158px";
     case "/login":
       return `calc(100% - 320px)`;
     case "/register":

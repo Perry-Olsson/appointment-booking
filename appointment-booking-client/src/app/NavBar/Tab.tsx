@@ -70,7 +70,7 @@ export const BurgerButton: React.FC<{
 };
 
 const StyledAnchor = styled.a<{ isSelected: boolean | undefined }>`
-  font-size: ${({ theme }) => theme.font.med};
+  font-size: ${({ theme }) => theme.font.sm_med};
   cursor: pointer;
   transition: color 0.1s;
   transition: background-color 0.1s;

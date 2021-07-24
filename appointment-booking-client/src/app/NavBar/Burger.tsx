@@ -14,7 +14,6 @@ export const Burger: React.FC = () => {
         <BurgerTab href="/" isFirst={true}>
           Home
         </BurgerTab>
-        <BurgerTab href="/about">About</BurgerTab>
         <BurgerTab href="/schedule">Book Online</BurgerTab>
         <UserTabs isBurger />
       </BurgerMenu>
