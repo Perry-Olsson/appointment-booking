@@ -29,6 +29,9 @@ const IntroSection = styled.section`
   height: calc(100vh - ${({ theme }) => theme.navBar.height});
   display: flex;
   justify-content: center;
+  @media (min-width: ${device.desktop.pixels}) {
+    margin-bottom: 4rem;
+  }
 `;
 
 const ImageContainter = styled(Flex)`

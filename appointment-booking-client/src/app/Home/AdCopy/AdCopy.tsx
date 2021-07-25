@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { device, Flex, Flex2, LinkButton } from "../../../components";
 import { dimensionsAtom } from "../../Scheduler/atoms";
@@ -28,6 +28,7 @@ const sectionTwoProps: SectionProps = {
     "Relax in our friendly and caring facility as you receive customized treatments for everything from acne to weight loss. Our team has over 40 years of combined experience.",
   buttonHref: "#",
   alignRight: true,
+  scrollOffset: 400,
 };
 
 interface SectionProps {
@@ -36,6 +37,7 @@ interface SectionProps {
   description: string;
   buttonHref: string;
   alignRight?: boolean;
+  scrollOffset?: number;
 }
 
 const SectionLayout: FC<SectionProps> = ({
@@ -44,46 +46,69 @@ const SectionLayout: FC<SectionProps> = ({
   description,
   buttonHref,
   alignRight,
+  scrollOffset = 0,
 }) => {
+  const headerRef = useRef<HTMLHeadingElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const textContentRef = useRef<HTMLDivElement>(null);
   const [{ width }] = useAtom(dimensionsAtom);
   const isTabletOrSmaller = device.isTabletOrSmaller(width);
+
+  function scrollHandler() {
+    if (window.scrollY > scrollOffset + 200) {
+      headerRef.current!.style.transform = "translate(0, 0)";
+    }
+    if (window.scrollY > scrollOffset + 300) {
+      imgRef.current!.style.transform = "translate(0, 0)";
+      textContentRef.current!.style.transform = "translate(0, 0)";
+      window.removeEventListener("scroll", scrollHandler);
+    }
+  }
+  useEffect(() => {
+    window.addEventListener("scroll", scrollHandler);
+  }, []);
+
   return (
     <Section as="section">
-      <Header>{header}</Header>
+      <Header ref={headerRef}>{header}</Header>
       <ContentContainer>
-        {alignRight || isTabletOrSmaller ? <Img src={imgSrc} /> : null}
-        <TextContainer alignRight={alignRight}>
+        {alignRight || isTabletOrSmaller ? (
+          <Img ref={imgRef} translateValue="-100vw" src={imgSrc} />
+        ) : null}
+        <TextContainer ref={textContentRef} alignRight={alignRight}>
           <p>{description}</p>
           <Button href={buttonHref} text="Learn More" />
         </TextContainer>
-        {alignRight || isTabletOrSmaller ? null : <Img src={imgSrc} />}
+        {alignRight || isTabletOrSmaller ? null : (
+          <Img ref={imgRef} translateValue="100vw" src={imgSrc} />
+        )}
       </ContentContainer>
     </Section>
   );
 };
 
-const Container = styled(Flex)`
-  border: solid red;
-`;
+const Container = styled(Flex)``;
 
 const Section = styled(Flex2)`
+  width: 90%;
   margin-bottom: 5rem;
-  width: 60rem;
-  @media (max-width: ${device.desktop.pixels}) {
-    width: 90%;
+  @media (min-width: ${device.desktop.pixels}) {
+    width: 60rem;
   }
 `;
 
 const Header = styled.h2`
   color: ${({ theme }) => theme.colors.secondary};
   font-weight: normal;
-  margin: 2rem;
+  margin-bottom: 2rem;
   @media (max-width: ${device.tablet.pixels}) {
     text-align: center;
   }
+  transition: all 0.7s;
+  transform: translate(-100vw, -200px);
 `;
 
-const ContentContainer = styled(Flex)`
+const ContentContainer = styled(Flex2)`
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
@@ -93,16 +118,24 @@ const ContentContainer = styled(Flex)`
   }
 `;
 
-const Img = styled.img`
+const Img = styled.img<{ translateValue: string }>`
   width: 100%;
+  transition: transform 0.8s;
+  transform: ${({ translateValue }) => `translate(${translateValue}, 0)`};
+  @media (min-width: ${device.desktop.pixels}) {
+    width: 50%;
+  }
 `;
 
 const TextContainer = styled(Flex2)<{ alignRight?: boolean }>`
   width: 45%;
   align-items: ${({ alignRight }) => (alignRight ? "flex-end" : "flex-start")};
   text-align: ${({ alignRight }) => (alignRight ? "end" : "start")};
+  transition: transform 0.8s ease-in-out;
+  transform: ${({ alignRight }) =>
+    alignRight ? "translate(100vw, 0)" : "translate(-100vw, 0)"};
   @media (max-width: ${device.tablet.pixels}) {
-    width: 80%;
+    width: 90%;
     margin-top: 1.5rem;
     align-items: center;
     text-align: center;
