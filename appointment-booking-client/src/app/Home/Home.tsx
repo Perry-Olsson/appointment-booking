@@ -25,12 +25,7 @@ const Intro: FC = () => {
 };
 
 const IntroSection = styled.section`
-  /* position: absolute;
-  top: ${({ theme }) => theme.navBar.height};
-  right: 0;
-  bottom: 0;
-  left: 0; */
-  width: 100vw;
+  width: 100%;
   height: calc(100vh - ${({ theme }) => theme.navBar.height});
   display: flex;
   justify-content: center;
@@ -51,23 +46,16 @@ const ImageContainter = styled(Flex)`
 
 const TextContainer = styled(Flex)`
   position: absolute;
-  right: 10%;
-  top: 25%;
-  width: 30rem;
-  @media (max-width: ${device.desktop.pixels}) {
-    position: absolute;
-    right: initial;
-    top: initial;
-    bottom: 10%;
-    width: 80%;
+  top: 60%;
+  width: 80%;
+  @media (min-width: ${device.desktop.pixels}) {
+    right: 5%;
+    top: 25%;
+    width: 20rem;
   }
-  /* @media (max-width: ${device.tablet.pixels}) {
-    margin-left: 0;
-    margin-right: 0;
-    width: 80%;
-    position: absolute;
-    bottom: 8vh;
-  } */
+  @media (min-width: ${device.desktop.largePixels}) {
+    width: 30rem;
+  }
 `;
 
 const Header = styled.h1`
@@ -75,9 +63,10 @@ const Header = styled.h1`
   font-size: 3rem;
   color: ${({ theme }) => theme.colors.secondary};
   margin-bottom: 2rem;
-  @media (max-width: ${device.desktop.pixels}) {
+  @media (max-width: ${device.desktop.largePixels}) {
     font-size: 2rem;
   }
+
   @media (max-width: ${device.tablet.pixels}) {
     font-size: 1.65rem;
   }

@@ -63,9 +63,7 @@ const SectionLayout: FC<SectionProps> = ({
 };
 
 const Container = styled(Flex)`
-  padding-top: 7rem;
-  @media (max-width: ${device.tablet.pixels}) {
-  }
+  border: solid red;
 `;
 
 const Section = styled(Flex2)`
@@ -96,11 +94,7 @@ const ContentContainer = styled(Flex)`
 `;
 
 const Img = styled.img`
-  width: 48%;
-  @media (max-width: ${device.tablet.pixels}) {
-    margin-top: 0.5rem;
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 const TextContainer = styled(Flex2)<{ alignRight?: boolean }>`
