@@ -52,12 +52,10 @@ const SectionLayout: FC<SectionProps> = ({
       <Header>{header}</Header>
       <ContentContainer>
         {alignRight || isTabletOrSmaller ? <Img src={imgSrc} /> : null}
-        <Flex>
-          <TextContainer alignRight={alignRight}>
-            <p>{description}</p>
-            <Button href={buttonHref} text="Learn More" />
-          </TextContainer>
-        </Flex>
+        <TextContainer alignRight={alignRight}>
+          <p>{description}</p>
+          <Button href={buttonHref} text="Learn More" />
+        </TextContainer>
         {alignRight || isTabletOrSmaller ? null : <Img src={imgSrc} />}
       </ContentContainer>
     </Section>
@@ -92,6 +90,7 @@ const Header = styled.h2`
 const ContentContainer = styled(Flex)`
   flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
   @media (max-width: ${device.tablet.pixels}) {
     flex-direction: column;
     align-items: center;
@@ -107,12 +106,14 @@ const Img = styled.img`
 `;
 
 const TextContainer = styled(Flex2)<{ alignRight?: boolean }>`
-  width: 85%;
+  width: 45%;
   align-items: ${({ alignRight }) => (alignRight ? "flex-end" : "flex-start")};
   text-align: ${({ alignRight }) => (alignRight ? "end" : "start")};
   @media (max-width: ${device.tablet.pixels}) {
-    align-items: center;
+    width: 80%;
     margin-top: 1.5rem;
+    align-items: center;
+    text-align: center;
   }
 `;
 
