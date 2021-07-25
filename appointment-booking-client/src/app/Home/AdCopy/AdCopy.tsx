@@ -65,8 +65,6 @@ const SectionLayout: FC<SectionProps> = ({
 const Container = styled(Flex)`
   padding-top: 7rem;
   @media (max-width: ${device.tablet.pixels}) {
-    position: relative;
-    top: 30vh;
   }
 `;
 
