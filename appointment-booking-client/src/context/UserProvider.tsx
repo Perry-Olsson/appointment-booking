@@ -6,13 +6,18 @@ import { User } from "../types";
 const UserContext = createContext<User | null | "loading">(null);
 
 export const UserProvider: FC = ({ children }) => {
-  const { data } = useQuery("user", async () => await customerService.user(), {
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
+  const { data, error } = useQuery(
+    "user",
+    async () => await customerService.user(),
+    {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   let user: User | null | "loading";
-  if (!data) user = "loading";
+  if (error) user = null;
+  else if (!data) user = "loading";
   else if (data === "Unauthorized") user = null;
   else user = data;
 

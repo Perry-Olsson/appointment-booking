@@ -23,6 +23,7 @@ export const Login: FC = () => {
   const user = useGetUser();
   const [error, setError] = useState<ErrorObject | null>(null);
 
+  console.log(user);
   if (user) {
     if (user === "loading") return <LoadingIcon />;
 
