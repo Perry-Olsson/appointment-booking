@@ -74,7 +74,11 @@ const SectionLayout: FC<SectionProps> = ({
       <Header ref={headerRef}>{header}</Header>
       <ContentContainer>
         {alignRight || isTabletOrSmaller ? (
-          <Img ref={imgRef} translateValue="-100vw" src={imgSrc} />
+          <Img
+            ref={imgRef}
+            translateValue={`${isTabletOrSmaller ? "100vw" : "-100vw"}`}
+            src={imgSrc}
+          />
         ) : null}
         <TextContainer ref={textContentRef} alignRight={alignRight}>
           <p>{description}</p>
@@ -108,7 +112,7 @@ const Header = styled.h2`
     text-align: center;
   }
   transition: all 0.7s;
-  transform: translate(-100vw, -200px);
+  transform: translate(-100vw, -50px);
 `;
 
 const ContentContainer = styled(Flex2)`

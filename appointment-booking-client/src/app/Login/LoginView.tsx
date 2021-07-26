@@ -75,8 +75,8 @@ export const LoginFormContainer = styled(Flex)`
     padding-top: 30px;
     position: static;
     box-shadow: 5px 5px 5px 3px ${({ theme }) => theme.colors.lightGray};
-    border: solid 1px ${({ theme }) => theme.colors.shadeGray};
-    margin: 100px auto 20px auto;
+    border: solid 1px ${({ theme }) => theme.colors.primaryLightFaded};
+    margin: 100px auto 100px auto;
   }
   width: 100vw;
   max-width: 700px;
