@@ -7,7 +7,6 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, AnchorProps>(
     { text, className, negative, hexColor = theme.colors.primary, ...props },
     ref
   ) => {
-    console.log(className);
     return (
       <BaseButton
         as="a"

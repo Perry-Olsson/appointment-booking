@@ -31,9 +31,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Montserrat', sans-serif;
   }
 
-  html, body {
-    overflow-x: hidden;
-  }
   
 /* REACT BURGER MENU */
   /* Position and sizing of burger button */

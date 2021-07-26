@@ -66,6 +66,7 @@ const SectionLayout: FC<SectionProps> = ({
   }
   useEffect(() => {
     window.addEventListener("scroll", scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
   return (
@@ -87,7 +88,9 @@ const SectionLayout: FC<SectionProps> = ({
   );
 };
 
-const Container = styled(Flex)``;
+const Container = styled(Flex)`
+  overflow-x: hidden;
+`;
 
 const Section = styled(Flex2)`
   width: 90%;
