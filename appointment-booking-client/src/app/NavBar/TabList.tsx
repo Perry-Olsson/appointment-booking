@@ -54,7 +54,7 @@ const getLocationDisplayMargin = (route: string) => {
   }
 };
 
-const getMainRoute = (route: string) => {
+export const getMainRoute = (route: string) => {
   let pastFirstSlash = false;
   for (let i = 0; i < route.length; i++) {
     if (route[i] === "/") {

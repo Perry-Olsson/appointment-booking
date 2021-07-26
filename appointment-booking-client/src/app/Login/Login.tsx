@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,6 +8,7 @@ import { customerService } from "../../api";
 import { device, ErrorObject, LoadingIcon } from "../../components";
 import { useGetUser } from "../../context";
 import { accessToken } from "../../pages/_app";
+import { errorAtom } from "../Scheduler/atoms";
 import { LoginView } from "./LoginView";
 import { LoginFormValues } from "./types";
 
@@ -22,8 +24,8 @@ export const Login: FC = () => {
   const router = useRouter();
   const user = useGetUser();
   const [error, setError] = useState<ErrorObject | null>(null);
+  const [, setUnexpectedError] = useAtom(errorAtom);
 
-  console.log(user);
   if (user) {
     if (user === "loading") return <LoadingIcon />;
 
@@ -32,16 +34,20 @@ export const Login: FC = () => {
   }
 
   const onSubmit = async (data: LoginFormValues) => {
-    const response = await customerService.login(data);
+    try {
+      const response = await customerService.login(data);
 
-    if (response.accessToken) {
-      accessToken.set(response.accessToken);
-      reset();
-      await client.refetchQueries("user");
-      await router.push("/schedule");
-    } else {
-      setError(response);
-      setValue("password", "");
+      if (response.accessToken) {
+        accessToken.set(response.accessToken);
+        reset();
+        await client.refetchQueries("user");
+        await router.push("/schedule");
+      } else {
+        setError(response);
+        setValue("password", "");
+      }
+    } catch (err) {
+      setUnexpectedError({ error: err.name, message: err.message });
     }
   };
 

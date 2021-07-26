@@ -9,6 +9,8 @@ import { RegisterView } from "./RegisterView";
 import { LoadingIcon } from "../../components";
 import { ErrorObject } from "../../components";
 import styled from "styled-components";
+import { useAtom } from "jotai";
+import { errorAtom } from "../Scheduler/atoms";
 
 export interface RegisterFormValues {
   firstName: string;
@@ -32,6 +34,7 @@ export const Register: FC = () => {
   const user = useGetUser();
   const client = useQueryClient();
   const [error, setError] = useState<ErrorObject | null>(null);
+  const [, setUnexpectedError] = useAtom(errorAtom);
 
   if (user) {
     if (user === "loading") return <LoadingIcon />;
@@ -41,23 +44,27 @@ export const Register: FC = () => {
   }
 
   const onSubmit = async (data: RegisterFormValues) => {
-    const response = await customerService.register(
-      prunePasswordConfirmation(data)
-    );
-    if (!response.error) {
-      const loginResponse = await customerService.login({
-        email: data.email,
-        password: data.password,
-      });
+    try {
+      const response = await customerService.register(
+        prunePasswordConfirmation(data)
+      );
+      if (!response.error) {
+        const loginResponse = await customerService.login({
+          email: data.email,
+          password: data.password,
+        });
 
-      if (loginResponse.accessToken) {
-        accessToken.set(loginResponse.accessToken);
-        reset();
-        client.setQueryData("user", response);
-        await router.push("/schedule");
+        if (loginResponse.accessToken) {
+          accessToken.set(loginResponse.accessToken);
+          reset();
+          client.setQueryData("user", response);
+          await router.push("/schedule");
+        }
+      } else {
+        setError(response);
       }
-    } else {
-      setError(response);
+    } catch (err) {
+      setUnexpectedError({ error: err.name, message: err.message });
     }
   };
 
