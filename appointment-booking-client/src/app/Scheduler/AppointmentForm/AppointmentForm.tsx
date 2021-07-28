@@ -134,6 +134,7 @@ const closeAppointmentForm = (
 };
 
 const Container = styled.div<{ show: boolean }>`
+  overflow-y: auto;
   display: ${({ show }) => (show ? "flex" : "none")};
   justify-content: center;
   align-items: flex-start;
