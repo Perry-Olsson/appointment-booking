@@ -17,7 +17,7 @@ export const Tab: React.FC<TabProps> = ({
   isSelected,
 }) => {
   return (
-    <Link href={href}>
+    <Link href={href} passHref>
       <StyledAnchor onClick={onClick} isSelected={isSelected}>
         {children}
       </StyledAnchor>

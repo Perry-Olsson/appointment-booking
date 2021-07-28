@@ -31,10 +31,6 @@ const BaseButton = styled.button<{ color: string; negative: boolean }>`
   font-size: ${({ theme }) => theme.font.sm};
   cursor: pointer;
   transition: all 0.15s;
-  text-decoration: none;
-  &:focus {
-    outline: none;
-  }
   @media (hover: hover) {
     &:hover {
       color: ${({ theme }) => theme.colors.textPrimary};

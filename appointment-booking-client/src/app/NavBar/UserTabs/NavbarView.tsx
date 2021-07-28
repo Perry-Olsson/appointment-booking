@@ -25,7 +25,7 @@ export const NavbarView: React.FC = ({}) => {
     return (
       <Container>
         <ProfileIcon>{user.firstName[0]}</ProfileIcon>
-        <Link href="/dashboard">
+        <Link href="/dashboard" passHref>
           <LinkButton style={{ margin: "10px" }} text="Dashboard" />
         </Link>
         <Logout

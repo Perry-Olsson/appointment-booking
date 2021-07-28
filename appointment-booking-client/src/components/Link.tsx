@@ -14,7 +14,9 @@ export const Link: React.FC<LinkProps> = ({
     <Container {...restProps}>{children}</Container>
   ) : (
     <Container onClick={onClick}>
-      <NextLink href={href}>{children}</NextLink>
+      <NextLink href={href} passHref>
+        {children}
+      </NextLink>
     </Container>
   );
 };

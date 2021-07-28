@@ -31,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Montserrat', sans-serif;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   
 /* REACT BURGER MENU */
   /* Position and sizing of burger button */

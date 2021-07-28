@@ -10,7 +10,7 @@ export const MobileTabletNav: FC = () => {
 
   return (
     <Container>
-      <Link href="/dashboard">
+      <Link href="/dashboard" passHref>
         <Icon
           onClick={() => (locationDisplayRef.current!.style.marginLeft = "0")}
           isSelected={route === "/dashboard"}
@@ -18,7 +18,7 @@ export const MobileTabletNav: FC = () => {
           <b>Appointments</b>
         </Icon>
       </Link>
-      <Link href="/dashboard/pastAppointments">
+      <Link href="/dashboard/pastAppointments" passHref>
         <Icon
           onClick={() =>
             (locationDisplayRef.current!.style.marginLeft = `${
@@ -76,7 +76,7 @@ const Container = styled.div`
   }
 `;
 
-const Icon = styled.div<{ isSelected?: boolean }>`
+const Icon = styled.a<{ isSelected?: boolean }>`
   height: 100%;
   width: 100%;
   display: flex;
