@@ -19,6 +19,7 @@ const sectionOneProps: SectionProps = {
   description:
     "Whether you want to improve your skin texture or reduce the appearance of facial lines and wrinkles, you will get professional medical care at our fine clinic.",
   buttonHref: "#",
+  imgAlt: "Middle aged women looking over her shoulder and smiling",
 };
 
 const sectionTwoProps: SectionProps = {
@@ -29,6 +30,7 @@ const sectionTwoProps: SectionProps = {
   buttonHref: "#",
   alignRight: true,
   scrollOffset: 400,
+  imgAlt: "Young woman looking down and smiling",
 };
 
 interface SectionProps {
@@ -38,6 +40,7 @@ interface SectionProps {
   buttonHref: string;
   alignRight?: boolean;
   scrollOffset?: number;
+  imgAlt: string;
 }
 
 const SectionLayout: FC<SectionProps> = ({
@@ -46,6 +49,7 @@ const SectionLayout: FC<SectionProps> = ({
   description,
   buttonHref,
   alignRight,
+  imgAlt,
   scrollOffset = 0,
 }) => {
   const headerRef = useRef<HTMLHeadingElement>(null);
@@ -78,6 +82,7 @@ const SectionLayout: FC<SectionProps> = ({
             ref={imgRef}
             translateValue={`${isTabletOrSmaller ? "100vw" : "-100vw"}`}
             src={imgSrc}
+            alt={imgAlt}
           />
         ) : null}
         <TextContainer ref={textContentRef} alignRight={alignRight}>
@@ -85,7 +90,7 @@ const SectionLayout: FC<SectionProps> = ({
           <Button href={buttonHref} text="Learn More" />
         </TextContainer>
         {alignRight || isTabletOrSmaller ? null : (
-          <Img ref={imgRef} translateValue="100vw" src={imgSrc} />
+          <Img ref={imgRef} translateValue="100vw" src={imgSrc} alt={imgAlt} />
         )}
       </ContentContainer>
     </Section>

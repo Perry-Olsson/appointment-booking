@@ -15,7 +15,13 @@ export const Home: FC = () => {
 const Intro: FC = () => {
   return (
     <IntroSection>
-      <ImageContainter></ImageContainter>
+      <ImageContainter>
+        <span
+          className="background-image"
+          role="img"
+          aria-label="Health and beauty background image"
+        ></span>
+      </ImageContainter>
       <TextContainer>
         <Header>INNOVATIVE HEALTH AND BEAUTY SERVICES</Header>
         <StyledButton href="#" text="Get a Personal Consultation" />
