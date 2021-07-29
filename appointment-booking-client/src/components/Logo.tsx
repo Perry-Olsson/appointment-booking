@@ -14,6 +14,7 @@ export const Logo: FC<Props> = ({ isMobile }) => {
       src="/logo.png"
       alt="logo"
       width={isMobile ? "140px" : "145px"}
+      height={isMobile ? "67px" : "69px"}
       isMobile
       onClick={() => router.push("/")}
     />
