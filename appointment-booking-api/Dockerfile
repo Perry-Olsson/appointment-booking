@@ -17,6 +17,9 @@ CMD ["/bin/bash"]
 
 FROM base as development
 ENV NODE_ENV development
+ENV PORT 3001
+ENV ACCESS_TOKEN_SECRET  fhds8f0sfdf9sa0afa9sdf
+ENV REFRESH_TOKEN_SECRET d8sf9agds9afs9fsd9fasf
 
 EXPOSE 3001
 
