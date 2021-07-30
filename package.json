@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "addDependencies": "(cd ./appointment-booking-api && npm install) && (cd ./appointment-booking-client && npm install)"
+  }
+}
