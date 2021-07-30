@@ -83,6 +83,6 @@ const Header = styled.h1`
 
 const StyledButton = styled(LinkButton)`
   width: fit-content;
-  padding: 0.8rem !important;
+  padding: 0.8rem 2.5rem;
   text-align: center;
 `;
