@@ -1,4 +1,4 @@
-<a href="https://perry-olsson.github.io/javascript-calculator/" target="_blank"><h1 align="center">Online Booking</h1></a>
+<a href="https://appointment-booking-example.com" target="_blank"><h1 align="center">Online Booking</h1></a>
 
 <p align="center"><b>For The Renewal Center</b></p>
 
