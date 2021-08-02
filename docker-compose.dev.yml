@@ -15,20 +15,20 @@ services:
           - nginx
   appointment-client:
     build:
-      context: ./appointment-booking-client
+      context: ./Client
       target: development
     volumes:
-      - ./appointment-booking-client:/usr/app
+      - ./Client:/usr/app
     networks:
       main:
         aliases:
           - appointment-client
   appointment-api:
     build:
-      context: ./appointment-booking-api
+      context: ./Api
       target: development
     volumes:
-      - ./appointment-booking-api:/usr/app
+      - ./Api:/usr/app
     networks:
       main:
         aliases:
