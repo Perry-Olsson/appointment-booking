@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "addDependencies": "(cd ./appointment-booking-api && npm install && npm run tsc) && (cd ./appointment-booking-client && npm install)",
+    "addDependencies": "(cd ./Api && npm install && npm run tsc) && (cd ./Client && npm install)",
     "initDatabase": "docker exec -it appointment-booking_appointment-api_1 bash -c 'npm run migrate:reset && npm run db:seed'"
   }
 }
