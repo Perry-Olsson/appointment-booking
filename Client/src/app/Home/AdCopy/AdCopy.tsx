@@ -15,7 +15,7 @@ export const AdCopy: FC = () => {
 
 const sectionOneProps: SectionProps = {
   header: "The Renewal Center Enhances Your Natural Beauty",
-  imgSrc: "/home-page-natural-beauty.jpeg",
+  imgSrc: "/home-page-natural-beauty.webp",
   description:
     "Whether you want to improve your skin texture or reduce the appearance of facial lines and wrinkles, you will get professional medical care at our fine clinic.",
   buttonHref: "#",
@@ -24,7 +24,7 @@ const sectionOneProps: SectionProps = {
 
 const sectionTwoProps: SectionProps = {
   header: "Individualized Skin Care and More",
-  imgSrc: "/home-page-skin-care.jpeg",
+  imgSrc: "/home-page-skin-care.webp",
   description:
     "Relax in our friendly and caring facility as you receive customized treatments for everything from acne to weight loss. Our team has over 40 years of combined experience.",
   buttonHref: "#",

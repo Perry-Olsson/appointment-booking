@@ -41,7 +41,7 @@ const IntroSection = styled.section`
 `;
 
 const ImageContainter = styled(Flex)`
-  background-image: url("/home-page-bg.png");
+  background-image: url("/home-page-bg.webp");
   background-size: cover;
   position: absolute;
   top: ${({ theme }) => theme.navBar.height};
