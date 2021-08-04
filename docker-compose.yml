@@ -18,7 +18,7 @@ services:
         aliases:
           - nginx
   appointment-client:
-    build: ./appointment-booking-client
+    build: ./Client
     image: dockterperry/appointment-client:v1
     ports:
       - 3000:3000
@@ -27,7 +27,7 @@ services:
         aliases:
           - appointment-client
   appointment-api:
-    build: ./appointment-booking-api
+    build: ./Api
     image: dockterperry/appointment-api:v1
     ports:
       - 3001:3001
