@@ -1,6 +1,9 @@
 import { DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
+  homePage: {
+    maxWidth: "60rem",
+  },
   dashboard: {
     navBar: {
       height: 60,
@@ -67,6 +70,9 @@ export const theme: DefaultTheme = {
 
 declare module "styled-components" {
   export interface DefaultTheme {
+    homePage: {
+      maxWidth: string;
+    };
     dashboard: {
       navBar: {
         height: number;

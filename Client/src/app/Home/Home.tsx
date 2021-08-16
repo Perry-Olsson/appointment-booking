@@ -1,13 +1,15 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { device, Flex, LinkButton } from "../../components";
 import { AdCopy } from "./AdCopy";
+import { Contact } from "./Contact";
 
 export const Home: FC = () => {
   return (
     <>
       <Intro />
       <AdCopy />
+      <Contact />
     </>
   );
 };

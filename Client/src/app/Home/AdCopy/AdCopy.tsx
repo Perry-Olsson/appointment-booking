@@ -56,7 +56,7 @@ const SectionLayout: FC<SectionProps> = ({
   const imgRef = useRef<HTMLImageElement>(null);
   const textContentRef = useRef<HTMLDivElement>(null);
   const [{ width }] = useAtom(dimensionsAtom);
-  const isTabletOrSmaller = device.isTabletOrSmaller(width);
+  const isDesktop = device.isDesktop(width);
 
   function scrollHandler() {
     if (window.scrollY > scrollOffset + 200) {
@@ -77,10 +77,10 @@ const SectionLayout: FC<SectionProps> = ({
     <Section as="section">
       <Header ref={headerRef}>{header}</Header>
       <ContentContainer>
-        {alignRight || isTabletOrSmaller ? (
+        {alignRight || !isDesktop ? (
           <Img
             ref={imgRef}
-            translateValue={`${isTabletOrSmaller ? "100vw" : "-100vw"}`}
+            translateValue={`${isDesktop ? "100vw" : "-100vw"}`}
             src={imgSrc}
             alt={imgAlt}
           />
@@ -89,7 +89,7 @@ const SectionLayout: FC<SectionProps> = ({
           <p>{description}</p>
           <Button href={buttonHref} text="Learn More" />
         </TextContainer>
-        {alignRight || isTabletOrSmaller ? null : (
+        {alignRight || !isDesktop ? null : (
           <Img ref={imgRef} translateValue="100vw" src={imgSrc} alt={imgAlt} />
         )}
       </ContentContainer>
@@ -105,7 +105,7 @@ const Section = styled(Flex2)`
   width: 90%;
   margin-bottom: 5rem;
   @media (min-width: ${device.desktop.pixels}) {
-    width: 60rem;
+    width: ${({ theme }) => theme.homePage.maxWidth};
   }
 `;
 
@@ -113,7 +113,7 @@ const Header = styled.h2`
   color: ${({ theme }) => theme.colors.secondary};
   font-weight: normal;
   margin-bottom: 2rem;
-  @media (max-width: ${device.tablet.pixels}) {
+  @media (max-width: ${device.desktop.pixels}) {
     text-align: center;
   }
   transition: all 0.7s;
@@ -124,7 +124,7 @@ const ContentContainer = styled(Flex2)`
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  @media (max-width: ${device.tablet.pixels}) {
+  @media (max-width: ${device.desktop.pixels}) {
     flex-direction: column;
     align-items: center;
   }
@@ -146,7 +146,7 @@ const TextContainer = styled(Flex2)<{ alignRight?: boolean }>`
   transition: transform 0.8s ease-in-out;
   transform: ${({ alignRight }) =>
     alignRight ? "translate(100vw, 0)" : "translate(-100vw, 0)"};
-  @media (max-width: ${device.tablet.pixels}) {
+  @media (max-width: ${device.desktop.pixels}) {
     width: 90%;
     margin-top: 1.5rem;
     align-items: center;
