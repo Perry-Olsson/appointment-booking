@@ -25,6 +25,7 @@ export const AppointmentCard: FC<Props> = ({ appointment }) => {
         <AppointmentTime
           time={appointment.timestamp}
           procedure={appointment.procedure}
+          toLocalTime
         />
       </AppointmentInfoItem>
     </Container>
