@@ -1,18 +1,15 @@
-FROM node:alpine AS development
-
+FROM node:alpine AS base
 WORKDIR /usr/app
 COPY package*.json ./
 RUN npm install
-
 COPY . .
 
+FROM base AS development
 ENV NODE_ENV development
-
 EXPOSE 3000
-
 CMD ["npm", "run", "dev:client"]
 
-FROM node:alpine AS builder
+FROM base AS builder
 WORKDIR /usr/app
 COPY . .
 COPY --from=development /usr/app/node_modules ./node_modules

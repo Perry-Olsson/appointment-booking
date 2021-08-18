@@ -1,9 +1,18 @@
 import "@testing-library/jest-dom";
 import { NavBar } from "../app/NavBar";
-import { render, screen } from "../__utils__";
+import { fireEvent, render, screen } from "../__utils__";
 
-test("home page button has fake link", () => {
+// jest.mock(
+//   "",
+//   () =>
+//     ({ children }: any) =>
+//       children
+// );
+
+test("Book Online tab re-routes to login page", () => {
   render(<NavBar />);
-  const logoutButton = screen.getByText("logout");
-  console.log(logoutButton);
+  const menuButton = screen.getByText("Open Menu");
+  expect(menuButton).toBeInTheDocument();
+  fireEvent.click(menuButton);
+  fireEvent.click(screen.getByText("Login"));
 });

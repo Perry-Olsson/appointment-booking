@@ -2,7 +2,9 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { FC } from "react";
 import styled from "styled-components";
-import { Flex2, ErrorNotification, ExitButton } from ".";
+import { Flex2 } from "./Flex";
+import { ErrorNotification } from "./ErrorNotification";
+import { ExitButton } from "./ExitButton";
 import { getMainRoute } from "../app/NavBar/TabList";
 import { errorAtom, showErrorAtom } from "../app/Scheduler/atoms";
 
