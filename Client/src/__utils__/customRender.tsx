@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { FC, ReactElement } from "react";
 import { theme } from "../components";
 import { render, RenderOptions } from "@testing-library/react";
+import renderer from "react-test-renderer";
 import { UserProvider } from "../context";
 
 const Providers: FC = ({ children }) => {
@@ -24,5 +25,9 @@ const customRender = (
   options?: Omit<RenderOptions, "wrapper">
 ) => render(ui, { wrapper: Providers, ...options });
 
+const customSnapRenderer = (component: ReactElement) => {
+  return renderer.create(<Providers>{component}</Providers>);
+};
+
 export * from "@testing-library/react";
-export { customRender as render };
+export { customRender as render, customSnapRenderer };

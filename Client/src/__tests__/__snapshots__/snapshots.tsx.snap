@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Home Page 1`] = `
+Array [
+  <section
+    className="Home__IntroSection-sc-11xpvj1-0 hepMEv"
+  >
+    <div
+      className="Flex__Container-sc-vtvril-0 fOTFPX Home__ImageContainter-sc-11xpvj1-1 koXSxE"
+    >
+      <span
+        aria-label="Health and beauty background image"
+        className="background-image"
+        role="img"
+      />
+    </div>
+    <div
+      className="Flex__Container-sc-vtvril-0 fOTFPX Home__TextContainer-sc-11xpvj1-2 NqdIW"
+    >
+      <h1
+        className="Home__Header-sc-11xpvj1-3 jHDkmB"
+      >
+        INNOVATIVE HEALTH AND BEAUTY SERVICES
+      </h1>
+      <a
+        className="Button__BaseButton-sc-94vson-0 dbZzvV Home__StyledButton-sc-11xpvj1-4 bqOQef"
+        color="#8b9153"
+        href="#"
+      >
+        Get a Personal Consultation
+      </a>
+    </div>
+  </section>,
+  <div
+    className="Flex__Container-sc-vtvril-0 fOTFPX AdCopy__Container-sc-14piilm-0 QUXnl"
+  >
+    <section
+      className="Flex__Flex2-sc-vtvril-1 AdCopy__Section-sc-14piilm-1 fIIapk kDJRfU"
+    >
+      <h2
+        className="AdCopy__Header-sc-14piilm-2 ckCrXU"
+      >
+        The Renewal Center Enhances Your Natural Beauty
+      </h2>
+      <div
+        className="Flex__Flex2-sc-vtvril-1 AdCopy__ContentContainer-sc-14piilm-3 fIIapk bVuzez"
+      >
+        <img
+          alt="Middle aged women looking over her shoulder and smiling"
+          className="AdCopy__Img-sc-14piilm-4 cDcdEF"
+          src="/home-page-natural-beauty.webp"
+        />
+        <div
+          className="Flex__Flex2-sc-vtvril-1 AdCopy__TextContainer-sc-14piilm-5 fIIapk gMYscr"
+        >
+          <p>
+            Whether you want to improve your skin texture or reduce the appearance of facial lines and wrinkles, you will get professional medical care at our fine clinic.
+          </p>
+          <a
+            className="Button__BaseButton-sc-94vson-0 dbZzvV AdCopy__Button-sc-14piilm-6 iqYQrB"
+            color="#8b9153"
+            href="#"
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+    </section>
+    <section
+      className="Flex__Flex2-sc-vtvril-1 AdCopy__Section-sc-14piilm-1 fIIapk kDJRfU"
+    >
+      <h2
+        className="AdCopy__Header-sc-14piilm-2 ckCrXU"
+      >
+        Individualized Skin Care and More
+      </h2>
+      <div
+        className="Flex__Flex2-sc-vtvril-1 AdCopy__ContentContainer-sc-14piilm-3 fIIapk bVuzez"
+      >
+        <img
+          alt="Young woman looking down and smiling"
+          className="AdCopy__Img-sc-14piilm-4 cDcdEF"
+          src="/home-page-skin-care.webp"
+        />
+        <div
+          className="Flex__Flex2-sc-vtvril-1 AdCopy__TextContainer-sc-14piilm-5 fIIapk exWYnq"
+        >
+          <p>
+            Relax in our friendly and caring facility as you receive customized treatments for everything from acne to weight loss. Our team has over 40 years of combined experience.
+          </p>
+          <a
+            className="Button__BaseButton-sc-94vson-0 dbZzvV AdCopy__Button-sc-14piilm-6 iqYQrB"
+            color="#8b9153"
+            href="#"
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>,
+  <div
+    className="Contact__BarContainer-sc-1r8410d-1 heSjAW"
+  >
+    <div
+      className="Flex__Flex2-sc-vtvril-1 Contact__BottomBar-sc-1r8410d-2 fIIapk dpYfxw"
+    >
+      <div
+        className="Flex__Flex2-sc-vtvril-1 Contact__Socials-sc-1r8410d-3 fIIapk ccIIsZ"
+      >
+        <div
+          className="Flex__Flex2-sc-vtvril-1 Contact__Circle-sc-1r8410d-4 Contact__Icon-sc-1r8410d-5 fIIapk cOEMyE bRESfu"
+        >
+          <svg
+            height="30px"
+            viewBox="0 0 117.7 226.6"
+            width="30px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M76.4 226.6V123.2h34.7l5.2-40.3H76.4V57.2c0-11.7 3.2-19.6 20-19.6h21.3v-36C114 1.1 101.3 0 86.6 0 55.8 0 34.8 18.8 34.8 53.2v29.7H0v40.3h34.8v103.4h41.6z"
+              fill="white"
+            />
+          </svg>
+        </div>
+        <div
+          className="Flex__Flex2-sc-vtvril-1 Contact__Circle-sc-1r8410d-4 Contact__Icon-sc-1r8410d-5 fIIapk cOEMyE bRESfu"
+        >
+          <svg
+            height="30px"
+            viewBox="0 0 24 24"
+            width="30px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+              fill="white"
+            />
+          </svg>
+        </div>
+        <div
+          className="Flex__Flex2-sc-vtvril-1 Contact__Circle-sc-1r8410d-4 Contact__Icon-sc-1r8410d-5 fIIapk cOEMyE bRESfu"
+        >
+          <span
+            className="Contact__GooglePlus-sc-1r8410d-0 hrbmTA"
+          >
+            G+
+          </span>
+        </div>
+      </div>
+      <h2>
+        425-921-9489
+      </h2>
+    </div>
+  </div>,
+]
+`;
