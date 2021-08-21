@@ -1,7 +1,8 @@
 import { AppProps } from "next/app";
 import { NavBar } from "../app/NavBar/NavBar";
 import { NavBarOffset } from "../app/NavBar/NavBarOffset";
-import { AccessToken, getLayoutProvider, GlobalProviders } from "../utils";
+import { getLayoutProvider, GlobalProviders } from "../context";
+import { AccessToken } from "../utils/accessToken";
 import { useDimensions } from "../hooks";
 import "../utils/date.extensions";
 import { UnexpectedErrorDisplay } from "../components/UnexpectedErrorDisplay";

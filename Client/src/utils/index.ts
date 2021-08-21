@@ -1,3 +1,2 @@
-export * from "./getLayoutProvider";
+export * from "../context/getLayoutProvider";
 export * from "./accessToken";
-export * from "./GlobalProviders";

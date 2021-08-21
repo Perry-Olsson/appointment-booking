@@ -155,3 +155,78 @@ Array [
   </div>,
 ]
 `;
+
+exports[`App Large Device nav bar 1`] = `
+Array [
+  <div
+    className="Flex__Container-sc-vtvril-0 fOTFPX TabList__NonUserTabsContainer-sc-p646c1-2 kmfjKs"
+  >
+    <div
+      className="TabList__LocationDisplay-sc-p646c1-0 hmjLzf"
+      id="locationDisplay"
+    />
+    <a
+      className="Tab__StyledAnchor-sc-1vqgrmi-0 jbhMeI"
+      href="/"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      <img
+        alt="logo"
+        className="Logo__StyledImg-sc-1x2g3rb-0 geJfPU"
+        height="69px"
+        onClick={[Function]}
+        src="/logo.png"
+        width="145px"
+      />
+    </a>
+    <a
+      className="Tab__StyledAnchor-sc-1vqgrmi-0 jbhMeI"
+      href="/schedule"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+    >
+      Book Online
+    </a>
+  </div>,
+  <div
+    className="Flex__Container-sc-vtvril-0 fOTFPX TabList__UserTabsContainer-sc-p646c1-1 nUiHX"
+  >
+    <div
+      className="Flex__Container-sc-vtvril-0 fOTFPX LoadingIcon__LoadingContainer-sc-1ajbae7-0 gdetxw NavbarView__StyledLoadingIcon-sc-1y2hyh9-1 kURXlK"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 32 32\\">
+  <path transform=\\"translate(2)\\" d=\\"M0 12 V20 H4 V12z\\"> 
+    <animate attributeName=\\"d\\" values=\\"M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z\\" dur=\\"1.2s\\" repeatCount=\\"indefinite\\" begin=\\"0\\" keytimes=\\"0;.2;.5;1\\" keySplines=\\"0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8\\" calcMode=\\"spline\\"  />
+  </path>
+  <path transform=\\"translate(8)\\" d=\\"M0 12 V20 H4 V12z\\">
+    <animate attributeName=\\"d\\" values=\\"M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z\\" dur=\\"1.2s\\" repeatCount=\\"indefinite\\" begin=\\"0.2\\" keytimes=\\"0;.2;.5;1\\" keySplines=\\"0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8\\" calcMode=\\"spline\\"  />
+  </path>
+  <path transform=\\"translate(14)\\" d=\\"M0 12 V20 H4 V12z\\">
+    <animate attributeName=\\"d\\" values=\\"M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z\\" dur=\\"1.2s\\" repeatCount=\\"indefinite\\" begin=\\"0.4\\" keytimes=\\"0;.2;.5;1\\" keySplines=\\"0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8\\" calcMode=\\"spline\\" />
+  </path>
+  <path transform=\\"translate(20)\\" d=\\"M0 12 V20 H4 V12z\\">
+    <animate attributeName=\\"d\\" values=\\"M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z\\" dur=\\"1.2s\\" repeatCount=\\"indefinite\\" begin=\\"0.6\\" keytimes=\\"0;.2;.5;1\\" keySplines=\\"0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8\\" calcMode=\\"spline\\" />
+  </path>
+  <path transform=\\"translate(26)\\" d=\\"M0 12 V20 H4 V12z\\">
+    <animate attributeName=\\"d\\" values=\\"M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z\\" dur=\\"1.2s\\" repeatCount=\\"indefinite\\" begin=\\"0.8\\" keytimes=\\"0;.2;.5;1\\" keySplines=\\"0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8\\" calcMode=\\"spline\\" />
+  </path>
+</svg>
+",
+          }
+        }
+        style={
+          Object {
+            "fill": "#8b9153",
+            "height": "50px",
+            "width": "50px",
+          }
+        }
+      />
+    </div>
+  </div>,
+]
+`;
