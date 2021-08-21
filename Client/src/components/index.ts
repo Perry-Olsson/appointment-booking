@@ -18,3 +18,4 @@ export * from "./Logo";
 export * from "./ProfileIcon";
 export * from "./TimezoneMessage";
 export * from "./ErrorIcon";
+export * from "./Circle";
