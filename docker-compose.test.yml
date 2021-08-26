@@ -2,12 +2,12 @@ version: "3.8"
 services:
   test-appointment-api:
     build:
-      context: ./appointment-booking-api
+      context: ./Api
       target: test
     stdin_open: true
     tty: true
     volumes:
-      - ./appointment-booking-api:/usr/app
+      - ./Api:/usr/app
     depends_on:
       - test-db
     networks:

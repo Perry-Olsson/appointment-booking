@@ -27,6 +27,8 @@ services:
     build:
       context: ./Api
       target: development
+    ports:
+      - 3001:3001
     volumes:
       - ./Api:/usr/app
     networks:
