@@ -89,6 +89,7 @@ describe("Error handler middleware", () => {
       .send(invalidFinish)
       .set(getValidAuthHeader());
 
+    console.log(validResponse.error);
     expect(validResponse.status).toBe(200);
     expect(invalidStartResponse.status).toBe(400);
     expect(invalidFinishResponse.status).toBe(400);

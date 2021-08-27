@@ -59,6 +59,11 @@ export const createAppointmentTimestamps = (
       time.hour,
       time.minute
     );
+    if (!start.day) {
+      while (timestamp.getDay() !== 1)
+        timestamp.setDate(timestamp.getDate() + 1);
+      time.day = timestamp.getDate();
+    }
     time.hour = time.hour + 1;
     for (let field in finish) {
       time[field as keyof Time] = finish[field as keyof Time] as number;
