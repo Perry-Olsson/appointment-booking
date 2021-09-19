@@ -68,6 +68,7 @@ const SectionLayout: FC<SectionProps> = ({
       window.removeEventListener("scroll", scrollHandler);
     }
   }
+
   useEffect(() => {
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
@@ -75,12 +76,14 @@ const SectionLayout: FC<SectionProps> = ({
 
   return (
     <Section as="section">
-      <Header ref={headerRef}>{header}</Header>
+      <Header ref={headerRef} alignRight={alignRight}>
+        {header}
+      </Header>
       <ContentContainer>
         {alignRight || !isDesktop ? (
           <Img
             ref={imgRef}
-            translateValue={`${isDesktop ? "100vw" : "-100vw"}`}
+            translateValue={`${alignRight ? "-100vw" : "100vw"}`}
             src={imgSrc}
             alt={imgAlt}
           />
@@ -109,7 +112,7 @@ const Section = styled(Flex2)`
   }
 `;
 
-const Header = styled.h2`
+const Header = styled.h2<{ alignRight?: boolean }>`
   color: ${({ theme }) => theme.colors.secondary};
   font-weight: normal;
   margin-bottom: 2rem;
@@ -117,7 +120,10 @@ const Header = styled.h2`
     text-align: center;
   }
   transition: all 0.7s;
-  transform: translate(-100vw, -50px);
+  transform: translate(
+    ${({ alignRight }) => (alignRight ? "100vw" : "-100vw")},
+    -50px
+  );
 `;
 
 const ContentContainer = styled(Flex2)`
