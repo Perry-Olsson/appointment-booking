@@ -1,5 +1,5 @@
 # stage 1
-FROM node:14 as base
+FROM node:16.13.2-alpine3.14 as base
 WORKDIR /usr/app
 COPY ./package*.json ./
 RUN npm install
